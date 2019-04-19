@@ -1,0 +1,175 @@
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h4 class="text-themecolor">Welcome to MNIT Placement Portal</h4>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">MNIT Placement Portal Student Registration</h4>
+                <h6 class="card-subtitle">Register yourself for the placement session</h6>
+                <form class="form-material m-t-40" ng-submit="register.regUser(regData);">
+                    <div class="form-group">
+                        <label>Name </label>
+                        <input type="text" class="form-control form-control-line" placeholder="Enter your name" ng-model="register.regData.name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>College ID </label>
+                        <input type="text" class="form-control form-control-line" placeholder="Enter your college ID" ng-model="register.regData.college_id" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Select Branch</label>
+                        <select class="form-control" ng-model="register.regData.branch" required>
+                            <option value="Computer Science">Computer Science</option>
+                            <option value="Mechanical">Mechanical</option>
+                            <option value="Electrical">Electrical</option>
+                            <option value="Electronics">Electronics</option>
+                            <option value="Civil">Civil</option>
+                            <option value="Chemical">Chemical</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Select Year</label>
+                        <select class="form-control" ng-model="register.regData.year" required>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>CGPA</label>
+                        <input type="number" class="form-control form-control-line" placeholder="Enter your CGPA" ng-model="register.regData.cgpa" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Contact No.</label>
+                        <input type="text" class="form-control form-control-line" placeholder="Enter your contact no." ng-model="register.regData.contact_no" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password </label>
+                        <input type="password" class="form-control form-control-line" placeholder="Enter your password" ng-model="register.regData.password" required>
+                    </div>
+
+                    <div class="alert alert-success alert-rounded" ng-show="register.successMsg">
+                        <i class="icon-check"></i>
+                        <strong> Yay!</strong> {{ register.successMsg }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="alert alert-danger alert-rounded" ng-show="register.errorMsg">
+                        <i class="icon-close"></i>
+                        <strong>Oops! </strong> {{ register.errorMsg }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <button type="submit" class="btn btn-success btn-rounded">Register</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--
+<div class="row">
+    <div class="col-sm-6">
+            <div>
+                <h1 class="text-center">
+                    User Login
+                </h1>
+            </div>
+
+            <form ng-submit="register.doLogin(regData);" novalidate>
+                <label>Username :</label>
+                <input ng-disabled="register.disabled" class="form-control" type="text" placeholder="Enter username" ng-model="register.regData.username" required>
+                <br>
+
+                <label>Password :</label>
+                <input ng-disabled="register.disabled" class="form-control" type="password" placeholder="Enter password" ng-model="register.regData.password" required>
+                <br>
+
+                <button ng-disabled="register.disabled" type="submit" class="btn btn-primary">Login </button>
+                <a href="/forgot"><button class="btn btn-success">Forgot? </button></a>
+            </form>
+            <br>
+
+            <div class="jumbotron text-center" ng-show="register.loading">
+                <span class="glyphicon glyphicon-repeat spinner"></span>
+                <p> Loading..... </p>
+            </div>
+
+            <div class="row show-hide-message">
+                <div class="alert alert-success" ng-show="register.successMsg">
+                    <strong> Success! </strong> {{ register.successMsg  }}
+                </div>
+            </div>
+
+            <div class="row show-hide-message">
+                <div class="alert alert-danger" ng-show="register.errorMsg">
+                    <strong> Oops! </strong> {{ register.errorMsg  }}
+                    <div class="text-center" ng-show="register.expired">
+                        <br>
+                        <a href="/resend"><button type="button" class="btn btn-success">Resend Link</button></a>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+
+    <div class="col-sm-6">
+        <div>
+            <h1 class="text-center">
+                User Registration
+            </h1>
+        </div>
+        <form ng-submit="register.regUser(regData);" novalidate>
+
+            <label>Name : </label>
+            <input class="form-control" type="text" name="name" placeholder="Enter your name" ng-model="register.regData.name" required>
+            <br>
+
+            <label>Username :</label>
+            <input class="form-control" type="text" name="username" placeholder="Enter your username" ng-model="register.regData.username" required>
+            <br>
+
+            <label>Email :</label>
+            <input class="form-control" type="email" name="email" placeholder="Enter your email" ng-model="register.regData.email" required>
+            <br>
+
+            <label>Password :</label>
+            <input class="form-control" type="password" name="password" placeholder="Enter your password" ng-model="register.regData.password" required>
+            <br>
+
+            <button class="btn btn-primary" type="submit">Sign Up</button>
+        </form>
+        <br>
+
+        <div class="jumbotron text-center " ng-show="register.loading">
+            <span class="glyphicon glyphicon-repeat spinner"></span>
+            <p> Loading..... </p>
+        </div>
+
+
+        <div class="row show-hide-message">
+            <div class="alert alert-success" ng-show="register.successMsg">
+                <strong> Success! </strong> {{ register.successMsg }}
+            </div>
+        </div>
+
+
+        <div class="row show-hide-message">
+            <div class="alert alert-danger" ng-show="register.errorMsg">
+                <strong> Oops! </strong>{{ register.errorMsg }}
+            </div>
+        </div>
+    </div>
+</div>
+-->

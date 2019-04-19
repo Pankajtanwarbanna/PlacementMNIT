@@ -1,0 +1,102 @@
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h4 class="text-themecolor">Company Registration</h4>
+    </div>
+
+
+    <div class="col-md-7 align-self-center text-right" ng-show="main.authorized">
+        <div class="d-flex justify-content-end align-items-center">
+            <button type="button" class="btn btn-primary d-none d-lg-block m-l-15" data-toggle="modal" data-target="#addCompanyModal"><i class="ti-plus"></i> Add New Company</button>
+        </div>
+    </div>
+    <!-- Company add Modal box   -->
+    <div class="modal fade" id="addCompanyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel1">Add New Company</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label class="control-label">Company Name</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Job Profile</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Eligible Branches</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Other Eligibility</label>
+                            <input type="text" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label">Location of Posting</label>
+                            <input type="text" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label">Company Website</label>
+                            <input type="text" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label">Bond requirement</label>
+                            <select class="form-control">
+                                <option>Yes</option>
+                                <option>No</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label">Last Date to Apply</label>
+                            <input type="date" class="form-control">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success">Post Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Column -->
+    <div class="col-lg-4 col-md-6">
+        <div class="card cc-widget">
+            <div class="card-body">
+                <div class="d-flex no-block flex-row">
+                    <div class="round align-self-center round-success m-t-10 m-b-10"><i class="ti-briefcase"></i></div>
+                    <div class="m-l-10 align-self-center">
+                        <h4 class="m-b-0">Flipkart</h4>
+                        <h5 class="text-muted m-b-0">Software Enginner</h5>
+                    </div>
+                </div>
+                <div class="d-flex no-block flex-row m-t-20 cc-details">
+                    <div class="col-4 p-10 p-l-0 border-right">
+                        <h6 class="font-light">Package</h6><b class="growth">₹ 20 Lakh</b></div>
+                    <div class="col-4 p-10 border-right">
+                        <h6 class="font-light">Location</h6><b class="up"> Bengaluru</b>
+                    </div>
+                    <div class="col-4 p-10">
+                        <h6 class="font-light">Last Date</h6><b class="down">5 April</b>
+                    </div>
+                </div>
+                <br>
+
+                <div class="text-center">
+                    <a href="/company"><button type="button" class="btn btn-info btn-rounded">View More</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

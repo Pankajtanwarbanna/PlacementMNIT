@@ -1,0 +1,84 @@
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h4 class="text-themecolor">Welcome to MNIT Placement Portal</h4>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">MNIT Placement Portal Login</h4>
+                <h6 class="card-subtitle">Login for the placement session</h6>
+                <form class="form-material m-t-40" ng-submit="main.doLogin(logData);">
+                    <div class="form-group">
+                        <label>College ID </label>
+                        <input type="text" class="form-control form-control-line" placeholder="Enter your college id" ng-model="main.logData.college_id" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Password </label>
+                        <input type="password" class="form-control form-control-line" placeholder="Enter your password" ng-model="main.logData.password" required>
+                    </div>
+
+                    <div class="alert alert-success alert-rounded" ng-show="main.successMsg">
+                        <i class="icon-check"></i>
+                        <strong> Yay!</strong> {{ main.successMsg }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="alert alert-danger alert-rounded" ng-show="main.errorMsg">
+                        <i class="icon-close"></i>
+                        <strong>Oops! </strong> {{ main.errorMsg }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <button type="submit" class="btn btn-success btn-rounded">Login</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<div class="page-header">-->
+<!--    <h1 class="text-center">-->
+<!--        User Login-->
+<!--    </h1>-->
+<!--</div>-->
+
+<!--<form ng-submit="main.doLogin(logData);" novalidate>-->
+<!--    <label>Username :</label>-->
+<!--    <input class="form-control" type="text" placeholder="Enter username" ng-model="main.logData.username" required>-->
+<!--    <br>-->
+
+<!--    <label>Password :</label>-->
+<!--    <input class="form-control" type="password" placeholder="Enter password" ng-model="main.logData.password" required>-->
+<!--    <br>-->
+
+<!--    <button type="submit" class="btn btn-primary">Login </button>-->
+<!--</form>-->
+<!--<br>-->
+
+<!--<div class="jumbotron text-center" ng-show="main.loading">-->
+<!--    <span class="glyphicon glyphicon-repeat spinner"></span>-->
+<!--    <p> Loading..... </p>-->
+<!--</div>-->
+
+<!--<div class="row show-hide-message">-->
+<!--    <div class="alert alert-success" ng-show="main.successMsg">-->
+<!--        <strong> Success! </strong> {{ main.successMsg  }}-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<div class="row show-hide-message">-->
+<!--    <div class="alert alert-danger" ng-show="main.errorMsg">-->
+<!--        <strong> Oops! </strong> {{ main.errorMsg  }}-->
+<!--    </div>-->
+<!--</div>-->

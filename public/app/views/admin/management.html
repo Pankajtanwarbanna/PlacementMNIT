@@ -1,0 +1,83 @@
+<div>
+    <div class="text-center">
+        <h1>User Managements</h1>
+    </div>
+</div>
+
+
+<div class="jumbotron text-center" ng-show="management.loading">
+    <span class="glyphicon glyphicon-repeat spinner"></span>
+    <p> Loading..... </p>
+</div>
+
+<br>
+
+<div class="row">
+    <div class="col-sm-8">
+        <button type="button" ng-click="management.showMore(number);" class="btn btn-success">Apply filter</button>
+        <button type="button" ng-click="management.showAll();" class="btn btn-danger">Show all</button>
+
+        <div style="display: inline;">
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <span class="input-group-addon">Results to display : </span>
+                    <input class="form-control" ng-model="number">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<div class="navbar-form">
+    <div class="form-group">
+        <input type="text" name="search" class="form-control" placeholder="Search for..." ng-model="searchKeyword">
+    </div>
+    <button type="button" class="btn btn-default">Search</button>
+</div>
+
+<div class="row show-hide-message">
+    <div class="alert alert-danger" ng-show="management.showMoreError">
+        <div>
+            <strong> Oops! </strong> {{ management.showMoreError  }}
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <strong>User management</strong>
+    </div>
+
+    <table class="table">
+        <tr>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Email</th>
+        </tr>
+        <tr ng-repeat="person in management.users | filter : searchKeyword | limitTo : management.limit">
+            <th>{{ person.name }}</th>
+            <th>{{ person.username }}</th>
+            <th>{{ person.email }}</th>
+            <th>
+                <a href="/edit/{{ person._id }}">
+                    <button type="button" ng-show="management.editAccess" class="btn btn-primary">Edit</button>
+                </a>
+                <button type="button" ng-show="management.editAccess" ng-click="management.userDelete(person.username);" class="btn btn-danger">Delete</button>
+            </th>
+        </tr>
+    </table>
+</div>
+
+
+<div class="row show-hide-message">
+    <div class="alert alert-success" ng-show="management.successMsg">
+        <strong> Success! </strong> {{ management.successMsg  }}
+    </div>
+</div>
+
+<div class="row show-hide-message">
+    <div class="alert alert-danger" ng-show="management.errorMsg">
+        <strong> Oops! </strong> {{ management.errorMsg  }}
+    </div>
+</div>

@@ -1,0 +1,68 @@
+<div>
+    <div class="text-center">
+        <h1>Edit route</h1>
+    </div>
+</div>
+<br>
+<ul class="nav nav-tabs">
+    <li class="presentation" ng-click="edit.namePhase();" ng-class="nameTab"><a href="#">Name</a> </li>
+    <li class="presentation" ng-click="edit.usernamePhase();" ng-class="usernameTab"><a href="#">Username</a> </li>
+    <li class="presentation" ng-click="edit.emailPhase();" ng-class="emailTab"><a href="#">Email</a> </li>
+    <li class="presentation" ng-click="edit.permissionPhase();" ng-class="permissionTab"><a href="#">Permission</a> </li>
+</ul>
+<br>
+<!-- Name Phase -->
+<div ng-show="edit.namephase">
+
+    <form ng-submit="edit.updateName(newName);">
+        <label>Name : </label>
+        <input class="form-control" type="text" name="name" placeholder="Enter your name" ng-model="newName" required>
+        <br>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+
+</div>
+
+<!-- username Phase -->
+<div ng-show="edit.usernamephase">
+
+    <form ng-submit="edit.updateUsername(newUsername);">
+        <label>Username : </label>
+        <input class="form-control" type="text" name="name" placeholder="Enter your username" ng-model="newUsername" required>
+        <br>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+
+</div>
+
+<!-- Email Phase -->
+<div ng-show="edit.emailphase">
+
+    <form ng-submit="edit.updateEmail(newEmail);">
+        <label>Email : </label>
+        <input class="form-control" type="text" name="name" placeholder="Enter your email" ng-model="newEmail" required>
+        <br>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+
+</div>
+
+<!-- Permission Phase -->
+<div ng-show="edit.permissionphase">
+    <p> Current Role :  <span class="label label-primary">{{ permission }}</span></p>
+    <br>
+    <button class="btn btn-success" ng-click="edit.updatePermission(permission);">Upgrade to admin</button>
+</div>
+<br>
+<div class="row show-hide-message">
+    <div class="alert alert-success" ng-show="edit.successMsg">
+        <strong> Success! </strong> {{ edit.successMsg }}
+    </div>
+</div>
+
+
+<div class="row show-hide-message">
+    <div class="alert alert-danger" ng-show="edit.errorMsg">
+        <strong> Oops! </strong>{{ edit.errorMsg }}
+    </div>
+</div>

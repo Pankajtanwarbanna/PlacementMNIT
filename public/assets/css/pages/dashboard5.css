@@ -1,0 +1,47 @@
+/*
+Template Name: Admin Template
+Author: Wrappixel
+
+File: scss
+*/
+@import url("https://fonts.googleapis.com/css?family=Rubik:300,400,500,600,700");
+/*Theme Colors*/
+/**
+ * Table Of Content
+ *
+ * 	1. Color system
+ *	2. Options
+ *	3. Body
+ *	4. Typography
+ *	5. Breadcrumbs
+ *	6. Cards
+ *	7. Dropdowns
+ *	8. Buttons
+ *	9. Typography
+ *	10. Progress bars
+ *	11. Tables
+ *	12. Forms
+ *	14. Component
+ */
+#cc-table span a i {
+  font-size: 25px; }
+
+#cc-table h6 {
+  margin-bottom: 0px; }
+
+#cc-table.dataTable thead .sorting:after,
+#cc-table.dataTable thead .sorting_desc:after,
+#cc-table.dataTable thead .sorting_asc:after {
+  display: none; }
+
+.cc-widget .cc-icon i {
+  font-size: 50px; }
+
+.cc-widget .cc-details .growth {
+  color: #01c0c8; }
+
+.cc-widget .cc-details .up {
+  color: #20c997; }
+
+.cc-widget .cc-details .down {
+  color: #f62d51; }

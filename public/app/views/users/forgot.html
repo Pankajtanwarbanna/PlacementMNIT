@@ -1,0 +1,62 @@
+<div>
+    <h1 class="text-center">
+        Forgot something?
+    </h1>
+</div>
+
+<div class="row about">
+    <div class="col-sm-6">
+        <p class="text-center">Forgot Username ?</p>
+
+        <br>
+        <form ng-submit="forgot.forgotUsername(logData)">
+            <label>Enter Email :</label>
+            <br>
+            <input ng-disabled="forgot.disabledUsername" class="form-control" type="email" placeholder="Enter email" ng-model="forgot.logData.email" required>
+            <br>
+            <button ng-disabled="forgot.disabledUsername" class="btn btn-primary">Submit</button>
+        </form>
+
+        <br>
+        <div class="row show-hide-message">
+            <div class="alert alert-success" ng-show="forgot.successMsgUsername">
+                <strong> Success! </strong> {{ forgot.successMsgUsername  }}
+            </div>
+        </div>
+
+        <div class="row show-hide-message">
+            <div class="alert alert-danger" ng-show="forgot.errorMsgUsername">
+                <strong> Oops! </strong> {{ forgot.errorMsgUsername  }}
+            </div>
+        </div>
+
+    </div>
+    <div class="col-sm-6">
+        <p class="text-center">Forgot Password ?</p>
+
+        <br>
+        <form ng-submit="forgot.forgotPassword(logData);">
+            <label>Enter Username :</label>
+            <br>
+            <input ng-disabled="forgot.disabledPassword" class="form-control" type="text" placeholder="Enter username" ng-model="forgot.logData.username" required>
+            <br>
+            <button ng-disabled="forgot.disabledPassword" class="btn btn-primary">Submit</button>
+        </form>
+
+        <br>
+        <div class="row show-hide-message">
+            <div class="alert alert-success" ng-show="forgot.successMsgPassword">
+                <strong> Success! </strong> {{ forgot.successMsgPassword  }}
+            </div>
+        </div>
+
+        <div class="row show-hide-message">
+            <div class="alert alert-danger" ng-show="forgot.errorMsgPassword">
+                <strong> Oops! </strong> {{ forgot.errorMsgPassword  }}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+

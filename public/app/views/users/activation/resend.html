@@ -1,0 +1,35 @@
+<div>
+    <h1 class="text-center">
+        Resend activation link
+    </h1>
+</div>
+
+<form ng-submit="resend.checkCredientials(logData);" novalidate>
+    <label>Username :</label>
+    <input ng-disabled="resend.disabled" class="form-control" type="text" placeholder="Enter username" ng-model="resend.logData.username" required>
+    <br>
+
+    <label>Password :</label>
+    <input ng-disabled="resend.disabled" class="form-control" type="password" placeholder="Enter password" ng-model="resend.logData.password" required>
+    <br>
+
+    <button ng-disabled="resend.disabled" type="submit" class="btn btn-primary">Send link </button>
+</form>
+<br>
+
+<div class="jumbotron text-center" ng-show="resend.loading">
+    <span class="glyphicon glyphicon-repeat spinner"></span>
+    <p> Loading..... </p>
+</div>
+
+<div class="row show-hide-message">
+    <div class="alert alert-success" ng-show="resend.successMsg">
+        <strong> Success! </strong> {{ resend.successMsg  }}
+    </div>
+</div>
+
+<div class="row show-hide-message">
+    <div class="alert alert-danger" ng-show="resend.errorMsg">
+        <strong> Oops! </strong> {{ resend.errorMsg  }}
+    </div>
+</div>

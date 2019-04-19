@@ -1,0 +1,130 @@
+<!--
+<div class="page-header">
+    <h1 class="text-center">
+        {{ main.username }}'s PROFILE
+    </h1>
+</div>
+
+<div class="container-fluid">
+    <div class="row text-center">
+        <div class="col-sm-3">
+            <h2>
+                Name :
+            </h2>
+        </div>
+        <div class="col-sm-9">
+            <h2>
+                {{ main.name }}
+            </h2>
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-sm-3">
+            <h2>
+                Username :
+            </h2>
+        </div>
+        <div class="col-sm-9 text-center">
+            <h2>
+                {{ main.username }}
+            </h2>
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-sm-3">
+            <h2>
+                Email :
+            </h2>
+        </div>
+        <div class="col-sm-9 text-center">
+            <h2>
+                {{ main.email }}
+            </h2>
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-sm-3">
+            <h2>
+                Password :
+            </h2>
+        </div>
+        <div class="col-sm-9 text-center">
+            <h2>
+                ***********
+            </h2>
+        </div>
+    </div>
+</div>
+
+
+-->
+<div>
+    <div class="text-center">
+        <h1>Edit Profile</h1>
+    </div>
+</div>
+<br>
+<ul class="nav nav-tabs">
+    <li class="presentation" ng-click="edit.namePhase();" ng-class="nameTab"><a href="#">Name</a> </li>
+    <li class="presentation" ng-click="edit.usernamePhase();" ng-class="usernameTab"><a href="#">Username</a> </li>
+    <li class="presentation" ng-click="edit.emailPhase();" ng-class="emailTab"><a href="#">Email</a> </li>
+    <li class="presentation" ng-click="edit.permissionPhase();" ng-class="permissionTab"><a href="#">Permission</a> </li>
+</ul>
+<br>
+<!-- Name Phase -->
+<div ng-show="edit.namephase">
+
+    <form ng-submit="edit.updateName(newName);">
+        <label>Name : </label>
+        <input class="form-control" type="text" name="name" placeholder="Enter your name" ng-model="newName" required>
+        <br>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+
+</div>
+
+<!-- username Phase -->
+<div ng-show="edit.usernamephase">
+
+    <form ng-submit="edit.updateUsername(newUsername);">
+        <label>Username : </label>
+        <input class="form-control" type="text" name="name" placeholder="Enter your username" ng-model="newUsername" required>
+        <br>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+
+</div>
+
+<!-- Email Phase -->
+<div ng-show="edit.emailphase">
+
+    <form ng-submit="edit.updateEmail(newEmail);">
+        <label>Email : </label>
+        <input class="form-control" type="text" name="name" placeholder="Enter your email" ng-model="newEmail" required>
+        <br>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+
+</div>
+
+<!-- Password Phase -->
+<div ng-show="edit.permissionphase">
+    <p> Current Role :  <span class="label label-primary">{{ permission }}</span></p>
+    <br>
+    <button class="btn btn-success" ng-click="edit.updatePermission(permission);">Upgrade to admin</button>
+</div>
+<br>
+<div class="row show-hide-message">
+    <div class="alert alert-success" ng-show="edit.successMsg">
+        <strong> Success! </strong> {{ edit.successMsg }}
+    </div>
+</div>
+
+
+<div class="row show-hide-message">
+    <div class="alert alert-danger" ng-show="edit.errorMsg">
+        <strong> Oops! </strong>{{ edit.errorMsg }}
+    </div>
+</div>
+
+<button ng-click="main.logout();" type="button" class="btn btn-danger">Logout</button>

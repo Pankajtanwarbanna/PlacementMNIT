@@ -1,0 +1,40 @@
+@import url("https://fonts.googleapis.com/css?family=Rubik:300,400,500,600,700");
+/*Theme Colors*/
+/**
+ * Table Of Content
+ *
+ * 	1. Color system
+ *	2. Options
+ *	3. Body
+ *	4. Typography
+ *	5. Breadcrumbs
+ *	6. Cards
+ *	7. Dropdowns
+ *	8. Buttons
+ *	9. Typography
+ *	10. Progress bars
+ *	11. Tables
+ *	12. Forms
+ *	14. Component
+ */
+/*******************
+ Our income
+*******************/
+.o-income .c3 line, .o-income .c3 path {
+  stroke: #e9ecef; }
+
+.news-slide .carousel-item {
+  min-height: 515px;
+  background: -moz-linear-gradient(top, transparent 50%, rgba(0, 0, 0, 0.08) 56%, rgba(0, 0, 0, 0.65) 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, transparent 50%, rgba(0, 0, 0, 0.08) 56%, rgba(0, 0, 0, 0.65) 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.08) 56%, rgba(0, 0, 0, 0.65) 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=0 );
+  /* IE6-9 */ }
+
+.news-slide .carousel-caption {
+  text-align: left;
+  left: 25px;
+  right: 25px; }

@@ -1,0 +1,24 @@
+{
+  "name": "placementmnit",
+  "version": "1.0.0",
+  "description": "Online Web Placement Portal for MNIT",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pankaj Tanwar",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.2.6",
+    "mongoose-title-case": "0.0.4",
+    "mongoose-validator": "^2.1.0",
+    "morgan": "^1.9.0",
+    "nodemailer": "^4.6.8",
+    "nodemailer-sendgrid-transport": "^0.2.0",
+    "nodemon": "^1.18.3"
+  }
+}
