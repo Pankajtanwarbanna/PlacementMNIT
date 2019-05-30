@@ -2,4 +2,63 @@
     <div class="col-md-5 align-self-center">
         <h4 class="text-themecolor">Company Schedule</h4>
     </div>
+    <div class="col-md-7 align-self-center text-right" ng-show="main.authorized">
+        <div class="d-flex justify-content-end align-items-center">
+            <button type="button" class="btn btn-success d-none d-lg-block m-l-15" data-toggle="modal" data-target="#add-new-event"><i class="ti-plus"></i> Add New Event</button>
+        </div>
+    </div>
+
+    <!-- Modal Add New Event -->
+    <div class="modal fade none-border" id="add-new-event">
+        <div class="modal-dialog">
+            <div class="modal-content" ng-show="!companySchedule.successMsg">
+                <form ng-submit="companySchedule.scheduleEvent(scheduleData);">
+                    <div class="modal-header">
+                        <h4 class="modal-title"><strong>Add</strong> New Event</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <label class="control-label">Company Name</label>
+                            <input class="form-control form-white" placeholder="Enter company name" type="text" ng-model="scheduleData.title"/>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="control-label">Event Start Date</label>
+                                <input class="form-control form-white" type="date" ng-model="scheduleData.start"/>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="control-label">Event End Date</label>
+                                <input class="form-control form-white" type="date" ng-model="scheduleData.end"/>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="alert alert-danger alert-rounded" ng-show="companySchedule.errorMsg">
+                            <strong>Oops! </strong> {{ companySchedule.errorMsg }}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success waves-effect waves-light save-category">Save</button>
+                        <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+            <!--In case of success -->
+            <div class="modal-content" ng-show="companySchedule.successMsg">
+                <div class="modal-header">
+                    <h4 class="modal-title" style="color: green;">Success!</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-md-center">
+                        <i class="icon-check large-success-icon"></i>
+                        <h3 class="success-text">{{ companySchedule.successMsg }}</h3>
+                        <button type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>

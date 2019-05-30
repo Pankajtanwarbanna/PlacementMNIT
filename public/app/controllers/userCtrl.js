@@ -59,6 +59,34 @@ angular.module('userCtrl',['userServices'])
 })
 
 // Company Schedule Controller
-.controller('companyscheduleCtrl', function () {
-    console.log('Testing companyschedule ctrl');
+.controller('companyscheduleCtrl', function (user) {
+
+    let app = this;
+
+    app.successMsg = false;
+    app.errorMsg = false;
+
+    user.getSchedule().then(function (data) {
+        //console.log(data);
+        if(data.data.success) {
+            app.schedule = data.data.schedule;
+            //console.log(data.data.schedule);
+        } else {
+            app.errorMsg = data.data.message;
+        }
+    });
+
+    app.scheduleEvent = function (scheduleData) {
+
+        //console.log(scheduleData);
+        user.scheduleCompany(scheduleData).then(function (data) {
+            console.log(data);
+            if(data.data.success) {
+                app.successMsg = data.data.message;
+            } else {
+                app.errorMsg = data.data.message;
+            }
+        })
+    }
+
 });

@@ -16,8 +16,10 @@ app.use(express.static(__dirname + '/public'));
 // diff. front end and backend routes
 app.use('/api', apiRoutes);
 
+// URI - 'mongodb://admin:placement123@ds145146.mlab.com:45146/placementmnit'
+
 // connecting to mongo database
-mongoose.connect('mongodb://admin:placement123@ds145146.mlab.com:45146/placementmnit', { useNewUrlParser: true }, function (err) {
+mongoose.connect('mongodb://127.0.0.1/placementmnit', { useNewUrlParser: true }, function (err) {
     if(err) {
         console.log(err);
     } else {

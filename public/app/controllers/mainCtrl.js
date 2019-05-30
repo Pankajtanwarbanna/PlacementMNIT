@@ -10,14 +10,22 @@ angular.module('mainController', ['authServices'])
 
     app.loadme = false;
     app.home = true;
+    app.schedule = false;
 
     $rootScope.$on('$routeChangeStart', function (event, next, current) {
 
         //console.log('user is changing routes');
         //console.log($window.location.pathname);
+        //console.log(next.$$route.originalPath);
         if(next.$$route) {
             //console.log('we are not at home page');
             app.home = false;
+            if(next.$$route.originalPath === '/company-schedule') {
+                //console.log('schedule page')
+                app.schedule = true;
+            } else {
+                app.schedule = false;
+            }
         } else {
             app.home = true;
         }

@@ -35,14 +35,14 @@ var app = angular.module('userRoutes', ['ngRoute'])
                 templateUrl : '/app/views/pages/company-registration.html',
                 authenticated : true,
                 controller : 'companyregistrationCtrl',
-                controllerAs : 'companyregistration'
+                controllerAs : 'companyRegistration'
             })
 
             .when('/company-schedule', {
                 templateUrl : '/app/views/pages/company-schedule.html',
                 authenticated : true,
                 controller : 'companyscheduleCtrl',
-                controllerAs : 'companyschedule'
+                controllerAs : 'companySchedule'
             })
 
             .when('/announcements', {

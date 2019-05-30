@@ -71,5 +71,15 @@ angular.module('userServices',[])
         return $http.put('/api/edit/', id);
     };
 
+    // Company Schedule Service
+    userFactory.scheduleCompany = function (scheduleData) {
+        return $http.post('/api/scheduleCompany', scheduleData);
+    };
+
+    // Get all schedules of company
+    userFactory.getSchedule = function () {
+        return $http.get('/api/getSchedule');
+    };
+
     return userFactory;
 });

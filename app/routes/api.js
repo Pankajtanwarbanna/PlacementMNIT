@@ -2,10 +2,12 @@
     API written by - Pankaj Tanwar
 */
 var User = require('../models/user');
+var Schedule = require('../models/schedule');
 var jwt = require('jsonwebtoken');
 var secret = 'placementmnit';
 var nodemailer = require('nodemailer');
 var sgTransport = require('nodemailer-sendgrid-transport');
+const fs = require('fs');
 
 module.exports = function (router){
 
@@ -600,327 +602,87 @@ module.exports = function (router){
         })
     });
 
-    // get all users
-    router.get('/management', function (req, res) {
+    // Schedule Company
+    router.post('/scheduleCompany', function (req, res) {
 
-        User.find({}, function (err, users) {
-
-            if(err) throw err;
-            User.findOne({ username : req.decoded.username }, function (err,mainUser) {
-
-                if(err) throw err;
-                if(!mainUser) {
-                    res.json({
-                        success : false,
-                        message : 'User not found.'
-                    });
-                } else {
-                    if(!users) {
-                        res.json({
-                            success : false,
-                            message : 'Users not found.'
-                        });
-                    } else {
-                        res.json({
-                            success : true,
-                            users : users,
-                            permission : mainUser.permission
-                        })
-                    }
-                }
-            })
-        })
-    });
-
-    // delete a user form database
-    router.delete('/management/:username', function (req,res) {
-
-        var deletedUser = req.params.username;
-
-        User.findOne({ username : req.decoded.username }, function (err,mainUser) {
-
+        User.findOne({ college_id : req.decoded.college_id }).select('permission').exec(function (err, user) {
             if(err) throw err;
 
-            if(!mainUser) {
+            if(!user) {
                 res.json({
                     success : false,
                     message : 'User not found.'
                 });
             } else {
-                if(mainUser.permission !== 'admin') {
+                if(user.permission !== 'admin') {
                     res.json({
                         success : false,
-                        message : 'Insufficient permission'
-                    });
+                        message : 'You are not authorized.'
+                    })
                 } else {
-                    User.findOneAndRemove({ username : deletedUser }, function (err,user) {
-                        if(err) throw err;
+                    if(!req.body.title || !req.body.start || !req.body.end) {
+                        res.json({
+                            success : false,
+                            message : 'Please ensure you fill all the entries.'
+                        })
+                    } else {
+                        let schedule = new Schedule();
 
+                        schedule.title = req.body.title;
+                        schedule.start = req.body.start;
+                        schedule.end = req.body.end;
+
+                        schedule.save(function (err) {
+                            if(err) {
+                                res.json({
+                                    success : false,
+                                    message : 'Error while saving data to database.'
+                                });
+                            } else {
+                                res.json({
+                                    success : true,
+                                    message : 'Event successfully created.'
+                                })
+                            }
+                        })
+                    }
+                }
+            }
+        })
+    });
+
+    // get schedules of all companies
+    router.get('/getSchedule', function (req, res) {
+
+        Schedule.find({}).select('title start end').exec(function (err, schedule) {
+            if(err) {
+                res.json({
+                    success : false,
+                    message : 'Error while getting schedule data'
+                });
+            }
+
+            if(!schedule) {
+                res.json({
+                    success : false,
+                    message : 'No schedule found.'
+                });
+            } else {
+
+                fs.writeFile('./public/events/events.json', JSON.stringify(schedule), function (err) {
+                    if(err) {
+                        console.log(err);
+                    } else {
                         res.json({
                             success : true,
-                        });
-                    });
-                }
+                            schedule : schedule
+                        })
+                    }
+                });
             }
         })
     });
 
-    // route to edit user
-    router.get('/edit/:id', function (req,res) {
-        var editedUser = req.params.id;
-
-        User.findOne({ username : req.decoded.username }, function (err,mainUser) {
-            if(err) throw err;
-
-            if(!mainUser) {
-                res.json({
-                    success : false,
-                    message : 'User not found...'
-                });
-            } else {
-                if(mainUser.permission === 'admin') {
-
-                    User.findOne({ _id : editedUser }, function (err, user) {
-
-                        if(err) throw err;
-
-                        if(!user) {
-                            res.json({
-                                success : false,
-                                message : 'User not found.'
-                            });
-                        } else {
-                            res.json({
-                                success : true,
-                                user : user
-                            })
-                        }
-
-                    })
-
-                } else {
-                    res.json({
-                        success : false,
-                        message : 'Insufficient permission.'
-                    })
-                }
-            }
-        })
-    });
-
-    // update user details
-    router.put('/edit', function (req,res) {
-
-        var editedUser = req.body._id;
-
-        if(req.body.name) {
-            var newName = req.body.name;
-        }
-        if(req.body.username) {
-            var newUsername = req.body.username;
-        }
-        if(req.body.email) {
-            var newEmail = req.body.email;
-        }
-        if(req.body.permission) {
-            var newPermission = req.body.permission;
-        }
-
-        User.findOne({ username : req.decoded.username }, function (err,mainUser) {
-            if(err) throw err;
-
-            if(!mainUser) {
-                res.json({
-                    success : false,
-                    message : 'User not found'
-                });
-            } else {
-                if(mainUser.permission === 'admin') {
-
-                    // update name
-                    if(newName) {
-                        User.findOne({ _id : editedUser }, function (err,user) {
-                            if(err) throw err;
-
-                            if(!user) {
-                                res.json({
-                                    success : false,
-                                    message : 'User not found.'
-                                });
-                            } else {
-                                user.name = newName;
-                                user.save(function (err) {
-                                    if(err) {
-                                        if(err.errors.name) {
-                                            res.json({
-                                                success : false,
-                                                message : err.errors.name.message
-                                            })
-                                        } else {
-                                            res.json({
-                                                success : false,
-                                                message : 'Error! Please try again.'
-                                            })
-                                        }
-                                    }
-
-                                    else {
-
-                                        res.json({
-                                            success : true,
-                                            message : 'Name has been updated.'
-                                        });
-                                    }
-
-                                })
-                            }
-
-                        })
-                    }
-
-                    // update username
-                    if(newUsername) {
-                        User.findOne({ _id : editedUser }, function (err,user) {
-                            if(err) throw err;
-
-                            if(!user) {
-                                res.json({
-                                    success : false,
-                                    message : 'User not found.'
-                                });
-                            } else {
-                                user.username = newUsername;
-                                user.save(function (err) {
-                                    if(err) {
-                                        if(err.errors) {
-                                            res.json({
-                                                success : false,
-                                                message : err.errors.username.message
-                                            })
-                                        } else {
-                                            res.json({
-                                                success : false,
-                                                message : 'Username is not unique.'
-                                            })
-                                        }
-                                    }
-
-                                    res.json({
-                                        success : true,
-                                        message : 'Username has been updated.'
-                                    })
-                                })
-                            }
-
-                        })
-                    }
-
-                    // update email
-                    if(newEmail) {
-                        User.findOne({ _id : editedUser }, function (err,user) {
-                            if(err) throw err;
-
-                            if(!user) {
-                                res.json({
-                                    success : false,
-                                    message : 'User not found.'
-                                });
-                            } else {
-                                user.email = newEmail;
-                                user.save(function (err) {
-                                    if(err) {
-                                        if(err.errors) {
-                                            console.log(err.errors);
-                                            res.json({
-                                                success : false,
-                                                message : err.errors.email.message
-                                            })
-                                        } else {
-                                            res.json({
-                                                success : false,
-                                                message : 'User is already registered with us.'
-                                            })
-                                        }
-                                    } else {
-                                        res.json({
-                                            success : true,
-                                            message : 'Email has been updated.'
-                                        });
-                                    }
-
-                                })
-                            }
-
-                        })
-                    }
-
-                    // update permission
-                    if(newPermission) {
-                        User.findOne({ _id : editedUser }, function (err,user) {
-                            if(err) throw err;
-
-                            if(!user) {
-                                res.json({
-                                    success : false,
-                                    message : 'User not found.'
-                                });
-                            } else {
-                                console.log(user.permission);
-                                console.log(mainUser.permission);
-
-                                if(user.permission === 'user' && mainUser.permission === 'admin') {
-                                    user.permission = 'admin';
-
-                                    user.save(function (err) {
-                                        if(err) {
-                                            res.json({
-                                                success : false,
-                                                message : 'Can not upgrade to admin'
-                                            });
-                                        } else {
-                                            res.json({
-                                                success : true,
-                                                message : 'Successfully upgraded to admin.'
-                                            })
-                                        }
-                                    });
-
-                                } else if(user.permission === 'user' && mainUser.permission === 'user') {
-                                    res.json({
-                                        success : false,
-                                        message : 'Insufficient permission.'
-                                    })
-                                } else if(user.permission === 'admin' && mainUser.permission === 'admin') {
-                                    res.json({
-                                        success : false,
-                                        message : 'Role is already admin.'
-                                    })
-                                } else if (user.permission === 'admin' && mainUser.permission === 'user') {
-                                    res.json({
-                                        success : false,
-                                        message : 'Insufficient permission.'
-                                    })
-                                } else {
-                                    res.json({
-                                        success : true,
-                                        message : 'Please try again later.'
-                                    })
-                                }
-                            }
-
-                        });
-                    }
-
-
-                } else {
-                    res.json({
-                        success : false,
-                        message : 'Insufficient permission.'
-                    })
-                }
-            }
-        });
-    });
 
     return router;
 };
