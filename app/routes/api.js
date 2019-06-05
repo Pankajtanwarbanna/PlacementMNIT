@@ -3,6 +3,8 @@
 */
 var User = require('../models/user');
 var Schedule = require('../models/schedule');
+var Announcement = require('../models/announcement');
+var Company = require('../models/company');
 var jwt = require('jsonwebtoken');
 var secret = 'placementmnit';
 var nodemailer = require('nodemailer');
@@ -682,6 +684,158 @@ module.exports = function (router){
             }
         })
     });
+
+    // Post new announcement
+    router.post('/postAnnouncement', function (req, res) {
+
+        if(!req.decoded.college_id) {
+            res.json({
+                success : false,
+                message : 'Please login.'
+            })
+        } else {
+            var announcement  = new Announcement();
+
+            announcement.category = req.body.category;
+            announcement.announcement = req.body.announcement;
+            announcement.timestamp = new Date();
+
+            announcement.save(function (err) {
+                if(err) {
+                    res.json({
+                        success : false,
+                        message : 'Error while saving data to database.'
+                    });
+                } else {
+                    res.json({
+                        success : true,
+                        message : 'Announcement successfully updated.'
+                    });
+                }
+            })
+        }
+    });
+
+    // get all announcements
+    router.get('/getAnnouncements', function (req, res) {
+        if(!req.decoded.college_id) {
+            res.json({
+                success : false,
+                message : 'Please login.'
+            })
+        } else {
+            Announcement.find({ }, function (err, announcements) {
+                if(err) {
+                    res.json({
+                        success : false,
+                        message : 'Error while getting data.'
+                    })
+                }
+
+                if(!announcements) {
+                    res.json({
+                        success : false,
+                        message : 'Announcements not found.'
+                    })
+                } else {
+                    res.json({
+                        success : true,
+                        announcements : announcements
+                    })
+                }
+            })
+        }
+    });
+
+    // post new company to db
+    router.post('/postCompanyDetails', function (req, res) {
+
+        if(!req.decoded.college_id) {
+            res.json({
+                success : false,
+                message : 'Please login.'
+            });
+        } else {
+
+            var company = new Company();
+
+            company.company_name = req.body.company_name;
+            company.company_website_url = req.body.company_website_url;
+            company.about_company = req.body.about_company;
+
+            company.job_profile = req.body.job_profile;
+            company.posting_location = req.body.posting_location;
+            company.recruitment = req.body.recruitment;
+            company.duration = req.body.duration;
+            company.package = req.body.package;
+            company.other_facility = req.body.other_facility;
+
+            var i = 0;
+            for(i = 0; i < req.body.eligible_programs.length; i++) {
+                company.eligible_programs.push(req.body.eligible_programs[i])
+            }
+
+            for(i = 0; i < req.body.eligible_branches.length; i++) {
+                company.eligible_branches.push(req.body.eligible_branches[i])
+            }
+
+            company.min_cgpa = req.body.min_cgpa;
+            company.min_10_percent = req.body.min_10_percent;
+            company.min_12_percent = req.body.min_12_percent;
+            company.other_eligibility = req.body.other_eligibility;
+
+            company.deadline_date = req.body.deadline_date;
+
+            company.save(function (err) {
+                if(err) {
+                    console.log(err);
+                    res.json({
+                        success : false,
+                        message : 'Error while saving to database.'
+                    });
+                } else {
+                    res.json({
+                        success : true,
+                        message : 'Successfully new company added.'
+                    })
+                }
+            })
+
+        }
+    });
+
+    // get companies details from db
+    router.get('/getCompanyDetails', function (req, res) {
+
+        if(!req.decoded.college_id) {
+            res.json({
+                success : false,
+                message : 'Please login.'
+            });
+        } else {
+            // todo Add here validation according to branch, cgpa etc
+            Company.find({ }).select('company_name job_profile package deadline_date').exec(function (err, companies) {
+                if(err) {
+                    res.json({
+                        success : false,
+                        message : 'Error while getting data from database.'
+                    });
+                }
+
+                if(!companies) {
+                    res.json({
+                        success : false,
+                        message : 'Companies not found.'
+                    });
+                } else {
+                    res.json({
+                        success : true,
+                        companies : companies
+                    })
+                }
+            })
+        }
+    })
 
 
     return router;

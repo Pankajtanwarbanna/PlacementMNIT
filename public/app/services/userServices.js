@@ -81,5 +81,25 @@ angular.module('userServices',[])
         return $http.get('/api/getSchedule');
     };
 
+    // post announcement
+    userFactory.postAnnouncement = function (announcementData) {
+        return $http.post('/api/postAnnouncement', announcementData);
+    };
+
+    // get all announcements
+    userFactory.getAnnouncements = function () {
+        return $http.get('/api/getAnnouncements');
+    };
+
+    // post company to db
+    userFactory.postCompanyDetails = function (newCompanyData) {
+        return $http.post('/api/postCompanyDetails', newCompanyData);
+    };
+
+    // get companies details from db
+    userFactory.getCompanyDetails = function () {
+        return $http.get('/api/getCompanyDetails');
+    }
+
     return userFactory;
 });

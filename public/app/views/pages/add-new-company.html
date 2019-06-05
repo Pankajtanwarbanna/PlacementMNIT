@@ -1,0 +1,223 @@
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h4 class="text-themecolor">Add New Company</h4>
+    </div>
+
+
+    <div class="col-md-7 align-self-center text-right" ng-show="main.authorized">
+        <div class="d-flex justify-content-end align-items-center">
+            <button type="button" class="btn btn-primary d-none d-lg-block m-l-15" a="/add-new-company"><i class="ti-plus"></i> Add New Company</button>
+        </div>
+    </div>
+</div>
+
+<!--Add New Company Form -->
+<form ng-submit="addNewCompany.postCompanyDetails(newCompanyData);">
+
+    <div class="row">
+
+        <!--Company Details Form-->
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Company Details</h4>
+                    <h6 class="card-subtitle">Enter company details for placement session</h6>
+
+                    <div class="row p-t-20">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Company Name</label>
+                                <input type="text" class="form-control" placeholder="Enter name" ng-model="addNewCompany.newCompanyData.company_name">
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Company Website Link</label>
+                                <input type="text" class="form-control" placeholder="Enter URL" ng-model="addNewCompany.newCompanyData.company_website_url">
+                                <!--<small class="form-control-feedback"> This field has error. </small>-->
+                            </div>
+                        </div>
+                        <!--/span-->
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">About Company</label>
+                        <textarea type="text" class="form-control" rows="3" ng-model="addNewCompany.newCompanyData.about_company"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Job Profile Details Form-->
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Job Profile Details</h4>
+                    <h6 class="card-subtitle">Enter job details for placement session</h6>
+
+                    <div class="row p-t-20">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Job Profile</label>
+                                <input type="text" class="form-control" placeholder="Enter job profile" ng-model="addNewCompany.newCompanyData.job_profile">
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Location of Posting</label>
+                                <input type="text" class="form-control" placeholder="Enter posting location" ng-model="addNewCompany.newCompanyData.posting_location">
+                                <!--<small class="form-control-feedback"> This field has error. </small>-->
+                            </div>
+                        </div>
+                        <!--/span-->
+                    </div>
+
+                    <div class="row p-t-20">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Recruitment</label>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="recruitmentRadio1" class="custom-control-input" value="Internship" ng-model="addNewCompany.newCompanyData.recruitment">
+                                            <label class="custom-control-label" for="recruitmentRadio1">Internship</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="recruitmentRadio2" class="custom-control-input" value="Placement" ng-model="addNewCompany.newCompanyData.recruitment">
+                                            <label class="custom-control-label" for="recruitmentRadio2">Placement</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Duration</label>
+                                <input type="text" class="form-control" placeholder="Enter duration" ng-model="addNewCompany.newCompanyData.duration">
+                                <!--<small class="form-control-feedback"> This field has error. </small>-->
+                            </div>
+                        </div>
+                        <!--/span-->
+                    </div>
+
+                    <div class="row p-t-20">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Package/Stipend</label>
+                                <input type="text" class="form-control" placeholder="Enter package" ng-model="addNewCompany.newCompanyData.package">
+                                <!--<small class="form-control-feedback"> This field has error. </small>-->
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Extra Facility</label>
+                                <input type="text" class="form-control" placeholder="Enter other facility" ng-model="addNewCompany.newCompanyData.other_facility">
+                                <!--<small class="form-control-feedback"> This field has error. </small>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Student Eligibility Details Form-->
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Student Eligibility Details</h4>
+                    <h6 class="card-subtitle">Enter eligibility details for placement session</h6>
+
+                    <div class="row p-t-20">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Eligible Program</label>
+                                <select class="selectpicker" multiple data-style="form-control btn-success" ng-model="addNewCompany.newCompanyData.eligible_programs">
+                                    <option value="B.Tech.">B.Tech.</option>
+                                    <option value="M.Tech.">M.Tech.</option>
+                                    <option value="Ph.D.">Ph.D.</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Eligible Branches</label>
+                                <select class="selectpicker" multiple data-style="form-control btn-success" ng-model="addNewCompany.newCompanyData.eligible_branches">
+                                    <option value="CS">Computer Science</option>
+                                    <option value="MECH">Mechanical</option>
+                                    <option value="ECE">Electronics</option>
+                                    <option value="EE">Electrical</option>
+                                    <option value="CE">Civil</option>
+                                    <option value="CHE">Chemical</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!--/span-->
+                    </div>
+                    <div class="row p-t-20">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Minimum CGPA</label>
+                                <input type="text" class="form-control" placeholder="Enter minimum CGPA" ng-model="addNewCompany.newCompanyData.min_cgpa">
+                                <!--<small class="form-control-feedback"> This field has error. </small>-->
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Min. Marks in 12th</label>
+                                <input type="text" class="form-control" placeholder="Enter percentage" ng-model="addNewCompany.newCompanyData.min_10_percent">
+                                <!--<small class="form-control-feedback"> This field has error. </small>-->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row p-t-20">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Min. Marks in 10th</label>
+                                <input type="text" class="form-control" placeholder="Enter percentage" ng-model="addNewCompany.newCompanyData.min_12_percent">
+                                <!--<small class="form-control-feedback"> This field has error. </small>-->
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Other Eligibility</label>
+                                <input type="text" class="form-control" placeholder="Enter other eligibility" ng-model="addNewCompany.newCompanyData.other_eligibility">
+                                <!--<small class="form-control-feedback"> This field has error. </small>-->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!--Registration Details Form-->
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Registration Details</h4>
+                    <h6 class="card-subtitle">Enter registration details for placement session</h6>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="m-t-20">Last Date to Apply</label>
+                            <input type="date" class="form-control" placeholder="Enter date" ng-model="addNewCompany.newCompanyData.deadline_date">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Submit Buttom-->
+    <div style="text-align: center">
+        <button type="submit" class="btn btn-primary btn-rounded"><i class="ti-check-box"></i> &nbsp; Submit Details</button>
+    </div>
+</form>

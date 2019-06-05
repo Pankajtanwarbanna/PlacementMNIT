@@ -16,7 +16,7 @@ app.use(express.static(__dirname + '/public'));
 // diff. front end and backend routes
 app.use('/api', apiRoutes);
 
-if(process.env.DEV_MODE === 'PROD') {
+if(process.env.DEV_MODE === "PROD") {
     // Production Mode
     URI = 'mongodb://admin:placement123@ds145146.mlab.com:45146/placementmnit';
 } else {
@@ -24,7 +24,7 @@ if(process.env.DEV_MODE === 'PROD') {
     URI = 'mongodb://127.0.0.1/placementmnit';
 }
 // connecting to mongo database
-mongoose.connect('mongodb://admin:placement123@ds145146.mlab.com:45146/placementmnit' , { useNewUrlParser: true }, function (err) {
+mongoose.connect('mongodb://admin:placement123@ds145146.mlab.com:45146/placementmnit', { useNewUrlParser: true }, function (err) {
     if(err) {
         console.log(err);
     } else {

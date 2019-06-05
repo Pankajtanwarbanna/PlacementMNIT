@@ -7,3 +7,9 @@
     margin-top: 15px;
     margin-bottom: 15px;
 }
+.card {
+    border-radius: 15px;
+}
+.card-img {
+    border-radius: 15px;
+}

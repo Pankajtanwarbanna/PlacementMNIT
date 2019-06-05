@@ -54,8 +54,29 @@ angular.module('userCtrl',['userServices'])
 })
 
 // Company Registration Controller
-.controller('companyregistrationCtrl', function () {
-    console.log('Company registration ctrl testing');
+.controller('companyRegistrationCtrl', function (user) {
+
+    var app = this;
+
+    user.getCompanyDetails().then(function (data) {
+        console.log(data);
+        if(data.data.success) {
+            app.companies = data.data.companies;
+        }
+    })
+})
+
+// Add new company controller
+.controller('addNewCompanyCtrl', function (user) {
+
+    var app = this;
+
+    app.postCompanyDetails = function (newCompanyData) {
+        console.log(app.newCompanyData);
+        user.postCompanyDetails(app.newCompanyData).then(function (data) {
+            console.log(data);
+        });
+    }
 })
 
 // Company Schedule Controller
@@ -89,4 +110,41 @@ angular.module('userCtrl',['userServices'])
         })
     }
 
+})
+
+.controller('announcementsCtrl', function (user) {
+
+    var app = this;
+
+    app.number = false;
+
+    function updateAnnouncements () {
+        user.getAnnouncements().then(function (data) {
+            console.log(data);
+            if(data.data.success) {
+                app.announcements = data.data.announcements;
+                if(data.data.announcements.length > 0) {
+                    app.number = true;
+                }
+            }
+        });
+    }
+
+    updateAnnouncements();
+
+    app.successMsg = false;
+    app.errorMsg = false;
+
+    app.postAnnouncement = function (announcementData) {
+        console.log(announcementData);
+        user.postAnnouncement(announcementData).then(function (data) {
+            console.log(data);
+            if(data.data.success) {
+                app.successMsg = data.data.message;
+                updateAnnouncements();
+            } else {
+                app.errorMsg = data.data.message;
+            }
+        })
+    }
 });

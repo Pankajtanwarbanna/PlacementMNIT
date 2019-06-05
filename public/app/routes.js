@@ -34,8 +34,15 @@ var app = angular.module('userRoutes', ['ngRoute'])
             .when('/company-registration', {
                 templateUrl : '/app/views/pages/company-registration.html',
                 authenticated : true,
-                controller : 'companyregistrationCtrl',
+                controller : 'companyRegistrationCtrl',
                 controllerAs : 'companyRegistration'
+            })
+
+            .when('/add-new-company', {
+                templateUrl : '/app/views/pages/add-new-company.html',
+                authenticated : true,
+                controller : 'addNewCompanyCtrl',
+                controllerAs : 'addNewCompany'
             })
 
             .when('/company-schedule', {
@@ -47,7 +54,9 @@ var app = angular.module('userRoutes', ['ngRoute'])
 
             .when('/announcements', {
                 templateUrl : '/app/views/pages/announcements.html',
-                authenticated : true
+                authenticated : true,
+                controller : 'announcementsCtrl',
+                controllerAs : 'announcements'
             })
 
             .when('/result', {
