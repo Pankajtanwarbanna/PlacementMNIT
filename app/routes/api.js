@@ -805,7 +805,7 @@ module.exports = function (router){
     });
 
     // get companies details from db
-    router.get('/getCompanyDetails', function (req, res) {
+    router.get('/getAllCompanies', function (req, res) {
 
         if(!req.decoded.college_id) {
             res.json({
@@ -834,6 +834,40 @@ module.exports = function (router){
                     })
                 }
             })
+        }
+    });
+
+    // get company details
+    router.get('/getCompanyDetails/:company_id', function (req, res) {
+
+        if(!req.decoded.college_id) {
+            res.json({
+                success : false,
+                message : 'Please login.'
+            });
+        } else {
+            Company.findOne({ _id : req.params.company_id}, function (err, companyDetail) {
+                if(err) {
+                    console.log(err);
+                    res.json({
+                        success : false,
+                        message : 'Error while getting data from database.'
+                    });
+                }
+
+                if(!companyDetail) {
+                    res.json({
+                        success : false,
+                        message : 'Company not found.'
+                    });
+                } else {
+                    res.json({
+                        success : true,
+                        companyDetail : companyDetail
+                    })
+                }
+            })
+
         }
     })
 

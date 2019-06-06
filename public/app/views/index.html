@@ -30,6 +30,9 @@
     <script src="app/services/userServices.js"></script>
     <script src="app/services/authServices.js"></script>
 
+    <!--Angular Filters-->
+    <script src="app/filters/eligible-programs-filter.js"></script>
+
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -370,7 +373,15 @@
                 </div>
 
                 <div ng-show="main.schedule">
-                    <div id='calendar'></div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div id='calendar'></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- ============================================================== -->

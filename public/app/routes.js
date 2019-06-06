@@ -45,6 +45,13 @@ var app = angular.module('userRoutes', ['ngRoute'])
                 controllerAs : 'addNewCompany'
             })
 
+            .when('/company/:company_id', {
+                templateUrl : '/app/views/pages/company.html',
+                authenticated : true,
+                controller : 'companyCtrl',
+                controllerAs : 'company'
+            })
+
             .when('/company-schedule', {
                 templateUrl : '/app/views/pages/company-schedule.html',
                 authenticated : true,
@@ -73,13 +80,6 @@ var app = angular.module('userRoutes', ['ngRoute'])
                 templateUrl : '/app/views/student/notifications.html',
                 authenticated : true
             })
-
-            .when('/company', {
-                templateUrl : '/app/views/pages/company.html',
-                authenticated : true
-            })
-
-
 
             .when('/help', {
                 templateUrl : '/app/views/pages/help.html',
@@ -186,4 +186,15 @@ app.run(['$rootScope','auth','$location', 'user', function ($rootScope,auth,$loc
 */
     })
 }]);
+
+// AngularJs Filters
+app.filter('eligibleFilter', function () {
+    return function (text) {
+        if(typeof text !== "undefined") {
+            return text.toString();
+        } else {
+            return '';
+        }
+    }
+})
 

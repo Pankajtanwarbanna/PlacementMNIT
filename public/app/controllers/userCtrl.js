@@ -58,7 +58,7 @@ angular.module('userCtrl',['userServices'])
 
     var app = this;
 
-    user.getCompanyDetails().then(function (data) {
+    user.getAllCompanies().then(function (data) {
         console.log(data);
         if(data.data.success) {
             app.companies = data.data.companies;
@@ -77,6 +77,20 @@ angular.module('userCtrl',['userServices'])
             console.log(data);
         });
     }
+})
+
+// company controller
+.controller('companyCtrl', function (user, $routeParams) {
+
+    var app = this;
+
+    user.getCompanyDetails($routeParams.company_id).then(function (data) {
+        console.log(data);
+        if(data.data.success) {
+            app.companyDetail = data.data.companyDetail;
+            console.log(app.companyDetail)
+        }
+    })
 })
 
 // Company Schedule Controller

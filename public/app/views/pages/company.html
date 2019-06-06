@@ -1,6 +1,6 @@
 <div class="row page-titles">
     <div class="col-md-5 align-self-center">
-        <h4 class="text-themecolor">Company Registration</h4>
+        <h4 class="text-themecolor">{{ company.companyDetail.company_name}}'s Company Details</h4>
     </div>
 </div>
 
@@ -9,8 +9,8 @@
         <div class="card">
             <div class="card-body">
 
-                <h4 class="card-title text-center">Flipkart</h4>
-                <h6 class="card-subtitle text-center">Software Engineer</h6>
+                <h4 class="card-title text-center"> {{ company.companyDetail.company_name}}</h4>
+                <h6 class="card-subtitle text-center">{{ company.companyDetail.job_profile}}</h6>
                 <div class="table-responsive">
                     <table class="table stylish-table">
                         <tbody>
@@ -19,65 +19,7 @@
                             <td style="vertical-align: inherit;">
                                 <h5 style="font-weight: 500;">Company Name</h5>                           </td>
                             <td style="vertical-align: inherit;">
-                                <h5>Flipkart</h5>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><span class="round bg-success"><i class="ti-id-badge"></i></span></td>
-                            <td style="vertical-align: inherit;">
-                                <h5 style="font-weight: 500;">Job Profile</h5>
-                            </td>
-                            <td style="vertical-align: inherit;">
-                                <h5>Software Engineer</h5>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><span class="round bg-dark"><i class="icon-people"></i></span></td>
-                            <td style="vertical-align: inherit;">
-                                <h5 style="font-weight: 500;">Eligible Branch</h5>
-                            </td>
-                            <td style="vertical-align: inherit;">
-                                <h5>Computer Science</h5>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td><span class="round bg-primary"><i class="icon-graduation"></i></span></td>
-                            <td style="vertical-align: inherit;">
-                                <h5 style="font-weight: 500;">Minimum CGPA </h5>
-                            </td>
-                            <td style="vertical-align: inherit;">
-                                <h5>7 CGPA</h5>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td><span class="round bg-danger"><i class="icon-tag"></i></span></td>
-                            <td style="vertical-align: inherit;">
-                                <h5 style="font-weight: 500;">Other Eligibility </h5>
-                            </td>
-                            <td style="vertical-align: inherit;">
-                                <h5>None</h5>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td><span class="round bg-dark"><i class="ti-money"></i></span></td>
-                            <td style="vertical-align: inherit;">
-                                <h5 style="font-weight: 500;">Package </h5>
-                            </td>
-                            <td style="vertical-align: inherit;">
-                                <h5>₹ 20 Lakh</h5>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td><span class="round bg-over"><i class="ti-location-pin"></i></span></td>
-                            <td style="vertical-align: inherit;">
-                                <h5 style="font-weight: 500;">Location of Posting </h5>
-                            </td>
-                            <td style="vertical-align: inherit;">
-                                <h5>Bengaluru</h5>
+                                <h5>{{ company.companyDetail.company_name}}</h5>
                             </td>
                         </tr>
 
@@ -87,7 +29,164 @@
                                 <h5 style="font-weight: 500;">Company Website </h5>
                             </td>
                             <td style="vertical-align: inherit;">
-                                <h5>www.flipkart.com</h5>
+                                <h5>{{ company.companyDetail.company_website_url }}</h5>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><span class="round bg-cyan"><i class="ti-blackboard"></i></span></td>
+                            <td style="vertical-align: inherit;">
+                                <h5 style="font-weight: 500;">About Company</h5>
+                            </td>
+                            <td style="vertical-align: inherit;">
+                                <h5>{{ company.companyDetail.about_company }}</h5>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+
+                <h4 class="card-title text-center"> Job Details</h4>
+                <div class="table-responsive">
+                    <table class="table stylish-table">
+                        <tbody>
+                        <tr>
+                            <td><span class="round bg-success"><i class="ti-id-badge"></i></span></td>
+                            <td style="vertical-align: inherit;">
+                                <h5 style="font-weight: 500;">Job Profile</h5>
+                            </td>
+                            <td style="vertical-align: inherit;">
+                                <h5>{{ company.companyDetail.job_profile}}</h5>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><span class="round bg-primary"><i class="icon-graduation"></i></span></td>
+                            <td style="vertical-align: inherit;">
+                                <h5 style="font-weight: 500;">Recruitment </h5>
+                            </td>
+                            <td style="vertical-align: inherit;">
+                                <h5>{{ company.companyDetail.recruitment }} </h5>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><span class="round bg-danger"><i class="ti-time"></i></span></td>
+                            <td style="vertical-align: inherit;">
+                                <h5 style="font-weight: 500;">Duration </h5>
+                            </td>
+                            <td style="vertical-align: inherit;">
+                                <h5>{{ company.companyDetail.duration }} </h5>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><span class="round bg-info"><i class="ti-credit-card"></i></span></td>
+                            <td style="vertical-align: inherit;">
+                                <h5 style="font-weight: 500;">Package</h5>
+                            </td>
+                            <td style="vertical-align: inherit;">
+                                <h5> {{ company.companyDetail.package }}  </h5>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><span class="round bg-success"><i class="ti-gift"></i></span></td>
+                            <td style="vertical-align: inherit;">
+                                <h5 style="font-weight: 500;">Other Facilities</h5>
+                            </td>
+                            <td style="vertical-align: inherit;">
+                                <h5> {{ company.companyDetail.other_facility }}  </h5>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><span class="round bg-over"><i class="ti-location-pin"></i></span></td>
+                            <td style="vertical-align: inherit;">
+                                <h5 style="font-weight: 500;">Location of Posting </h5>
+                            </td>
+                            <td style="vertical-align: inherit;">
+                                <h5>{{ company.companyDetail.posting_location }}</h5>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+
+                <h4 class="card-title text-center"> Eligibility Information</h4>
+                <div class="table-responsive">
+                    <table class="table stylish-table">
+                        <tbody>
+                        <tr>
+                            <td><span class="round"><i class="icon-graduation"></i></span></td>
+                            <td style="vertical-align: inherit;">
+                                <h5 style="font-weight: 500;">Eligible Programs</h5>                           </td>
+                            <td style="vertical-align: inherit;">
+                                <h5> {{ company.companyDetail.eligible_programs | eligibleFilter}}</h5>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><span class="round"><i class="icon-graduation"></i></span></td>
+                            <td style="vertical-align: inherit;">
+                                <h5 style="font-weight: 500;">Eligible Branches</h5>                           </td>
+                            <td style="vertical-align: inherit;">
+                                <h5> {{ company.companyDetail.eligible_branches | eligibleFilter }}</h5>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><span class="round bg-success"><i class="ti-medall"></i></span></td>
+                            <td style="vertical-align: inherit;">
+                                <h5 style="font-weight: 500;">Minimum CGPA </h5>
+                            </td>
+                            <td style="vertical-align: inherit;">
+                                <h5>{{ company.companyDetail.min_cgpa  }} CGPA</h5>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><span class="round bg-primary"><i class="ti-cup"></i></span></td>
+                            <td style="vertical-align: inherit;">
+                                <h5 style="font-weight: 500;">Minimum Marks in 10th </h5>
+                            </td>
+                            <td style="vertical-align: inherit;">
+                                <h5>{{ company.companyDetail.min_10_percent }} %</h5>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><span class="round bg-primary"><i class="ti-cup"></i></span></td>
+                            <td style="vertical-align: inherit;">
+                                <h5 style="font-weight: 500;">Minimum Marks in 12th </h5>
+                            </td>
+                            <td style="vertical-align: inherit;">
+                                <h5>{{ company.companyDetail.min_12_percent }} %</h5>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><span class="round bg-danger"><i class="icon-tag"></i></span></td>
+                            <td style="vertical-align: inherit;">
+                                <h5 style="font-weight: 500;">Other Eligibility </h5>
+                            </td>
+                            <td style="vertical-align: inherit;">
+                                <h5>{{ company.companyDetail.other_eligibility}}</h5>
                             </td>
                         </tr>
 
@@ -101,23 +200,38 @@
                             </td>
                         </tr>
 
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+
+                <h4 class="card-title text-center"> Deadline</h4>
+                <div class="table-responsive">
+                    <table class="table stylish-table">
+                        <tbody>
                         <tr>
-                            <td><span class="round bg-danger"><i class="icon-calender"></i></span></td>
+                            <td><span class="round"><i class="ti-calendar"></i></span></td>
                             <td style="vertical-align: inherit;">
-                                <h5 style="font-weight: 500;">Last Date to Apply</h5>
-                            </td>
+                                <h5 style="font-weight: 500;">Last Date to Apply</h5>                           </td>
                             <td style="vertical-align: inherit;">
-                                <h5>5 April 2019</h5>
+                                <h5>{{ company.companyDetail.deadline_date | date : 'dd MMMM yyyy'}} </h5>
                             </td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-
-                <div class="text-center">
-                    <button type="button" class="btn btn-info btn-rounded">One Click Apply</button>
-                </div>
             </div>
         </div>
     </div>
+</div>
+
+
+<div style="text-align: center">
+    <button type="button" class="btn btn-success btn-rounded"><i class="ti-check-box"></i> &nbsp; One Click Apply</button>
 </div>
