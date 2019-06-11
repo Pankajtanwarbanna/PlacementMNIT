@@ -232,6 +232,6 @@
 </div>
 
 
-<div style="text-align: center">
-    <button type="button" class="btn btn-success btn-rounded"><i class="ti-check-box"></i> &nbsp; One Click Apply</button>
+<div style="text-align: center; margin-bottom: 20px;">
+    <button ng-disabled="company.applyStatus" type="button" id="oneClickApplyButton" class="btn btn-success btn-rounded" ng-click="company.oneClickApply();"><i class="ti-check-box" id="oneClickApplyIcon"></i> &nbsp; One Click Apply</button>
 </div>

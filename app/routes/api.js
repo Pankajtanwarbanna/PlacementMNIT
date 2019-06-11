@@ -5,6 +5,7 @@ var User = require('../models/user');
 var Schedule = require('../models/schedule');
 var Announcement = require('../models/announcement');
 var Company = require('../models/company');
+var Registration = require('../models/registration');
 var jwt = require('jsonwebtoken');
 var secret = 'placementmnit';
 var nodemailer = require('nodemailer');
@@ -869,7 +870,149 @@ module.exports = function (router){
             })
 
         }
-    })
+    });
+
+    // get candidate apply status in company
+    router.get('/getCandidateApplyStatus/:company_id', function (req, res) {
+        if(!req.decoded.college_id) {
+            res.json({
+                success : false,
+                message : 'Please login.'
+            });
+        } else {
+            Registration.findOne({ company_id : req.params.company_id}, function (err, company) {
+                if(err) {
+                    console.log(err);
+                    res.json({
+                        success : false,
+                        message : 'Database error.'
+                    });
+                }
+                // No candidate registered till now
+                if(!company) {
+                    res.json({
+                        success : false,
+                        message : 'Not applied.'
+                    });
+                } else {
+                    console.log(company.candidates);
+
+                    if(company.candidates.find(candidate => candidate.college_id === req.decoded.college_id)) {
+                        res.json({
+                            success : true,
+                            message : 'Applied.'
+                        });
+                    } else {
+                        res.json({
+                            success : false,
+                            message : 'Not applied.'
+                        })
+                    }
+                }
+            })
+        }
+    });
+
+    // register in a company
+    router.post('/oneClickApply/:company_id', function (req, res) {
+        if(!req.decoded.college_id) {
+            res.json({
+                success : false,
+                message : 'Please login.'
+            })
+        } else {
+            Registration.findOne({ company_id : req.params.company_id }, function (err, company) {
+                if(err) {
+                    console.log(err);
+                    res.json({
+                        success : false,
+                        message : 'Database error.'
+                    });
+                }
+
+                if(!company) {
+                    // Company not found
+                    var registration = new Registration();
+
+                    registration.company_id = req.params.company_id;
+                    registration.candidates.push({ college_id : req.decoded.college_id, timestamp : new Date()});
+
+                    registration.save(function (err) {
+                        if(err) {
+                            res.json({
+                                success : false,
+                                message : 'Database error. Please try again later.'
+                            })
+                        } else {
+                            res.json({
+                                success : true,
+                                message : 'Successfully applied.'
+                            })
+                        }
+                    })
+                } else {
+                    company.candidates.push({college_id : req.decoded.college_id, timestamp : new Date()});
+
+                    company.save(function (err) {
+                        if(err) {
+                            res.json({
+                                success : false,
+                                message : 'Database error.'
+                            });
+                        } else {
+                            res.json({
+                                success : true,
+                                message : 'Successfully applied.'
+                            })
+                        }
+                    })
+                }
+            })
+        }
+    });
+
+    // get user timeline
+    router.get('/getTimeline', function (req, res) {
+        if(!req.decoded.college_id) {
+            res.json({
+                success : false,
+                message : 'Please login.'
+            });
+        } else {
+            Registration.find({  }, function (err, candidatesData) {
+                if(err) {
+                    console.log(err);
+                    res.json({
+                        success : false,
+                        message : 'Database error.'
+                    })
+                }
+
+                if(!candidatesData) {
+                    res.json({
+                        success : false,
+                        message : 'Registrations not found.'
+                    });
+                } else {
+
+                    //console.log(candidatesData);
+                    var candidateTimeline = [];
+
+                    for(var i=0; i < candidatesData.length; i++) {
+                        if(candidatesData[i].candidates.find(obj => obj.college_id === req.decoded.college_id)) {
+                            candidateTimeline.push(candidatesData[i].candidates.find(obj => obj.college_id === req.decoded.college_id))
+                        }
+                    }
+
+                    res.json({
+                        success : true,
+                        message : 'Registrations found.',
+                        candidateTimeline : candidateTimeline
+                    })
+                }
+            })
+        }
+    });
 
 
     return router;

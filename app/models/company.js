@@ -57,6 +57,7 @@ var companySchema = new mongoose.Schema({
         type : Date,
         required : true
     }
+    // todo add timestamp
 });
 
 // Mongoose title case plugin

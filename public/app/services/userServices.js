@@ -106,5 +106,20 @@ angular.module('userServices',[])
         return $http.get('/api/getCompanyDetails/' + company_id);
     };
 
+    // get candidate apply status in company
+    userFactory.getCandidateApplyStatus = function(company_id) {
+        return $http.get('/api/getCandidateApplyStatus/' + company_id);
+    };
+    
+    // register in a company
+    userFactory.oneClickApply = function (company_id) {
+        return $http.post('/api/oneClickApply/' + company_id);
+    };
+
+    // get user timeline
+    userFactory.getTimeline = function () {
+        return $http.get('/api/getTimeline');
+    };
+
     return userFactory;
 });

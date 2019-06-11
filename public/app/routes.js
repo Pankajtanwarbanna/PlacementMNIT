@@ -73,7 +73,9 @@ var app = angular.module('userRoutes', ['ngRoute'])
 
             .when('/timeline', {
                 templateUrl : '/app/views/student/timeline.html',
-                authenticated : true
+                authenticated : true,
+                controller : 'timelineCtrl',
+                controllerAs : 'timeline'
             })
 
             .when('/notifications', {

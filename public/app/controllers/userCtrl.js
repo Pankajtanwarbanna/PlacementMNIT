@@ -48,11 +48,6 @@ angular.module('userCtrl',['userServices'])
     });
 })
 
-// User Profile Controller
-.controller('profileCtrl', function (user) {
-    console.log('profile page testing');
-})
-
 // Company Registration Controller
 .controller('companyRegistrationCtrl', function (user) {
 
@@ -84,13 +79,41 @@ angular.module('userCtrl',['userServices'])
 
     var app = this;
 
+    app.applyStatus = false;
+
     user.getCompanyDetails($routeParams.company_id).then(function (data) {
-        console.log(data);
+        //console.log(data);
         if(data.data.success) {
             app.companyDetail = data.data.companyDetail;
-            console.log(app.companyDetail)
+            //console.log(app.companyDetail)
         }
-    })
+    });
+
+    function getCandidateApplyStatusFunction() {
+        user.getCandidateApplyStatus($routeParams.company_id).then(function (data) {
+            console.log(data);
+            if(data.data.success) {
+                app.applyStatus = true;
+                document.getElementById('oneClickApplyButton').className = 'btn btn-danger btn-rounded';
+                document.getElementById('oneClickApplyButton').innerHTML = 'Applied successfully!'
+            } else {
+                app.applyStatus = false;
+                document.getElementById('oneClickApplyButton').className = 'btn btn-success btn-rounded';
+                document.getElementById('oneClickApplyButton').value = 'One Click Apply'
+            }
+        });
+    }
+
+    getCandidateApplyStatusFunction();
+
+    app.oneClickApply = function () {
+        user.oneClickApply($routeParams.company_id).then(function (data) {
+            //console.log(data);
+            if(data.data.success) {
+                getCandidateApplyStatusFunction();
+            }
+        })
+    }
 })
 
 // Company Schedule Controller
@@ -161,4 +184,22 @@ angular.module('userCtrl',['userServices'])
             }
         })
     }
+})
+
+
+// User Profile Controller
+.controller('profileCtrl', function (user) {
+    console.log('profile page testing');
+})
+
+// User timeline controller
+.controller('timelineCtrl', function (user) {
+    var app = this;
+
+    user.getTimeline().then(function (data) {
+        console.log(data);
+        if(data.data.success) {
+            app.timelineData = data.data.candidateTimeline;
+        }
+    })
 });
