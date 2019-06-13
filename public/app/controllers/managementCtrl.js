@@ -227,5 +227,42 @@ angular.module('managementController', ['userServices'])
             }
         });
     }
-});
+})
+
+.controller('editCompanyCtrl', function ($routeParams, user) {
+
+    var app = this;
+
+    user.getCompanyDetails($routeParams.company_id).then(function (data) {
+        console.log(data);
+        if(data.data.success) {
+            app.companyDetail = data.data.companyDetail;
+            //console.log(app.companyDetail)
+        }
+    });
+})
+
+.controller('registeredStudentsCtrl', function ($routeParams, user) {
+    var app = this;
+
+    app.registeredStudentsData = [];
+
+    user.getRegisteredStudents($routeParams.company_id).then(function (data) {
+        //console.log(data);
+        if(data.data.success) {
+            app.studentsData = data.data.candidates;
+            //console.log(app.studentsData);
+            for(var i=0;i < app.studentsData.length;i++) {
+                user.getStudentDetailsByCollegeID(app.studentsData[i].college_id).then(function (data) {
+                    console.log(data);
+                    if(data.data.success) {
+                        app.registeredStudentsData.push(data.data.user);
+                    }
+                })
+            }
+
+            console.log(app.registeredStudentsData);
+        }
+    })
+})
 

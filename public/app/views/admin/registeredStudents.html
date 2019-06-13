@@ -1,0 +1,48 @@
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h4 class="text-themecolor">Registered Students</h4>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title text-center"> Registered Students list</h4>
+                <h6 class="card-subtitle"></h6>
+                <div class="table-responsive">
+                    <table id="demo-foo-addrow" class="table table-bordered m-t-30 table-hover contact-list" data-paging="true" data-paging-size="7">
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Name</th>
+                            <th>College ID</th>
+                            <th>Phone</th>
+                            <th>Branch</th>
+                            <th>Year</th>
+                            <th>CGPA</th>
+                            <!--<th>Applying date</th>
+                            <th>Status</th>-->
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="student in registeredStudents.registeredStudentsData">
+                            <td>{{ $index + 1}}</td>
+                            <td>
+                                <a href="#  "><img src="../assets/images/users/pankaj-tanwar.jpg" alt="user" width="40" class="rounded-circle" /> {{ student.name }}</a>
+                            </td>
+                            <td><a>{{ student.college_id }} </a></td>
+                            <td>+91 {{ student.contact_no }}</td>
+                            <td>{{ student.branch }}</td>
+                            <td>{{ student.year }}</td>
+                            <td>{{ student.cgpa }}</td>
+                            <!--<td>12 June</td>
+                            <td><span class="label label-success">Shortlisted</span> </td>-->
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

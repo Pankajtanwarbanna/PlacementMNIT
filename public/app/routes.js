@@ -78,6 +78,22 @@ var app = angular.module('userRoutes', ['ngRoute'])
                 controllerAs : 'timeline'
             })
 
+            // Management routes
+            .when('/editCompany/:company_id', {
+                templateUrl : '/app/views/admin/editCompany.html',
+                authenticated : true,
+                controller : 'editCompanyCtrl',
+                controllerAs : 'editCompany'
+            })
+
+            .when('/registeredStudents/:company_id', {
+                templateUrl : '/app/views/admin/registeredStudents.html',
+                authenticated : true,
+                controller : 'registeredStudentsCtrl',
+                controllerAs : 'registeredStudents'
+            })
+
+
             .when('/notifications', {
                 templateUrl : '/app/views/student/notifications.html',
                 authenticated : true
@@ -198,5 +214,6 @@ app.filter('eligibleFilter', function () {
             return '';
         }
     }
-})
+});
+
 

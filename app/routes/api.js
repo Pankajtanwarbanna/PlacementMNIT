@@ -5,7 +5,6 @@ var User = require('../models/user');
 var Schedule = require('../models/schedule');
 var Announcement = require('../models/announcement');
 var Company = require('../models/company');
-var Registration = require('../models/registration');
 var jwt = require('jsonwebtoken');
 var secret = 'placementmnit';
 var nodemailer = require('nodemailer');
@@ -1012,6 +1011,161 @@ module.exports = function (router){
             })
         }
     });
+
+    // delete company
+    router.delete('/deleteCompany/:company_id', function (req, res) {
+        if(!req.decoded.college_id) {
+            res.json({
+                success : false,
+                message : 'Please login.'
+            });
+        } else {
+            User.findOne({ college_id : req.decoded.college_id}, function (err, user) {
+                if(err) {
+                    res.json({
+                        success : false,
+                        message : 'Error from the database side.'
+                    });
+                }
+
+                if(!user) {
+                    res.json({
+                        success : false,
+                        message : 'User not found.'
+                    })
+                } else {
+                    if(user.permission === 'admin') {
+                        Company.findOneAndRemove({ _id : req.params.company_id}, function (err,data) {
+                            if(err) {
+                                res.json({
+                                    success : false,
+                                    message : 'Error while deleting company.'
+                                })
+                            } else {
+                                res.json({
+                                    success : true,
+                                    message : 'Successfully deleted company.'
+                                })
+                            }
+                        })
+                    } else {
+                        res.json({
+                            success :  false,
+                            message : 'User not authorized.'
+                        })
+                    }
+                }
+            })
+        }
+    });
+
+    // router to get registered candidate students
+    router.get('/getRegisteredStudents/:company_id', function (req, res) {
+        if(!req.decoded.college_id) {
+            res.json({
+                success : false,
+                message : 'Please login.'
+            });
+        } else {
+            User.findOne({ college_id : req.decoded.college_id}, function (err, user) {
+                if(err) {
+                    res.json({
+                        success : false,
+                        message : 'Error from the database side.'
+                    });
+                }
+
+                if(!user) {
+                    res.json({
+                        success : false,
+                        message : 'User not found.'
+                    })
+                } else {
+                    if(user.permission === 'admin') {
+                        Company.findOne({ _id : req.params.company_id }, function (err, company) {
+                            if(err) {
+                                res.json({
+                                    success : false,
+                                    message : 'Error from database.'
+                                })
+                            }
+
+                            if(!company) {
+                                res.json({
+                                    success : false,
+                                    message : 'Company not found.'
+                                })
+                            } else {
+                                res.json({
+                                    success : true,
+                                    candidates : company.candidates
+                                })
+                            }
+                        })
+                    } else {
+                        res.json({
+                            success :  false,
+                            message : 'User not authorized.'
+                        })
+                    }
+                }
+            })
+        }
+    });
+
+    // get students details by college_id
+    router.get('/getStudentDetailsByCollegeID/:college_id', function (req, res) {
+        if(!req.decoded.college_id) {
+            res.json({
+                success : false,
+                message : 'Please login.'
+            });
+        } else {
+            User.findOne({ college_id : req.decoded.college_id}, function (err, user) {
+                if(err) {
+                    res.json({
+                        success : false,
+                        message : 'Error from the database side.'
+                    });
+                }
+
+                if(!user) {
+                    res.json({
+                        success : false,
+                        message : 'User not found.'
+                    })
+                } else {
+                    if(user.permission === 'admin') {
+                        User.findOne({ college_id : req.params.college_id}, function (err, user) {
+                            if(err) {
+                                res.json({
+                                    success : false,
+                                    message : 'Error from database.'
+                                });
+                            }
+
+                            if(!user) {
+                                res.json({
+                                    success : true,
+                                    message : 'No user found.'
+                                })
+                            } else {
+                                res.json({
+                                    success : true,
+                                    user : user
+                                })
+                            }
+                        })
+                    } else {
+                        res.json({
+                            success :  false,
+                            message : 'User not authorized.'
+                        })
+                    }
+                }
+            })
+        }
+    })
 
 
     return router;

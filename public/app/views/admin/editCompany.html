@@ -1,0 +1,230 @@
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h4 class="text-themecolor">Under Construction Page</h4>
+    </div>
+</div>
+
+<!--Company Added Div-->
+<div class="row" ng-show="editCompany.successMsg">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-md-center">
+                    <i class="icon-check large-success-icon"></i>
+                    <h3 class="success-text">Details Successfully updated.</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--update Company details Form -->
+<form ng-submit="editCompany.updateCompanyDetails(updatedCompanyData);" ng-show="!editCompany.successMsg">
+
+    <div class="row">
+
+        <!--Company Details Form-->
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Company Details</h4>
+                    <h6 class="card-subtitle">Enter company details for placement session</h6>
+
+                    <div class="row p-t-20">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Company Name</label>
+                                <input type="text" class="form-control" placeholder="Enter name" ng-value="editCompany.companyDetail.company_name" ng-model="editCompany.updatedCompanyData.company_name">
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Company Website Link</label>
+                                <input type="text" class="form-control" placeholder="Enter URL" ng-value="editCompany.companyDetail.company_website_url" ng-model="editCompany.updatedCompanyData.company_website_url">
+                                <!--<small class="form-control-feedback"> This field has error. </small>-->
+                            </div>
+                        </div>
+                        <!--/span-->
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">About Company</label>
+                        <textarea type="text" class="form-control" rows="3" ng-value="editCompany.companyDetail.about_company" ng-model="editCompany.updatedCompanyData.about_company"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Job Profile Details Form-->
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Job Profile Details</h4>
+                    <h6 class="card-subtitle">Enter job details for placement session</h6>
+
+                    <div class="row p-t-20">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Job Profile</label>
+                                <input type="text" class="form-control" placeholder="Enter job profile" ng-value="editCompany.companyDetail.job_profile" ng-model="editCompany.updatedCompanyData.job_profile">
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Location of Posting</label>
+                                <input type="text" class="form-control" placeholder="Enter posting location" ng-value="editCompany.companyDetail.posting_location" ng-model="editCompany.updatedCompanyData.posting_location">
+                                <!--<small class="form-control-feedback"> This field has error. </small>-->
+                            </div>
+                        </div>
+                        <!--/span-->
+                    </div>
+
+                    <div class="row p-t-20">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Recruitment</label>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="recruitmentRadio1" class="custom-control-input" value="Internship" ng-model="editCompany.updatedCompanyData.recruitment">
+                                            <label class="custom-control-label" for="recruitmentRadio1">Internship</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="recruitmentRadio2" class="custom-control-input" value="Placement" ng-model="editCompany.updatedCompanyData.recruitment">
+                                            <label class="custom-control-label" for="recruitmentRadio2">Placement</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Duration</label>
+                                <input type="text" class="form-control" placeholder="Enter duration" ng-value="editCompany.companyDetail.duration" ng-model="editCompany.updatedCompanyData.duration">
+                                <!--<small class="form-control-feedback"> This field has error. </small>-->
+                            </div>
+                        </div>
+                        <!--/span-->
+                    </div>
+
+                    <div class="row p-t-20">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Package/Stipend</label>
+                                <input type="text" class="form-control" placeholder="Enter package" ng-value="editCompany.companyDetail.package" ng-model="editCompany.updatedCompanyData.package">
+                                <!--<small class="form-control-feedback"> This field has error. </small>-->
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Extra Facility</label>
+                                <input type="text" class="form-control" placeholder="Enter other facility" ng-value="editCompany.companyDetail.other_facility" ng-model="editCompany.updatedCompanyData.other_facility">
+                                <!--<small class="form-control-feedback"> This field has error. </small>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Student Eligibility Details Form-->
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Student Eligibility Details</h4>
+                    <h6 class="card-subtitle">Enter eligibility details for placement session</h6>
+
+                    <div class="row p-t-20">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Eligible Program</label>
+                                <select class="selectpicker" multiple data-style="form-control btn-success" ng-value="editCompany.companyDetail.eligible_programs" ng-model="editCompany.updatedCompanyData.eligible_programs">
+                                    <option value="B.Tech.">B.Tech.</option>
+                                    <option value="M.Tech.">M.Tech.</option>
+                                    <option value="Ph.D.">Ph.D.</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Eligible Branches</label>
+                                <select class="selectpicker" multiple data-style="form-control btn-success" ng-value="editCompany.companyDetail.eligible_branches" ng-model="editCompany.updatedCompanyData.eligible_branches">
+                                    <option value="CS">Computer Science</option>
+                                    <option value="MECH">Mechanical</option>
+                                    <option value="ECE">Electronics</option>
+                                    <option value="EE">Electrical</option>
+                                    <option value="CE">Civil</option>
+                                    <option value="CHE">Chemical</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!--/span-->
+                    </div>
+                    <div class="row p-t-20">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Minimum CGPA</label>
+                                <input type="text" class="form-control" placeholder="Enter minimum CGPA" ng-value="editCompany.companyDetail.min_cgpa" ng-model="editCompany.updatedCompanyData.min_cgpa">
+                                <!--<small class="form-control-feedback"> This field has error. </small>-->
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Min. Marks in 12th</label>
+                                <input type="text" class="form-control" placeholder="Enter percentage" ng-value="editCompany.companyDetail.min_10_percent" ng-model="editCompany.updatedCompanyData.min_10_percent">
+                                <!--<small class="form-control-feedback"> This field has error. </small>-->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row p-t-20">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Min. Marks in 10th</label>
+                                <input type="text" class="form-control" placeholder="Enter percentage" ng-value="editCompany.companyDetail.min_12_percent" ng-model="editCompany.updatedCompanyData.min_12_percent">
+                                <!--<small class="form-control-feedback"> This field has error. </small>-->
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Other Eligibility</label>
+                                <input type="text" class="form-control" placeholder="Enter other eligibility" ng-value="editCompany.companyDetail.other_eligibility" ng-model="editCompany.updatedCompanyData.other_eligibility">
+                                <!--<small class="form-control-feedback"> This field has error. </small>-->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!--Registration Details Form-->
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Registration Details</h4>
+                    <h6 class="card-subtitle">Enter registration details for placement session</h6>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="m-t-20">Last Date to Apply</label>
+                            <input type="date" class="form-control" placeholder="Enter date" ng-value="editCompany.companyDetail.deadline_date" ng-model="editCompany.updatedCompanyData.deadline_date">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Submit Buttom -->
+    <div style="text-align: center">
+        <button type="submit" class="btn btn-primary btn-rounded"><i class="ti-check-box"></i> &nbsp; Update Details</button>
+    </div>
+</form>

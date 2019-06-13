@@ -85,9 +85,10 @@ angular.module('userCtrl',['userServices'])
     var app = this;
 
     app.applyStatus = false;
+    app.deleteSuccessMsg = '';
 
     user.getCompanyDetails($routeParams.company_id).then(function (data) {
-        //console.log(data);
+        console.log(data);
         if(data.data.success) {
             app.companyDetail = data.data.companyDetail;
             //console.log(app.companyDetail)
@@ -116,6 +117,15 @@ angular.module('userCtrl',['userServices'])
             //console.log(data);
             if(data.data.success) {
                 getCandidateApplyStatusFunction();
+            }
+        })
+    };
+
+    app.deleteCompany = function () {
+        user.deleteCompany($routeParams.company_id).then(function (data) {
+            console.log(data);
+            if(data.data.success) {
+                app.deleteSuccessMsg = data.data.message;
             }
         })
     }

@@ -116,6 +116,21 @@ angular.module('userServices',[])
         return $http.post('/api/oneClickApply/' + company_id);
     };
 
+    // delete company
+    userFactory.deleteCompany = function(company_id) {
+        return $http.delete('/api/deleteCompany/'+ company_id);
+    };
+
+    // get registered students
+    userFactory.getRegisteredStudents = function(company_id) {
+        return $http.get('/api/getRegisteredStudents/'+ company_id);
+    };
+
+    // get student details with id
+    userFactory.getStudentDetailsByCollegeID = function(college_id) {
+        return $http.get('/api/getStudentDetailsByCollegeID/' + college_id);
+    };
+
     // get user timeline
     userFactory.getTimeline = function () {
         return $http.get('/api/getTimeline');
