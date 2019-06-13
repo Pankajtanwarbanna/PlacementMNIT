@@ -11,8 +11,22 @@
     </div>
 </div>
 
+<!--Company Added Div-->
+<div class="row" ng-show="addNewCompany.successMsg">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-md-center">
+                    <i class="icon-check large-success-icon"></i>
+                    <h3 class="success-text">Successfully Posted.</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!--Add New Company Form -->
-<form ng-submit="addNewCompany.postCompanyDetails(newCompanyData);">
+<form ng-submit="addNewCompany.postCompanyDetails(newCompanyData);" ng-show="!addNewCompany.successMsg">
 
     <div class="row">
 

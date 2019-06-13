@@ -786,6 +786,7 @@ module.exports = function (router){
             company.other_eligibility = req.body.other_eligibility;
 
             company.deadline_date = req.body.deadline_date;
+            company.timestamp = new Date();
 
             company.save(function (err) {
                 if(err) {
@@ -880,7 +881,7 @@ module.exports = function (router){
                 message : 'Please login.'
             });
         } else {
-            Registration.findOne({ company_id : req.params.company_id}, function (err, company) {
+            Company.findOne({ _id : req.params.company_id}, function (err, company) {
                 if(err) {
                     console.log(err);
                     res.json({
@@ -921,7 +922,7 @@ module.exports = function (router){
                 message : 'Please login.'
             })
         } else {
-            Registration.findOne({ company_id : req.params.company_id }, function (err, company) {
+            Company.findOne({ _id : req.params.company_id }, function (err, company) {
                 if(err) {
                     console.log(err);
                     res.json({
@@ -932,23 +933,9 @@ module.exports = function (router){
 
                 if(!company) {
                     // Company not found
-                    var registration = new Registration();
-
-                    registration.company_id = req.params.company_id;
-                    registration.candidates.push({ college_id : req.decoded.college_id, timestamp : new Date()});
-
-                    registration.save(function (err) {
-                        if(err) {
-                            res.json({
-                                success : false,
-                                message : 'Database error. Please try again later.'
-                            })
-                        } else {
-                            res.json({
-                                success : true,
-                                message : 'Successfully applied.'
-                            })
-                        }
+                    res.json({
+                        success : false,
+                        message : 'Company not found.'
                     })
                 } else {
                     company.candidates.push({college_id : req.decoded.college_id, timestamp : new Date()});
@@ -979,7 +966,7 @@ module.exports = function (router){
                 message : 'Please login.'
             });
         } else {
-            Registration.find({  }, function (err, candidatesData) {
+            Company.find({  }, function (err, companyData) {
                 if(err) {
                     console.log(err);
                     res.json({
@@ -988,27 +975,39 @@ module.exports = function (router){
                     })
                 }
 
-                if(!candidatesData) {
+                if(!companyData) {
                     res.json({
                         success : false,
-                        message : 'Registrations not found.'
+                        message : 'Company not found.'
                     });
                 } else {
 
-                    //console.log(candidatesData);
-                    var candidateTimeline = [];
+                    let candidateTimeline = [];
 
-                    for(var i=0; i < candidatesData.length; i++) {
-                        if(candidatesData[i].candidates.find(obj => obj.college_id === req.decoded.college_id)) {
-                            candidateTimeline.push(candidatesData[i].candidates.find(obj => obj.college_id === req.decoded.college_id))
+                    // Used Let for scope purpose
+                    for(let i=0; i < companyData.length; i++) {
+                        if(companyData[i].candidates.find(obj => obj.college_id === req.decoded.college_id)) {
+
+                            let candidateTimelineObj = {};
+
+                            candidateTimelineObj.company_name = companyData[i].company_name;
+                            // todo company coming to MNIT date
+                            candidateTimelineObj.company_date = companyData[i].deadline_date;
+                            //console.log(candidatesData);
+                            candidateTimelineObj.timestamp = (companyData[i].candidates.find(obj => obj.college_id === req.decoded.college_id)).timestamp;
+                            candidateTimelineObj.status = (companyData[i].candidates.find(obj => obj.college_id === req.decoded.college_id)).candidate_status;
+
+                            candidateTimeline.push(candidateTimelineObj);
+                            console.log(candidateTimeline)
                         }
                     }
 
+                    console.log(candidateTimeline);
                     res.json({
                         success : true,
-                        message : 'Registrations found.',
                         candidateTimeline : candidateTimeline
                     })
+
                 }
             })
         }

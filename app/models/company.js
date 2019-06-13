@@ -52,12 +52,32 @@ var companySchema = new mongoose.Schema({
         type : String
     },
 
-    // registration
+    // registration deadline
     deadline_date : {
         type : Date,
         required : true
+    },
+
+    // Students registration
+    candidates : [{
+        college_id : {
+            type : String,
+            required: true
+        },
+        candidate_status : {
+            type : String,
+            default : 'Applied',
+            enum : ['Applied','Appeared','Shortlisted','Selected']
+        },
+        timestamp : {
+            type : Date,
+            required : true
+        }
+    }],
+    timestamp: {
+        type : Date,
+        required : true
     }
-    // todo add timestamp
 });
 
 // Mongoose title case plugin

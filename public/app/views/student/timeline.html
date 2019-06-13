@@ -6,39 +6,66 @@
 
 <!--Timeline page-->
 <div class="row">
-    <div class="col-12">
+    <!-- Column -->
+    <div class="col-lg-4 col-xlg-3 col-md-5">
         <div class="card">
             <div class="card-body">
-                <ul class="timeline">
-                    <li>
-                        <div class="timeline-badge success"><img class="img-responsive" alt="user" src="../assets/images/users/1.jpg" alt="img"> </div>
-                        <div class="timeline-panel">
-                            <div class="timeline-heading">
-                                <h4 class="timeline-title">Paytm</h4>
-                                <p><small class="text-muted"><i class="fa fa-clock-o"></i> 11 hours ago via Twitter</small> </p>
-                            </div>
-                            <div class="timeline-body">
-                                <ul>
-                                    <li>Candidate : Pankaj Tanwar</li>
-                                    <li>Applied at : 5 June 2019</li>
-                                    <li>Status : Shortlisted</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="timeline-inverted" >
-                        <div class="timeline-badge success"><i class="fa fa-graduation-cap"></i> </div>
-                        <div class="timeline-panel">
-                            <div class="timeline-heading">
-                                <h4 class="timeline-title">Lorem ipsum dolor</h4>
-                            </div>
-                            <div class="timeline-body">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt obcaecati, quaerat tempore officia voluptas debitis consectetur culpa amet, accusamus dolorum fugiat, animi dicta aperiam, enim incidunt quisquam maxime neque eaque.</p>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
+                <center class="m-t-30"> <img src="../assets/images/users/pankaj-tanwar.jpg" class="img-circle" width="150" />
+                    <h4 class="card-title m-t-10">Pankaj Tanwar</h4>
+                    <h6 class="card-subtitle">Computer Science Student</h6>
+                    <div class="row text-center justify-content-md-center">
+                        <div class="col-4"><a href="javascript:void(0)" class="link"><i class="icon-people"></i> <font class="font-medium">254</font></a></div>
+                        <div class="col-4"><a href="javascript:void(0)" class="link"><i class="icon-picture"></i> <font class="font-medium">54</font></a></div>
+                    </div>
+                </center>
             </div>
         </div>
     </div>
+    <!-- Column -->
+    <div class="col-lg-8 col-xlg-9 col-md-7">
+        <div class="card">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs profile-tab" role="tablist">
+                <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#" role="tab">Timeline</a> </li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane active" id="home" role="tabpanel">
+                    <div class="card-body">
+                        <div class="profiletimeline" ng-repeat="registration in timeline.timelineData">
+                            <!--<div class="sl-item">
+                                <div class="sl-left"> <img src="../assets/images/users/1.jpg" alt="user" class="img-circle" /> </div>
+                                <div class="sl-right">
+                                    <div><a href="javascript:void(0)" class="link">John Doe</a> <span class="sl-date">5 minutes ago</span>
+                                        <p>assign a new task <a href="javascript:void(0)"> Design weblayout</a></p>
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-6 m-b-20"><img src="../assets/images/big/img1.jpg" class="img-responsive radius" /></div>
+                                            <div class="col-lg-3 col-md-6 m-b-20"><img src="../assets/images/big/img2.jpg" class="img-responsive radius" /></div>
+                                            <div class="col-lg-3 col-md-6 m-b-20"><img src="../assets/images/big/img3.jpg" class="img-responsive radius" /></div>
+                                            <div class="col-lg-3 col-md-6 m-b-20"><img src="../assets/images/big/img4.jpg" class="img-responsive radius" /></div>
+                                        </div>
+                                        <div class="like-comm"> <a href="javascript:void(0)" class="link m-r-10">2 comment</a> <a href="javascript:void(0)" class="link m-r-10"><i class="fa fa-heart text-danger"></i> 5 Love</a> </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>-->
+                            <div class="sl-item">
+                                <div class="sl-left"> <img src="../assets/images/users/1.jpg" alt="user" class="img-circle" /> </div>
+                                <div class="sl-right">
+                                    <div><a href="javascript:void(0)" class="link">{{registration.company_name}}</a> <span class="sl-date"> {{registration.timestamp | date : 'dd MMMM yyyy'}}</span>
+                                        <div class="row">
+                                            <div class="col-lg-6"><p class="m-t-10"> <b>Applied :</b> {{registration.timestamp | date : 'dd MMMM yyyy'}}</p></div>
+                                            <div class="col-lg-6"><p class="m-t-10"> <b>Status :</b> {{registration.status}}</p></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+c            </div>
+        </div>
+    </div>
+    <!-- Column -->
 </div>
+<!-- Row -->

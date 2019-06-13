@@ -66,10 +66,15 @@ angular.module('userCtrl',['userServices'])
 
     var app = this;
 
+    app.successMsg = '';
+
     app.postCompanyDetails = function (newCompanyData) {
         console.log(app.newCompanyData);
         user.postCompanyDetails(app.newCompanyData).then(function (data) {
             console.log(data);
+            if(data.data.success) {
+                app.successMsg = data.data.message;
+            }
         });
     }
 })
