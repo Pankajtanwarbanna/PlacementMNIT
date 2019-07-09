@@ -52,12 +52,12 @@ var app = angular.module('userRoutes', ['ngRoute'])
                 controllerAs : 'company'
             })
 
-            .when('/company-schedule', {
+            /*.when('/company-schedule', {
                 templateUrl : '/app/views/pages/company-schedule.html',
                 authenticated : true,
                 controller : 'companyscheduleCtrl',
                 controllerAs : 'companySchedule'
-            })
+            })*/
 
             .when('/announcements', {
                 templateUrl : '/app/views/pages/announcements.html',

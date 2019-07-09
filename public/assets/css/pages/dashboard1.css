@@ -24,7 +24,8 @@
   stroke: #e9ecef; }
 
 .news-slide .carousel-item {
-  min-height: 515px;
+  min-height: 200px;
+  border-radius: 15px;
   background: -moz-linear-gradient(top, transparent 50%, rgba(0, 0, 0, 0.08) 56%, rgba(0, 0, 0, 0.65) 100%);
   /* FF3.6-15 */
   background: -webkit-linear-gradient(top, transparent 50%, rgba(0, 0, 0, 0.08) 56%, rgba(0, 0, 0, 0.65) 100%);
@@ -36,5 +37,6 @@
 
 .news-slide .carousel-caption {
   text-align: left;
+  padding-bottom: 0px;
   left: 25px;
   right: 25px; }

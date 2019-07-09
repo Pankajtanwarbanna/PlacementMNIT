@@ -24,7 +24,7 @@ if(process.env.DEV_MODE === "PROD") {
     URI = 'mongodb://127.0.0.1/placementmnit';
 }
 // connecting to mongo database
-mongoose.connect('mongodb://admin:placement123@ds145146.mlab.com:45146/placementmnit', { useNewUrlParser: true }, function (err) {
+mongoose.connect(URI, { useNewUrlParser: true }, function (err) {
     if(err) {
         console.log(err);
     } else {
