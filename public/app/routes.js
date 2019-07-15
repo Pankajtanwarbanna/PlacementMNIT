@@ -66,10 +66,10 @@ var app = angular.module('userRoutes', ['ngRoute'])
                 controllerAs : 'announcements'
             })
 
-            .when('/result', {
+            /*.when('/result', {
                 templateUrl : '/app/views/pages/result.html',
                 authenticated : true
-            })
+            })*/
 
             .when('/timeline', {
                 templateUrl : '/app/views/student/timeline.html',

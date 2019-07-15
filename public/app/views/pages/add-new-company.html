@@ -146,31 +146,33 @@
                     <h6 class="card-subtitle">Enter eligibility details for placement session</h6>
 
                     <div class="row p-t-20">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-group">
-                                <label class="control-label">Eligible Program</label>
-                                <select class="selectpicker" multiple data-style="form-control btn-success" ng-model="addNewCompany.newCompanyData.eligible_programs">
-                                    <option value="B.Tech.">B.Tech.</option>
-                                    <option value="M.Tech.">M.Tech.</option>
-                                    <option value="Ph.D.">Ph.D.</option>
-                                </select>
+                                <label class="control-label">Eligible Programs</label>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <input type="checkbox" name="recruitmentRadio11" value="Btech">
+                                        <label>B.Tech.</label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="checkbox" name="recruitmentRadio11" value="Mtech">
+                                        <label>M.Tech.</label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="checkbox" name="recruitmentRadio11" value="Mplan">
+                                        <label>M.Plan.</label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="checkbox" name="recruitmentRadio11" value="Msc">
+                                        <label>M.Sc.</label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="checkbox" name="recruitmentRadio11" value="Phd">
+                                        <label>PhD</label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <!--/span-->
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label">Eligible Branches</label>
-                                <select class="selectpicker" multiple data-style="form-control btn-success" ng-model="addNewCompany.newCompanyData.eligible_branches">
-                                    <option value="CS">Computer Science</option>
-                                    <option value="MECH">Mechanical</option>
-                                    <option value="ECE">Electronics</option>
-                                    <option value="EE">Electrical</option>
-                                    <option value="CE">Civil</option>
-                                    <option value="CHE">Chemical</option>
-                                </select>
-                            </div>
-                        </div>
-                        <!--/span-->
                     </div>
                     <div class="row p-t-20">
                         <div class="col-md-6">
