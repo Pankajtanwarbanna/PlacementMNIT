@@ -36,8 +36,8 @@
 
                             <tr>
                                 <td><span class="round bg-cyan"><i class="ti-blackboard"></i></span></td>
-                                <td style="vertical-align: inherit;">
-                                    <h5 style="font-weight: 500;">About Company</h5>
+                                <td>
+                                    <h5 style="font-weight: 500;margin-top: 1rem;">About Company</h5>
                                 </td>
                                 <td style="vertical-align: inherit;">
                                     <h5>{{ company.companyDetail.about_company }}</h5>
@@ -135,19 +135,14 @@
                             <tbody>
                             <tr>
                                 <td><span class="round"><i class="icon-graduation"></i></span></td>
-                                <td style="vertical-align: inherit;">
-                                    <h5 style="font-weight: 500;">Eligible Programs</h5>                           </td>
-                                <td style="vertical-align: inherit;">
-                                    <h5> {{ company.companyDetail.eligible_programs | eligibleFilter}}</h5>
+                                <td>
+                                    <h5 style="font-weight: 500;margin-top: 1rem;">Eligibility</h5>
                                 </td>
-                            </tr>
-
-                            <tr>
-                                <td><span class="round"><i class="icon-graduation"></i></span></td>
                                 <td style="vertical-align: inherit;">
-                                    <h5 style="font-weight: 500;">Eligible Branches</h5>                           </td>
-                                <td style="vertical-align: inherit;">
-                                    <h5> {{ company.companyDetail.eligible_branches | eligibleFilter }}</h5>
+                                    <div ng-repeat="(key, value) in company.companyDetail.eligibility">
+                                        <h5> <b>{{ key }}</b></h5>
+                                        <h5 ng-repeat="(key, value) in company.companyDetail.eligibility[key]">{{ key }}</h5>
+                                    </div>
                                 </td>
                             </tr>
 
@@ -238,7 +233,8 @@
                         <div class="card-body">
                             <div class="text-center">
                                 <div>
-                                    <a href="/editCompany/{{ company.companyDetail._id }}"><button class="btn btn-primary btn-rounded"><i class="ti-pencil"></i> &nbsp; Edit</button></a>
+                                    <!--<a href="/editCompany/{{ company.companyDetail._id }}"><button class="btn btn-primary btn-rounded"><i class="ti-pencil"></i> &nbsp; Edit</button></a>-->
+                                    <a href="#"><button class="btn btn-primary btn-rounded"><i class="ti-pencil"></i> &nbsp; Edit</button></a>
                                 </div>
                             </div>
                         </div>

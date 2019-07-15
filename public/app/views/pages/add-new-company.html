@@ -150,25 +150,22 @@
                             <div class="form-group">
                                 <label class="control-label">Eligible Programs</label>
                                 <div class="row">
-                                    <div class="col-md-2">
-                                        <input type="checkbox" name="recruitmentRadio11" value="Btech">
-                                        <label>B.Tech.</label>
+                                    <div class="col-md-2" ng-repeat="program in programs">
+                                        <input type="checkbox" value="program" ng-model="programTicked" ng-change="showBranchesDiv(program)">
+                                        <label>{{ program }}</label>
                                     </div>
-                                    <div class="col-md-2">
-                                        <input type="checkbox" name="recruitmentRadio11" value="Mtech">
-                                        <label>M.Tech.</label>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <input type="checkbox" name="recruitmentRadio11" value="Mplan">
-                                        <label>M.Plan.</label>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <input type="checkbox" name="recruitmentRadio11" value="Msc">
-                                        <label>M.Sc.</label>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <input type="checkbox" name="recruitmentRadio11" value="Phd">
-                                        <label>PhD</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row p-t-20" ng-repeat="program in programs"  ng-show="programsDiv[program.toLowerCase()]">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label"><b>Select {{ program }} Program Branches</b></label>
+                                <div class="row">
+                                    <div class="col-md-6" ng-repeat="branch in programsBranches[program.toLowerCase()]">
+                                        <input type="checkbox" name="recruitmentRadio11" value="branch" ng-model="addNewCompany.newCompanyData.eligibility[program][branch]">
+                                        <label>{{ branch }}</label>
                                     </div>
                                 </div>
                             </div>

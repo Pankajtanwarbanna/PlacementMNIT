@@ -37,8 +37,9 @@ var companySchema = new mongoose.Schema({
     },
 
     // student
-    eligible_programs : [String],
-    eligible_branches : [String],
+    eligibility : {
+        type : Object
+    },
     min_cgpa : {
         type : String // todo convert float
     },

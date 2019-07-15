@@ -759,6 +759,8 @@ module.exports = function (router){
 
             var company = new Company();
 
+            company.eligibility = req.body.eligibility;
+
             company.company_name = req.body.company_name;
             company.company_website_url = req.body.company_website_url;
             company.about_company = req.body.about_company;
@@ -769,15 +771,6 @@ module.exports = function (router){
             company.duration = req.body.duration;
             company.package = req.body.package;
             company.other_facility = req.body.other_facility;
-
-            var i = 0;
-            for(i = 0; i < req.body.eligible_programs.length; i++) {
-                company.eligible_programs.push(req.body.eligible_programs[i])
-            }
-
-            for(i = 0; i < req.body.eligible_branches.length; i++) {
-                company.eligible_branches.push(req.body.eligible_branches[i])
-            }
 
             company.min_cgpa = req.body.min_cgpa;
             company.min_10_percent = req.body.min_10_percent;
@@ -795,6 +788,7 @@ module.exports = function (router){
                         message : 'Error while saving to database.'
                     });
                 } else {
+                    console.log('success.')
                     res.json({
                         success : true,
                         message : 'Successfully new company added.'

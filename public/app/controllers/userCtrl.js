@@ -62,11 +62,77 @@ angular.module('userCtrl',['userServices'])
 })
 
 // Add new company controller
-.controller('addNewCompanyCtrl', function (user) {
+.controller('addNewCompanyCtrl', function (user,$scope) {
 
     var app = this;
 
     app.successMsg = '';
+
+    $scope.programs = [
+        'UG',
+        'MTech',
+        'MPlan',
+        'MSc',
+        'PhD'
+    ];
+
+    $scope.programsBranches = {
+        ug : [
+            'Civil Engineering',
+            'Electrical Engineering',
+            'Chemical Engineering',
+            'Mechanical Engineering',
+            'Computer Science & Engineering',
+            'Metallurgical & Material Science',
+            'Electronics & Communication Engineering',
+            'Architecture & Planing Engineering'
+        ],
+        mtech : [
+            'Electronics & Communication',
+            'Computer Science & Engineering',
+            'Electrical Engineering',
+            'Chemical Engineering',
+            'Mechanical Engineering',
+            'Civil Engineering',
+            'Metallurgical &Materials Engineering',
+            'Materials Research Centre',
+            'National Centre for Disaster Mitigation and Management',
+            'Centre for Energy and Environment',
+        ],
+        mplan : [
+            'Master of Planning: Urban Planning'
+        ],
+        msc : [
+            'Mathematics',
+            'Chemistry',
+            'Physics'
+        ],
+        mba : [
+            'Marketing',
+            'Human Resource',
+            'Finance',
+            'Operations'
+        ],
+        phd : [
+            'Architecture',
+            'Management',
+            'Engineering',
+            'Sciences'
+        ]
+    };
+
+    $scope.programsDiv = {
+        ug : false,
+        mtech : false,
+        mplan : false,
+        msc : false,
+        mba : false,
+        phd : false,
+    };
+
+    $scope.showBranchesDiv = function(program) {
+        $scope.programsDiv[program.toLowerCase()] = !$scope.programsDiv[program.toLowerCase()];
+    }
 
     app.postCompanyDetails = function (newCompanyData) {
         console.log(app.newCompanyData);
