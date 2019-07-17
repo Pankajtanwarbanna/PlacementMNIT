@@ -54,35 +54,36 @@ $(function() {
         }
     });
     // ============================================================== 
-    // Our Income
+    // UG Placement Graph
     // ==============================================================
     var chart = c3.generate({
-        bindto: '#income',
+        bindto: '#ugplacementgraph',
         data: {
             columns: [
-                ['Growth Income', 100, 200, 100, 300, 350],
-                ['Net Income', 130, 100, 140, 200, 120]
+                ['Eligible Students', 30, 89, 75, 87, 92, 69, 82, 71],
+                ['Placed Students', 30, 67, 59, 86, 70, 61, 74, 57]
             ],
             type: 'bar'
         },
         bar: {
             space: 0.2,
             // or
-            width: 15 // this makes bar width 100px
+            width: 25 // this makes bar width 100px
         },
         axis: {
             y: {
                 tick: {
-                    count: 5,
-
-                    outer: false
-                }
+                    count: 6,
+                },
+                max : 100
+            },
+            x: {
+                type: 'category',
+                categories: ['B.Arch.', 'Chemical', 'Civil', 'Computer Science', 'Electronics & Comm.', 'Electrical', 'Mechanical', 'Metallurgy']
             }
         },
         legend: {
             hide: true
-            //or hide: 'data1'
-            //or hide: ['data1', 'data2']
         },
         grid: {
             x: {
@@ -93,7 +94,7 @@ $(function() {
             }
         },
         size: {
-            height: 290
+            height: 300
         },
         color: {
             pattern: ['#7460ee', '#009efb']
