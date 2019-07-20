@@ -107,6 +107,10 @@ var app = angular.module('userRoutes', ['ngRoute'])
                 templateUrl : '/app/views/pages/contact.html',
             })
 
+            .when('/team', {
+                templateUrl : '/app/views/pages/team.html',
+            })
+
             .when('/services', {
                 templateUrl : '/app/views/pages/services.html',
             })
