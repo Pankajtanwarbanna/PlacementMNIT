@@ -16,31 +16,26 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
 
-    <!--Excel Js file-->
-    <script type="text/javascript" src="assets/js/saveAsExcel.js"></script>
-
-    <!-- App config -->
-    <script src="app/app.js"></script>
-    <script src="app/routes.js"></script>
-
-    <!-- Angular Controller files -->
-    <script src="app/controllers/userCtrl.js"></script>
-    <script src="app/controllers/mainCtrl.js"></script>
-    <script src="app/controllers/managementCtrl.js"></script>
-    <script src="app/controllers/emailCtrl.js"></script>
-
-    <!-- Angular Services -->
-    <script src="app/services/userServices.js"></script>
-    <script src="app/services/authServices.js"></script>
-
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <!-- Font library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <!-- This page CSS -->
+    <!--Select CSS-->
+    <link href="assets/modules/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/modules/select2/dist/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/modules/switchery/dist/switchery.min.css" rel="stylesheet" />
+    <link href="assets/modules/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="assets/modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css" rel="stylesheet" />
+    <link href="assets/modules/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css" rel="stylesheet" />
+    <link href="assets/modules/multiselect/css/multi-select.css" rel="stylesheet" type="text/css" />
+
     <!-- chartist CSS -->
     <link href="assets/modules/morrisjs/morris.css" rel="stylesheet">
+    <!--Toaster Popup message CSS -->
+    <link href="assets/modules/toast-master/css/jquery.toast.css" rel="stylesheet">
     <!--c3 plugins CSS -->
     <link href="assets/modules/c3-master/c3.min.css" rel="stylesheet">
     <!-- Custom CSS -->
@@ -58,7 +53,26 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <!--<script src="assets/js/main.js"></script>-->
+    <script src="assets/js/main.js"></script>
+
+    <script type="text/javascript" src="assets/js/saveAsExcel.js"></script>
+
+    <!-- App config -->
+    <script src="app/app.js"></script>
+    <script src="app/routes.js"></script>
+
+    <!-- Angular Controller files -->
+    <script src="app/controllers/userCtrl.js"></script>
+    <script src="app/controllers/mainCtrl.js"></script>
+    <script src="app/controllers/managementCtrl.js"></script>
+    <script src="app/controllers/emailCtrl.js"></script>
+
+    <!-- Angular Services -->
+    <script src="app/services/userServices.js"></script>
+    <script src="app/services/authServices.js"></script>
+
+
+
 </head>
 
 <body ng-app="userApp" ng-controller="mainCtrl as main" class="skin-blue fixed-layout logo-center lock-nav" ng-show="main.loadme" ng-cloak>
@@ -708,7 +722,6 @@
     <script src="assets/modules/toast-master/js/jquery.toast.js"></script>
     <!-- Chart JS -->
     <script src="assets/js/dashboard1.js"></script>
-
 </body>
 
 </html>
