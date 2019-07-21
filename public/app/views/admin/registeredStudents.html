@@ -5,7 +5,7 @@
 
     <div class="col-md-7 align-self-center text-right" ng-show="main.authorized">
         <div class="d-flex justify-content-end align-items-center">
-            <button type="button" class="btn btn-success d-none d-lg-block m-l-15" ng-click="exportData();"><i class="ti-export"></i> &nbsp;Export Data</button>
+            <input type="button" value="Export as Excel" onclick="saveAsExcel('demo-foo-addrow', $('#company_name').val() )"/>
         </div>
     </div>
 </div>
@@ -14,7 +14,8 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title text-center"> Registered Students list</h4>
+                <h4 class="card-title text-center"> {{ registeredStudents.company_name}}  Registered Students list</h4>
+                <input type="hidden" id="company_name" value={{registeredStudents.company_name}}>
                 <h6 class="card-subtitle"></h6>
                 <div class="table-responsive">
                     <table id="demo-foo-addrow" class="table table-bordered m-t-30 table-hover contact-list" data-paging="true" data-paging-size="7">

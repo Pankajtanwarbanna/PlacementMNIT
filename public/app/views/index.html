@@ -16,6 +16,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
 
+    <!--Excel Js file-->
+    <script type="text/javascript" src="assets/js/saveAsExcel.js"></script>
+
     <!-- App config -->
     <script src="app/app.js"></script>
     <script src="app/routes.js"></script>
@@ -36,20 +39,8 @@
     <!-- Font library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <!-- This page CSS -->
-    <!--Select CSS-->
-    <link href="assets/modules/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/modules/select2/dist/css/select2.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/modules/switchery/dist/switchery.min.css" rel="stylesheet" />
-    <link href="assets/modules/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" />
-    <link href="assets/modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css" rel="stylesheet" />
-    <link href="assets/modules/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css" rel="stylesheet" />
-    <link href="assets/modules/multiselect/css/multi-select.css" rel="stylesheet" type="text/css" />
-
     <!-- chartist CSS -->
     <link href="assets/modules/morrisjs/morris.css" rel="stylesheet">
-    <!--Toaster Popup message CSS -->
-    <link href="assets/modules/toast-master/css/jquery.toast.css" rel="stylesheet">
     <!--c3 plugins CSS -->
     <link href="assets/modules/c3-master/c3.min.css" rel="stylesheet">
     <!-- Custom CSS -->
@@ -67,9 +58,7 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-    <script src="assets/js/main.js"></script>
-
+    <!--<script src="assets/js/main.js"></script>-->
 </head>
 
 <body ng-app="userApp" ng-controller="mainCtrl as main" class="skin-blue fixed-layout logo-center lock-nav">
@@ -490,9 +479,9 @@
                                             <td class="text-center">8</td>
                                             <td class="txt-oflo">METALLURGY</td>
                                             <td><span class="text-info">71</span></td>
-                                            <td class="txt-oflo">58</td>
-                                            <td><span class="text-success">57</span></td>
-                                            <td class="txt-oflo">80.28 %</td>
+                                            <td class="txt-oflo">60</td>
+                                            <td><span class="text-success">58</span></td>
+                                            <td class="txt-oflo">80.69 %</td>
                                             <td class="txt-oflo">12.93 LPA</td>
                                             <td class="txt-oflo">6.58 LPA</td>
                                         </tr>
@@ -500,11 +489,11 @@
                                             <td class="text-center"></td>
                                             <td class="txt-oflo"><b>TOTAL</b></td>
                                             <td><span class="text-info"><b>595</b></span></td>
-                                            <td class="txt-oflo"><b>548</b></td>
-                                            <td><span class="text-success"><b>504</b></span></td>
-                                            <td class="txt-oflo"><b>84.71 %</b></td>
+                                            <td class="txt-oflo"><b>550</b></td>
+                                            <td><span class="text-success"><b>505</b></span></td>
+                                            <td class="txt-oflo"><b>84.87 %</b></td>
                                             <td class="txt-oflo"><b>37 LPA</b></td>
-                                            <td class="txt-oflo"><b>8.10 LPA</b></td>
+                                            <td class="txt-oflo"><b>8.09 LPA</b></td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -559,8 +548,8 @@
                                         <tr>
                                             <td class="text-center">2</td>
                                             <td class="txt-oflo">M.Tech (CIVIL)</td>
-                                            <td><span class="text-info">3</span></td>
-                                            <td class="txt-oflo">3</td>
+                                            <td><span class="text-info">5</span></td>
+                                            <td class="txt-oflo">5</td>
                                         </tr>
                                         <tr>
                                             <td class="text-center">3</td>
@@ -583,8 +572,8 @@
                                         <tr>
                                             <td class="text-center">6</td>
                                             <td class="txt-oflo">M.Tech (MECHANICAL)</td>
-                                            <td><span class="text-info">18</span> </td>
-                                            <td class="txt-oflo">18</td>
+                                            <td><span class="text-info">19</span> </td>
+                                            <td class="txt-oflo">19</td>
                                         </tr>
                                         <tr>
                                             <td class="text-center">7</td>
@@ -607,8 +596,8 @@
                                         <tr>
                                             <td class="text-center">10</td>
                                             <td class="txt-oflo">M.Sc.</td>
-                                            <td><span class="text-info">5</span></td>
-                                            <td class="txt-oflo">5</td>
+                                            <td><span class="text-info">6</span></td>
+                                            <td class="txt-oflo">6</td>
                                         </tr>
                                         <tr>
                                             <td class="text-center">11</td>
@@ -625,8 +614,8 @@
                                         <tr>
                                             <td class="text-center"></td>
                                             <td class="txt-oflo"><b>TOTAL</b></td>
-                                            <td><span class="text-info"><b>111</b></span></td>
-                                            <td class="txt-oflo"><b>123</b></td>
+                                            <td><span class="text-info"><b>115</b></span></td>
+                                            <td class="txt-oflo"><b>127</b></td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -652,7 +641,7 @@
                                                     <h2 class="m-b-0 font-light">50</h2><span class="text-muted">Pre-Placement Offers</span>
                                                 </div>
                                                 <div class="col-lg-4 col-md-4 m-t-20">
-                                                    <h2 class="m-b-0 font-light">166</h2><span class="text-muted">No. of Companies Visited</span>
+                                                    <h2 class="m-b-0 font-light">167</h2><span class="text-muted">No. of Companies Visited</span>
                                                 </div>
                                                 <div class="col-lg-4 col-md-4 m-t-20">
                                                     <h2 class="m-b-0 font-light">152</h2><span class="text-muted">On-Campus Internships (UG + PG)</span>
@@ -719,6 +708,7 @@
     <script src="assets/modules/toast-master/js/jquery.toast.js"></script>
     <!-- Chart JS -->
     <script src="assets/js/dashboard1.js"></script>
+
 </body>
 
 </html>

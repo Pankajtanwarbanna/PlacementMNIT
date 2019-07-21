@@ -61,7 +61,7 @@ $(function() {
         data: {
             columns: [
                 ['Eligible Students', 30, 89, 75, 87, 92, 69, 82, 71],
-                ['Placed Students', 30, 67, 59, 86, 70, 61, 74, 57]
+                ['Placed Students', 30, 67, 59, 86, 70, 61, 74, 58]
             ],
             type: 'bar'
         },

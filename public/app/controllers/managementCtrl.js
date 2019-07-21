@@ -251,6 +251,7 @@ angular.module('managementController', ['userServices'])
         //console.log(data);
         if(data.data.success) {
             app.studentsData = data.data.candidates;
+            app.company_name = data.data.name;
             //console.log(app.studentsData);
             for(var i=0;i < app.studentsData.length;i++) {
                 user.getStudentDetailsByCollegeID(app.studentsData[i].college_id).then(function (data) {

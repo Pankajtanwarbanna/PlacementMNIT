@@ -907,7 +907,7 @@ module.exports = function (router){
         }
     });
 
-    // register in a company
+    // register in a company by student
     router.post('/oneClickApply/:company_id', function (req, res) {
         if(!req.decoded.college_id) {
             res.json({
@@ -943,7 +943,7 @@ module.exports = function (router){
                             res.json({
                                 success : true,
                                 message : 'Successfully applied.'
-                            })
+                            });
                         }
                     })
                 }
@@ -1092,7 +1092,8 @@ module.exports = function (router){
                             } else {
                                 res.json({
                                     success : true,
-                                    candidates : company.candidates
+                                    candidates : company.candidates,
+                                    name : company.company_name
                                 })
                             }
                         })
