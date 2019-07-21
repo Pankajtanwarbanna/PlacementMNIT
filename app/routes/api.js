@@ -1159,8 +1159,11 @@ module.exports = function (router){
                 }
             })
         }
-    })
+    });
 
+    router.post('/export/:company_id', function (req, res) {
+        Company.find({ _id : req.params.company_id} ).populate('')
+    })
 
     return router;
 };

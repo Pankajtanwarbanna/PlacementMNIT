@@ -99,8 +99,8 @@ var app = angular.module('userRoutes', ['ngRoute'])
                 authenticated : true
             })
 
-            .when('/help', {
-                templateUrl : '/app/views/pages/help.html',
+            .when('/table', {
+                templateUrl : '/app/views/table.html',
             })
 
             .when('/contact', {

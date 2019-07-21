@@ -242,7 +242,7 @@ angular.module('managementController', ['userServices'])
     });
 })
 
-.controller('registeredStudentsCtrl', function ($routeParams, user) {
+.controller('registeredStudentsCtrl', function ($routeParams, user,$scope) {
     var app = this;
 
     app.registeredStudentsData = [];
@@ -260,9 +260,7 @@ angular.module('managementController', ['userServices'])
                     }
                 })
             }
-
-            console.log(app.registeredStudentsData);
         }
-    })
+    });
 })
 

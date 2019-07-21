@@ -58,7 +58,7 @@ angular.module('userCtrl',['userServices'])
         if(data.data.success) {
             app.companies = data.data.companies;
         }
-    })
+    });
 })
 
 // Add new company controller
