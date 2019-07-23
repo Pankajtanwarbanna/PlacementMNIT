@@ -54,7 +54,7 @@ angular.module('userCtrl',['userServices'])
     var app = this;
 
     user.getAllCompanies().then(function (data) {
-        console.log(data);
+        //console.log(data);
         if(data.data.success) {
             app.companies = data.data.companies;
         }
@@ -161,6 +161,22 @@ angular.module('userCtrl',['userServices'])
         }
     });
 
+    // get company schedule
+    user.getCompanySchedule($routeParams.company_id).then(function (data) {
+        console.log(data);
+        if(data.data.success) {
+            app.companyScheduleData = data.data.schedule;
+        }
+    });
+
+    // get company notifications
+    user.getCompanyNotifications($routeParams.company_id).then(function (data) {
+        console.log(data);
+        if(data.data.success) {
+            app.companyNotificationsData = data.data.notifications;
+        }
+    });
+
     function getCandidateApplyStatusFunction() {
         user.getCandidateApplyStatus($routeParams.company_id).then(function (data) {
             console.log(data);
@@ -194,7 +210,31 @@ angular.module('userCtrl',['userServices'])
                 app.deleteSuccessMsg = data.data.message;
             }
         })
+    };
+
+    app.addScheduleSuccessMsg = '';
+    app.addNotificationSuccessMsg = '';
+
+    app.addCompanySchedule = function (scheduleData) {
+        console.log(app.scheduleData)
+        user.addCompanySchedule(app.scheduleData,$routeParams.company_id).then(function (data) {
+            console.log(data);
+            if(data.data.success) {
+                app.addScheduleSuccessMsg = data.data.message;
+            }
+        })
     }
+
+    app.addCompanyNotification = function (notificationData) {
+        console.log(app.notificationData)
+        user.addCompanyNotification(app.notificationData,$routeParams.company_id).then(function (data) {
+            console.log(data);
+            if(data.data.success) {
+                app.addNotificationSuccessMsg = data.data.message;
+            }
+        })
+    }
+
 })
 
 // Company Schedule Controller

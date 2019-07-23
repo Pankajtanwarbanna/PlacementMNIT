@@ -94,8 +94,8 @@ var app = angular.module('userRoutes', ['ngRoute'])
             })
 
 
-            .when('/notifications', {
-                templateUrl : '/app/views/student/notifications.html',
+            .when('/achievement', {
+                templateUrl : '/app/views/student/achievement.html',
                 authenticated : true
             })
 
@@ -208,16 +208,5 @@ app.run(['$rootScope','auth','$location', 'user', function ($rootScope,auth,$loc
 */
     })
 }]);
-
-// AngularJs Filters
-app.filter('eligibleFilter', function () {
-    return function (text) {
-        if(typeof text !== "undefined") {
-            return text.toString();
-        } else {
-            return '';
-        }
-    }
-});
 
 

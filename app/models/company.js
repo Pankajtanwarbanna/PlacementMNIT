@@ -78,7 +78,31 @@ var companySchema = new mongoose.Schema({
     timestamp: {
         type : Date,
         required : true
-    }
+    },
+    company_schedule : [{
+        date_time : {
+            type : Date,
+            required : true
+        },
+        schedule_info : {
+            type : String,
+            required : true
+        },
+        timestamp : {
+            type : Date,
+            required : true
+        }
+    }],
+    company_notifications : [{
+        notification : {
+            type : String,
+            required : true
+        },
+        timestamp : {
+            type : Date,
+            required : true
+        }
+    }]
 });
 
 // Mongoose title case plugin

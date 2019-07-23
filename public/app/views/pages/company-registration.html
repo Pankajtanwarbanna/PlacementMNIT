@@ -13,9 +13,9 @@
 
 <div class="row">
     <!-- Column -->
-    <div class="col-lg-4 col-md-6" ng-repeat="company in companyRegistration.companies">
+    <div class="col-lg-4 col-md-6" ng-repeat="company in companyRegistration.companies | orderBy : 'deadline_date'">
         <div class="card cc-widget">
-            <div class="card-body">
+            <div class="card-body" ng-show="company.deadline_date > new Date()">
                 <div class="d-flex no-block flex-row">
                     <div class="round align-self-center round-success m-t-10 m-b-10"><i class="ti-briefcase"></i></div>
                     <div class="m-l-10 align-self-center">
@@ -33,7 +33,7 @@
                 <br>
 
                 <div class="text-center">
-                    <a href="/company/{{company._id}}"><button type="button" class="btn btn-info btn-rounded">Apply</button></a>
+                    <a href="/company/{{company._id}}"><button type="button" class="btn btn-info btn-rounded"><span ng-show="!main.authorized">Apply Now</span><span ng-show="main.authorized">Edit Now</span></button></a>
                 </div>
             </div>
         </div>

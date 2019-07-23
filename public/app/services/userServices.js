@@ -136,5 +136,25 @@ angular.module('userServices',[])
         return $http.get('/api/getTimeline');
     };
 
+    // add company schedule
+    userFactory.addCompanySchedule = function (scheduleData,company_id) {
+        return $http.post('/api/addCompanySchedule/'+company_id, scheduleData);
+    };
+
+    // add company notification
+    userFactory.addCompanyNotification = function (notificationData, company_id) {
+        return $http.post('/api/addCompanyNotification/'+company_id, notificationData);
+    };
+
+    // get company schedule
+    userFactory.getCompanySchedule = function (company_id) {
+        return $http.get('/api/getCompanySchedule/'+company_id);
+    };
+
+    // get company notifications
+    userFactory.getCompanyNotifications = function (company_id) {
+        return $http.get('/api/getCompanyNotifications/'+company_id);
+    };
+
     return userFactory;
 });

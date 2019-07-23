@@ -299,10 +299,176 @@
         </div>
     </div>
 
+    <!-- Schedule Company Model  -->
+    <div class="modal fade" id="scheduleCompanyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="scheduleCompanyModal1">{{ company.companyDetail.company_name }}'s Schedule</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                    <div class="modal-body" ng-repeat="schedule in company.companyScheduleData | orderBy : 'date_time'">
+                    <h4><b>{{ schedule.date_time | date : 'dd MMMM yyyy h:mm a' }} </b>: {{ schedule.schedule_info}}</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="buttom" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications Company   -->
+    <div class="modal fade" id="notificationsCompanyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="notificationsCompanyModal1">{{ company.companyDetail.company_name}}'s Notifications</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body" ng-repeat="notification in company.companyNotificationsData">
+                    <h4><i class="ti-bell"></i> &nbsp; {{ notification.notification }}</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="buttom" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Schedule Company Model  -->
+    <div class="modal fade" id="addScheduleCompanyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content" ng-show="!company.addScheduleSuccessMsg">
+                <form ng-submit="company.addCompanySchedule(scheduleData);">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="addScheduleCompanyModal1">Add {{ company.companyDetail.company_name }}'s Schedule</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label class="control-label">Date & Time</label>
+                                <input type="datetime-local" class="form-control" ng-model="company.scheduleData.date_time">
+                            </div>
+                            <label class="control-label">Schedule Info</label>
+                            <textarea type="text" class="form-control" ng-model="company.scheduleData.schedule_info"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Post Now</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-content" ng-show="company.addScheduleSuccessMsg">
+                <div class="modal-header">
+                    <h4 class="modal-title">Success</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-body">
+                        <div class="text-md-center">
+                            <i class="icon-check large-success-icon"></i>
+                            <h3 class="success-text">{{ company.addScheduleSuccessMsg }}</h3>
+                            <button type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Notifications Company Model  -->
+    <div class="modal fade" id="addNotificationsCompanyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content" ng-show="!company.addNotificationSuccessMsg">
+                <form ng-submit="company.addCompanyNotification(notificationData);">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="addNotificationCompanyModal1">Add {{ company.companyDetail.company_name }}'s Schedule</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="control-label">New Notification</label>
+                            <textarea type="text" class="form-control" ng-model="company.notificationData.notification"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Post Now</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-content" ng-show="company.addNotificationSuccessMsg">
+                <div class="modal-header">
+                    <h4 class="modal-title">Success</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-body">
+                        <div class="text-md-center">
+                            <i class="icon-check large-success-icon"></i>
+                            <h3 class="success-text">{{ company.addNotificationSuccessMsg }}</h3>
+                            <button type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <div style="text-align: center; margin-bottom: 20px;" ng-show="!main.authorized">
         <button ng-disabled="company.applyStatus" type="button" id="oneClickApplyButton" class="btn btn-success btn-rounded" data-toggle="modal" data-target="#applyNowCompanyModal"><i class="ti-check-box" id="oneClickApplyIcon"></i> &nbsp; One Click Apply</button>
     </div>
+
+    <div class="row" ng-show="company.applyStatus">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center">
+                        <div>
+                            <button class="btn btn-primary btn-rounded" data-toggle="modal" data-target="#scheduleCompanyModal"><i class="ti-calendar"></i> &nbsp; View Schedule</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center">
+                        <button class="btn btn-primary btn-rounded" data-toggle="modal" data-target="#notificationsCompanyModal"><i class="ti-bell"></i> &nbsp; View Notifications</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" ng-show="main.authorized">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center">
+                        <div>
+                            <button class="btn btn-primary btn-rounded" data-toggle="modal" data-target="#addScheduleCompanyModal"><i class="ti-calendar"></i> &nbsp; Add Schedule</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center">
+                        <button class="btn btn-primary btn-rounded" data-toggle="modal" data-target="#addNotificationsCompanyModal"><i class="ti-bell"></i> &nbsp; Add Notifications</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 <div ng-show="company.deleteSuccessMsg" style="margin-top: 20px;">
     <div class="col-lg-12" class="text-center">

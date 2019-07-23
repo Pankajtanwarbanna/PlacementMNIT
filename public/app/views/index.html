@@ -19,6 +19,21 @@
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+
+    <!-- App config -->
+    <script src="app/app.js"></script>
+    <script src="app/routes.js"></script>
+
+    <!-- Angular Controller files -->
+    <script src="app/controllers/userCtrl.js"></script>
+    <script src="app/controllers/mainCtrl.js"></script>
+    <script src="app/controllers/managementCtrl.js"></script>
+    <script src="app/controllers/emailCtrl.js"></script>
+
+    <!-- Angular Services -->
+    <script src="app/services/userServices.js"></script>
+    <script src="app/services/authServices.js"></script>
+
     <!-- Font library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -53,74 +68,12 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <script src="assets/js/main.js"></script>
 
     <script type="text/javascript" src="assets/js/saveAsExcel.js"></script>
-
-    <!-- App config -->
-    <script src="app/app.js"></script>
-    <script src="app/routes.js"></script>
-
-    <!-- Angular Controller files -->
-    <script src="app/controllers/userCtrl.js"></script>
-    <script src="app/controllers/mainCtrl.js"></script>
-    <script src="app/controllers/managementCtrl.js"></script>
-    <script src="app/controllers/emailCtrl.js"></script>
-
-    <!-- Angular Services -->
-    <script src="app/services/userServices.js"></script>
-    <script src="app/services/authServices.js"></script>
-
-
 
 </head>
 
 <body ng-app="userApp" ng-controller="mainCtrl as main" class="skin-blue fixed-layout logo-center lock-nav" ng-show="main.loadme" ng-cloak>
-
-    <!--    <div class="container">-->
-    <!--        <div class="row cb-slideshow-text-container">-->
-    <!--            <div class="tm-content">-->
-
-    <!--                <nav class="navbar navbar-inverse">-->
-    <!--                    <div class="container">-->
-    <!--                        <div class="navbar-header">-->
-    <!--                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">-->
-    <!--                                <span class="icon-bar"></span>-->
-    <!--                                <span class="icon-bar"></span>-->
-    <!--                                <span class="icon-bar"></span>-->
-    <!--                            </button>-->
-    <!--                            <a class="navbar-brand prata-font" href="/">MEAN Login Signup App</a>-->
-    <!--                        </div>-->
-    <!--                        <div class="collapse navbar-collapse" id="myNavbar">-->
-    <!--                            <ul class="nav navbar-nav navbar-right">-->
-    <!--                                <li><a href="/services" class="prata-font" ng-show="!main.isLoggedIn"> SERVICES </a></li>-->
-    <!--                                <li><a href="/about" class="prata-font" ng-show="!main.isLoggedIn"> ABOUT </a></li>-->
-    <!--                                <li><a href="/contact" class="prata-font" ng-show="!main.isLoggedIn"> CONTACT US </a></li>-->
-    <!--                                <li><a href="/management" class="prata-font" ng-show="main.isLoggedIn && main.authorized">MANAGEMENT </a></li>-->
-    <!--                                <li><a href="/register" class="prata-font" ng-show="!main.isLoggedIn"> JOIN US </a></li>-->
-    <!--                                <li><a href="#" class="prata-font" ng-show="main.isLoggedIn" ng-click="main.logout();"> LOGOUT </a></li>-->
-    <!--                                <li><a href="/users/{{main.username}}" class="prata-font" ng-show="main.isLoggedIn"> HELLO {{main.name }}</a></li>-->
-    <!--                            </ul>-->
-    <!--                        </div>-->
-    <!--                    </div>-->
-    <!--                </nav>-->
-
-    <!--                &lt;!&ndash; Angular view &ndash;&gt;-->
-    <!--                <div class="ng-view"></div>-->
-
-    <!--                &lt;!&ndash; Home page &ndash;&gt;-->
-    <!--                <div ng-show="main.home">-->
-    <!--                    <h1>-->
-    <!--                        Hey there!-->
-    <!--                    </h1>-->
-    <!--                </div>-->
-
-    <!--            </div>-->
-    <!--        </div>-->
-    <!--    </div>-->
-
-
-
 
     <!-- Preloader - style you can find in spinners.css -->
     <!-- ============================================================== -->
@@ -287,11 +240,10 @@
                                         <p class=" m-b-0"> {{ main.permission }} </p>
                                     </div>
                                 </div>
-                                <a class="dropdown-item" href="/profile"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
-                                <a class="dropdown-item" href="/timeline"><i class="ti-stats-up m-r-5 m-l-5"></i> My Timeline</a>
-                                <a class="dropdown-item" href="#"><i class="ti-medall m-r-5 m-l-5"></i> My Achievements</a>
-                                <a class="dropdown-item" href="/notifications"><i class="ti-bell m-r-5 m-l-5"></i> My Notifications</a>
-                                <a class="dropdown-item" href="/announcements"><i class="ti-announcement m-r-5 m-l-5"></i> Announcements</a>
+                                <a class="dropdown-item" href="/profile" ng-show="!main.authorized"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
+                                <a class="dropdown-item" href="/timeline" ng-show="!main.authorized"><i class="ti-stats-up m-r-5 m-l-5"></i> My Timeline</a>
+                                <a class="dropdown-item" href="/achievement" ng-show="!main.authorized"><i class="ti-medall m-r-5 m-l-5"></i> My Achievements</a>
+                                <a class="dropdown-item" href="/announcements" ng-show="!main.authorized"><i class="ti-announcement m-r-5 m-l-5"></i> Announcements</a>
                                 <div class="dropdown-divider"></div>
                                 <div class="p-l-30 p-10"><a href="#" ng-click="main.logout();" class="btn btn-sm btn-success btn-rounded">Logout</a></div>
                             </div>
@@ -323,17 +275,17 @@
 -->
                         <li ng-show="!main.isLoggedIn"> <a class="waves-effect waves-dark" href="/login" aria-expanded="false"><i class="icon-login"></i><span class="hide-menu">Login </span></a></li>
                         <li ng-show="main.isLoggedIn"> <a class="waves-effect waves-dark" href="/company-registration" aria-expanded="false"><i class="icon-briefcase"></i><span class="hide-menu">Company Registration</span></a></li>
-                        <li ng-show="main.isLoggedIn"> <a class="waves-effect waves-dark" href="/announcements" aria-expanded="false"><i class="ti-announcement"></i><span class="hide-menu">Announcements  <span class="badge badge-pill badge-cyan">4</span></span></a></li>
+                        <li ng-show="main.isLoggedIn"> <a class="waves-effect waves-dark" href="/announcements" aria-expanded="false"><i class="ti-announcement"></i><span class="hide-menu">Announcements </span></a></li>
                         <!--<li ng-show="main.isLoggedIn"> <a class="waves-effect waves-dark" href="/result" aria-expanded="false"><i class="ti-cup"></i><span class="hide-menu">Result</span></a></li>-->
 
-                        <li ng-show="main.isLoggedIn"> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="icon-user"></i><span class="hide-menu">User Profile</span></a>
+                        <li ng-show="main.isLoggedIn && !main.authorized"> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="icon-user"></i><span class="hide-menu">User Profile</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="/profile">Profile Page <i class="ti-user text-success"></i></a></li>
                                 <li><a href="/timeline">Timeline <i class="ti-stats-up text-info"></i></a></li>
-                                <li><a href="/notifications">Notifications <i class="ti-bell text-danger"></i></a></li>
+                                <li><a href="/achievement">Achievement <i class="ti-medall text-danger"></i></a></li>
                             </ul>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="/team" aria-expanded="false"><i class="icon-people"></i><span class="hide-menu">Team </span></a></li>
+                        <li> <a class="waves-effect waves-dark" href="/team" aria-expanded="false"><i class="icon-people"></i><span class="hide-menu">Team</span></a></li>
                         <li> <a class="waves-effect waves-dark" href="/contact" aria-expanded="false"><i class="icon-phone"></i><span class="hide-menu">Contact Us </span></a></li>
 
                        
