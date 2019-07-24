@@ -1423,8 +1423,125 @@ module.exports = function (router){
                 }
             })
         }
+    });
+
+    // post company result
+    router.post('/addCompanyResult/:company_id', function (req, res) {
+        if(!req.decoded.college_id) {
+            res.json({
+                success : false,
+                message : 'Please login.'
+            })
+        } else {
+            User.findOne({ college_id : req.decoded.college_id}, function (err,user) {
+                if(err) {
+                    res.json({
+                        success : false,
+                        message : 'Error from database side.'
+                    });
+                }
+
+                if(!user) {
+                    res.json({
+                        success : false,
+                        message : 'User not found.'
+                    })
+                } else {
+                    if(user.permission === 'admin') {
+                        Company.findOne({ _id : req.params.company_id}, function (err, company) {
+                            if(err) {
+                                res.json({
+                                    success : false,
+                                    message : 'Error from database side.'
+                                });
+                            }
+
+                            if(!company) {
+                                res.json({
+                                    success : false,
+                                    message : 'Company Not found.'
+                                })
+                            } else {
+
+                                var companyResultObj = {};
+
+                                companyResultObj.result_title = req.body.result_title;
+                                companyResultObj.result_message = req.body.result_message;
+                                companyResultObj.candidates = req.body.candidates;
+                                companyResultObj.result_stage = company.company_result.length + 1;
+                                companyResultObj.timestamp = new Date();
+
+                                //console.log(companyResultObj);
+
+                                company.company_result.push(companyResultObj);
+
+                                company.save(function (err) {
+                                    if(err) {
+                                        res.json({
+                                            success : false,
+                                            message : 'Database error.'
+                                        })
+                                    } else {
+                                        res.json({
+                                            success : true,
+                                            message : 'Successfully result posted.'
+                                        })
+                                    }
+                                });
+                            }
+                        })
+                    }
+                }
+            })
+        }
     })
 
+    // get company result
+    router.get('/getCompanyResult/:company_id', function (req, res) {
+        if(!req.decoded.college_id) {
+            res.json({
+                success : false,
+                message : 'Please login.'
+            })
+        } else {
+            User.findOne({ college_id : req.decoded.college_id}, function (err,user) {
+                if(err) {
+                    res.json({
+                        success : false,
+                        message : 'Error from database side.'
+                    });
+                }
+
+                if(!user) {
+                    res.json({
+                        success : false,
+                        message : 'User not found.'
+                    })
+                } else {
+                    Company.findOne({ _id : req.params.company_id}, function (err, company) {
+                        if(err) {
+                            res.json({
+                                success : false,
+                                message : 'Error from database side.'
+                            });
+                        }
+
+                        if(!company) {
+                            res.json({
+                                success : false,
+                                message : 'Company Not found.'
+                            })
+                        } else {
+                            res.json({
+                                success : true,
+                                result : company.company_result
+                            })
+                        }
+                    })
+                }
+            })
+        }
+    })
 
 
     return router;

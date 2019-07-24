@@ -174,7 +174,7 @@ angular.module('userCtrl',['userServices'])
 })
 
 // company controller
-.controller('companyCtrl', function (user, $routeParams) {
+.controller('companyCtrl', function (user, $routeParams, $scope) {
 
     var app = this;
 
@@ -271,6 +271,73 @@ angular.module('userCtrl',['userServices'])
         })
     }
 
+    app.selectedCandidate = [];
+    app.noCandidateSelectedErrorMsg = false;
+    app.addResultSuccessMsg = '';
+
+    app.addCandidate = function (candidateId) {
+        console.log(candidateId);
+        if(app.selectedCandidate.indexOf(candidateId) < 0) {
+            app.selectedCandidate.push(candidateId);
+            app.noCandidateSelectedErrorMsg = false;
+        }
+    }
+
+    app.removeCandidate = function (candidateId) {
+        app.selectedCandidate.splice(app.selectedCandidate.indexOf(candidateId), 1);
+    }
+
+    $scope.alwaysTrue = true;
+    $scope.ifNotSelected = function (candidateId) {
+        if(app.selectedCandidate.indexOf(candidateId) < 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // add company result
+    app.addCompanyResult = function (resultData) {
+        console.log(app.resultData);
+        if(app.selectedCandidate.length === 0) {
+            app.noCandidateSelectedErrorMsg = true;
+        } else {
+            app.resultData.candidates = new Array();
+            app.selectedCandidate.forEach(function (item) {
+                app.resultData.candidates.push(item);
+            });
+            user.addCompanyResult(app.resultData, $routeParams.company_id).then(function (data) {
+                console.log(data);
+                if(data.data.success) {
+                    app.addResultSuccessMsg = data.data.message;
+                }
+            })
+        }
+    }
+
+    // get company result
+    user.getCompanyResult($routeParams.company_id).then(function (data) {
+        console.log(data);
+        if(data.data.success) {
+            app.companyResult = data.data.result;
+        }
+    })
+
+    $scope.tabArray = [];
+
+    $scope.activeTab = function (tabID) {
+        console.log(tabID);
+        console.log(app.companyResult.length)
+        for(let i=1;i<=app.companyResult.length;i++) {
+            if(i == tabID) {
+                $scope.tabArray[i] = true;
+                document.getElementById('btn'+i).className = "btn btn-primary";
+            } else {
+                $scope.tabArray[i] = false;
+                document.getElementById('btn'+i).className = "btn btn-outline-primary";
+            }
+        }
+    }
 })
 
 // Company Schedule Controller

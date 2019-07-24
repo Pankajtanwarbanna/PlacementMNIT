@@ -311,11 +311,12 @@
                     <h4><b>{{ schedule.date_time | date : 'dd MMMM yyyy h:mm a' }} </b>: {{ schedule.schedule_info}}</h4>
                 </div>
                 <div class="modal-footer">
-                    <button type="buttom" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
+
 
     <!-- Notifications Company   -->
     <div class="modal fade" id="notificationsCompanyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
@@ -329,12 +330,50 @@
                     <h4><i class="ti-bell"></i> &nbsp; {{ notification.notification }}</h4>
                 </div>
                 <div class="modal-footer">
-                    <button type="buttom" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 </div>
             </div>
             </div>
         </div>
     </div>
+
+    <!-- Result Company Model  -->
+    <div class="modal fade" id="resultCompanyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="resultCompanyModal1">{{ company.companyDetail.company_name }}'s Result</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="card">
+                        <div class="row">
+                            <div class="col-lg-2" ng-repeat="result in company.companyResult">
+                                <button id="btn{{ result.result_stage }}" class="btn btn-outline-primary" style="margin-left: 10px;margin-top: 5px;" ng-click="activeTab(result.result_stage)">{{ result.result_title }} </button>
+                            </div>
+                        </div>
+                        <div ng-repeat="result in company.companyResult">
+                            <div id="{{ result.result_stage }}" ng-show="tabArray[result.result_stage]" style="margin-top: 10px;margin-left: 20px;">
+                                <h4><b>Selected Candidates :</b> </h4>
+                                <div ng-repeat="candidate in result.candidates">
+                                    <h5>{{ candidate }}</h5>
+                                </div>
+                                <!--<h4>Selected Candidates : {{ result.candidates}}</h4>-->
+                                <p>*{{ result.result_message}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
 
     <!-- Add Schedule Company Model  -->
     <div class="modal fade" id="addScheduleCompanyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
@@ -439,15 +478,28 @@
 
                         <div class="form-group">
                             <label class="control-label">Add Candidates</label>
-                            <input type="text" class="form-control" ng-model="company.resultData.candidate" required>
+                            <div class="row">
+                                <div ng-repeat="student in company.selectedCandidate" style="margin-left: 10px">
+                                    <button type="button" class="btn btn-outline-danger" ng-click="company.removeCandidate(student);"> {{student}} <i class="icon-close" style="padding-left:5px;"></i> </button>
+                                </div>
+                            </div>
+                            <br>
+                            <input type="text" class="form-control" ng-model="company.resultData.candidate">
+                            <span class="control-label" style="color: red;" ng-show="company.noCandidateSelectedErrorMsg">Select Candidates</span>
                         </div>
-                        <div ng-repeat="candidate in company.registeredCandidates | filter : company.resultData.candidate">
-                            <p>{{ candidate.college_id }}</p>
+                        <div><!--ng-show="!companyResultForm.$pristine"-->
+                            <div>
+                                <div class="row" ng-repeat="candidate in company.registeredCandidates | filter : company.resultData.candidate | limitTo : 3">
+                                    <div class="col-lg-4" ng-show="alwaysTrue && ifNotSelected(candidate.college_id)">
+                                        <button type="button" class="btn btn-outline-primary" ng-click="company.addCandidate(candidate.college_id);">{{ candidate.college_id }}  <i class="icon-check" style="padding-left:5px;"></i> </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Post Now</button>
+                        <button type="submit" class="btn btn-success">Post Result</button>
                     </div>
                 </form>
             </div>

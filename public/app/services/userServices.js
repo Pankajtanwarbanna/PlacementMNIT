@@ -161,5 +161,15 @@ angular.module('userServices',[])
         return $http.get('/api/getAllRegisteredStudentsInCompany/' + company_id);
     };
 
+    // add company result
+    userFactory.addCompanyResult = function (resultData, company_id) {
+        return $http.post('/api/addCompanyResult/'+company_id, resultData);
+    };
+
+    // get company result
+    userFactory.getCompanyResult = function (company_id) {
+        return $http.get('/api/getCompanyResult/'+company_id);
+    };
+
     return userFactory;
 });
