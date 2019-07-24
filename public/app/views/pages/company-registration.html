@@ -13,9 +13,9 @@
 
 <div class="row">
     <!-- Column -->
-    <div class="col-lg-4 col-md-6" ng-repeat="company in companyRegistration.companies | orderBy : 'deadline_date'">
-        <div class="card cc-widget">
-            <div class="card-body" ng-show="company.deadline_date > new Date()">
+    <div class="col-lg-6 col-md-6" ng-repeat="company in companyRegistration.companies | orderBy : 'deadline_date'">
+        <div class="card cc-widget" ng-hide="alwaysTrue && checkDate(company.deadline_date);">
+            <div class="card-body">
                 <div class="d-flex no-block flex-row">
                     <div class="round align-self-center round-success m-t-10 m-b-10"><i class="ti-briefcase"></i></div>
                     <div class="m-l-10 align-self-center">

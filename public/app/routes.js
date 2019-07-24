@@ -109,6 +109,7 @@ var app = angular.module('userRoutes', ['ngRoute'])
 
             .when('/team', {
                 templateUrl : '/app/views/pages/team.html',
+                authenticated : true
             })
 
             .when('/services', {

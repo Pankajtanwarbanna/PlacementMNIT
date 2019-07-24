@@ -49,9 +49,21 @@ angular.module('userCtrl',['userServices'])
 })
 
 // Company Registration Controller
-.controller('companyRegistrationCtrl', function (user) {
+.controller('companyRegistrationCtrl', function (user, $scope, $filter) {
 
     var app = this;
+
+    $scope.alwaysTrue = true;
+
+    $scope.checkDate = function(date) {
+        //console.log(date);
+        if(new Date(date) > new Date()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 
     user.getAllCompanies().then(function (data) {
         //console.log(data);
