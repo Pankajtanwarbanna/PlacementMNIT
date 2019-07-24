@@ -102,7 +102,27 @@ var companySchema = new mongoose.Schema({
             type : Date,
             required : true
         }
+    }],
+    company_result : [{
+        result_title : {
+            type : String,
+            required : true
+        },
+        candidates : [String],
+        result_message : {
+            type : String,
+            required : true
+        },
+        result_stage : {
+            type : Number,
+            required : true
+        },
+        timestamp : {
+            type : Date,
+            required : true
+        }
     }]
+
 });
 
 // Mongoose title case plugin

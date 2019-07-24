@@ -49,7 +49,7 @@ angular.module('userCtrl',['userServices'])
 })
 
 // Company Registration Controller
-.controller('companyRegistrationCtrl', function (user, $scope, $filter) {
+.controller('companyRegistrationCtrl', function (user, $scope, $location, $anchorScroll) {
 
     var app = this;
 
@@ -57,13 +57,29 @@ angular.module('userCtrl',['userServices'])
 
     $scope.checkDate = function(date) {
         //console.log(date);
-        if(new Date(date) > new Date()) {
+        if(new Date(date) >= new Date()) {
             return false;
         } else {
             return true;
         }
     }
 
+    $scope.checkPreviousDate = function(date) {
+        //console.log(date);
+        if(new Date(date) >= new Date()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    $scope.scrollToDiv = function(divID) {
+        console.log('testing scroll div function    ');
+        console.log(app.divID);
+        $location.hash(divID);
+        event.preventDefault();
+        $anchorScroll();
+    }
 
     user.getAllCompanies().then(function (data) {
         //console.log(data);
@@ -189,9 +205,17 @@ angular.module('userCtrl',['userServices'])
         }
     });
 
+    // get all registered students
+    user.getAllRegisteredStudentsInCompany($routeParams.company_id).then(function (data) {
+        console.log(data);
+        if(data.data.success) {
+            app.registeredCandidates = data.data.candidate;
+        }
+    });
+
     function getCandidateApplyStatusFunction() {
         user.getCandidateApplyStatus($routeParams.company_id).then(function (data) {
-            console.log(data);
+            //console.log(data);
             if(data.data.success) {
                 app.applyStatus = true;
                 document.getElementById('oneClickApplyButton').className = 'btn btn-danger btn-rounded';

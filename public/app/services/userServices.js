@@ -156,5 +156,10 @@ angular.module('userServices',[])
         return $http.get('/api/getCompanyNotifications/'+company_id);
     };
 
+    // get all registered students in a company
+    userFactory.getAllRegisteredStudentsInCompany = function (company_id) {
+        return $http.get('/api/getAllRegisteredStudentsInCompany/' + company_id);
+    };
+
     return userFactory;
 });

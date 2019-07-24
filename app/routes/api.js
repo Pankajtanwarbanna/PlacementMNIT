@@ -1377,6 +1377,54 @@ module.exports = function (router){
         }
     });
 
+    router.get('/getAllRegisteredStudentsInCompany/:company_id', function (req, res) {
+        if(!req.decoded.college_id) {
+            res.json({
+                success : false,
+                message : 'Please login.'
+            })
+        } else {
+            User.findOne({ college_id : req.decoded.college_id}, function (err,user) {
+                if(err) {
+                    res.json({
+                        success : false,
+                        message : 'Error from database side.'
+                    });
+                }
+
+                if(!user) {
+                    res.json({
+                        success : false,
+                        message : 'User not found.'
+                    })
+                } else {
+                    if(user.permission === 'admin') {
+                        Company.findOne({ _id : req.params.company_id}, function (err, company) {
+                            if(err) {
+                                res.json({
+                                    success : false,
+                                    message : 'Error from database side.'
+                                });
+                            }
+
+                            if(!company) {
+                                res.json({
+                                    success : false,
+                                    message : 'Company Not found.'
+                                })
+                            } else {
+                                res.json({
+                                    success : true,
+                                    candidate : company.candidates
+                                })
+                            }
+                        })
+                    }
+                }
+            })
+        }
+    })
+
 
 
     return router;

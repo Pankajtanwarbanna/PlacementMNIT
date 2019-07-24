@@ -275,6 +275,7 @@
 -->
                         <li ng-show="!main.isLoggedIn"> <a class="waves-effect waves-dark" href="/login" aria-expanded="false"><i class="icon-login"></i><span class="hide-menu">Login </span></a></li>
                         <li ng-show="main.isLoggedIn"> <a class="waves-effect waves-dark" href="/company-registration" aria-expanded="false"><i class="icon-briefcase"></i><span class="hide-menu">Company Registration</span></a></li>
+                        <li ng-show="main.isLoggedIn && main.authorized"> <a class="waves-effect waves-dark" href="/add-new-company" aria-expanded="false"><i class="icon-plus"></i><span class="hide-menu">Add New Company</span></a></li>
                         <li ng-show="main.isLoggedIn"> <a class="waves-effect waves-dark" href="/announcements" aria-expanded="false"><i class="ti-announcement"></i><span class="hide-menu">Announcements </span></a></li>
                         <!--<li ng-show="main.isLoggedIn"> <a class="waves-effect waves-dark" href="/result" aria-expanded="false"><i class="ti-cup"></i><span class="hide-menu">Result</span></a></li>-->
 
@@ -285,7 +286,7 @@
                                 <li><a href="/achievement">Achievement <i class="ti-medall text-danger"></i></a></li>
                             </ul>
                         </li>
-                        <li ng-show="main.isLoggedIn && !main.authorized"> <a class="waves-effect waves-dark" href="/team" aria-expanded="false"><i class="icon-people"></i><span class="hide-menu">Team</span></a></li>
+                        <li ng-show="main.isLoggedIn"> <a class="waves-effect waves-dark" href="/team" aria-expanded="false"><i class="icon-people"></i><span class="hide-menu">Team</span></a></li>
                         <li> <a class="waves-effect waves-dark" href="/contact" aria-expanded="false"><i class="icon-phone"></i><span class="hide-menu">Contact Us </span></a></li>
 
                        

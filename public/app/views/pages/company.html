@@ -418,13 +418,63 @@
         </div>
     </div>
 
+    <!-- Add Result Company Model  -->
+    <div class="modal fade" id="addResultCompanyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content" ng-show="!company.addResultSuccessMsg">
+                <form ng-submit="company.addCompanyResult(resultData);" name="companyResultForm">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="addResultCompanyModal1">Add {{ company.companyDetail.company_name }}'s Result</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="control-label">Result Title</label>
+                            <input type="text" class="form-control" ng-model="company.resultData.result_title" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Message to Students</label>
+                            <input type="text" class="form-control" ng-model="company.resultData.result_message" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label">Add Candidates</label>
+                            <input type="text" class="form-control" ng-model="company.resultData.candidate" required>
+                        </div>
+                        <div ng-repeat="candidate in company.registeredCandidates | filter : company.resultData.candidate">
+                            <p>{{ candidate.college_id }}</p>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Post Now</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-content" ng-show="company.addResultSuccessMsg">
+                <div class="modal-header">
+                    <h4 class="modal-title">Success</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-body">
+                        <div class="text-md-center">
+                            <i class="icon-check large-success-icon"></i>
+                            <h3 class="success-text">{{ company.addResultSuccessMsg }}</h3>
+                            <button type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div style="text-align: center; margin-bottom: 20px;" ng-show="!main.authorized">
         <button ng-disabled="company.applyStatus" type="button" id="oneClickApplyButton" class="btn btn-success btn-rounded" data-toggle="modal" data-target="#applyNowCompanyModal"><i class="ti-check-box" id="oneClickApplyIcon"></i> &nbsp; One Click Apply</button>
     </div>
 
     <div class="row" ng-show="company.applyStatus">
-        <div class="col-lg-6">
+        <div class="col-lg-4">
             <div class="card">
                 <div class="card-body">
                     <div class="text-center">
@@ -435,7 +485,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-4">
             <div class="card">
                 <div class="card-body">
                     <div class="text-center">
@@ -444,10 +494,21 @@
                 </div>
             </div>
         </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center">
+                        <div>
+                            <button class="btn btn-primary btn-rounded" data-toggle="modal" data-target="#resultCompanyModal"><i class="ti-crown"></i> &nbsp; View Result</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="row" ng-show="main.authorized">
-        <div class="col-lg-6">
+        <div class="col-lg-4">
             <div class="card">
                 <div class="card-body">
                     <div class="text-center">
@@ -458,7 +519,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-4">
             <div class="card">
                 <div class="card-body">
                     <div class="text-center">
@@ -467,9 +528,20 @@
                 </div>
             </div>
         </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center">
+                        <div>
+                            <button class="btn btn-primary btn-rounded" data-toggle="modal" data-target="#addResultCompanyModal"><i class="ti-crown"></i> &nbsp; Add Result</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
 </div>
+
 <div ng-show="company.deleteSuccessMsg" style="margin-top: 20px;">
     <div class="col-lg-12" class="text-center">
         <div class="card">

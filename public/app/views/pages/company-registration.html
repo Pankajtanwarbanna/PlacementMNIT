@@ -1,12 +1,12 @@
-<div class="row page-titles">
+<div class="row page-titles" id="upcomingCompanies">
     <div class="col-md-5 align-self-center">
         <h4 class="text-themecolor">Company Registration</h4>
     </div>
 
 
-    <div class="col-md-7 align-self-center text-right" ng-show="main.authorized">
+    <div class="col-md-7 align-self-center text-right">
         <div class="d-flex justify-content-end align-items-center">
-            <button type="button" class="btn btn-primary d-none d-lg-block m-l-15"><i class="ti-plus"></i><a href="/add-new-company" style="color: white;">Add New Company</a></button>
+            <button type="button" class="btn btn-primary d-none d-lg-block m-l-15" ng-click="scrollToDiv('previousCompanies');">Previous Companies</a></button>
         </div>
     </div>
 </div>
@@ -15,6 +15,48 @@
     <!-- Column -->
     <div class="col-lg-6 col-md-6" ng-repeat="company in companyRegistration.companies | orderBy : 'deadline_date'">
         <div class="card cc-widget" ng-hide="alwaysTrue && checkDate(company.deadline_date);">
+            <div class="card-body">
+                <div class="d-flex no-block flex-row">
+                    <div class="round align-self-center round-success m-t-10 m-b-10"><i class="ti-briefcase"></i></div>
+                    <div class="m-l-10 align-self-center">
+                        <h4 class="m-b-0">{{ company.company_name }}</h4>
+                        <h5 class="text-muted m-b-0"> {{ company.job_profile }}</h5>
+                    </div>
+                </div>
+                <div class="d-flex no-block flex-row m-t-20 cc-details text-center">
+                    <div class="col-lg-6 p-10 p-l-0 border-right">
+                        <h6 class="font-light">Package</h6><b class="growth">₹ {{company.package}}</b></div>
+                    <div class="col-lg-6 p-10">
+                        <h6 class="font-light">Last Date</h6><b class="down">{{ company.deadline_date | date : 'dd MMMM'}}</b>
+                    </div>
+                </div>
+                <br>
+
+                <div class="text-center">
+                    <a href="/company/{{company._id}}"><button type="button" class="btn btn-info btn-rounded"><span ng-show="!main.authorized">Apply Now</span><span ng-show="main.authorized">Edit Now</span></button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row page-titles" id="previousCompanies">
+    <div class="col-md-5 align-self-center">
+        <h4 class="text-themecolor">Previous Companies</h4>
+    </div>
+
+
+    <div class="col-md-7 align-self-center text-right" ng-show="main.authorized">
+        <div class="d-flex justify-content-end align-items-center">
+            <button type="button" class="btn btn-primary d-none d-lg-block m-l-15" ng-click="scrollToDiv('upcomingCompanies');">Upcoming Companies</a></button>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Column -->
+    <div class="col-lg-6 col-md-6" ng-repeat="company in companyRegistration.companies | orderBy : 'deadline_date'">
+        <div class="card cc-widget" ng-hide="alwaysTrue && checkPreviousDate(company.deadline_date);">
             <div class="card-body">
                 <div class="d-flex no-block flex-row">
                     <div class="round align-self-center round-success m-t-10 m-b-10"><i class="ti-briefcase"></i></div>
