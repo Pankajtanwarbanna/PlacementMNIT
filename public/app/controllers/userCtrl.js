@@ -168,12 +168,28 @@ angular.module('userCtrl',['userServices'])
 
     app.applyStatus = false;
     app.deleteSuccessMsg = '';
+    app.missedLastDate = true;
+
+    function checkDateDifference(deadline) {
+        var deadline_date = new Date(deadline);
+        var today = new Date();
+
+        if(deadline_date.getDate() < today.getDate() || deadline_date.getMonth() < today.getMonth() || deadline_date.getFullYear() < today.getFullYear()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     user.getCompanyDetails($routeParams.company_id).then(function (data) {
         console.log(data);
         if(data.data.success) {
             app.companyDetail = data.data.companyDetail;
-            //console.log(app.companyDetail)
+            if(checkDateDifference(app.companyDetail.deadline_date) === true) {
+                app.missedLastDate = true;
+            } else {
+                app.missedLastDate = false;
+            }
         }
     });
 

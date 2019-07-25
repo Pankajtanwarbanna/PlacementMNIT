@@ -29,7 +29,7 @@ module.exports = function (router){
         console.log(req.body);
 
         user.name = req.body.name;
-        user.college_id = req.body.college_id;
+        user.college_id = (req.body.college_id).toUpperCase();
         user.branch = req.body.branch;
         user.year = req.body.year;
         user.cgpa = req.body.cgpa;
@@ -129,7 +129,7 @@ module.exports = function (router){
             });
         } else {
 
-            User.findOne({ college_id : req.body.college_id }).select('college_id name password active').exec(function (err, user) {
+            User.findOne({ college_id : (req.body.college_id).toUpperCase() }).select('college_id name password active').exec(function (err, user) {
 
                 if(err) throw err;
 
@@ -965,6 +965,8 @@ module.exports = function (router){
                         message : 'Company not found.'
                     })
                 } else {
+                    // todo Check deadline date
+                    // todo check eligibility criteria 
                     company.candidates.push({college_id : req.decoded.college_id, timestamp : new Date()});
 
                     company.save(function (err) {
