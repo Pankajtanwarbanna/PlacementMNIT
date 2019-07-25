@@ -96,10 +96,16 @@ angular.module('userServices',[])
         return $http.post('/api/postCompanyDetails', newCompanyData);
     };
 
-    // get all companies from db
-    userFactory.getAllCompanies = function () {
-        return $http.get('/api/getAllCompanies');
+    // get all upcoming companies from db
+    userFactory.getAllUpcomingCompanies = function () {
+        return $http.get('/api/getAllUpcomingCompanies');
     };
+
+    // get all previous companies from db
+    userFactory.getAllPreviousCompanies = function () {
+        return $http.get('/api/getAllPreviousCompanies');
+    };
+
 
     // get company detail
     userFactory.getCompanyDetails = function (company_id) {
@@ -169,6 +175,11 @@ angular.module('userServices',[])
     // get company result
     userFactory.getCompanyResult = function (company_id) {
         return $http.get('/api/getCompanyResult/'+company_id);
+    };
+
+    // get user profile from database
+    userFactory.getUserProfile = function () {
+        return $http.get('/api/getUserProfile');
     };
 
     return userFactory;

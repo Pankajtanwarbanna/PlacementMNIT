@@ -10,12 +10,12 @@
     <div class="col-lg-4 col-xlg-3 col-md-5">
         <div class="card">
             <div class="card-body">
-                <center class="m-t-30"> <img src="../assets/images/users/pankaj-tanwar.jpg" class="img-circle" width="150" />
-                    <h4 class="card-title m-t-10">Pankaj Tanwar</h4>
-                    <h6 class="card-subtitle">Computer Science Student</h6>
-                    <div class="row text-center justify-content-md-center">
-                        <div class="col-4"><a href="javascript:void(0)" class="link"><i class="icon-people"></i> <font class="font-medium">254</font></a></div>
-                        <div class="col-4"><a href="javascript:void(0)" class="link"><i class="icon-picture"></i> <font class="font-medium">54</font></a></div>
+                <center class="m-t-30">
+                    <img src="assets/images/profile/{{ main.gender }}.png" class="img-circle" width="150" />
+                    <h4 class="card-title m-t-10">{{ main.name }}</h4>
+                    <h6 class="card-subtitle">{{ main.department }} Student</h6>
+                    <div class="row text-center">
+                        <div class="col-12"><a href="#" class="link"><i class="ti-location-pin"></i> <font class="font-medium">MNIT Jaipur</font></a></div>
                     </div>
                 </center>
             </div>
@@ -50,7 +50,7 @@
                             </div>
                             <hr>-->
                             <div class="sl-item">
-                                <div class="sl-left"> <img src="../assets/images/users/1.jpg" alt="user" class="img-circle" /> </div>
+                                <div class="sl-left"> <img src="assets/images/timeline.jpg" alt="user" class="img-circle" /> </div>
                                 <div class="sl-right">
                                     <div><a href="javascript:void(0)" class="link">{{registration.company_name}}</a> <span class="sl-date"> {{registration.timestamp | date : 'dd MMMM yyyy'}}</span>
                                         <div class="row">
@@ -61,8 +61,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div ng-if="{{ timeline.timelineData.length }} == '0'">
-                            <h5> Nothing right here!</h5>
+                        <div ng-show="timeline.timelineLengthZero">
+                            <h5> Nothing right here! Start applying.</h5>
                         </div>
                     </div>
                 </div>

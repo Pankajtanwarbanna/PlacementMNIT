@@ -14,8 +14,6 @@ angular.module('mainController', ['authServices'])
 
     $rootScope.$on('$routeChangeStart', function (event, next, current) {
 
-        console.log('user is changing routes');
-
         //console.log($window.location.pathname);
         //console.log(next.$$route);
         if(next.$$route) {
@@ -39,6 +37,9 @@ angular.module('mainController', ['authServices'])
                 //console.log(data);
                 app.name = data.data.name;
                 app.college_id = data.data.college_id;
+                app.gender = data.data.gender;
+                app.department = data.data.department;
+
                 user.getPermission().then(function (data) {
 
                     app.permission = data.data.permission;

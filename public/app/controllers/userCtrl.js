@@ -53,38 +53,26 @@ angular.module('userCtrl',['userServices'])
 
     var app = this;
 
-    $scope.alwaysTrue = true;
+    app.noUpcomingCompanies = false;
+    app.noPreviousCompanies = false;
 
-    $scope.checkDate = function(date) {
-        //console.log(date);
-        if(new Date(date) >= new Date()) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    $scope.checkPreviousDate = function(date) {
-        //console.log(date);
-        if(new Date(date) >= new Date()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    $scope.scrollToDiv = function(divID) {
-        console.log('testing scroll div function    ');
-        console.log(app.divID);
-        $location.hash(divID);
-        event.preventDefault();
-        $anchorScroll();
-    }
-
-    user.getAllCompanies().then(function (data) {
+    user.getAllUpcomingCompanies().then(function (data) {
         //console.log(data);
         if(data.data.success) {
-            app.companies = data.data.companies;
+            app.upcomingCompanies = data.data.companies;
+            if(app.upcomingCompanies.length === 0) {
+                app.noUpcomingCompanies = true;
+            }
+        }
+    });
+
+    user.getAllPreviousCompanies().then(function (data) {
+        //console.log(data);
+        if(data.data.success) {
+            app.previousCompanies = data.data.companies;
+            if(app.previousCompanies.length === 0) {
+                app.noPreviousCompanies = true;
+            }
         }
     });
 })
@@ -413,17 +401,32 @@ angular.module('userCtrl',['userServices'])
 
 // User Profile Controller
 .controller('profileCtrl', function (user) {
-    console.log('profile page testing');
+
+    var app = this;
+
+    user.getUserProfile().then(function (data) {
+        console.log(data);
+        if(data.data.success) {
+            app.userProfile = data.data.profile;
+        }
+    });
 })
 
 // User timeline controller
 .controller('timelineCtrl', function (user) {
     var app = this;
 
+    app.timelineLengthZero = false;
+
     user.getTimeline().then(function (data) {
         console.log(data);
         if(data.data.success) {
             app.timelineData = data.data.candidateTimeline;
+            if(app.timelineData.length === 0) {
+                app.timelineLengthZero = true;
+            } else {
+                app.timelineLengthZero = false;
+            }
         }
     })
 });

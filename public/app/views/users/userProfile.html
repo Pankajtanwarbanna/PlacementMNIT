@@ -1,6 +1,6 @@
 <div class="row page-titles">
     <div class="col-md-5 align-self-center">
-        <h4 class="text-themecolor">User Profile</h4>
+        <h4 class="text-themecolor">Student Profile</h4>
     </div>
 </div>
 <!-- ============================================================== -->
@@ -16,11 +16,11 @@
         <div class="card">
             <div class="card-body">
                 <center class="m-t-30">
-                    <img src="assets/images/users/pankaj-tanwar.jpg" class="img-circle" width="150" />
-                    <h4 class="card-title m-t-10">Pankaj Tanwar</h4>
-                    <h6 class="card-subtitle">Computer Science Student</h6>
+                    <img src="assets/images/profile/{{ profile.userProfile.gender }}.png" class="img-circle" width="150" />
+                    <h4 class="card-title m-t-10">{{ profile.userProfile.name }}</h4>
+                    <h6 class="card-subtitle">{{ profile.userProfile.department }} Student</h6>
                     <div class="row text-center">
-                        <div class="col-12"><a href="#" class="link"><i class=" icon-briefcase"></i> <font class="font-medium">FollowClass Intern</font></a></div>
+                        <div class="col-12"><a href="#" class="link"><i class="ti-location-pin"></i> <font class="font-medium">MNIT Jaipur</font></a></div>
                     </div>
                 </center>
             </div>
@@ -28,15 +28,15 @@
                 <hr> </div>
             <div class="card-body">
                 <small class="text-muted">Email address </small>
-                <h6>2016ucp1381@mnit.ac.in</h6>
+                <h6>{{ profile.userProfile.college_email }}</h6>
                 <small class="text-muted p-t-30 db">Contact No.</small>
-                <h6>+91 7740996673</h6>
+                <h6>+91 {{ profile.userProfile.contact_no }}</h6>
                 <small class="text-muted p-t-30 db">Address</small>
                 <h6>Village - Kurbara, Behind Aravali College, Neemkathana</h6>
 
                 <small class="text-muted p-t-30 db">Social Profile</small>
                 <br/>
-                <a href="/">
+                <a href="#">
                     <button class="btn btn-circle btn-secondary"><i class="icon-social-linkedin"></i></button>
                 </a>
             </div>
@@ -60,7 +60,7 @@
                                     <div class="form-group">
                                         <label class="col-md-12">Name</label>
                                         <div class="col-md-12">
-                                            <input type="text" placeholder="Enter your name" class="form-control form-control-line" value="Pankaj Tanwar">
+                                            <input type="text" placeholder="Enter your name" class="form-control form-control-line" value="{{ profile.userProfile.name }}">
                                         </div>
                                     </div>
                                 </div>
@@ -68,7 +68,7 @@
                                     <div class="form-group">
                                         <label class="col-md-12">College ID</label>
                                         <div class="col-md-12">
-                                            <input type="text" placeholder="Enter your college ID" class="form-control form-control-line" value="2016ucp1381">
+                                            <input type="text" placeholder="Enter your college ID" class="form-control form-control-line" value="{{ profile.userProfile.college_id }}">
                                         </div>
                                     </div>
                                 </div>
@@ -77,17 +77,17 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label class="col-md-12">Branch </label>
+                                        <label class="col-md-12">Degree</label>
                                         <div class="col-md-12">
-                                            <input type="text" placeholder="Enter your branch" class="form-control form-control-line" value="Computer Science">
+                                            <input type="text" placeholder="Enter your degree" class="form-control form-control-line" value="{{ profile.userProfile.degree }}">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label class="col-md-12">Year</label>
+                                        <label class="col-md-12">Branch </label>
                                         <div class="col-md-12">
-                                            <input type="text" placeholder="Enter your current year" class="form-control form-control-line" value="3rd Year">
+                                            <input type="text" placeholder="Enter your branch" class="form-control form-control-line" value="{{ profile.userProfile.department }}">
                                         </div>
                                     </div>
                                 </div>
@@ -98,7 +98,7 @@
                                     <div class="form-group">
                                         <label class="col-md-12">Personal Email</label>
                                         <div class="col-md-12">
-                                            <input type="text" placeholder="Enter your personal email" class="form-control form-control-line" value="pankaj.tanwar510@gmail.com">
+                                            <input type="text" placeholder="Enter your personal email" class="form-control form-control-line" value="{{ profile.userProfile.alternate_email }}">
                                         </div>
                                     </div>
                                 </div>

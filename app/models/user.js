@@ -34,23 +34,22 @@ var passwordValidator = [
 var userSchema = new mongoose.Schema({
     name : {
         type : String,
-        required : true,
-        validate: nameValidator
+        required : true
     },
     college_id : {
         type : String,
         required : true,
         unique : true
     },
-    branch : {
+    program : {
         type : String,
         required : true
     },
-    year : {
+    gender : {
         type : String,
         required : true
     },
-    cgpa : {
+    status : {
         type : String,
         required : true
     },
@@ -58,16 +57,31 @@ var userSchema = new mongoose.Schema({
         type : String,
         required : true
     },
+    college_email : {
+        type : String,
+        required : true
+    },
+    alternate_email : {
+        type : String,
+        required : true
+    },
+    degree : {
+        type : String,
+        required : true
+    },
+    department : {
+        type : String,
+        required : true
+    },
     password : {
         type : String,
         required : true,
-        validate : passwordValidator,
         select : false
     },
     active : {
         type : Boolean,
         required : true,
-        default : false
+        default : true
     },
     temporarytoken : {
         type : String,

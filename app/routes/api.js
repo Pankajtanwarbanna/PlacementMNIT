@@ -572,7 +572,7 @@ module.exports = function (router){
 
         //console.log(req.decoded.email);
         // getting profile of user from database using email, saved in the token in localStorage
-        User.findOne({ college_id : req.decoded.college_id }).select('college_id name').exec(function (err, user) {
+        User.findOne({ college_id : req.decoded.college_id }).select('college_id name gender department').exec(function (err, user) {
             if(err) throw err;
 
             if(!user) {
@@ -800,7 +800,7 @@ module.exports = function (router){
     });
 
     // get companies details from db
-    router.get('/getAllCompanies', function (req, res) {
+    router.get('/getAllUpcomingCompanies', function (req, res) {
 
         if(!req.decoded.college_id) {
             res.json({
@@ -809,7 +809,41 @@ module.exports = function (router){
             });
         } else {
             // todo Add here validation according to branch, cgpa etc
-            Company.find({ }).select('company_name job_profile package deadline_date').exec(function (err, companies) {
+            Company.find({ deadline_date : { $gte: new Date() -1 }}).select('company_name job_profile package deadline_date').exec(function (err, companies) {
+                if(err) {
+                    res.json({
+                        success : false,
+                        message : 'Error while getting data from database.'
+                    });
+                }
+
+                if(!companies) {
+                    res.json({
+                        success : false,
+                        message : 'Companies not found.'
+                    });
+                } else {
+                    res.json({
+                        success : true,
+                        companies : companies
+                    })
+                }
+            })
+        }
+    });
+
+    // get previous companies details from db
+    router.get('/getAllPreviousCompanies', function (req, res) {
+
+        if(!req.decoded.college_id) {
+            res.json({
+                success : false,
+                message : 'Please login.'
+            });
+        } else {
+            // todo Add here validation according to branch, cgpa etc
+
+            Company.find({ deadline_date : { $lt: new Date() }}).select('company_name job_profile package deadline_date').exec(function (err, companies) {
                 if(err) {
                     res.json({
                         success : false,
@@ -1543,6 +1577,36 @@ module.exports = function (router){
         }
     })
 
+    // get user profile details
+    router.get('/getUserProfile', function (req, res) {
+        if(!req.decoded.college_id) {
+            res.json({
+                success : false,
+                message : 'Please login'
+            })
+        } else {
+            User.findOne({ college_id : req.decoded.college_id}, function (err, user) {
+                if(err) {
+                    res.json({
+                        success : false,
+                        message : 'Database error'
+                    })
+                }
+
+                if(!user) {
+                    res.json({
+                        success : false,
+                        message : 'User not found.'
+                    })
+                } else {
+                    res.json({
+                        success : true,
+                        profile : user
+                    })
+                }
+            })
+        }
+    })
 
     return router;
 };

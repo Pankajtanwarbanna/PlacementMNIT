@@ -4,17 +4,17 @@
     </div>
 
 
-    <div class="col-md-7 align-self-center text-right">
+    <!--<div class="col-md-7 align-self-center text-right">
         <div class="d-flex justify-content-end align-items-center">
             <button type="button" class="btn btn-primary d-none d-lg-block m-l-15" ng-click="scrollToDiv('previousCompanies');">Previous Companies</a></button>
         </div>
-    </div>
+    </div>-->
 </div>
 
 <div class="row">
     <!-- Column -->
-    <div class="col-lg-6 col-md-6" ng-repeat="company in companyRegistration.companies | orderBy : 'deadline_date'">
-        <div class="card cc-widget" ng-hide="alwaysTrue && checkDate(company.deadline_date);">
+    <div class="col-lg-4 col-md-6" ng-repeat="company in companyRegistration.upcomingCompanies | orderBy : 'deadline_date'">
+        <div class="card cc-widget">
             <div class="card-body">
                 <div class="d-flex no-block flex-row">
                     <div class="round align-self-center round-success m-t-10 m-b-10"><i class="ti-briefcase"></i></div>
@@ -38,6 +38,15 @@
             </div>
         </div>
     </div>
+    <div class="col-md-12" ng-show="noUpcomingCompanies">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h3 class="card-title">No upcoming companies!</h3>
+                <p class="card-text">Placement & Training Cell will update you soon.</p>
+                <!--<a href="javascript:void(0)" class="btn btn-dark">Go somewhere</a>-->
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="row page-titles" id="previousCompanies">
@@ -46,17 +55,17 @@
     </div>
 
 
-    <div class="col-md-7 align-self-center text-right" ng-show="main.authorized">
+    <!--<div class="col-md-7 align-self-center text-right">
         <div class="d-flex justify-content-end align-items-center">
             <button type="button" class="btn btn-primary d-none d-lg-block m-l-15" ng-click="scrollToDiv('upcomingCompanies');">Upcoming Companies</a></button>
         </div>
-    </div>
+    </div>-->
 </div>
 
 <div class="row">
     <!-- Column -->
-    <div class="col-lg-6 col-md-6" ng-repeat="company in companyRegistration.companies | orderBy : 'deadline_date'">
-        <div class="card cc-widget" ng-hide="alwaysTrue && checkPreviousDate(company.deadline_date);">
+    <div class="col-lg-4 col-md-6" ng-repeat="company in companyRegistration.previousCompanies | orderBy : 'deadline_date'">
+        <div class="card cc-widget">
             <div class="card-body">
                 <div class="d-flex no-block flex-row">
                     <div class="round align-self-center round-success m-t-10 m-b-10"><i class="ti-briefcase"></i></div>
@@ -77,6 +86,16 @@
                 <div class="text-center">
                     <a href="/company/{{company._id}}"><button type="button" class="btn btn-info btn-rounded"><span ng-show="!main.authorized">Apply Now</span><span ng-show="main.authorized">Edit Now</span></button></a>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12" ng-show="noPreviousCompanies">
+        <div class="card text-white bg-danger">
+            <div class="card-body">
+                <h3 class="card-title">No previous companies!</h3>
+                <p class="card-text">No companies visited till now for campus recruitment.</p>
+                <!--<a href="javascript:void(0)" class="btn btn-dark">Go somewhere</a>-->
             </div>
         </div>
     </div>
