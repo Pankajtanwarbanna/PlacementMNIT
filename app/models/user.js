@@ -32,7 +32,7 @@ var passwordValidator = [
 ];
 
 var userSchema = new mongoose.Schema({
-    name : {
+    student_name : {
         type : String,
         required : true
     },

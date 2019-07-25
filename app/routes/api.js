@@ -572,7 +572,7 @@ module.exports = function (router){
 
         //console.log(req.decoded.email);
         // getting profile of user from database using email, saved in the token in localStorage
-        User.findOne({ college_id : req.decoded.college_id }).select('college_id name gender department').exec(function (err, user) {
+        User.findOne({ college_id : req.decoded.college_id }).select('college_id student_name gender department').exec(function (err, user) {
             if(err) throw err;
 
             if(!user) {

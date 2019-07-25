@@ -35,7 +35,7 @@ angular.module('mainController', ['authServices'])
             app.isLoggedIn = true;
             auth.getUser().then(function (data){
                 //console.log(data);
-                app.name = data.data.name;
+                app.student_name = data.data.student_name;
                 app.college_id = data.data.college_id;
                 app.gender = data.data.gender;
                 app.department = data.data.department;
