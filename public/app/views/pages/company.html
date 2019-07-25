@@ -307,8 +307,13 @@
                     <h4 class="modal-title" id="scheduleCompanyModal1">{{ company.companyDetail.company_name }}'s Schedule</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
-                    <div class="modal-body" ng-repeat="schedule in company.companyScheduleData | orderBy : 'date_time'">
-                    <h4><b>{{ schedule.date_time | date : 'dd MMMM yyyy h:mm a' }} </b>: {{ schedule.schedule_info}}</h4>
+                <div class="modal-body">
+                    <div class="card" ng-repeat="schedule in company.companyScheduleData | orderBy : 'date_time'">
+                        <h4><b>{{ schedule.date_time | date : 'dd MMMM yyyy h:mm a' }} </b>: {{ schedule.schedule_info}}</h4>
+                    </div>
+                    <div ng-show="company.noCompanySchedule">
+                        <h4 class="text-danger text-center">No schedule yet!</h4>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -326,8 +331,13 @@
                     <h4 class="modal-title" id="notificationsCompanyModal1">{{ company.companyDetail.company_name}}'s Notifications</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
-                <div class="modal-body" ng-repeat="notification in company.companyNotificationsData">
-                    <h4><i class="ti-bell"></i> &nbsp; {{ notification.notification }}</h4>
+                <div class="modal-body">
+                    <div class="card" ng-repeat="notification in company.companyNotificationsData | orderBy : '-timestamp'">
+                        <h4><i class="ti-bell"></i> &nbsp; {{ notification.notification }}</h4>
+                    </div>
+                    <div ng-show="company.noCompanyNotification">
+                        <h4 class="text-danger text-center">No notifications yet!</h4>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -362,6 +372,9 @@
                                 <p>*{{ result.result_message}}</p>
                             </div>
                         </div>
+                    </div>
+                    <div ng-show="company.noCompanyResult">
+                        <h4 class="text-danger text-center">Result not declared yet!</h4>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -525,7 +538,7 @@
         <button ng-disabled="company.applyStatus" type="button" id="oneClickApplyButton" class="btn btn-success btn-rounded" data-toggle="modal" data-target="#applyNowCompanyModal"><i class="ti-check-box" id="oneClickApplyIcon"></i> &nbsp; One Click Apply</button>
     </div>
 
-    <div style="text-align: center; margin-bottom: 20px;" ng-show="!main.authorized && company.missedLastDate">
+    <div style="text-align: center; margin-bottom: 20px;" ng-show="!main.authorized && company.missedLastDate && !company.applyStatus">
         <button ng-disabled="company.missedLastDate" type="button" class="btn btn-danger btn-rounded" data-toggle="modal"><i class="ti-close"></i> &nbsp; Oops! You missed it.</button>
     </div>
 

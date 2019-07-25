@@ -193,12 +193,21 @@ angular.module('userCtrl',['userServices'])
         }
     });
 
+    app.noCompanySchedule = true;
+    app.noCompanyNotification = true;
+    app.noCompanyResult = true;
+
     // get company schedule
     user.getCompanySchedule($routeParams.company_id).then(function (data) {
         console.log(data);
         if(data.data.success) {
             app.companyScheduleData = data.data.schedule;
-        }
+            if(app.companyScheduleData.length === 0) {
+                app.noCompanySchedule = true;
+            } else {
+                app.noCompanySchedule = false;
+            }
+         }
     });
 
     // get company notifications
@@ -206,6 +215,11 @@ angular.module('userCtrl',['userServices'])
         console.log(data);
         if(data.data.success) {
             app.companyNotificationsData = data.data.notifications;
+            if(app.companyNotificationsData.length === 0) {
+                app.noCompanyNotification = true;
+            } else {
+                app.noCompanyNotification = false;
+            }
         }
     });
 
@@ -324,6 +338,11 @@ angular.module('userCtrl',['userServices'])
         console.log(data);
         if(data.data.success) {
             app.companyResult = data.data.result;
+            if(app.companyResult.length === 0) {
+                app.noCompanyResult = true;
+            } else {
+                app.noCompanyResult = false;
+            }
         }
     })
 

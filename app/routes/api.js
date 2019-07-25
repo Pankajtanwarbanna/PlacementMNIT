@@ -966,7 +966,7 @@ module.exports = function (router){
                     })
                 } else {
                     // todo Check deadline date
-                    // todo check eligibility criteria 
+                    // todo check eligibility criteria
                     company.candidates.push({college_id : req.decoded.college_id, timestamp : new Date()});
 
                     company.save(function (err) {
