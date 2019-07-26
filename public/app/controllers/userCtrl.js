@@ -75,6 +75,17 @@ angular.module('userCtrl',['userServices'])
             }
         }
     });
+
+	app.profileComplete = false;
+
+	user.checkCompleteProfile().then(function (data) {
+	   console.log(data);
+	   if(data.data.success) {
+		   app.profileComplete = true;
+	   } else {
+		   app.profileComplete = false;
+	   }
+	})
 })
 
 // Add new company controller
@@ -437,14 +448,29 @@ angular.module('userCtrl',['userServices'])
 // User Profile Controller
 .controller('profileCtrl', function (user) {
 
-    var app = this;
+	var app = this;
 
-    user.getUserProfile().then(function (data) {
-        console.log(data);
-        if(data.data.success) {
-            app.userProfile = data.data.profile;
-        }
-    });
+	app.profileUpdateSuccessMsg = '';
+	app.profileUpdateErrorMsg = '';
+
+	user.getUserProfile().then(function (data) {
+		console.log(data);
+		if(data.data.success) {
+		    app.userProfile = data.data.profile;
+		}
+	});
+
+	app.updateProfile = function (profileData) {
+		console.log(app.profileData);
+		user.updateProfile(app.profileData).then(function (data) {
+		    console.log(data);
+		    if(data.data.success) {
+		        app.profileUpdateSuccessMsg = data.data.message;
+		    } else {
+		        app.profileUpdateErrorMsg = data.data.message;
+		    }
+		});
+	}
 })
 
 // User timeline controller

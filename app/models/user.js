@@ -34,58 +34,81 @@ var passwordValidator = [
 var userSchema = new mongoose.Schema({
     student_name : {
         type : String,
-        required : true
     },
     college_id : {
         type : String,
-        required : true,
         unique : true
     },
     program : {
         type : String,
-        required : true
     },
     gender : {
         type : String,
-        required : true
     },
     status : {
         type : String,
-        required : true
     },
     contact_no : {
         type : String,
-        required : true
     },
     college_email : {
         type : String,
-        required : true
     },
     alternate_email : {
         type : String,
-        required : true
     },
     degree : {
         type : String,
-        required : true
     },
     department : {
         type : String,
-        required : true
     },
+    // to add in Placement-MNIT
+    matric_marks : {
+        type : String
+    },
+    matric_board : {
+        type : String
+    },
+    senior_marks : {
+        type : String
+    },
+    senior_board : {
+        type : String
+    },
+    alternate_contact_no : {
+        type : String
+    },
+    address : {
+        type : String
+    },
+    city : {
+        type : String
+    },
+    post_code : {
+        type : String
+    },
+    state : {
+        type : String
+    },
+    country : {
+        type : String
+    },
+    linkedln_link : {
+        type : String
+    },
+    // till here
+
     password : {
         type : String,
-        required : true,
         select : false
     },
     active : {
         type : Boolean,
-        required : true,
         default : true
     },
     temporarytoken : {
         type : String,
-        required : true
     },
     permission : {
         type : String,
@@ -114,7 +137,8 @@ userSchema.pre('save', function (next) {
 
 // Mongoose title case plugin
 userSchema.plugin(titlize, {
-    paths: [ 'name' ], // Array of paths
+    // addition here also
+    paths: [ 'student_name','address','city','state','country' ], // Array of paths
 });
 
 // Password compare method
@@ -123,3 +147,4 @@ userSchema.methods.comparePassword = function(password){
 };
 
 module.exports = mongoose.model('User',userSchema);
+

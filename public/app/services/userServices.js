@@ -182,5 +182,15 @@ angular.module('userServices',[])
         return $http.get('/api/getUserProfile');
     };
 
+	// update user profile
+	userFactory.updateProfile = function (profileData) {
+		return $http.put('/api/updateProfile', profileData);
+	};
+
+	// check profile is complete or not
+	userFactory.checkCompleteProfile = function () {
+	   return $http.get('/api/checkCompleteProfile');
+	}
+
     return userFactory;
 });

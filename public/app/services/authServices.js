@@ -23,6 +23,7 @@ angular.module('authServices',[])
         }
     };
 
+
     // auth.getUser();
     authFactory.getUser = function () {
         if(authToken.getToken()) {

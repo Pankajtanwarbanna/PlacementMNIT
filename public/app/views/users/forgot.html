@@ -1,62 +1,40 @@
-<div>
-    <h1 class="text-center">
-        Forgot something?
-    </h1>
+<div class="row page-titles">
+   <div class="col-md-5 align-self-center">
+       <h4 class="text-themecolor">Forgot or Reset Password ?</h4>
+   </div>
 </div>
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+   <div class="col-12">
+       <div class="card">
+           <div class="card-body">
+               <h4 class="card-title">MNIT Placement Portal Reset Password</h4>
+               <h6 class="card-subtitle">reset password for the placement session</h6>
+               <form class="form-material m-t-40" ng-submit="forgot.forgotPassword(logData);">
+                   <div class="form-group">
+                       <label>College ID </label>
+                       <input ng-disabled="forgot.disabledPassword" type="text" class="form-control form-control-line" placeholder="Enter your college id" ng-model="forgot.logData.college_id" required>
+                   </div>
 
-<div class="row about">
-    <div class="col-sm-6">
-        <p class="text-center">Forgot Username ?</p>
+                   <div class="alert alert-success alert-rounded" ng-show="forgot.successMsgPassword">
+                       <i class="icon-check"></i>
+                       <strong> Yay!</strong> {{ forgot.successMsgPassword }}
+                   </div>
 
-        <br>
-        <form ng-submit="forgot.forgotUsername(logData)">
-            <label>Enter Email :</label>
-            <br>
-            <input ng-disabled="forgot.disabledUsername" class="form-control" type="email" placeholder="Enter email" ng-model="forgot.logData.email" required>
-            <br>
-            <button ng-disabled="forgot.disabledUsername" class="btn btn-primary">Submit</button>
-        </form>
+                   <div class="alert alert-danger alert-rounded" ng-show="forgot.errorMsgPassword">
+                       <i class="icon-close"></i>
+                       <strong>Oops! </strong> {{ forgot.errorMsgPassword }}
+                   </div>
 
-        <br>
-        <div class="row show-hide-message">
-            <div class="alert alert-success" ng-show="forgot.successMsgUsername">
-                <strong> Success! </strong> {{ forgot.successMsgUsername  }}
-            </div>
-        </div>
+                   <button ng-disabled="forgot.disabledPassword" type="submit" class="btn btn-success btn-rounded">Submit</button>
+                   <a href="/login" class="text-danger p-l-5">Login ?</a>
 
-        <div class="row show-hide-message">
-            <div class="alert alert-danger" ng-show="forgot.errorMsgUsername">
-                <strong> Oops! </strong> {{ forgot.errorMsgUsername  }}
-            </div>
-        </div>
-
-    </div>
-    <div class="col-sm-6">
-        <p class="text-center">Forgot Password ?</p>
-
-        <br>
-        <form ng-submit="forgot.forgotPassword(logData);">
-            <label>Enter Username :</label>
-            <br>
-            <input ng-disabled="forgot.disabledPassword" class="form-control" type="text" placeholder="Enter username" ng-model="forgot.logData.username" required>
-            <br>
-            <button ng-disabled="forgot.disabledPassword" class="btn btn-primary">Submit</button>
-        </form>
-
-        <br>
-        <div class="row show-hide-message">
-            <div class="alert alert-success" ng-show="forgot.successMsgPassword">
-                <strong> Success! </strong> {{ forgot.successMsgPassword  }}
-            </div>
-        </div>
-
-        <div class="row show-hide-message">
-            <div class="alert alert-danger" ng-show="forgot.errorMsgPassword">
-                <strong> Oops! </strong> {{ forgot.errorMsgPassword  }}
-            </div>
-        </div>
-
-    </div>
+               </form>
+           </div>
+       </div>
+   </div>
 </div>
 
 

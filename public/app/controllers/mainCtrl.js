@@ -65,7 +65,6 @@ angular.module('mainController', ['authServices'])
 
     });
 
-
     this.doLogin = function (logData) {
         //console.log(this.logData);
         app.successMsg = '';

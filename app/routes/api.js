@@ -381,14 +381,14 @@ module.exports = function (router){
     // Send link to email id for reset password
     router.put('/forgotPasswordLink', function (req,res) {
 
-        if(!req.body.username) {
+        if(!req.body.college_id) {
             res.json({
                 success : false,
                 message : 'Please ensure you filled the entries.'
             });
         } else {
 
-            User.findOne({ username : req.body.username }).select('username email temporarytoken name').exec(function (err,user) {
+            User.findOne({ college_id : req.body.college_id }).select('college_id email temporarytoken student_name').exec(function (err,user) {
                 if(err) throw err;
 
                 if(!user) {
@@ -401,8 +401,8 @@ module.exports = function (router){
                     console.log(user.temporarytoken);
 
                     user.temporarytoken = jwt.sign({
-                        email: user.email,
-                        username: user.username
+                        student_name: user.student_name,
+                        college_id: user.college_id
                     }, secret);
 
                     console.log(user.temporarytoken);
@@ -1609,6 +1609,122 @@ module.exports = function (router){
             })
         }
     })
+
+	// update user profile
+	router.put('/updateProfile', function (req, res) {
+		if(!req.decoded.college_id) {
+		    res.json({
+		        success : false,
+		        message : 'Please login.'
+		    })
+		} else {
+		    User.findOne({ college_id : req.decoded.college_id }, function (err, user) {
+		        if(err) {
+		            res.json({
+		                success : false,
+		                message : 'Error from database.'
+		            })
+		        }
+
+		        if(!user) {
+		            res.json({
+		                success : false,
+		                message : 'User not found.'
+		            })
+		        } else {
+
+		            if(req.body.matric_marks) {
+		                user.matric_marks = req.body.matric_marks;
+		            }
+		            if(req.body.matric_board) {
+		                user.matric_board = req.body.matric_board;
+		            }
+		            if(req.body.senior_marks) {
+		                user.senior_marks = req.body.senior_marks;
+		            }
+		            if(req.body.senior_board) {
+		                user.senior_board = req.body.senior_board;
+		            }
+		            if(req.body.alternate_contact_no) {
+		                user.alternate_contact_no = req.body.alternate_contact_no;
+		            }
+		            if(req.body.address) {
+		                user.address = req.body.address;
+		            }
+		            if(req.body.city) {
+		                user.city = req.body.city;
+		            }
+		            if(req.body.post_code) {
+		                user.post_code = req.body.post_code;
+		            }
+		            if(req.body.state) {
+		                user.state = req.body.state;
+		            }
+		            if(req.body.country) {
+		                user.country = req.body.country;
+		            }
+		            if(req.body.linkedln_link) {
+		                user.linkedln_link = req.body.linkedln_link;
+		            }
+
+		            user.save(function (err) {
+		                if(err) {
+		                    console.log(err);
+		                    res.json({
+		                        success : false,
+		                        message : 'Error while saving to database.'
+		                    })
+		                } else {
+		                    res.json({
+		                        success : true,
+		                        message : 'Profile Successfully updated.'
+		                    })
+		                }
+		            })
+		        }
+		    })
+		}
+	})
+
+	// check profile is complete or not
+	router.get('/checkCompleteProfile', function (req, res) {
+	   if(!req.decoded.college_id) {
+		   res.json({
+		       success : false,
+		       message : 'Please login.'
+		   })
+	   } else {
+		   User.findOne({ college_id : req.decoded.college_id }, function (err, user) {
+		       if(err) {
+		           res.json({
+		               success : false,
+		               message : 'Error from database.'
+		           })
+		       }
+		      
+		       if(!user) {
+		           res.json({
+		               success : false,
+		               message : 'User not found'
+		           })
+		       } else {
+		           if(!user.matric_marks || !user.matric_board || !user.senior_marks || !user.senior_board || !user.alternate_contact_no || !user.address || !user.city || !user.post_code || !user.state || !user.country || !user.linkedln_link ) {
+		               res.json({
+		                   success : false,
+		                   message : 'Profile fields missing'
+		               })
+		           } else {
+		               res.json({
+		                   success : true,
+		                   message : 'Profile is complete!'
+		               })
+		           }
+		       }
+		   })
+	   }
+	})
+
+
 
     return router;
 };

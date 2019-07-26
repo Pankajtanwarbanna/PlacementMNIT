@@ -534,12 +534,16 @@
         </div>
     </div>
 
-    <div style="text-align: center; margin-bottom: 20px;" ng-show="!main.authorized && !company.missedLastDate">
+    <div style="text-align: center; margin-bottom: 20px;" ng-show="!main.authorized && !company.missedLastDate && main.profileComplete">
         <button ng-disabled="company.applyStatus" type="button" id="oneClickApplyButton" class="btn btn-success btn-rounded" data-toggle="modal" data-target="#applyNowCompanyModal"><i class="ti-check-box" id="oneClickApplyIcon"></i> &nbsp; One Click Apply</button>
     </div>
 
-    <div style="text-align: center; margin-bottom: 20px;" ng-show="!main.authorized && company.missedLastDate && !company.applyStatus">
+    <div style="text-align: center; margin-bottom: 20px;" ng-show="!main.authorized && company.missedLastDate && !company.applyStatus && main.profileComplete">
         <button ng-disabled="company.missedLastDate" type="button" class="btn btn-danger btn-rounded" data-toggle="modal"><i class="ti-close"></i> &nbsp; Oops! You missed it.</button>
+    </div>
+
+    <div style="text-align: center; margin-bottom: 20px;" ng-show="main.profileComplete">
+        <button ng-disabled="!main.profileComplete" type="button" class="btn btn-danger btn-rounded" data-toggle="modal"><i class="ti-close"></i> &nbsp; Update your profile first!</button>
     </div>
 
     <div class="row" ng-show="company.applyStatus">

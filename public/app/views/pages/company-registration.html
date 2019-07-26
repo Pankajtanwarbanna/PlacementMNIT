@@ -12,6 +12,18 @@
 </div>
 
 <div class="row">
+   <div class="col-md-12" ng-show="!companyRegistration.profileComplete && !main.authorized">
+       <div class="card text-white bg-success">
+           <div class="card-body">
+               <h3 class="card-title">Profile not updated!</h3>
+               <p class="card-text">Kindly update your profile to proceed further with company registration.</p>
+               <a href="/profile" class="btn btn-dark">Go to Profile Page</a>
+           </div>
+       </div>
+   </div>
+</div>
+
+<div class="row" ng-show="companyRegistration.profileComplete || main.authorized">
     <!-- Column -->
     <div class="col-lg-4 col-md-6" ng-repeat="company in companyRegistration.upcomingCompanies | orderBy : 'deadline_date'">
         <div class="card cc-widget">
@@ -49,7 +61,7 @@
     </div>
 </div>
 
-<div class="row page-titles" id="previousCompanies">
+<div class="row page-titles" id="previousCompanies" ng-show="companyRegistration.profileComplete || main.authorized"> 
     <div class="col-md-5 align-self-center">
         <h4 class="text-themecolor">Previous Companies</h4>
     </div>
@@ -62,7 +74,7 @@
     </div>-->
 </div>
 
-<div class="row">
+<div class="row" ng-show="companyRegistration.profileComplete || main.authorized">
     <!-- Column -->
     <div class="col-lg-4 col-md-6" ng-repeat="company in companyRegistration.previousCompanies | orderBy : 'deadline_date'">
         <div class="card cc-widget">
@@ -94,7 +106,7 @@
         <div class="card text-white bg-danger">
             <div class="card-body">
                 <h3 class="card-title">No previous companies!</h3>
-                <p class="card-text">No companies visited till now for campus recruitment.</p>
+                <p class="card-text">No companies visited till now for campus recruitment this session.</p>
                 <!--<a href="javascript:void(0)" class="btn btn-dark">Go somewhere</a>-->
             </div>
         </div>
