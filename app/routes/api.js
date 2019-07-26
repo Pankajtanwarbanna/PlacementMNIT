@@ -4,11 +4,19 @@
 var User = require('../models/user');
 var Schedule = require('../models/schedule');
 var Announcement = require('../models/announcement');
+var Feedback = require('../models/feedback');
 var Company = require('../models/company');
 var jwt = require('jsonwebtoken');
 var secret = 'placementmnit';
 var nodemailer = require('nodemailer');
 var sgTransport = require('nodemailer-sendgrid-transport');
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'ptcell@mnit.ac.in',
+        pass: 'ptcell2020'
+    }
+});
 const fs = require('fs');
 
 module.exports = function (router){
@@ -22,23 +30,30 @@ module.exports = function (router){
 
     var client = nodemailer.createTransport(sgTransport(options));
 
-    // User register API
+/*    // User register API
     router.post('/register',function (req, res) {
         var user = new User();
 
         console.log(req.body);
 
-        user.name = req.body.name;
-        user.college_id = (req.body.college_id).toUpperCase();
-        user.branch = req.body.branch;
-        user.year = req.body.year;
-        user.cgpa = req.body.cgpa;
-        user.contact_no = req.body.contact_no;
-        user.password = req.body.password;
-        user.temporarytoken = jwt.sign({ name : user.name , college_id : user.college_id }, secret);
+        user.student_name = 'PANKAJ TANWAR';
+        user.college_id = '2016UCP1381';
+        user.program = 'UG';
+        user.gender = 'M';
+        user.student_name = 'PANKAJ TANWAR';
+        user.contact_no = '7740996673';
+        user.college_email = '2016ucp1381@mnit.ac.in';
+        user.alternate_email = 'pankajtanwar510@gmail.com';
+        user.degree = 'B.Tech';
+        user.department = 'COMPUTER SCIENCE & ENGG.';
+        user.status = 'active';
+        user.cgpa = '6.91';
+
+        user.password = 'pankaj';
+        user.temporarytoken = jwt.sign({ student_name : user.student_name , college_id : user.college_id }, secret);
 
         //console.log(req.body);
-        if(!user.name || !user.college_id || !user.password || !user.branch || !user.year || !user.cgpa || !user.contact_no) {
+        if(!user.student_name || !user.college_id || !user.password) {
             res.json({
                 success : false,
                 message : 'Ensure you filled all entries!'
@@ -117,7 +132,7 @@ module.exports = function (router){
                 }
             });
         }
-    });
+    });*/
 
     // User login API
     router.post('/authenticate', function (req,res) {
@@ -153,7 +168,7 @@ module.exports = function (router){
                         if (validPassword) {
                             var token = jwt.sign({
                                 college_id : user.college_id,
-                                name: user.name
+                                student_name: user.student_name
                             }, secret);
                             res.json({
                                 success: true,
@@ -173,211 +188,6 @@ module.exports = function (router){
 
     });
 
-    router.put('/activate/:token', function (req,res) {
-
-        if(!req.params.token) {
-            res.json({
-                success : false,
-                message : 'No token provided.'
-            });
-        } else {
-
-            User.findOne({temporarytoken: req.params.token}, function (err, user) {
-                if (err) throw err;
-
-                var token = req.params.token;
-
-                jwt.verify(token, secret, function (err, decoded) {
-                    if (err) {
-                        res.json({
-                            success: false,
-                            message: 'Activation link has been expired.'
-                        })
-                    }
-                    else if (!user) {
-                        res.json({
-                            success: false,
-                            message: 'Activation link has been expired.'
-                        });
-                    } else {
-
-                        user.temporarytoken = false;
-                        user.active = true;
-
-                        user.save(function (err) {
-                            if (err) {
-                                console.log(err);
-                            } else {
-
-                                var email = {
-                                    from: 'Polymath Registration, support@polymath.com',
-                                    to: user.email,
-                                    subject: 'Activation activated',
-                                    text: 'Hello ' + user.name + 'Your account has been activated.Thank you Pankaj Tanwar CEO, Polymath',
-                                    html: 'Hello <strong>' + user.name + '</strong>,<br><br> Your account has been activated.<br><br>Thank you<br>Pankaj Tanwar<br>CEO, Polymath'
-                                };
-
-                                client.sendMail(email, function (err, info) {
-                                    if (err) {
-                                        console.log(err);
-                                    }
-                                    else {
-                                        console.log('Message sent: ' + info.response);
-                                    }
-                                });
-
-                                res.json({
-                                    success: true,
-                                    message: 'Account activated.'
-                                })
-
-                            }
-                        });
-                    }
-                });
-            })
-        }
-    });
-
-    // Resend activation link
-    router.post('/resend', function (req,res) {
-
-        if(!req.body.username || !req.body.password) {
-            res.json({
-                success : false,
-                message : 'Ensure you fill all the entries.'
-            });
-        } else {
-
-            User.findOne({ username : req.body.username }).select('name username email password active temporarytoken').exec(function (err,user) {
-
-                if(!user) {
-                    res.json({
-                        success : false,
-                        message : 'User is not registered with us.Please signup!'
-                    });
-                } else {
-                    if(user.active) {
-                        res.json({
-                            success : false,
-                            message : 'Account is already activated.'
-                        });
-                    } else {
-
-                        var validPassword = user.comparePassword(req.body.password);
-
-                        if(!validPassword) {
-                            res.json({
-                                success : false,
-                                message : 'Incorrect password.'
-                            });
-                        } else {
-                            res.json({
-                                success : true,
-                                user : user
-                            });
-
-                        }
-                    }
-                }
-            })
-        }
-    });
-
-    // router to update temporary token in the database
-    router.put('/sendlink', function (req,res) {
-
-        User.findOne({username : req.body.username}).select('email username name temporarytoken').exec(function (err,user) {
-            if (err) throw err;
-
-            user.temporarytoken = jwt.sign({
-                email: user.email,
-                username: user.username
-            }, secret);
-
-            user.save(function (err) {
-                if(err) {
-                    console.log(err);
-                } else {
-
-                    var email = {
-                        from: 'Polymath Registration, support@polymath.com',
-                        to: user.email,
-                        subject: 'Activation Link request - Polymath Registration',
-                        text: 'Hello '+ user.name + 'You requested for the new activation link.Please find the below activation link Activation link Thank you Pankaj Tanwar CEO, Polymath',
-                        html: 'Hello <strong>'+ user.name + '</strong>,<br><br>You requested for the new activation link.Please find the below activation link<br><br><a href="http://localhost:8080/activate/'+ user.temporarytoken+'">Activation link</a><br><br>Thank you<br>Pankaj Tanwar<br>CEO, Polymath'
-                    };
-
-                    client.sendMail(email, function(err, info){
-                        if (err ){
-                            console.log(err);
-                        }
-                        else {
-                            console.log('Message sent: ' + info.response);
-                        }
-                    });
-
-                    res.json({
-                        success : true,
-                        message : 'Link has been successfully sent to registered email.'
-                    });
-
-                }
-            })
-        });
-
-
-    });
-
-    // Forgot username route
-    router.post('/forgotUsername', function (req,res) {
-
-        if(!req.body.email) {
-            res.json({
-                success : false,
-                message : 'Please ensure you fill all the entries.'
-            });
-        } else {
-            User.findOne({email : req.body.email}).select('username email name').exec(function (err,user) {
-                if(err) throw err;
-
-                if(!user) {
-                    res.json({
-                        success : false,
-                        message : 'Email is not registered with us.'
-                    });
-                } else if(user) {
-
-                    var email = {
-                        from: 'Polymath, support@polymath.com',
-                        to: user.email,
-                        subject: 'Forgot Username Request',
-                        text: 'Hello '+ user.name + 'You requested for your username.You username is ' + user.username + 'Thank you Pankaj Tanwar CEO, Polymath',
-                        html: 'Hello <strong>'+ user.name + '</strong>,<br><br>You requested for your username.You username is <strong>'+ user.username + '</strong><br><br>Thank you<br>Pankaj Tanwar<br>CEO, Polymath'
-                    };
-
-                    client.sendMail(email, function(err, info){
-                        if (err ){
-                            console.log(err);
-                        }
-                        else {
-                            console.log('Message sent: ' + info.response);
-                        }
-                    });
-
-                    res.json({
-                        success : true,
-                        message : 'Username has been successfully sent to your email.'
-                    });
-                } else {
-                    res.send(user);
-                }
-
-            });
-        }
-
-    });
-
     // Send link to email id for reset password
     router.put('/forgotPasswordLink', function (req,res) {
 
@@ -388,7 +198,7 @@ module.exports = function (router){
             });
         } else {
 
-            User.findOne({ college_id : req.body.college_id }).select('college_id email temporarytoken student_name').exec(function (err,user) {
+            User.findOne({ college_id : (req.body.college_id).toUpperCase() }).select('college_id college_email temporarytoken student_name').exec(function (err,user) {
                 if(err) throw err;
 
                 if(!user) {
@@ -416,27 +226,30 @@ module.exports = function (router){
                         } else {
 
                             var email = {
-                                from: 'Polymath Registration, support@polymath.com',
-                                to: user.email,
-                                subject: 'Forgot Password Request',
-                                text: 'Hello '+ user.name + 'You request for the forgot password.Please find the below link Reset password Thank you Pankaj Tanwar CEO, Polymath',
-                                html: 'Hello <strong>'+ user.name + '</strong>,<br><br>You requested for the forgot password. Please find the below link<br><br><a href="http://localhost:8080/forgotPassword/'+ user.temporarytoken+'">Reset password</a><br><br>Thank you<br>Pankaj Tanwar<br>CEO, Polymath'
+                                from: '"Placement & Training Cell" <ptcell@mnit.ac.in>',
+                                to: user.college_email,
+                                subject: 'Reset Password Request : Placemet Cell, MNIT Jaipur',
+                                text: 'Hello '+ user.student_name + 'You requested for the reset password.Please find the below link Reset password With Regards, Prof. Mahendar Choudhary',
+                                html: 'Hello <strong>'+ user.student_name + '</strong>,<br><br>You requested for the reset password. Please find the below link<br><br><a href="http://localhost:8080/forgotPassword/'+ user.temporarytoken+'">Reset password</a><br><br>With Regards.<br><br>Prof. Mahender Choudhary<br>In-charge, Training & Placement<br>MNIT Jaipur<br>+91-141-2529065'
                             };
 
-                            client.sendMail(email, function(err, info){
+                            transporter.sendMail(email, function(err, info){
                                 if (err ){
                                     console.log(err);
+                                    res.json({
+                                        success : false,
+                                        message : 'Email service not working. Contact Admin.'
+                                    })
                                 }
                                 else {
                                     console.log('Message sent: ' + info.response);
+
+                                    res.json({
+                                        success : true,
+                                        message : 'Link to reset your password has been sent to your registered email.'
+                                    });
                                 }
                             });
-
-                            res.json({
-                                success : true,
-                                message : 'Link to reset your password has been sent to your registered email.'
-                            });
-
                         }
                     });
 
@@ -457,7 +270,7 @@ module.exports = function (router){
             });
         } else {
 
-            User.findOne({ temporarytoken : req.params.token }).select('username temporarytoken').exec(function (err,user) {
+            User.findOne({ temporarytoken : req.params.token }).select('college_id temporarytoken').exec(function (err,user) {
 
                 if(err) throw err;
 
@@ -479,8 +292,6 @@ module.exports = function (router){
     // route to reset password
     router.put('/resetPassword/:token', function (req,res) {
 
-        console.log('api is working fine');
-
         if(!req.body.password) {
             res.json({
                 success : false,
@@ -488,7 +299,7 @@ module.exports = function (router){
             })
         } else {
 
-            User.findOne({ temporarytoken : req.params.token }).select('name password').exec(function (err,user) {
+            User.findOne({ temporarytoken : req.params.token }).select('student_name password').exec(function (err,user) {
 
                 if(err) throw err;
 
@@ -510,28 +321,10 @@ module.exports = function (router){
                             });
                         } else {
 
-                            var email = {
-                                from: 'Polymath, support@polymath.com',
-                                to: user.email,
-                                subject: 'Password reset',
-                                text: 'Hello '+ user.name + 'You request for the reset password.Your password has been reset. Thank you Pankaj Tanwar CEO, Polymath',
-                                html: 'Hello <strong>'+ user.name + '</strong>,<br><br>You requested for the reset password. Your password has been reset.<br><br>Thank you<br>Pankaj Tanwar<br>CEO, Polymath'
-                            };
-
-                            client.sendMail(email, function(err, info){
-                                if (err ){
-                                    console.log(err);
-                                }
-                                else {
-                                    console.log('Message sent: ' + info.response);
-                                }
-                            });
-
                             res.json({
                                 success : true,
                                 message : 'Password has been changed successfully.'
                             })
-
                         }
                     })
                 }
@@ -1722,7 +1515,31 @@ module.exports = function (router){
 		       }
 		   })
 	   }
-	})
+	});
+
+    // send feedback
+    router.post('/sendFeedback', function (req, res) {
+
+        var feedback = new Feedback();
+
+        feedback.title = req.body.title;
+        feedback.feedback = req.body.feedback;
+
+        feedback.save(function (err) {
+            if(err) {
+                res.json({
+                    success : false,
+                    message : 'Database error'
+                })
+            } else {
+                res.json({
+                    success : true,
+                    message : 'Thank you for submitting feedback.'
+                })
+            }
+        })
+
+    })
 
 
 

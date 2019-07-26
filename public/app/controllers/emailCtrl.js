@@ -98,8 +98,8 @@ angular.module('emailController', ['userServices'])
 
    app.forgotPassword = function (logData) {
 
-       app.successMsgPassword = false;
-       app.errorMsgPassword = false;
+       app.successMsgPassword = 'Sending Email...';
+       app.errorMsgPassword = '';
        app.disabledPassword = true;
 
        //console.log(app.logData)

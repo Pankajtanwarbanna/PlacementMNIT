@@ -490,4 +490,49 @@ angular.module('userCtrl',['userServices'])
             }
         }
     })
-});
+})
+
+// technical controller
+.controller('technicalCtrl', function (user) {
+
+    var app = this;
+
+    app.feedbackTitle = '';
+    app.successMsg = '';
+    app.errorMsg = '';
+
+    app.selectFeedbackBox = function (id) {
+        document.getElementById(id).className = 'btn btn-' + id;
+        if(id==='danger') {
+            app.feedbackTitle = 'bug';
+            document.getElementById('info').className = 'btn btn-outline-info';
+            document.getElementById('primary').className = 'btn btn-outline-primary';
+        } else if(id==='info') {
+            app.feedbackTitle = 'suggestion';
+            document.getElementById('danger').className = 'btn btn-outline-danger';
+            document.getElementById('primary').className = 'btn btn-outline-primary';
+        } else {
+            app.feedbackTitle = 'compliment';
+            document.getElementById('info').className = 'btn btn-outline-info';
+            document.getElementById('danger').className = 'btn btn-outline-danger';
+        }
+    }
+
+    app.sendFeedback = function (feedbackData) {
+        console.log(app.feedbackData);
+        if(!app.feedbackTitle) {
+            app.errorMsg = 'Select one category!'
+        } else {
+            app.feedbackData.title = app.feedbackTitle;
+            user.sendFeedback(app.feedbackData).then(function (data) {
+                console.log(data);
+                if(data.data.success) {
+                    app.successMsg = data.data.message;
+                } else {
+                    app.errorMsg = data.data.message;
+                }
+            })
+        }
+    }
+
+})

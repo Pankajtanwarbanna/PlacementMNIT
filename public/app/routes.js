@@ -112,6 +112,14 @@ var app = angular.module('userRoutes', ['ngRoute'])
                authenticated : true
            })
 
+           .when('/technical', {
+               templateUrl : '/app/views/pages/technical.html',
+               authenticated : true,
+               controller : 'technicalCtrl',
+               controllerAs : 'technical'
+           })
+
+
            .when('/services', {
                templateUrl : '/app/views/pages/services.html',
            })

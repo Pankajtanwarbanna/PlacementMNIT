@@ -192,5 +192,10 @@ angular.module('userServices',[])
 	   return $http.get('/api/checkCompleteProfile');
 	}
 
+	// send feedback
+    userFactory.sendFeedback = function (feedbackData) {
+        return $http.post('/api/sendFeedback', feedbackData);
+    };
+
     return userFactory;
 });

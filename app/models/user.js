@@ -63,7 +63,9 @@ var userSchema = new mongoose.Schema({
     department : {
         type : String,
     },
-    // to add in Placement-MNIT
+    cgpa : {
+        type : String,
+    },
     matric_marks : {
         type : String
     },
@@ -97,7 +99,6 @@ var userSchema = new mongoose.Schema({
     linkedln_link : {
         type : String
     },
-    // till here
 
     password : {
         type : String,
