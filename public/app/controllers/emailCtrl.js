@@ -72,8 +72,9 @@ angular.module('emailController', ['userServices'])
 
 // Forgot username and password controller
 .controller('forgotCtrl', function (user,$timeout,$location) {
-
    var app = this;
+
+   console.log(window.location.origin)
 
    this.forgotUsername = function (logData) {
 
@@ -96,13 +97,13 @@ angular.module('emailController', ['userServices'])
        });
    };
 
-   app.forgotPassword = function (logData) {
+    app.forgotPassword = function (logData) {
 
        app.successMsgPassword = 'Sending Email...';
        app.errorMsgPassword = '';
        app.disabledPassword = true;
 
-       //console.log(app.logData)
+       app.logData.hostname = window.location.origin;
 
        user.forgotPasswordLink(app.logData).then(function (data) {
 
