@@ -228,7 +228,7 @@ module.exports = function (router){
                             var email = {
                                 from: '"Placement & Training Cell" <ptcell@mnit.ac.in>',
                                 to: user.college_email,
-                                subject: 'Reset Password Request : Placemet Cell, MNIT Jaipur',
+                                subject: 'Reset Password Request : Placement Cell, MNIT Jaipur',
                                 text: 'Hello '+ user.student_name + 'You requested for the reset password.Please find the below link Reset password With Regards, Prof. Mahendar Choudhary',
                                 html: 'Hello <strong>'+ user.student_name + '</strong>,<br><br>You requested for the reset password. Please find the below link<br><br><a href="' +req.body.hostname + "/forgotPassword/" + user.temporarytoken + '">Reset password</a><br><br>With Regards.<br><br>Prof. Mahender Choudhary<br>In-charge, Training & Placement<br>MNIT Jaipur<br>+91-141-2529065'
                             };
