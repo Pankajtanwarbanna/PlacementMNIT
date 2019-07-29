@@ -68,7 +68,7 @@ var companySchema = new mongoose.Schema({
         candidate_status : {
             type : String,
             default : 'Applied',
-            enum : ['Applied','Appeared','Shortlisted','Selected']
+            enum : ['Applied','Appeared','Absent','Shortlisted','Selected']
         },
         timestamp : {
             type : Date,

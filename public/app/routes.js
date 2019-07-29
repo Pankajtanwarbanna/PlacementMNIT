@@ -42,7 +42,8 @@ var app = angular.module('userRoutes', ['ngRoute'])
                templateUrl : '/app/views/pages/add-new-company.html',
                authenticated : true,
                controller : 'addNewCompanyCtrl',
-               controllerAs : 'addNewCompany'
+               controllerAs : 'addNewCompany',
+               permission : 'admin'
            })
 
            .when('/company/:company_id', {
@@ -83,24 +84,22 @@ var app = angular.module('userRoutes', ['ngRoute'])
                templateUrl : '/app/views/admin/editCompany.html',
                authenticated : true,
                controller : 'editCompanyCtrl',
-               controllerAs : 'editCompany'
+               controllerAs : 'editCompany',
+               permission : 'admin'
            })
 
            .when('/registeredStudents/:company_id', {
                templateUrl : '/app/views/admin/registeredStudents.html',
                authenticated : true,
                controller : 'registeredStudentsCtrl',
-               controllerAs : 'registeredStudents'
+               controllerAs : 'registeredStudents',
+               permission : 'admin'
            })
 
 
            .when('/achievement', {
                templateUrl : '/app/views/student/achievement.html',
                authenticated : true
-           })
-
-           .when('/table', {
-               templateUrl : '/app/views/table.html',
            })
 
            .when('/contact', {
@@ -117,11 +116,6 @@ var app = angular.module('userRoutes', ['ngRoute'])
                authenticated : true,
                controller : 'technicalCtrl',
                controllerAs : 'technical'
-           })
-
-
-           .when('/services', {
-               templateUrl : '/app/views/pages/services.html',
            })
 
            .when('/activate/:token', {

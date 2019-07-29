@@ -1538,10 +1538,69 @@ module.exports = function (router){
                 })
             }
         })
+    });
 
-    })
+    router.post('/withdrawRegistration/:college_id/:company_id', function (req, res) {
+        console.log(req.params.college_id);
+        console.log(req.params.company_id);
+        if(!req.decoded.college_id) {
+            res.json({
+                success : false,
+                message : 'Please login.'
+            })
+        } else {
+            User.findOne({ college_id : req.decoded.college_id }, function (err, user) {
+                if(err) {
+                    res.json({
+                        success : false,
+                        message : 'Error from database.'
+                    })
+                }
 
+                if(!user) {
+                    res.json({
+                        success : false,
+                        message : 'User not found'
+                    })
+                } else {
+                    if(user.permission === 'admin') {
+                        Company.findOne({ _id : req.params.company_id}, function (err, company) {
+                            if(err) {
+                                res.json({
+                                    success : false,
+                                    message : 'Error from database side.'
+                                })
+                            }
 
+                            if (!company){
+                                res.json({
+                                    success : false,
+                                    message : 'Company not found'
+                                })
+                            } else {
+                                var index = company.candidates.indexOf(company.candidates.find(x => x.college_id === req.params.college_id));
+                                company.candidates.splice(company.candidates.indexOf(index,1));
+
+                                company.save(function (err) {
+                                    if(err) {
+                                        res.json({
+                                            success : false,
+                                            message : 'Error from database. '
+                                        })
+                                    } else {
+                                        res.json({
+                                            success : true,
+                                            message : 'Successfully withdraw registration'
+                                        })
+                                    }
+                                });
+                            }
+                        })
+                    }
+                }
+            })
+        }
+    });
 
     return router;
 };

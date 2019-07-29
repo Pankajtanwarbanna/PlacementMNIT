@@ -247,21 +247,36 @@ angular.module('managementController', ['userServices'])
 
     app.registeredStudentsData = [];
 
-    user.getRegisteredStudents($routeParams.company_id).then(function (data) {
-        //console.log(data);
-        if(data.data.success) {
-            app.studentsData = data.data.candidates;
-            app.company_name = data.data.name;
-            //console.log(app.studentsData);
-            for(var i=0;i < app.studentsData.length;i++) {
-                user.getStudentDetailsByCollegeID(app.studentsData[i].college_id).then(function (data) {
-                    console.log(data);
-                    if(data.data.success) {
-                        app.registeredStudentsData.push(data.data.user);
-                    }
-                })
+    function totalRegisteredStudent() {
+        user.getRegisteredStudents($routeParams.company_id).then(function (data) {
+            //console.log(data);
+            if(data.data.success) {
+                app.studentsData = data.data.candidates;
+                app.company_name = data.data.name;
+                //console.log(app.studentsData);
+                for(var i=0;i < app.studentsData.length;i++) {
+                    user.getStudentDetailsByCollegeID(app.studentsData[i].college_id).then(function (data) {
+                        console.log(data);
+                        if(data.data.success) {
+                            app.registeredStudentsData.push(data.data.user);
+                        }
+                    })
+                }
             }
-        }
-    });
+        });
+    }
+
+    totalRegisteredStudent();
+
+    $scope.withdrawRegistration = function (college_id) {
+        console.log(college_id)
+
+        user.withdrawRegistration(college_id,$routeParams.company_id).then(function (data) {
+            console.log(data);
+            if(data.data.success) {
+                totalRegisteredStudent();
+            }
+        })
+    }
 })
 

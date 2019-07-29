@@ -185,7 +185,10 @@ angular.module('userCtrl',['userServices'])
         var deadline_date = new Date(deadline);
         var today = new Date();
 
-        if(deadline_date.getDate() < today.getDate() || deadline_date.getMonth() < today.getMonth() || deadline_date.getFullYear() < today.getFullYear()) {
+        //console.log(deadline_date.getTime());
+        //console.log(today.getTime());
+
+        if(deadline_date.getTime() <= today.getTime()) {
             return true;
         } else {
             return false;
@@ -193,7 +196,7 @@ angular.module('userCtrl',['userServices'])
     }
 
     user.getCompanyDetails($routeParams.company_id).then(function (data) {
-        console.log(data);
+        //console.log(data);
         if(data.data.success) {
             app.companyDetail = data.data.companyDetail;
             if(checkDateDifference(app.companyDetail.deadline_date) === true) {
@@ -210,7 +213,7 @@ angular.module('userCtrl',['userServices'])
 
     // get company schedule
     user.getCompanySchedule($routeParams.company_id).then(function (data) {
-        console.log(data);
+        //console.log(data);
         if(data.data.success) {
             app.companyScheduleData = data.data.schedule;
             if(app.companyScheduleData.length === 0) {
@@ -223,7 +226,7 @@ angular.module('userCtrl',['userServices'])
 
     // get company notifications
     user.getCompanyNotifications($routeParams.company_id).then(function (data) {
-        console.log(data);
+        //console.log(data);
         if(data.data.success) {
             app.companyNotificationsData = data.data.notifications;
             if(app.companyNotificationsData.length === 0) {
@@ -236,7 +239,7 @@ angular.module('userCtrl',['userServices'])
 
     // get all registered students
     user.getAllRegisteredStudentsInCompany($routeParams.company_id).then(function (data) {
-        console.log(data);
+        //console.log(data);
         if(data.data.success) {
             app.registeredCandidates = data.data.candidate;
         }
@@ -346,7 +349,7 @@ angular.module('userCtrl',['userServices'])
 
     // get company result
     user.getCompanyResult($routeParams.company_id).then(function (data) {
-        console.log(data);
+        //console.log(data);
         if(data.data.success) {
             app.companyResult = data.data.result;
             if(app.companyResult.length === 0) {

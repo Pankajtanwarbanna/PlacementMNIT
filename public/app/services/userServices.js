@@ -197,5 +197,10 @@ angular.module('userServices',[])
         return $http.post('/api/sendFeedback', feedbackData);
     };
 
+	// withdrawRegistration
+    userFactory.withdrawRegistration = function (college_id, company_id) {
+        return $http.post('/api/withdrawRegistration/' + college_id + '/' + company_id);
+    };
+
     return userFactory;
 });
