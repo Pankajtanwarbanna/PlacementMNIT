@@ -57,11 +57,11 @@ angular.module('userCtrl',['userServices'])
     app.noPreviousCompanies = false;
     app.fetchedUpcomingCompanies = false;
     app.fetchedPreviousCompanies = false;
-    //app.profileComplete = false;
+    app.profileComplete = false;
 
     function getAllUpcomingCompaniesFunction() {
         user.getAllUpcomingCompanies().then(function (data) {
-            //console.log(data);
+            console.log(data);
             if(data.data.success) {
                 app.upcomingCompanies = data.data.companies;
                 app.fetchedUpcomingCompanies = true;
@@ -74,7 +74,7 @@ angular.module('userCtrl',['userServices'])
 
     function getAllPreviousCompaniesFunction () {
         user.getAllPreviousCompanies().then(function (data) {
-            //console.log(data);
+            console.log(data);
             if(data.data.success) {
                 app.previousCompanies = data.data.companies;
                 app.fetchedPreviousCompanies = true;
@@ -85,12 +85,13 @@ angular.module('userCtrl',['userServices'])
         });
     }
 
+	getAllUpcomingCompaniesFunction();
+	getAllPreviousCompaniesFunction();
+
 	user.checkCompleteProfile().then(function (data) {
-	   //console.log(data);
+	   console.log(data);
 	   if(data.data.success) {
 		   app.profileComplete = true;
-           getAllUpcomingCompaniesFunction();
-           getAllPreviousCompaniesFunction();
 	   } else {
 		   app.profileComplete = false;
 	   }
