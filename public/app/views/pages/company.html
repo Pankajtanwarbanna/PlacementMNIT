@@ -1,348 +1,349 @@
-<div ng-show="!company.deleteSuccessMsg">
-    <div class="row page-titles">
-        <div class="col-md-5 align-self-center">
-            <h4 class="text-themecolor">{{ company.companyDetail.company_name}}'s Company Details</h4>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-body">
-
-                    <h4 class="card-title text-center"> {{ company.companyDetail.company_name}}</h4>
-                    <h6 class="card-subtitle text-center">{{ company.companyDetail.job_profile}}</h6>
-                    <div class="table-responsive">
-                        <table class="table stylish-table">
-                            <tbody>
-                            <tr>
-                                <td><span class="round"><i class="ti-briefcase"></i></span></td>
-                                <td style="vertical-align: inherit;">
-                                    <h5 style="font-weight: 500;">Company Name</h5>                           </td>
-                                <td style="vertical-align: inherit;">
-                                    <h5>{{ company.companyDetail.company_name}}</h5>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td><span class="round bg-purple"><i class="ti-world"></i></span></td>
-                                <td style="vertical-align: inherit;">
-                                    <h5 style="font-weight: 500;">Company Website </h5>
-                                </td>
-                                <td style="vertical-align: inherit;">
-                                    <h5>{{ company.companyDetail.company_website_url }}</h5>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td><span class="round bg-cyan"><i class="ti-blackboard"></i></span></td>
-                                <td>
-                                    <h5 style="font-weight: 500;margin-top: 1rem;">About Company</h5>
-                                </td>
-                                <td style="vertical-align: inherit;">
-                                    <h5>{{ company.companyDetail.about_company }}</h5>
-                                </td>
-                            </tr>
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+<div ng-show="company.fetchedCompanyDetails">
+    <div ng-show="!company.deleteSuccessMsg">
+        <div class="row page-titles">
+            <div class="col-md-5 align-self-center">
+                <h4 class="text-themecolor">{{ company.companyDetail.company_name}}'s Company Details</h4>
             </div>
         </div>
 
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-body">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
 
-                    <h4 class="card-title text-center"> Job Details</h4>
-                    <div class="table-responsive">
-                        <table class="table stylish-table">
-                            <tbody>
-                            <tr>
-                                <td><span class="round bg-success"><i class="ti-id-badge"></i></span></td>
-                                <td style="vertical-align: inherit;">
-                                    <h5 style="font-weight: 500;">Job Profile</h5>
-                                </td>
-                                <td style="vertical-align: inherit;">
-                                    <h5>{{ company.companyDetail.job_profile}}</h5>
-                                </td>
-                            </tr>
+                        <h4 class="card-title text-center"> {{ company.companyDetail.company_name}}</h4>
+                        <h6 class="card-subtitle text-center">{{ company.companyDetail.job_profile}}</h6>
+                        <div class="table-responsive">
+                            <table class="table stylish-table">
+                                <tbody>
+                                <tr>
+                                    <td><span class="round"><i class="ti-briefcase"></i></span></td>
+                                    <td style="vertical-align: inherit;">
+                                        <h5 style="font-weight: 500;">Company Name</h5>                           </td>
+                                    <td style="vertical-align: inherit;">
+                                        <h5>{{ company.companyDetail.company_name}}</h5>
+                                    </td>
+                                </tr>
 
-                            <tr>
-                                <td><span class="round bg-primary"><i class="icon-graduation"></i></span></td>
-                                <td style="vertical-align: inherit;">
-                                    <h5 style="font-weight: 500;">Recruitment </h5>
-                                </td>
-                                <td style="vertical-align: inherit;">
-                                    <h5>{{ company.companyDetail.recruitment }} </h5>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td><span class="round bg-purple"><i class="ti-world"></i></span></td>
+                                    <td style="vertical-align: inherit;">
+                                        <h5 style="font-weight: 500;">Company Website </h5>
+                                    </td>
+                                    <td style="vertical-align: inherit;">
+                                        <a href="{{ company.companyDetail.company_website_url }}" target="_blank">{{ company.companyDetail.company_website_url }}</a>
+                                    </td>
+                                </tr>
 
-                            <tr>
-                                <td><span class="round bg-danger"><i class="ti-time"></i></span></td>
-                                <td style="vertical-align: inherit;">
-                                    <h5 style="font-weight: 500;">Duration </h5>
-                                </td>
-                                <td style="vertical-align: inherit;">
-                                    <h5>{{ company.companyDetail.duration }} </h5>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td><span class="round bg-cyan"><i class="ti-blackboard"></i></span></td>
+                                    <td>
+                                        <h5 style="font-weight: 500;margin-top: 1rem;">About Company</h5>
+                                    </td>
+                                    <td style="vertical-align: inherit;">
+                                        <h5>{{ company.companyDetail.about_company }}</h5>
+                                    </td>
+                                </tr>
 
-                            <tr>
-                                <td><span class="round bg-info"><i class="ti-credit-card"></i></span></td>
-                                <td style="vertical-align: inherit;">
-                                    <h5 style="font-weight: 500;">Package</h5>
-                                </td>
-                                <td style="vertical-align: inherit;">
-                                    <h5> {{ company.companyDetail.package }}  </h5>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td><span class="round bg-success"><i class="ti-gift"></i></span></td>
-                                <td style="vertical-align: inherit;">
-                                    <h5 style="font-weight: 500;">Other Facilities</h5>
-                                </td>
-                                <td style="vertical-align: inherit;">
-                                    <h5> {{ company.companyDetail.other_facility }}  </h5>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td><span class="round bg-over"><i class="ti-location-pin"></i></span></td>
-                                <td style="vertical-align: inherit;">
-                                    <h5 style="font-weight: 500;">Location of Posting </h5>
-                                </td>
-                                <td style="vertical-align: inherit;">
-                                    <h5>{{ company.companyDetail.posting_location }}</h5>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-body">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
 
-                    <h4 class="card-title text-center"> Eligibility Information</h4>
-                    <div class="table-responsive">
-                        <table class="table stylish-table">
-                            <tbody>
-                            <tr>
-                                <td><span class="round"><i class="icon-graduation"></i></span></td>
-                                <td>
-                                    <h5 style="font-weight: 500;margin-top: 1rem;">Eligibility</h5>
-                                </td>
-                                <td style="vertical-align: inherit;">
-                                    <div ng-repeat="(key, value) in company.companyDetail.eligibility">
-                                        <h5> <b>{{ key }}</b></h5>
-                                        <h5 ng-repeat="(key, value) in company.companyDetail.eligibility[key]">{{ key }}</h5>
+                        <h4 class="card-title text-center"> Job Details</h4>
+                        <div class="table-responsive">
+                            <table class="table stylish-table">
+                                <tbody>
+                                <tr>
+                                    <td><span class="round bg-success"><i class="ti-id-badge"></i></span></td>
+                                    <td style="vertical-align: inherit;">
+                                        <h5 style="font-weight: 500;">Job Profile</h5>
+                                    </td>
+                                    <td style="vertical-align: inherit;">
+                                        <h5>{{ company.companyDetail.job_profile}}</h5>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><span class="round bg-primary"><i class="icon-graduation"></i></span></td>
+                                    <td style="vertical-align: inherit;">
+                                        <h5 style="font-weight: 500;">Recruitment </h5>
+                                    </td>
+                                    <td style="vertical-align: inherit;">
+                                        <h5>{{ company.companyDetail.recruitment }} </h5>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><span class="round bg-danger"><i class="ti-time"></i></span></td>
+                                    <td style="vertical-align: inherit;">
+                                        <h5 style="font-weight: 500;">Duration </h5>
+                                    </td>
+                                    <td style="vertical-align: inherit;">
+                                        <h5>{{ company.companyDetail.duration }} </h5>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><span class="round bg-info"><i class="ti-credit-card"></i></span></td>
+                                    <td style="vertical-align: inherit;">
+                                        <h5 style="font-weight: 500;">Package</h5>
+                                    </td>
+                                    <td style="vertical-align: inherit;">
+                                        <h5> {{ company.companyDetail.package }}  </h5>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><span class="round bg-success"><i class="ti-gift"></i></span></td>
+                                    <td style="vertical-align: inherit;">
+                                        <h5 style="font-weight: 500;">Other Facilities</h5>
+                                    </td>
+                                    <td style="vertical-align: inherit;">
+                                        <h5> {{ company.companyDetail.other_facility }}  </h5>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><span class="round bg-over"><i class="ti-location-pin"></i></span></td>
+                                    <td style="vertical-align: inherit;">
+                                        <h5 style="font-weight: 500;">Location of Posting </h5>
+                                    </td>
+                                    <td style="vertical-align: inherit;">
+                                        <h5>{{ company.companyDetail.posting_location }}</h5>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+
+                        <h4 class="card-title text-center"> Eligibility Information</h4>
+                        <div class="table-responsive">
+                            <table class="table stylish-table">
+                                <tbody>
+                                <tr>
+                                    <td><span class="round"><i class="icon-graduation"></i></span></td>
+                                    <td>
+                                        <h5 style="font-weight: 500;margin-top: 1rem;">Eligibility</h5>
+                                    </td>
+                                    <td style="vertical-align: inherit;">
+                                        <div ng-repeat="(key, value) in company.companyDetail.eligibility">
+                                            <h5> <b>{{ key }}</b></h5>
+                                            <h5 ng-repeat="(key, value) in company.companyDetail.eligibility[key]">{{ key }}</h5>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><span class="round bg-success"><i class="ti-medall"></i></span></td>
+                                    <td style="vertical-align: inherit;">
+                                        <h5 style="font-weight: 500;">Minimum CGPA </h5>
+                                    </td>
+                                    <td style="vertical-align: inherit;">
+                                        <h5>{{ company.companyDetail.min_cgpa  }} CGPA</h5>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><span class="round bg-primary"><i class="ti-cup"></i></span></td>
+                                    <td style="vertical-align: inherit;">
+                                        <h5 style="font-weight: 500;">Minimum Marks in 10th </h5>
+                                    </td>
+                                    <td style="vertical-align: inherit;">
+                                        <h5>{{ company.companyDetail.min_10_percent }} %</h5>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><span class="round bg-primary"><i class="ti-cup"></i></span></td>
+                                    <td style="vertical-align: inherit;">
+                                        <h5 style="font-weight: 500;">Minimum Marks in 12th </h5>
+                                    </td>
+                                    <td style="vertical-align: inherit;">
+                                        <h5>{{ company.companyDetail.min_12_percent }} %</h5>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><span class="round bg-danger"><i class="icon-tag"></i></span></td>
+                                    <td style="vertical-align: inherit;">
+                                        <h5 style="font-weight: 500;">Other Eligibility </h5>
+                                    </td>
+                                    <td style="vertical-align: inherit;">
+                                        <h5>{{ company.companyDetail.other_eligibility}}</h5>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><span class="round bg-cyan"><i class="icon-link"></i></span></td>
+                                    <td style="vertical-align: inherit;">
+                                        <h5 style="font-weight: 500;">Bond Requirement</h5>
+                                    </td>
+                                    <td style="vertical-align: inherit;">
+                                        <h5>No</h5>
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+
+                        <h4 class="card-title text-center"> Deadline</h4>
+                        <div class="table-responsive">
+                            <table class="table stylish-table">
+                                <tbody>
+                                <tr>
+                                    <td><span class="round"><i class="ti-calendar"></i></span></td>
+                                    <td style="vertical-align: inherit;">
+                                        <h5 style="font-weight: 500;">Last Date to Apply</h5>                           </td>
+                                    <td style="vertical-align: inherit;">
+                                        <h5>{{ company.companyDetail.deadline_date | date : 'dd MMMM yyyy h:mm a'}} </h5>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12" ng-show="main.authorized">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <div>
+                                        <!--<a href="/editCompany/{{ company.companyDetail._id }}"><button class="btn btn-primary btn-rounded"><i class="ti-pencil"></i> &nbsp; Edit</button></a>-->
+                                        <a href="#"><button class="btn btn-primary btn-rounded"><i class="ti-pencil"></i> &nbsp; Edit</button></a>
                                     </div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td><span class="round bg-success"><i class="ti-medall"></i></span></td>
-                                <td style="vertical-align: inherit;">
-                                    <h5 style="font-weight: 500;">Minimum CGPA </h5>
-                                </td>
-                                <td style="vertical-align: inherit;">
-                                    <h5>{{ company.companyDetail.min_cgpa  }} CGPA</h5>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td><span class="round bg-primary"><i class="ti-cup"></i></span></td>
-                                <td style="vertical-align: inherit;">
-                                    <h5 style="font-weight: 500;">Minimum Marks in 10th </h5>
-                                </td>
-                                <td style="vertical-align: inherit;">
-                                    <h5>{{ company.companyDetail.min_10_percent }} %</h5>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td><span class="round bg-primary"><i class="ti-cup"></i></span></td>
-                                <td style="vertical-align: inherit;">
-                                    <h5 style="font-weight: 500;">Minimum Marks in 12th </h5>
-                                </td>
-                                <td style="vertical-align: inherit;">
-                                    <h5>{{ company.companyDetail.min_12_percent }} %</h5>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td><span class="round bg-danger"><i class="icon-tag"></i></span></td>
-                                <td style="vertical-align: inherit;">
-                                    <h5 style="font-weight: 500;">Other Eligibility </h5>
-                                </td>
-                                <td style="vertical-align: inherit;">
-                                    <h5>{{ company.companyDetail.other_eligibility}}</h5>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td><span class="round bg-cyan"><i class="icon-link"></i></span></td>
-                                <td style="vertical-align: inherit;">
-                                    <h5 style="font-weight: 500;">Bond Requirement</h5>
-                                </td>
-                                <td style="vertical-align: inherit;">
-                                    <h5>No</h5>
-                                </td>
-                            </tr>
-
-                            </tbody>
-                        </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-body">
-
-                    <h4 class="card-title text-center"> Deadline</h4>
-                    <div class="table-responsive">
-                        <table class="table stylish-table">
-                            <tbody>
-                            <tr>
-                                <td><span class="round"><i class="ti-calendar"></i></span></td>
-                                <td style="vertical-align: inherit;">
-                                    <h5 style="font-weight: 500;">Last Date to Apply</h5>                           </td>
-                                <td style="vertical-align: inherit;">
-                                    <h5>{{ company.companyDetail.deadline_date | date : 'dd MMMM yyyy h:mm a'}} </h5>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-12" ng-show="main.authorized">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="text-center">
-                                <div>
-                                    <!--<a href="/editCompany/{{ company.companyDetail._id }}"><button class="btn btn-primary btn-rounded"><i class="ti-pencil"></i> &nbsp; Edit</button></a>-->
-                                    <a href="#"><button class="btn btn-primary btn-rounded"><i class="ti-pencil"></i> &nbsp; Edit</button></a>
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <button class="btn btn-danger btn-rounded" data-toggle="modal" data-target="#deleteCompanyModal"><i class="ti-trash"></i> &nbsp; Delete</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="text-center">
-                                <button class="btn btn-danger btn-rounded" data-toggle="modal" data-target="#deleteCompanyModal"><i class="ti-trash"></i> &nbsp; Delete</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="text-center">
-                                <a href="/registeredStudents/{{ company.companyDetail._id }}">
-                                    <button class="btn btn-success btn-rounded"><i class="ti-user"></i> &nbsp; View Registered Students</button>
-                                </a>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <a href="/registeredStudents/{{ company.companyDetail._id }}">
+                                        <button class="btn btn-success btn-rounded"><i class="ti-user"></i> &nbsp; View Registered Students</button>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
 
-    <!-- Apply now Modal box   -->
-    <div class="modal fade" id="applyNowCompanyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel1">Are you sure to apply?</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="buttom" class="btn btn-success" ng-click="company.oneClickApply();" data-dismiss="modal">Apply Now</button>
+        <!-- Apply now Modal box   -->
+        <div class="modal fade" id="applyNowCompanyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="exampleModalLabel1">Are you sure to apply?</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="buttom" class="btn btn-success" ng-click="company.oneClickApply();" data-dismiss="modal">Apply Now</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Delete Company   -->
-    <div class="modal fade" id="deleteCompanyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="deleteCompanyModal1">Are you sure to delete company details?</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="buttom" class="btn btn-danger" ng-click="company.deleteCompany();" data-dismiss="modal">Delete</button>
+        <!-- Delete Company   -->
+        <div class="modal fade" id="deleteCompanyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="deleteCompanyModal1">Are you sure to delete company details?</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="buttom" class="btn btn-danger" ng-click="company.deleteCompany();" data-dismiss="modal">Delete</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Schedule Company Model  -->
-    <div class="modal fade" id="scheduleCompanyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="scheduleCompanyModal1">{{ company.companyDetail.company_name }}'s Schedule</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body">
-                    <div class="card" ng-repeat="schedule in company.companyScheduleData | orderBy : 'date_time'">
-                        <h4><b>{{ schedule.date_time | date : 'dd MMMM yyyy h:mm a' }} </b>: {{ schedule.schedule_info}}</h4>
+        <!-- Schedule Company Model  -->
+        <div class="modal fade" id="scheduleCompanyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="scheduleCompanyModal1">{{ company.companyDetail.company_name }}'s Schedule</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
-                    <div ng-show="company.noCompanySchedule">
-                        <h4 class="text-danger text-center">No schedule yet!</h4>
+                    <div class="modal-body">
+                        <div class="card" ng-repeat="schedule in company.companyScheduleData | orderBy : 'date_time'">
+                            <h4><b>{{ schedule.date_time | date : 'dd MMMM yyyy h:mm a' }} </b>: {{ schedule.schedule_info}}</h4>
+                        </div>
+                        <div ng-show="company.noCompanySchedule">
+                            <h4 class="text-danger text-center">No schedule yet!</h4>
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
 
-    <!-- Notifications Company   -->
-    <div class="modal fade" id="notificationsCompanyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="notificationsCompanyModal1">{{ company.companyDetail.company_name}}'s Notifications</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body">
-                    <div class="card" ng-repeat="notification in company.companyNotificationsData | orderBy : '-timestamp'">
-                        <h4><i class="ti-bell"></i> &nbsp; {{ notification.notification }}</h4>
+        <!-- Notifications Company   -->
+        <div class="modal fade" id="notificationsCompanyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="notificationsCompanyModal1">{{ company.companyDetail.company_name}}'s Notifications</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
-                    <div ng-show="company.noCompanyNotification">
-                        <h4 class="text-danger text-center">No notifications yet!</h4>
+                    <div class="modal-body">
+                        <div class="card" ng-repeat="notification in company.companyNotificationsData | orderBy : '-timestamp'">
+                            <h4><i class="ti-bell"></i> &nbsp; {{ notification.notification }}</h4>
+                        </div>
+                        <div ng-show="company.noCompanyNotification">
+                            <h4 class="text-danger text-center">No notifications yet!</h4>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                </div>
-            </div>
             </div>
         </div>
     </div>
@@ -383,10 +384,6 @@
             </div>
         </div>
     </div>
-
-
-
-
 
     <!-- Add Schedule Company Model  -->
     <div class="modal fade" id="addScheduleCompanyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
@@ -542,7 +539,7 @@
         <button ng-disabled="company.missedLastDate" type="button" class="btn btn-danger btn-rounded" data-toggle="modal"><i class="ti-close"></i> &nbsp; Oops! You missed it.</button>
     </div>
 
-    <div class="row" ng-show="company.applyStatus">
+    <div class="row">
         <div class="col-lg-4">
             <div class="card">
                 <div class="card-body">
@@ -621,5 +618,38 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+</div>
+
+<div>
+    <div class="row page-titles">
+        <div class="col-md-5 align-self-center">
+            <h4 class="text-themecolor"> Company Details</h4>
+        </div>
+    </div>
+</div>
+<div class="card-body text-center" ng-show="!company.fetchedCompanyDetails">
+    <!--<h4 class="card-title">Loading Announcements!</h4>-->
+    <div class="spinner-grow" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+    <div class="spinner-grow text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+    <div class="spinner-grow text-success" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+    <div class="spinner-grow text-danger" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+    <div class="spinner-grow text-warning" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+    <div class="spinner-grow text-info" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+    <div class="spinner-grow text-dark" role="status">
+        <span class="sr-only">Loading...</span>
     </div>
 </div>

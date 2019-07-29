@@ -2,60 +2,83 @@
     <div class="col-md-5 align-self-center">
         <h4 class="text-themecolor">Company Registration</h4>
     </div>
-
-
-    <!--<div class="col-md-7 align-self-center text-right">
-        <div class="d-flex justify-content-end align-items-center">
-            <button type="button" class="btn btn-primary d-none d-lg-block m-l-15" ng-click="scrollToDiv('previousCompanies');">Previous Companies</a></button>
-        </div>
-    </div>-->
 </div>
 
-<div class="row">
-   <div class="col-md-12" ng-show="!companyRegistration.profileComplete && !main.authorized">
-       <div class="card text-white bg-success">
-           <div class="card-body">
-               <h3 class="card-title">Profile not updated!</h3>
-               <p class="card-text">Kindly update your profile to proceed further with company registration.</p>
-               <a href="/profile" class="btn btn-dark">Go to Profile Page</a>
-           </div>
-       </div>
-   </div>
-</div>
-
-<div class="row" ng-show="companyRegistration.profileComplete || main.authorized">
-    <!-- Column -->
-    <div class="col-lg-4 col-md-6" ng-repeat="company in companyRegistration.upcomingCompanies | orderBy : 'deadline_date'">
-        <div class="card cc-widget">
-            <div class="card-body">
-                <div class="d-flex no-block flex-row">
-                    <div class="round align-self-center round-success m-t-10 m-b-10"><i class="ti-briefcase"></i></div>
-                    <div class="m-l-10 align-self-center">
-                        <h4 class="m-b-0">{{ company.company_name }}</h4>
-                        <h5 class="text-muted m-b-0"> {{ company.job_profile }}</h5>
-                    </div>
-                </div>
-                <div class="d-flex no-block flex-row m-t-20 cc-details text-center">
-                    <div class="col-lg-6 p-10 p-l-0 border-right">
-                        <h6 class="font-light">Package</h6><b class="growth">₹ {{company.package}}</b></div>
-                    <div class="col-lg-6 p-10">
-                        <h6 class="font-light">Last Date</h6><b class="down">{{ company.deadline_date | date : 'dd MMMM'}}</b>
-                    </div>
-                </div>
-                <br>
-
-                <div class="text-center">
-                    <a href="/company/{{company._id}}"><button type="button" class="btn btn-info btn-rounded"><span ng-show="!main.authorized">View More</span><span ng-show="main.authorized">Edit Now</span></button></a>
+<div ng-show="companyRegistration.fetchedUpcomingCompanies">
+    <div class="row">
+        <div class="col-md-12" ng-show="!companyRegistration.profileComplete && !main.authorized">
+            <div class="card text-white bg-success">
+                <div class="card-body">
+                    <h3 class="card-title">Profile not updated!</h3>
+                    <p class="card-text">Kindly update your profile to proceed further with company registration.</p>
+                    <a href="/profile" class="btn btn-dark">Go to Profile Page</a>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-md-12" ng-show="companyRegistration.noUpcomingCompanies">
-        <div class="card text-white bg-success">
-            <div class="card-body">
-                <h3 class="card-title">No upcoming companies!</h3>
-                <p class="card-text">Placement & Training Cell will update you soon.</p>
-                <!--<a href="javascript:void(0)" class="btn btn-dark">Go somewhere</a>-->
+
+    <div class="row" ng-show="companyRegistration.profileComplete || main.authorized">
+        <!-- Column -->
+        <div class="col-lg-4 col-md-6" ng-repeat="company in companyRegistration.upcomingCompanies | orderBy : 'deadline_date'">
+            <div class="card cc-widget">
+                <div class="card-body">
+                    <div class="d-flex no-block flex-row">
+                        <div class="round align-self-center round-success m-t-10 m-b-10"><i class="ti-briefcase"></i></div>
+                        <div class="m-l-10 align-self-center">
+                            <h4 class="m-b-0">{{ company.company_name }}</h4>
+                            <h5 class="text-muted m-b-0"> {{ company.job_profile }}</h5>
+                        </div>
+                    </div>
+                    <div class="d-flex no-block flex-row m-t-20 cc-details text-center">
+                        <div class="col-lg-6 p-10 p-l-0 border-right">
+                            <h6 class="font-light">Package</h6><b class="growth">₹ {{company.package}}</b></div>
+                        <div class="col-lg-6 p-10">
+                            <h6 class="font-light">Last Date</h6><b class="down">{{ company.deadline_date | date : 'dd MMMM'}}</b>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="text-center">
+                        <a href="/company/{{company._id}}"><button type="button" class="btn btn-info btn-rounded"><span ng-show="!main.authorized">View More</span><span ng-show="main.authorized">Edit Now</span></button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12" ng-show="companyRegistration.noUpcomingCompanies">
+            <div class="card text-white bg-success">
+                <div class="card-body">
+                    <h3 class="card-title">No upcoming companies!</h3>
+                    <p class="card-text">Placement & Training Cell will update you soon.</p>
+                    <!--<a href="javascript:void(0)" class="btn btn-dark">Go somewhere</a>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" ng-show="!companyRegistration.fetchedUpcomingCompanies">
+    <div class="col-md-12">
+        <div class="card-body text-center">
+            <!--<h4 class="card-title">Loading Announcements!</h4>-->
+            <div class="spinner-grow" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-success" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-danger" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-warning" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-info" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-dark" role="status">
+                <span class="sr-only">Loading...</span>
             </div>
         </div>
     </div>
@@ -65,49 +88,44 @@
     <div class="col-md-5 align-self-center">
         <h4 class="text-themecolor">Previous Companies</h4>
     </div>
-
-
-    <!--<div class="col-md-7 align-self-center text-right">
-        <div class="d-flex justify-content-end align-items-center">
-            <button type="button" class="btn btn-primary d-none d-lg-block m-l-15" ng-click="scrollToDiv('upcomingCompanies');">Upcoming Companies</a></button>
-        </div>
-    </div>-->
 </div>
 
-<div class="row" ng-show="companyRegistration.profileComplete || main.authorized">
-    <!-- Column -->
-    <div class="col-lg-4 col-md-6" ng-repeat="company in companyRegistration.previousCompanies | orderBy : 'deadline_date'">
-        <div class="card cc-widget">
-            <div class="card-body">
-                <div class="d-flex no-block flex-row">
-                    <div class="round align-self-center round-success m-t-10 m-b-10"><i class="ti-briefcase"></i></div>
-                    <div class="m-l-10 align-self-center">
-                        <h4 class="m-b-0">{{ company.company_name }}</h4>
-                        <h5 class="text-muted m-b-0"> {{ company.job_profile }}</h5>
+<div ng-show="companyRegistration.fetchedPreviousCompanies">
+    <div class="row" ng-show="companyRegistration.profileComplete || main.authorized">
+        <!-- Column -->
+        <div class="col-lg-4 col-md-6" ng-repeat="company in companyRegistration.previousCompanies | orderBy : 'deadline_date'">
+            <div class="card cc-widget">
+                <div class="card-body">
+                    <div class="d-flex no-block flex-row">
+                        <div class="round align-self-center round-success m-t-10 m-b-10"><i class="ti-briefcase"></i></div>
+                        <div class="m-l-10 align-self-center">
+                            <h4 class="m-b-0">{{ company.company_name }}</h4>
+                            <h5 class="text-muted m-b-0"> {{ company.job_profile }}</h5>
+                        </div>
                     </div>
-                </div>
-                <div class="d-flex no-block flex-row m-t-20 cc-details text-center">
-                    <div class="col-lg-6 p-10 p-l-0 border-right">
-                        <h6 class="font-light">Package</h6><b class="growth">₹ {{company.package}}</b></div>
-                    <div class="col-lg-6 p-10">
-                        <h6 class="font-light">Last Date</h6><b class="down">{{ company.deadline_date | date : 'dd MMMM'}}</b>
+                    <div class="d-flex no-block flex-row m-t-20 cc-details text-center">
+                        <div class="col-lg-6 p-10 p-l-0 border-right">
+                            <h6 class="font-light">Package</h6><b class="growth">₹ {{company.package}}</b></div>
+                        <div class="col-lg-6 p-10">
+                            <h6 class="font-light">Last Date</h6><b class="down">{{ company.deadline_date | date : 'dd MMMM'}}</b>
+                        </div>
                     </div>
-                </div>
-                <br>
+                    <br>
 
-                <div class="text-center">
-                    <a href="/company/{{company._id}}"><button type="button" class="btn btn-info btn-rounded"><span ng-show="!main.authorized">View More</span><span ng-show="main.authorized">Edit Now</span></button></a>
+                    <div class="text-center">
+                        <a href="/company/{{company._id}}"><button type="button" class="btn btn-info btn-rounded"><span ng-show="!main.authorized">View More</span><span ng-show="main.authorized">Edit Now</span></button></a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="col-md-12" ng-show="companyRegistration.noPreviousCompanies">
-        <div class="card text-white bg-danger">
-            <div class="card-body">
-                <h3 class="card-title">No previous companies!</h3>
-                <p class="card-text">No companies visited till now for campus recruitment this session.</p>
-                <!--<a href="javascript:void(0)" class="btn btn-dark">Go somewhere</a>-->
+        <div class="col-md-12" ng-show="companyRegistration.noPreviousCompanies">
+            <div class="card text-white bg-danger">
+                <div class="card-body">
+                    <h3 class="card-title">No previous companies!</h3>
+                    <p class="card-text">No companies visited till now for campus recruitment this session.</p>
+                    <!--<a href="javascript:void(0)" class="btn btn-dark">Go somewhere</a>-->
+                </div>
             </div>
         </div>
     </div>

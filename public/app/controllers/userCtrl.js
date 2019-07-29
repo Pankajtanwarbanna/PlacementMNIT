@@ -55,33 +55,42 @@ angular.module('userCtrl',['userServices'])
 
     app.noUpcomingCompanies = false;
     app.noPreviousCompanies = false;
+    app.fetchedUpcomingCompanies = false;
+    app.fetchedPreviousCompanies = false;
+    //app.profileComplete = false;
 
-    user.getAllUpcomingCompanies().then(function (data) {
-        //console.log(data);
-        if(data.data.success) {
-            app.upcomingCompanies = data.data.companies;
-            if(app.upcomingCompanies.length === 0) {
-                app.noUpcomingCompanies = true;
+    function getAllUpcomingCompaniesFunction() {
+        user.getAllUpcomingCompanies().then(function (data) {
+            //console.log(data);
+            if(data.data.success) {
+                app.upcomingCompanies = data.data.companies;
+                app.fetchedUpcomingCompanies = true;
+                if(app.upcomingCompanies.length === 0) {
+                    app.noUpcomingCompanies = true;
+                }
             }
-        }
-    });
+        });
+    }
 
-    user.getAllPreviousCompanies().then(function (data) {
-        //console.log(data);
-        if(data.data.success) {
-            app.previousCompanies = data.data.companies;
-            if(app.previousCompanies.length === 0) {
-                app.noPreviousCompanies = true;
+    function getAllPreviousCompaniesFunction () {
+        user.getAllPreviousCompanies().then(function (data) {
+            //console.log(data);
+            if(data.data.success) {
+                app.previousCompanies = data.data.companies;
+                app.fetchedPreviousCompanies = true;
+                if(app.previousCompanies.length === 0) {
+                    app.noPreviousCompanies = true;
+                }
             }
-        }
-    });
-
-	app.profileComplete = false;
+        });
+    }
 
 	user.checkCompleteProfile().then(function (data) {
-	   console.log(data);
+	   //console.log(data);
 	   if(data.data.success) {
 		   app.profileComplete = true;
+           getAllUpcomingCompaniesFunction();
+           getAllPreviousCompaniesFunction();
 	   } else {
 		   app.profileComplete = false;
 	   }
@@ -180,6 +189,7 @@ angular.module('userCtrl',['userServices'])
     app.applyStatus = false;
     app.deleteSuccessMsg = '';
     app.missedLastDate = true;
+    app.fetchedCompanyDetails = false;
 
     function checkDateDifference(deadline) {
         var deadline_date = new Date(deadline);
@@ -199,6 +209,7 @@ angular.module('userCtrl',['userServices'])
         //console.log(data);
         if(data.data.success) {
             app.companyDetail = data.data.companyDetail;
+            app.fetchedCompanyDetails = true;
             if(checkDateDifference(app.companyDetail.deadline_date) === true) {
                 app.missedLastDate = true;
             } else {
@@ -415,12 +426,14 @@ angular.module('userCtrl',['userServices'])
     var app = this;
 
     app.number = false;
+    app.fetchedAnnouncements = false;
 
     function updateAnnouncements () {
         user.getAnnouncements().then(function (data) {
-            console.log(data);
+            //console.log(data);
             if(data.data.success) {
                 app.announcements = data.data.announcements;
+                app.fetchedAnnouncements = true;
                 if(data.data.announcements.length > 0) {
                     app.number = true;
                 }
@@ -434,9 +447,9 @@ angular.module('userCtrl',['userServices'])
     app.errorMsg = false;
 
     app.postAnnouncement = function (announcementData) {
-        console.log(announcementData);
+        //console.log(announcementData);
         user.postAnnouncement(announcementData).then(function (data) {
-            console.log(data);
+            //console.log(data);
             if(data.data.success) {
                 app.successMsg = data.data.message;
                 updateAnnouncements();

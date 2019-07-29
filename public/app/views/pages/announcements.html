@@ -64,7 +64,7 @@
 
 <div class="col-lg-12">
     <div class="card">
-        <div class="card-body">
+        <div class="card-body" ng-show="announcements.fetchedAnnouncements">
             <div ng-if="!announcements.number">
                 <h5 class="card-title">No Announcements!</h5>
             </div>
@@ -80,6 +80,30 @@
                         <div class="desc">{{ announcement.announcement }} </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="card-body text-center" ng-show="!announcements.fetchedAnnouncements">
+            <!--<h4 class="card-title">Loading Announcements!</h4>-->
+            <div class="spinner-grow" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-success" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-danger" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-warning" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-info" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-dark" role="status">
+                <span class="sr-only">Loading...</span>
             </div>
         </div>
     </div>
