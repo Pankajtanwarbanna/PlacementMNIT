@@ -217,5 +217,10 @@ angular.module('userServices',[])
         return $http.post('/api/markCompanyAttendance/'+ company_id, attendanceData);
     };
 
+    // done with attendance
+    userFactory.doneWithAttendance = function (company_id) {
+        return $http.post('/api/doneWithAttendance/' + company_id);
+    };
+
     return userFactory;
 });

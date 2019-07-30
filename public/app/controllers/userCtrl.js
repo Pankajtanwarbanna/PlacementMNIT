@@ -433,6 +433,15 @@ angular.module('userCtrl',['userServices'])
                 app.markCompanyAttendanceErrorMsg = data.data.message;
             }
         })
+    };
+
+    app.doneWithAttendance = function () {
+        user.doneWithAttendance($routeParams.company_id).then(function (data) {
+            console.log(data);
+            if(data.data.success) {
+                getAttendanceStatus();
+            }
+        })
     }
 })
 
@@ -465,7 +474,7 @@ angular.module('userCtrl',['userServices'])
                 app.errorMsg = data.data.message;
             }
         })
-    }
+    };
 
 })
 
@@ -538,7 +547,7 @@ angular.module('userCtrl',['userServices'])
 })
 
 // User timeline controller
-.controller('timelineCtrl', function (user) {
+.controller('timelineCtrl', function (user, $scope) {
     var app = this;
 
     app.timelineLengthZero = false;

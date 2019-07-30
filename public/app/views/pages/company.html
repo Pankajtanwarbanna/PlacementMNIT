@@ -689,6 +689,20 @@
         </div>
     </div>
 
+    <div class="row" ng-show="main.authorized && company.attendanceStatus">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center">
+                        <div>
+                            <button class="btn btn-outline-primary btn-rounded" ng-click="company.doneWithAttendance();"> <i class="icon-check"></i> &nbsp;Done with the Attendance!</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row" ng-show="!main.authorized && company.applyStatus && company.attendanceStatus && company.notMarkedAttendance">
         <div class="col-lg-12">
             <div class="card">

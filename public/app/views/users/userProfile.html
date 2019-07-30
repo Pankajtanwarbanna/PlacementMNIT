@@ -28,10 +28,13 @@
                 <hr> </div>
             <div class="card-body">
                 <center>
-                    <h6>0 Red Flags</h6>
-                    <td><span class="badge badge-success badge-pill">&nbsp;</span></td>
-                    <td><span class="badge badge-success badge-pill">&nbsp;</span></td>
-                    <td><span class="badge badge-success badge-pill">&nbsp;</span></td>
+                    <h6>{{ profile.userProfile.red_flags}} Red Flags</h6>
+                    <div ng-repeat="x in [].constructor(profile.userProfile.red_flags) track by $index" style="display: inline">
+                        <td><span class="badge badge-danger badge-pill">&nbsp;</span></td>
+                    </div>
+                    <div ng-repeat="x in [].constructor(3 - profile.userProfile.red_flags) track by $index" style="display: inline">
+                        <td><span class="badge badge-success badge-pill">&nbsp;</span></td>
+                    </div>
                     <br>
                     <small class="text-muted">*3 Red Flags will lead to suspension </small>
                 </center>

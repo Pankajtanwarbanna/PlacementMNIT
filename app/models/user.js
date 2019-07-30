@@ -99,7 +99,10 @@ var userSchema = new mongoose.Schema({
     linkedln_link : {
         type : String
     },
-
+    red_flags : {
+        type : Number,
+        default : 0
+    },
     password : {
         type : String,
         select : false

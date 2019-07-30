@@ -60,6 +60,7 @@ var companySchema = new mongoose.Schema({
     },
 
     // Students registration
+    // tempo attendance status
     attendance : {
         type : Boolean
     },
