@@ -257,13 +257,20 @@ angular.module('userCtrl',['userServices'])
         }
     });
 
+    app.notMarkedAttendance = false;
+
     function getCandidateApplyStatusFunction() {
         user.getCandidateApplyStatus($routeParams.company_id).then(function (data) {
-            //console.log(data);
+            console.log(data);
             if(data.data.success) {
                 app.applyStatus = true;
                 document.getElementById('oneClickApplyButton').className = 'btn btn-danger btn-rounded';
-                document.getElementById('oneClickApplyButton').innerHTML = 'Applied successfully!'
+                document.getElementById('oneClickApplyButton').innerHTML = data.data.status + ' Successfully!';
+                if(data.data.status === 'Applied') {
+                    app.notMarkedAttendance = true;
+                } else {
+                    app.notMarkedAttendance = false;
+                }
             } else {
                 app.applyStatus = false;
                 document.getElementById('oneClickApplyButton').className = 'btn btn-success btn-rounded';
@@ -386,6 +393,46 @@ angular.module('userCtrl',['userServices'])
                 document.getElementById('btn'+i).className = "btn btn-outline-primary";
             }
         }
+    }
+
+    app.attendanceStatus = false;
+    app.company_otp = '';
+
+    function getAttendanceStatus () {
+        user.getAttendanceStatus($routeParams.company_id).then(function (data) {
+            //console.log(data);
+            if(data.data.success) {
+                app.attendanceStatus = data.data.attendanceStatus;
+                app.company_otp = data.data.company_otp;
+            }
+        });
+    }
+
+    getAttendanceStatus();
+
+    app.updateAttendanceStatus = function () {
+        user.updateAttendanceStatus($routeParams.company_id).then(function (data) {
+            //console.log(data);
+            if(data.data.success) {
+                getAttendanceStatus();
+            }
+        })
+    }
+
+    app.markCompanyAttendanceSuccessMsg = '';
+    app.markCompanyAttendanceErrorMsg = '';
+
+    app.markCompanyAttendance = function (attendanceData) {
+        console.log(app.attendanceData);
+        user.markCompanyAttendance(app.attendanceData,$routeParams.company_id).then(function (data) {
+            console.log(data);
+            if(data.data.success) {
+                app.markCompanyAttendanceSuccessMsg =  data.data.message;
+                getCandidateApplyStatusFunction();
+            } else {
+                app.markCompanyAttendanceErrorMsg = data.data.message;
+            }
+        })
     }
 })
 

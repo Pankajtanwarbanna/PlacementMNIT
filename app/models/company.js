@@ -60,6 +60,12 @@ var companySchema = new mongoose.Schema({
     },
 
     // Students registration
+    attendance : {
+        type : Boolean
+    },
+    company_otp : {
+        type : String
+    },
     candidates : [{
         college_id : {
             type : String,
@@ -68,7 +74,7 @@ var companySchema = new mongoose.Schema({
         candidate_status : {
             type : String,
             default : 'Applied',
-            enum : ['Applied','Appeared','Absent','Shortlisted','Selected']
+            enum : ['Applied','Appeared for Test','Absent','Shortlisted','Selected']
         },
         timestamp : {
             type : Date,

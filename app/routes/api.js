@@ -721,7 +721,8 @@ module.exports = function (router){
                     if(company.candidates.find(candidate => candidate.college_id === req.decoded.college_id)) {
                         res.json({
                             success : true,
-                            message : 'Applied.'
+                            message : 'Applied',
+                            status : company.candidates[company.candidates.indexOf(company.candidates.find(x => x.college_id === req.decoded.college_id))].candidate_status
                         });
                     } else {
                         res.json({
@@ -1601,6 +1602,161 @@ module.exports = function (router){
             })
         }
     });
+
+    // router to start attendance
+    router.post('/updateAttendanceStatus/:company_id', function (req, res) {
+        if(!req.decoded.college_id) {
+            res.json({
+                success : false,
+                message : 'Please login.'
+            })
+        } else {
+            Company.findOne({ _id : req.params.company_id}, function (err, company) {
+                if(err) {
+                    res.json({
+                        success : false,
+                        message : 'Error from database.'
+                    })
+                }
+
+                if(!company) {
+                    res.json({
+                        success : false,
+                        message : 'Company not found.'
+                    })
+                } else {
+                    if(company.attendance) {
+                        company.attendance = false;
+                        company.company_otp = '';
+
+                        company.save(function (err) {
+                            if(err) {
+                                res.json({
+                                    success : false,
+                                    message : 'Database side eror.'
+                                })
+                            } else {
+                                res.json({
+                                    success : true,
+                                    message : 'Attendance successfully closed.'
+                                })
+                            }
+                        })
+                    } else {
+                        company.attendance = true;
+                        var max = 99999;
+                        var min = 10000;
+                        company.company_otp = Math.floor(Math.random() * (+max - +min)) + +min;
+                        console.log(company.company_otp);
+
+                        company.save(function (err) {
+                            if(err) {
+                                res.json({
+                                    success : false,
+                                    message : 'Database side error.'
+                                })
+                            } else {
+                                res.json({
+                                    success : true,
+                                    message : 'Attendance successfully started.'
+                                })
+                            }
+                        })
+                    }
+                }
+            })
+        }
+    });
+
+    // get company attendance status
+    router.get('/getAttendanceStatus/:company_id', function (req, res) {
+        if(!req.decoded.college_id) {
+            res.json({
+                success : false,
+                message : 'Please login.'
+            })
+        } else {
+            Company.findOne({ _id : req.params.company_id}, function (err, company) {
+                if(err) {
+                    res.json({
+                        success : false,
+                        message : 'Database error.'
+                    })
+                }
+
+                if(!company) {
+                    res.json({
+                        success : false,
+                        message : 'Company Not found.'
+                    })
+                } else {
+                    res.json({
+                        success : true,
+                        attendanceStatus : company.attendance,
+                        company_otp : company.company_otp
+                    })
+                }
+            })
+        }
+    });
+
+    // mark attendance
+    router.post('/markCompanyAttendance/:company_id', function (req, res) {
+        if(!req.decoded.college_id) {
+            res.json({
+                success : false,
+                message : 'Please login.'
+            })
+        } else {
+            Company.findOne({ _id : req.params.company_id}, function (err, company) {
+                if(err) {
+                    res.json({
+                        success : false,
+                        message : 'Error from database'
+                    })
+                }
+
+                if(!company) {
+                    res.json({
+                        success : false,
+                        message : 'Company not found.'
+                    })
+                } else {
+                    if(company.attendance) {
+                        if(company.company_otp === req.body.otp) {
+                            var index = company.candidates.indexOf(company.candidates.find(x => x.college_id === req.decoded.college_id));
+
+                            company.candidates[index].candidate_status = 'Appeared for Test';
+
+                            company.save(function (err) {
+                                if(err) {
+                                    res.json({
+                                        success : false,
+                                        message : 'Database error'
+                                    })
+                                } else {
+                                    res.json({
+                                        success : true,
+                                        message : 'Attendance successfully marked.'
+                                    })
+                                }
+                            })
+                        } else {
+                            res.json({
+                                success : false,
+                                message : 'Incorrect OTP'
+                            })
+                        }
+                    } else {
+                        res.json({
+                            success : false,
+                            message : 'Attendance is closed.'
+                        })
+                    }
+                }
+            })
+        }
+    })
 
     return router;
 };

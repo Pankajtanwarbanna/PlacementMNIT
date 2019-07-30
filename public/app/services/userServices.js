@@ -202,5 +202,20 @@ angular.module('userServices',[])
         return $http.post('/api/withdrawRegistration/' + college_id + '/' + company_id);
     };
 
+    // start attendance
+    userFactory.updateAttendanceStatus = function (company_id) {
+        return $http.post('/api/updateAttendanceStatus/' + company_id);
+    };
+
+    // get attendance status
+    userFactory.getAttendanceStatus = function (company_id) {
+        return $http.get('/api/getAttendanceStatus/' + company_id);
+    };
+
+    // mark attendance
+    userFactory.markCompanyAttendance = function (attendanceData, company_id) {
+        return $http.post('/api/markCompanyAttendance/'+ company_id, attendanceData);
+    };
+
     return userFactory;
 });
