@@ -19,7 +19,7 @@ angular.module('mainController', ['authServices'])
         if(next.$$route) {
             //console.log('we are not at home page');
             app.home = false;
-            if(next.$$route.originalPath === '/company-schedule') {
+            if(next.$$route.originalPath === '/schedule') {
                 app.schedule = true;
             } else {
                 app.schedule = false;

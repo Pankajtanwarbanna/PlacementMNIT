@@ -34,6 +34,9 @@
     <script src="app/services/userServices.js"></script>
     <script src="app/services/authServices.js"></script>
 
+    <!-- Calendar CSS -->
+    <link href="assets/modules/calendar/dist/fullcalendar.css" rel="stylesheet" />
+
     <!-- Font library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -286,7 +289,7 @@
 -->
                         <li ng-show="!main.isLoggedIn"> <a class="waves-effect waves-dark" href="/login" aria-expanded="false"><i class="icon-login"></i><span class="hide-menu">Login </span></a></li>
                         <li ng-show="main.isLoggedIn"> <a class="waves-effect waves-dark" href="/company-registration" aria-expanded="false"><i class="icon-briefcase"></i><span class="hide-menu">Company Registration</span></a></li>
-                        <li ng-show="main.isLoggedIn && main.authorized"> <a class="waves-effect waves-dark" href="/add-new-company" aria-expanded="false"><i class="icon-plus"></i><span class="hide-menu">Add New Company</span></a></li>
+                        <li ng-show="main.isLoggedIn"> <a class="waves-effect waves-dark" href="/schedule" aria-expanded="false"><i class="ti-calendar"></i><span class="hide-menu">Company Schedule</span></a></li>
                         <li ng-show="main.isLoggedIn"> <a class="waves-effect waves-dark" href="/announcements" aria-expanded="false"><i class="ti-announcement"></i><span class="hide-menu">Announcements </span></a></li>
                         <!--<li ng-show="main.isLoggedIn"> <a class="waves-effect waves-dark" href="/result" aria-expanded="false"><i class="ti-cup"></i><span class="hide-menu">Result</span></a></li>-->
 
@@ -320,6 +323,58 @@
             <!-- ============================================================== -->
             <div class="container-fluid">
                 <div class="ng-view"></div>
+
+                <div ng-show="main.schedule">
+                    <div class="row page-titles">
+                        <div class="col-md-5 align-self-center">
+                            <h4 class="text-themecolor">Company Schedule</h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12 text-center">
+                                            <h3>Placement Drive 2019-20 Schedule</h3>
+                                            <h5 class="font-light m-t-0">*Click on 'month' to view complete schedule*</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="card-body b-l calender-sidebar">
+                                                <div id="calendar"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- BEGIN MODAL -->
+                    <div class="modal none-border" id="my-event">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title"><strong>Schedule</strong></h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                </div>
+                                <div class="modal-body"></div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div ng-show="main.home">
                     <div class="row page-titles">
@@ -634,6 +689,7 @@
                     </div>
 
                 </div>
+
             </div>
             <!-- ============================================================== -->
             <!-- End Container fluid  -->
@@ -685,6 +741,11 @@
     <script src="assets/modules/toast-master/js/jquery.toast.js"></script>
     <!-- Chart JS -->
     <script src="assets/js/dashboard1.js"></script>
+    <!-- Calendar JavaScript -->
+    <script src="assets/modules/calendar/jquery-ui.min.js"></script>
+    <script src="assets/modules/moment/moment.js"></script>
+    <script src='assets/modules/calendar/dist/fullcalendar.min.js'></script>
+    <script src="assets/modules/calendar/dist/cal-init.js"></script>
 </body>
 
 </html>

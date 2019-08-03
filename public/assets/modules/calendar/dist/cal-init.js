@@ -15,7 +15,7 @@
 
 
     /* on drop */
-    CalendarApp.prototype.onDrop = function (eventObj, date) { 
+    /*CalendarApp.prototype.onDrop = function (eventObj, date) {
         var $this = this;
             // retrieve the dropped element's stored Event Object
             var originalEventObject = eventObj.data('eventObject');
@@ -26,20 +26,20 @@
             copiedEventObject.start = date;
             if ($categoryClass)
                 copiedEventObject['className'] = [$categoryClass];
-            // render the event on the calendar
+            // render the   event on the calendar
             $this.$calendar.fullCalendar('renderEvent', copiedEventObject, true);
             // is the "remove after drop" checkbox checked?
             if ($('#drop-remove').is(':checked')) {
                 // if so, remove the element from the "Draggable Events" list
                 eventObj.remove();
             }
-    },
+    },*/
     /* on click on event */
     CalendarApp.prototype.onEventClick =  function (calEvent, jsEvent, view) {
         var $this = this;
             var form = $("<form></form>");
-            form.append("<label>Change event name</label>");
-            form.append("<div class='input-group'><input class='form-control' type=text value='" + calEvent.title + "' /><span class='input-group-btn'><button type='submit' class='btn btn-success waves-effect waves-light'><i class='fa fa-check'></i> Save</button></span></div>");
+            form.append("<label>Company</label>");
+            form.append("<div class='input-group'><input class='form-control' type=text value='" + calEvent.title + "' /><span class='input-group-btn'></span></div>");
             $this.$modal.modal({
                 backdrop: 'static'
             });
@@ -55,9 +55,9 @@
                 $this.$modal.modal('hide');
                 return false;
             });
-    },
+    }
     /* on select */
-    CalendarApp.prototype.onSelect = function (start, end, allDay) {
+    /*CalendarApp.prototype.onSelect = function (start, end, allDay) {
         var $this = this;
             $this.$modal.modal({
                 backdrop: 'static'
@@ -100,8 +100,8 @@
                 
             });
             $this.$calendarObj.fullCalendar('unselect');
-    },
-    CalendarApp.prototype.enableDrag = function() {
+    },*/
+    /*CalendarApp.prototype.enableDrag = function() {
         //init events
         $(this.$event).each(function () {
             // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
@@ -118,10 +118,10 @@
                 revertDuration: 0  //  original position after the drag
             });
         });
-    }
+    }*/
     /* Initializing */
     CalendarApp.prototype.init = function() {
-        this.enableDrag();
+                    /*this.enableDrag();*/
         /*  Initialize the calendar  */
         var date = new Date();
         var d = date.getDate();
@@ -130,43 +130,170 @@
         var form = '';
         var today = new Date($.now());
 
-        var defaultEvents =  [{
-                title: 'Released Ample Admin!',
-                start: new Date($.now() + 506800000),
+        // start format - MM-DD-YYYY
+        var defaultEvents =  [
+            {
+                title: 'Box8 Test (Except Software Developer Profile)',
+                start: new Date('08-04-2019'),
                 className: 'bg-info'
             }, {
-                title: 'This is today check date',
-                start: today,
-                end: today,
-                className: 'bg-danger'
+                title: 'Hero Test',
+                start: new Date('08-04-2019'),
+                className: 'bg-info'
+            },{
+                title: 'Service Now Personal Interviews',
+                start: new Date('08-04-2019'),
+                className: 'bg-info'
             }, {
-                title: 'This is your birthday',
-                start: new Date($.now() + 848000000),
+                title: 'Texas Personal Interviews',
+                start: new Date('08-04-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Box8 Test',
+                start: new Date('08-05-2019'),
+                className: 'bg-info'
+            }, {
+                title: 'Texas Interview',
+                start: new Date('08-05-2019'),
+                className: 'bg-info'
+            }, {
+                title: 'Fidelity Online Test (2PM)',
+                start: new Date('08-05-2019'),
                 className: 'bg-info'
             },{
-                title: 'your meeting with john',
-                start: new Date($.now() - 1099000000),
-                end:  new Date($.now() - 919000000),
-                className: 'bg-warning'
-            },{
-                title: 'your meeting with john',
-                start: new Date($.now() - 1199000000),
-                end: new Date($.now() - 1199000000),
-                className: 'bg-purple'
-            },{
-                title: 'your meeting with john',
-                start: new Date($.now() - 399000000),
-                end: new Date($.now() - 219000000),
+                title: 'JPMC PPT',
+                start: new Date('08-05-2019'),
                 className: 'bg-info'
-            },  
-              {
-                title: 'Hanns birthday',
-                start: new Date($.now() + 868000000),
-                className: 'bg-danger'
-            },{
-                title: 'Like it?',
-                start: new Date($.now() + 348000000),
-                className: 'bg-success'
+            }, {
+                title: 'Airtel Online Test',
+                start: new Date('08-06-2019'),
+                className: 'bg-info'
+            }, {
+                title: 'JPMC Personal Interviews',
+                start: new Date('08-06-2019'),
+                className: 'bg-info'
+            }, {
+                title: 'Future First Test : Morning',
+                start: new Date('08-06-2019'),
+                className: 'bg-info'
+            }, {
+                title: 'Airtel Personal Interviews',
+                start: new Date('08-07-2019'),
+                className: 'bg-info'
+            }, {
+                title: 'Samsung Test',
+                start: new Date('08-07-2019'),
+                className: 'bg-info'
+            }, {
+                title: 'Future First Interviews',
+                start: new Date('08-07-2019'),
+                className: 'bg-info'
+            }, {
+                title: 'InfoEdge Online Test',
+                start: new Date('08-07-2019'),
+                className: 'bg-info'
+            },
+
+            {
+                title: 'Amazon PI',
+                start: new Date('08-08-2019'),
+                end: new Date('08-09-2019'),
+                className: 'bg-info'
+            }, {
+                title: 'Lowes Test',
+                start: new Date('08-08-2019'),
+                className: 'bg-info'
+            }, {
+                title: 'Sociate General Test',
+                start: new Date('08-08-2019'),
+                className: 'bg-info'
+            }, {
+                title: 'Fidelity Personal Interviews',
+                start: new Date('08-08-2019'),
+                className: 'bg-info'
+            },
+
+            {
+                title: 'Q E Systems',
+                start: new Date('08-09-2019'),
+                className: 'bg-info'
+            }, {
+                title: 'Tredence Test',
+                start: new Date('08-09-2019'),
+                className: 'bg-info'
+            }, {
+                title: 'InfoEdge Personal Interview',
+                start: new Date('08-10-2019'),
+                className: 'bg-info'
+            }, {
+                title: 'Sociate General Personal Interviews',
+                start: new Date('08-10-2019'),
+                className: 'bg-info'
+            },
+
+            {
+                title: 'Duetsche Bank Test',
+                start: new Date('08-11-2019'),
+                className: 'bg-info'
+            }, {
+                title: 'Samsung Personal Interview',
+                start: new Date('08-11-2019'),
+                className: 'bg-info'
+            }, {
+                title: 'Walmart Test : Evening',
+                start: new Date('08-11-2019'),
+                className: 'bg-info'
+            },
+
+            {
+                title: 'Axxela',
+                start: new Date('08-12-2019'),
+                className: 'bg-info'
+            }, {
+                title: 'Walmart Personal Interview',
+                start: new Date('08-12-2019'),
+                className: 'bg-info'
+            },
+
+            {
+                title: 'Wisig',
+                start: new Date('08-13-2019'),
+                end: new Date('08-14-2019'),
+                className: 'bg-info'
+            },
+
+            {
+                title: 'Lowes Personal Interview ',
+                start: new Date('08-13-2019'),
+                className: 'bg-info'
+            },
+
+            {
+                title: 'Deutsche Bank Personal Interview ',
+                start: new Date('08-14-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'MAQ Online Test ',
+                start: new Date('08-14-2019'),
+                className: 'bg-info'
+            },
+
+            {
+                title: 'Increff',
+                start: new Date('08-15-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Oracle',
+                start: new Date('08-15-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'OFSS',
+                start: new Date('08-15-2019'),
+                className: 'bg-info'
             }];
 
         var $this = this;
@@ -183,9 +310,9 @@
                 right: 'month,agendaWeek,agendaDay'
             },
             events: defaultEvents,
-            editable: true,
-            droppable: true, // this allows things to be dropped onto the calendar !!!
-            eventLimit: true, // allow "more" link when too many events
+            editable: false,
+            droppable: false, // this allows things to be dropped onto the calendar !!!
+            eventLimit: false, // allow "more" link when too many events
             selectable: true,
             drop: function(date) { $this.onDrop($(this), date); },
             select: function (start, end, allDay) { $this.onSelect(start, end, allDay); },
@@ -199,7 +326,7 @@
             var categoryColor = $this.$categoryForm.find("select[name='category-color']").val();
             if (categoryName !== null && categoryName.length != 0) {
                 $this.$extEvents.append('<div class="calendar-events" data-class="bg-' + categoryColor + '" style="position: relative;"><i class="fa fa-circle text-' + categoryColor + '"></i>' + categoryName + '</div>')
-                $this.enableDrag();
+                //$this.enableDrag();
             }
 
         });

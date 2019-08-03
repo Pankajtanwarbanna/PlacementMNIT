@@ -38,6 +38,13 @@ var app = angular.module('userRoutes', ['ngRoute'])
                controllerAs : 'companyRegistration'
            })
 
+           .when('/schedule', {
+               templateUrl : '/app/views/pages/company-schedule.html',
+               authenticated : true,
+               controller : 'companyScheduleCtrl',
+               controllerAs : 'companySchedule'
+           })
+
            .when('/add-new-company', {
                templateUrl : '/app/views/pages/add-new-company.html',
                authenticated : true,

@@ -446,14 +446,14 @@ angular.module('userCtrl',['userServices'])
 })
 
 // Company Schedule Controller
-.controller('companyscheduleCtrl', function (user) {
+.controller('companyScheduleCtrl', function (user) {
 
-    let app = this;
+/*    let app = this;
 
     app.successMsg = false;
-    app.errorMsg = false;
+    app.errorMsg = false;*/
 
-    user.getSchedule().then(function (data) {
+/*    user.getSchedule().then(function (data) {
         //console.log(data);
         if(data.data.success) {
             app.schedule = data.data.schedule;
@@ -474,7 +474,7 @@ angular.module('userCtrl',['userServices'])
                 app.errorMsg = data.data.message;
             }
         })
-    };
+    };*/
 
 })
 
