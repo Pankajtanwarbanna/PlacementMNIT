@@ -30,26 +30,25 @@ module.exports = function (router){
 
     var client = nodemailer.createTransport(sgTransport(options));
 
-/*    // User register API
-    router.post('/register',function (req, res) {
+   // User register API
+    router.post('/registeruser',function (req, res) {
         var user = new User();
 
         console.log(req.body);
 
-        user.student_name = 'PANKAJ TANWAR';
-        user.college_id = '2016UCP1381';
+        user.student_name = 'VIRENDRA SINGH YADAV';
+        user.college_id = '2015UMT1238';
         user.program = 'UG';
         user.gender = 'M';
-        user.student_name = 'PANKAJ TANWAR';
-        user.contact_no = '7740996673';
-        user.college_email = '2016ucp1381@mnit.ac.in';
-        user.alternate_email = 'pankajtanwar510@gmail.com';
+        user.contact_no = '8874875070';
+        user.college_email = '2015UMT1238@mnit.ac.in';
+        user.alternate_email = 'yadavvirendra553@gmail.com';
         user.degree = 'B.Tech';
-        user.department = 'COMPUTER SCIENCE & ENGG.';
+        user.department = 'METALLURGICAL & MATERIALS ENGG.';
         user.status = 'active';
-        user.cgpa = '6.91';
+        user.cgpa = '6.43';
+		user.password = '2015UMT1238';
 
-        user.password = 'pankaj';
         user.temporarytoken = jwt.sign({ student_name : user.student_name , college_id : user.college_id }, secret);
 
         //console.log(req.body);
@@ -132,7 +131,7 @@ module.exports = function (router){
                 }
             });
         }
-    });*/
+    });
 
     // User login API
     router.post('/authenticate', function (req,res) {
