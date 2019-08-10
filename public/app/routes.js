@@ -74,6 +74,11 @@ var app = angular.module('userRoutes', ['ngRoute'])
                controllerAs : 'announcements'
            })
 
+           .when('/placements2019-20', {
+               templateUrl : '/app/views/pages/placement-stats.html',
+               authenticated : true
+           })
+
            /*.when('/result', {
                templateUrl : '/app/views/pages/result.html',
                authenticated : true

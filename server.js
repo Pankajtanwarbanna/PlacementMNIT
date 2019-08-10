@@ -1,7 +1,7 @@
 var express  = require('express');
 var app = express();
 var morgan = require('morgan');             // middleware to log http requests
-var port = 80;
+var port = 80; // localhost : 8080 & Prod : 80
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var router = express.Router();
@@ -15,14 +15,6 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
 // diff. front end and backend routes
 app.use('/api', apiRoutes);
-
-if(process.env.DEV_MODE === "PROD") {
-    // Production Mode
-    URI = 'mongodb://admin:placement123@ds145146.mlab.com:45146/placementmnit';
-} else {
-    // Development Mode
-    URI = 'mongodb://127.0.0.1/placementmnit';
-}
 
 // connecting to mongo database
 mongoose.connect('mongodb://127.0.0.1/placementmnit', { useNewUrlParser: true }, function (err) {
