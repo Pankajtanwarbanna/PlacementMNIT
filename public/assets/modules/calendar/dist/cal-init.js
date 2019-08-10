@@ -294,6 +294,66 @@
                 title: 'OFSS',
                 start: new Date('08-15-2019'),
                 className: 'bg-info'
+            },
+			{
+                title: 'InfoObject Test',
+                start: new Date('08-16-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Trandence PI',
+                start: new Date('08-16-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Philips Test',
+                start: new Date('08-16-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'MAQ PI',
+                start: new Date('08-17-2019'),
+                className: 'bg-info'
+            },
+			{
+                title: 'Nokia Test',
+                start: new Date('08-17-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Oracle PI',
+                start: new Date('08-17-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'OFSS PI',
+                start: new Date('08-17-2019'),
+                className: 'bg-info'
+            },
+			{
+                title: 'Wissen Test',
+                start: new Date('08-17-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Wissen PI',
+                start: new Date('08-18-2019'),
+                className: 'bg-info'
+            },
+			{
+                title: 'Wooqer Test + PI',
+                start: new Date('08-18-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'InfoObject PI',
+                start: new Date('08-19-2019'),
+                className: 'bg-info'
+            },
+			{
+                title: 'Philips PI',
+                start: new Date('08-19-2019'),
+                className: 'bg-info'
             }];
 
         var $this = this;
