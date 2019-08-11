@@ -1780,90 +1780,33 @@ module.exports = function (router){
                     })
                 } else {
                     for(var i=0;i< company.candidates.length;i++) {
-                        if(company.candidates[i].candidate_status === 'Applied') {
+                        if(company.candidates[i].candidate_status === 'Applied') {	
                             company.candidates[i].candidate_status = 'Absent';
-
-                            User.findOne({ college_id :  company.candidates[i].college_id }, function (err, user) {
-                                if(err) {
-                                    res.json({
-                                        success : false,
-                                        message : 'Error from database'
-                                    })
-                                }
-
-                                if(!user) {
-                                    res.json({
-                                        success : false,
-                                        message : 'User not found.'
-                                    })
-                                } else {
-                                    if(!user.red_flags) {
-                                        user.red_flags = 1;
-                                    } else {
-                                        user.red_flags++;
-                                    }
-
-                                    user.save(function (err) {
-                                        if(err) {
-                                            res.json({
-                                                success : false,
-                                                message : 'Error from database'
-                                            })
-                                        } else {
-
-                                            var email = {
-                                                from: '"Placement & Training Cell" <ptcell@mnit.ac.in>',
-                                                to: user.college_email,
-                                                subject: 'Red Flag Notification : Placement Cell, MNIT Jaipur',
-                                                text: 'Hello '+ user.student_name + 'You requested for the reset password.Please find the below link Reset password With Regards, Prof. Mahendar Choudhary',
-                                                html: 'Hello <strong>'+ user.student_name + '</strong>,<br><br>Your profile has been red flaged. 3 Red Flags will block your profile<br><br>With Regards.<br><br>Prof. Mahender Choudhary<br>In-charge, Training & Placement<br>MNIT Jaipur<br>+91-141-2529065'
-                                            };
-
-                                            transporter.sendMail(email, function(err, info){
-                                                if (err ){
-                                                    console.log(err);
-                                                    res.json({
-                                                        success : false,
-                                                        message : 'Email service not working. Contact Admin.'
-                                                    })
-                                                }
-                                                else {
-                                                    console.log('Message sent: ' + info.response);
-
-                                                    res.json({
-                                                        success : true,
-                                                        message : 'Link to reset your password has been sent to your registered email.'
-                                                    });
-                                                }
-                                            });
-
-                                            console.log('Success!')
-                                        }
-                                    })
-                                }
-                            });
+			    console.log(company.candidates[i].college_id);
                         }
+		    }
 
-                        company.attendance = false;
+		    company.attendance = false;
 
-                        company.save(function (err) {
-                            if(err) {
-                                res.json({
-                                    success : false,
-                                    message : 'Error from database!'
-                                })
-                            } else {
-                                res.json({
-                                    success : true,
-                                    message : 'Success!'
-                                })
-                            }
-                        })
-                    }
+			company.save(function (err) {
+				if(err) {
+					res.json({
+						success : false,
+						message : 'Error from database.'
+					    });
+				} else {
+					res.json({
+						success : true,
+						message : 'Updated successfully.'
+					    });
+				}
+			})
+             
                 }
             })
         }
     })
+
 
     return router;
 };
