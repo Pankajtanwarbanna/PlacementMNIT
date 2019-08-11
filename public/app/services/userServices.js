@@ -222,5 +222,10 @@ angular.module('userServices',[])
         return $http.post('/api/doneWithAttendance/' + company_id);
     };
 
+    // mark red flag to absent students
+    userFactory.sendEmailToAbsentAndMarkRedFlag = function (company_id) {
+        return $http.post('/api/sendEmailToAbsentAndMarkRedFlag/'+ company_id);
+    };
+
     return userFactory;
 });

@@ -4,7 +4,33 @@
     </div>
 </div>
 
-<div ng-show="companyRegistration.fetchedUpcomingCompanies">
+<div class="row" ng-show="main.blockedProfile">
+    <div class="col-md-12">
+        <div class="card text-white bg-danger">
+            <div class="card-body">
+                <h3 class="card-title">Your profile is blocked!</h3>
+                <p class="card-text">You violated Placement Rule 3 times so, your profile is blocked. Reach ptcell@mnit.ac.in in case of any help.</p>
+                <!--<a href="javascript:void(0)" class="btn btn-dark">Go somewhere</a>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <form class="form-material">
+                    <div class="form-group">
+                        <input type="text" class="form-control form-control-line" placeholder="Search for Company" ng-model="companyName">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div ng-show="companyRegistration.fetchedUpcomingCompanies && !main.blockedProfile">
     <div class="row">
         <div class="col-md-12" ng-show="!companyRegistration.profileComplete && !main.authorized">
             <div class="card text-white bg-success">
@@ -19,7 +45,7 @@
 
     <div class="row" ng-show="companyRegistration.profileComplete || main.authorized">
         <!-- Column -->
-        <div class="col-lg-4 col-md-6" ng-repeat="company in companyRegistration.upcomingCompanies | orderBy : 'deadline_date'">
+        <div class="col-lg-4 col-md-6" ng-repeat="company in companyRegistration.upcomingCompanies | orderBy : 'deadline_date' | filter : companyName">
             <div class="card cc-widget">
                 <div class="card-body">
                     <div class="d-flex no-block flex-row">
@@ -90,10 +116,10 @@
     </div>
 </div>
 
-<div ng-show="companyRegistration.fetchedPreviousCompanies">
+<div ng-show="companyRegistration.fetchedPreviousCompanies && !main.blockedProfile">
     <div class="row" ng-show="companyRegistration.profileComplete || main.authorized">
         <!-- Column -->
-        <div class="col-lg-4 col-md-6" ng-repeat="company in companyRegistration.previousCompanies | orderBy : 'deadline_date'">
+        <div class="col-lg-4 col-md-6" ng-repeat="company in companyRegistration.previousCompanies | orderBy : 'deadline_date' | filter : companyName">
             <div class="card cc-widget">
                 <div class="card-body">
                     <div class="d-flex no-block flex-row">

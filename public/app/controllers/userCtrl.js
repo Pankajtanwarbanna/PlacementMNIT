@@ -439,7 +439,12 @@ angular.module('userCtrl',['userServices'])
         user.doneWithAttendance($routeParams.company_id).then(function (data) {
             console.log(data);
             if(data.data.success) {
-                getAttendanceStatus();
+                user.sendEmailToAbsentAndMarkRedFlag($routeParams.company_id).then(function (data) {
+                    console.log(data);
+                    if(data.data.success) {
+                        getAttendanceStatus();
+                    }
+                });
             }
         })
     }

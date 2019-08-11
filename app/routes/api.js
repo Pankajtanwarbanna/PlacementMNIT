@@ -364,7 +364,7 @@ module.exports = function (router){
 
         //console.log(req.decoded.email);
         // getting profile of user from database using email, saved in the token in localStorage
-        User.findOne({ college_id : req.decoded.college_id }).select('college_id student_name gender department').exec(function (err, user) {
+        User.findOne({ college_id : req.decoded.college_id }).select('college_id student_name gender department red_flags').exec(function (err, user) {
             if(err) throw err;
 
             if(!user) {
@@ -1782,28 +1782,103 @@ module.exports = function (router){
                     for(var i=0;i< company.candidates.length;i++) {
                         if(company.candidates[i].candidate_status === 'Applied') {	
                             company.candidates[i].candidate_status = 'Absent';
-			    console.log(company.candidates[i].college_id);
+			                console.log(company.candidates[i].college_id);
                         }
-		    }
+		            }
 
-		    company.attendance = false;
+                    company.attendance = false;
 
-			company.save(function (err) {
-				if(err) {
-					res.json({
-						success : false,
-						message : 'Error from database.'
-					    });
-				} else {
-					res.json({
-						success : true,
-						message : 'Updated successfully.'
-					    });
-				}
-			})
-             
+                    company.save(function (err) {
+                        if(err) {
+                            res.json({
+                                success : false,
+                                message : 'Error from database.'
+                            });
+                        } else {
+                            res.json({
+                                success : true,
+                                message : 'Updated successfully.'
+                            });
+                        }
+                    });
                 }
             })
+        }
+    });
+
+    // mark ref flag to absent students
+    router.post('/sendEmailToAbsentAndMarkRedFlag/:company_id', function (req, res) {
+        if(!req.decoded.college_id) {
+            res.json({
+                success : false,
+                message : 'Please login.'
+            })
+        } else {
+            Company.findOne({ _id : req.params.company_id }, function (err, company) {
+                if(err) {
+                    res.json({
+                        success : false,
+                        message : 'Error from database side.'
+                    })
+                }
+
+                if(!company) {
+                    res.json({
+                        success : false,
+                        message : 'Company not found.'
+                    })
+                } else {
+                    for(var i=0;i< company.candidates.length;i++) {
+                        if (company.candidates[i].candidate_status === 'Absent') {
+
+                            User.findOne({ college_id :  company.candidates[i].college_id }, function (err, user) {
+                                if(err) {
+                                    console.log(err);
+                                }
+
+                                if(!user) {
+                                    console.log('User not found')
+                                } else {
+                                    if(user.red_flags) {
+                                        user.red_flags = user.red_flags + 1;
+                                    } else {
+                                        user.red_flags = 1;
+                                    }
+
+                                    user.save(function (err) {
+                                        if(err) {
+                                            console.log('Error from database side.' + err);
+                                        } else {
+                                            var email = {
+                                                from: '"Placement & Training Cell" <ptcell@mnit.ac.in>',
+                                                to: user.college_email,
+                                                subject: 'Red Flag Notification : Placement Cell, MNIT Jaipur',
+                                                text: 'Hello '+ user.student_name + 'Your profile has been red flaged. 3 Red Flags will block your profile. With Regards, Prof. Mahendar Choudhary',
+                                                html: 'Hello <strong>'+ user.student_name + '</strong>,<br><br>Your profile has been red flaged. 3 Red Flags will block your profile<br><br>With Regards.<br><br>Prof. Mahender Choudhary<br>In-charge, Training & Placement<br>MNIT Jaipur<br>+91-141-2529065'
+                                            };
+
+                                            transporter.sendMail(email, function(err, info){
+                                                if (err ){
+                                                    console.log(err);
+                                                }
+                                                else {
+                                                    console.log('Message sent: ' + info.response);
+                                                }
+                                            });
+                                        }
+                                    });
+
+                                }
+                            })
+                        }
+                    }
+
+                    res.json({
+                        success : true,
+                        message : 'Email sent successfully.'
+                    });
+                }
+            });
         }
     })
 
