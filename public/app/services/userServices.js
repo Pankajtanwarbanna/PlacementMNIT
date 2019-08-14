@@ -122,6 +122,11 @@ angular.module('userServices',[])
         return $http.post('/api/oneClickApply/' + company_id);
     };
 
+    // withdraw application
+    userFactory.withdrawApplication = function(company_id) {
+        return $http.post('/api/withdrawApplication/' + company_id);
+    };
+
     // delete company
     userFactory.deleteCompany = function(company_id) {
         return $http.delete('/api/deleteCompany/'+ company_id);

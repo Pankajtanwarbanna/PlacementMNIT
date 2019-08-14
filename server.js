@@ -1,7 +1,7 @@
 var express  = require('express');
 var app = express();
 var morgan = require('morgan');             // middleware to log http requests
-var port = 80; // localhost : 8080 & Prod : 80
+var port = 8080; // localhost : 8080 & Prod : 80
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var router = express.Router();

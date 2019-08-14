@@ -13,3 +13,9 @@
 .card-img {
     border-radius: 15px;
 }
+.success-icon {
+    -webkit-text-stroke: 0.5px green;
+}
+.danger-icon {
+    -webkit-text-stroke: 0.5px red;
+}

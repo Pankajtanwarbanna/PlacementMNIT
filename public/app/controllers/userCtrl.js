@@ -95,7 +95,16 @@ angular.module('userCtrl',['userServices'])
 	   } else {
 		   app.profileComplete = false;
 	   }
-	})
+	});
+
+	$scope.getApplyStatusInCompany = function (company_id) {
+	    console.log(company_id);
+        /*user.getCandidateApplyStatus(company_id).then(function (data) {
+            console.log(data);
+        })*/
+
+        return true;
+    }
 })
 
 // Add new company controller
@@ -261,7 +270,6 @@ angular.module('userCtrl',['userServices'])
 
     function getCandidateApplyStatusFunction() {
         user.getCandidateApplyStatus($routeParams.company_id).then(function (data) {
-            console.log(data);
             if(data.data.success) {
                 app.applyStatus = true;
                 document.getElementById('oneClickApplyButton').className = 'btn btn-danger btn-rounded';
@@ -274,7 +282,7 @@ angular.module('userCtrl',['userServices'])
             } else {
                 app.applyStatus = false;
                 document.getElementById('oneClickApplyButton').className = 'btn btn-success btn-rounded';
-                document.getElementById('oneClickApplyButton').value = 'One Click Apply'
+                document.getElementById('oneClickApplyButton').innerHTML = 'One Click Apply';
             }
         });
     }
@@ -284,6 +292,15 @@ angular.module('userCtrl',['userServices'])
     app.oneClickApply = function () {
         user.oneClickApply($routeParams.company_id).then(function (data) {
             //console.log(data);
+            if(data.data.success) {
+                getCandidateApplyStatusFunction();
+            }
+        })
+    };
+
+    app.withdrawApplication = function() {
+        user.withdrawApplication($routeParams.company_id).then(function (data) {
+            console.log(data);
             if(data.data.success) {
                 getCandidateApplyStatusFunction();
             }

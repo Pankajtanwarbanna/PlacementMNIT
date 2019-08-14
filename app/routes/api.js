@@ -780,6 +780,61 @@ module.exports = function (router){
         }
     });
 
+    // route to withdraw application
+    router.post('/withdrawApplication/:company_id', function (req, res) {
+        if(!req.decoded.college_id) {
+            res.json({
+                success : false,
+                message : 'Please login.'
+            })
+        } else {
+            Company.findOne({ _id : req.params.company_id }, function (err, company) {
+                if(err) {
+                    console.log(err);
+                    res.json({
+                        success : false,
+                        message : 'Database error.'
+                    });
+                }
+
+                if(!company) {
+                    // Company not found
+                    res.json({
+                        success : false,
+                        message : 'Company not found.'
+                    })
+                } else {
+                    console.log(company.candidates);
+
+                    var candidateIndex;
+
+                    for(var i=0;i<company.candidates.length;i++) {
+                        if(company.candidates[i].college_id === req.decoded.college_id) {
+                            candidateIndex = i;
+                            break;
+                        }
+                    }
+
+                    company.candidates.splice(candidateIndex,1);
+
+                    company.save(function (err) {
+                        if(err) {
+                            res.json({
+                                success : false,
+                                message : 'Database error.'
+                            });
+                        } else {
+                            res.json({
+                                success : true,
+                                message : 'Successfully applied.'
+                            });
+                        }
+                    })
+                }
+            })
+        }
+    })
+
     // get user timeline
     router.get('/getTimeline', function (req, res) {
         if(!req.decoded.college_id) {
