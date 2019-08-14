@@ -97,14 +97,15 @@ angular.module('userCtrl',['userServices'])
 	   }
 	});
 
-	$scope.getApplyStatusInCompany = function (company_id) {
+	// check status in a company
+	/*$scope.getApplyStatusInCompany = function (company_id) {
 	    console.log(company_id);
-        /*user.getCandidateApplyStatus(company_id).then(function (data) {
+        /!*user.getCandidateApplyStatus(company_id).then(function (data) {
             console.log(data);
-        })*/
+        })*!/
 
         return true;
-    }
+    }*/
 })
 
 // Add new company controller
