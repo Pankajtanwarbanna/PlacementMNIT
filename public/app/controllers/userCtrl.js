@@ -120,7 +120,8 @@ angular.module('userCtrl',['userServices'])
         'MTech',
         'MPlan',
         'MSc',
-        'PhD'
+        'PhD',
+		'MBA'
     ];
 
     $scope.programsBranches = {

@@ -331,18 +331,18 @@
                 className: 'bg-info'
             },
 			{
-                title: 'Wissen Test',
+                title: 'Wissen Test + PI',
                 start: new Date('08-17-2019'),
                 className: 'bg-info'
             },
             {
-                title: 'Wissen PI',
+                title: 'OYO Test',
                 start: new Date('08-18-2019'),
                 className: 'bg-info'
             },
 			{
-                title: 'Wooqer Test + PI',
-                start: new Date('08-18-2019'),
+                title: 'Philips PI',
+                start: new Date('08-19-2019'),
                 className: 'bg-info'
             },
             {
@@ -350,9 +350,177 @@
                 start: new Date('08-19-2019'),
                 className: 'bg-info'
             },
-			{
-                title: 'Philips PI',
+	    {
+                title: 'Commvault Test',
                 start: new Date('08-19-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Dassault PPT',
+                start: new Date('08-19-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Optum Test',
+                start: new Date('08-19-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Dassault Test + PI',
+                start: new Date('08-20-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Interra System',
+                start: new Date('08-20-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Incture',
+                start: new Date('08-21-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'OYO PI',
+                start: new Date('08-21-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Optum PI',
+                start: new Date('08-21-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Deloitte Test',
+                start: new Date('08-22-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'NOKIA PI',
+                start: new Date('08-22-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'IndusValley Test',
+                start: new Date('08-22-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Commvault PI',
+                start: new Date('08-22-2019'),
+                className: 'bg-info'
+            },
+
+            {
+                title: 'Deloitte PI',
+                start: new Date('08-23-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'IndusValley PI',
+                start: new Date('08-23-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'BlackBuck',
+                start: new Date('08-23-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Accenture',
+                start: new Date('08-24-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Sarthee Tech. Test',
+                start: new Date('08-24-2019'),
+                className: 'bg-info'
+            },
+
+            {
+                title: 'Publicis Sapient Test',
+                start: new Date('08-25-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Sarthee Tech. PI',
+                start: new Date('08-25-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'REIL PI',
+                start: new Date('08-25-2019'),
+                className: 'bg-info'
+            },
+
+            {
+                title: 'Publicis Sapient PI',
+                start: new Date('08-26-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Capgemini Test',
+                start: new Date('08-26-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'IBM Test',
+                start: new Date('08-26-2019'),
+                className: 'bg-info'
+            },
+
+            {
+                title: 'Delhivery',
+                start: new Date('08-27-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'IBM PI',
+                start: new Date('08-27-2019'),
+                className: 'bg-info'
+            },
+
+            {
+                title: 'Capgemini PI',
+                start: new Date('08-28-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'GEP Solutions',
+                start: new Date('08-28-2019'),
+                className: 'bg-info'
+            },
+
+            {
+                title: 'Droom',
+                start: new Date('08-29-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'KarMic',
+                start: new Date('08-29-2019'),
+                className: 'bg-info'
+            },
+
+            {
+                title: 'Addverb Test',
+                start: new Date('08-30-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Technip',
+                start: new Date('08-30-2019'),
+                className: 'bg-info'
+            },
+
+            {
+                title: 'Addverb PI',
+                start: new Date('08-31-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Jaro Education',
+                start: new Date('08-31-2019'),
                 className: 'bg-info'
             }];
 
