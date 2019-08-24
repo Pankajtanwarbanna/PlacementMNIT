@@ -119,7 +119,7 @@
 <div ng-show="companyRegistration.fetchedPreviousCompanies && !main.blockedProfile">
     <div class="row" ng-show="companyRegistration.profileComplete || main.authorized">
         <!-- Column -->
-        <div class="col-lg-4 col-md-6" ng-repeat="company in companyRegistration.previousCompanies | orderBy : 'deadline_date' | filter : companyName">
+        <div class="col-lg-4 col-md-6" ng-repeat="company in companyRegistration.previousCompanies | orderBy : '-deadline_date' | filter : companyName">
             <div class="card cc-widget">
                 <div class="card-body">
                     <div class="d-flex no-block flex-row">

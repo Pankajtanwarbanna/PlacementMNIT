@@ -291,7 +291,12 @@ angular.module('userCtrl',['userServices'])
 
     getCandidateApplyStatusFunction();
 
+    //app.oneClickApplyLoading = false;
+
     app.oneClickApply = function () {
+        document.getElementById('oneClickApplyButton').className = 'btn btn-primary btn-rounded';
+        document.getElementById('oneClickApplyButton').innerHTML = 'Applying.....Please wait!!';
+        document.getElementById('oneClickApplyButton').disabled = true;
         user.oneClickApply($routeParams.company_id).then(function (data) {
             //console.log(data);
             if(data.data.success) {
