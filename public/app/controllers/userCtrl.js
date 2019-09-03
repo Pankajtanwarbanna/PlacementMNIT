@@ -636,7 +636,6 @@ angular.module('userCtrl',['userServices'])
             })
         }
     }
-
 })
 
 // feedbacks controller

@@ -245,11 +245,12 @@ angular.module('managementController', ['userServices'])
 .controller('registeredStudentsCtrl', function ($routeParams, user,$scope) {
     var app = this;
 
-    app.registeredStudentsData = [];
-
     function totalRegisteredStudent() {
+
+        app.registeredStudentsData = [];
+
         user.getRegisteredStudents($routeParams.company_id).then(function (data) {
-            //console.log(data);
+            console.log(data);
             if(data.data.success) {
                 app.studentsData = data.data.candidates;
                 app.company_name = data.data.name;
@@ -269,7 +270,7 @@ angular.module('managementController', ['userServices'])
     totalRegisteredStudent();
 
     $scope.withdrawRegistration = function (college_id) {
-        console.log(college_id)
+        console.log(college_id);
 
         user.withdrawRegistration(college_id,$routeParams.company_id).then(function (data) {
             console.log(data);

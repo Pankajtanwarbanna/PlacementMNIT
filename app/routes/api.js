@@ -1632,7 +1632,7 @@ module.exports = function (router){
         }
     })
 
-    router.post('/withdrawRegistration/:college_id/:company_id', function (req, res) {
+    router.delete('/withdrawRegistration/:college_id/:company_id', function (req, res) {
         console.log(req.params.college_id);
         console.log(req.params.company_id);
         if(!req.decoded.college_id) {
@@ -1671,7 +1671,7 @@ module.exports = function (router){
                                 })
                             } else {
                                 var index = company.candidates.indexOf(company.candidates.find(x => x.college_id === req.params.college_id));
-                                company.candidates.splice(company.candidates.indexOf(index,1));
+                                company.candidates.splice(index,1);
 
                                 company.save(function (err) {
                                     if(err) {

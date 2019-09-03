@@ -204,7 +204,7 @@ angular.module('userServices',[])
 
 	// withdrawRegistration
     userFactory.withdrawRegistration = function (college_id, company_id) {
-        return $http.post('/api/withdrawRegistration/' + college_id + '/' + company_id);
+        return $http.delete('/api/withdrawRegistration/' + college_id + '/' + company_id);
     };
 
     // start attendance
