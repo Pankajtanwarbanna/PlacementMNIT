@@ -39,6 +39,7 @@ We are trying to improve the placement portal day by day.
 * Add Meta Keywords & Descriptions
 * Share the list of students with Resume on Portal itself
 * Filter as per Internship, Placements, B.Tech., M.Tech, Applied & Not Applied
+* Technical Page - Remove Success Message 
 
 ## Contributing
 Pull requests are welcome. For major changes, please open a issue first to discuss what you would like to change.

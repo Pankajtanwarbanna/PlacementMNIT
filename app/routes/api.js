@@ -143,7 +143,7 @@ module.exports = function (router){
             });
         } else {
 
-            User.findOne({ college_id : (req.body.college_id).toUpperCase() }).select('college_id name password active').exec(function (err, user) {
+            User.findOne({ college_id : (req.body.college_id).toUpperCase() }).select('college_id student_name password active').exec(function (err, user) {
 
                 if(err) throw err;
 
@@ -1579,9 +1579,14 @@ module.exports = function (router){
 
         feedback.title = req.body.title;
         feedback.feedback = req.body.feedback;
+        //console.log(req.decoded.student_name);
+        feedback.author_name = req.decoded.student_name;
+        feedback.author_email = req.decoded.college_id + '@mnit.ac.in';
+        feedback.timestamp = new Date();
 
         feedback.save(function (err) {
             if(err) {
+                console.log(err);
                 res.json({
                     success : false,
                     message : 'Database error'
@@ -1594,6 +1599,38 @@ module.exports = function (router){
             }
         })
     });
+
+    // get feedbacks form database
+    router.get('/fetchFeedbacks', function (req, res) {
+
+        if(!req.decoded.college_id) {
+            res.json({
+                success : false,
+                message : 'Please login.'
+            })
+        } else {
+            Feedback.find({}, function (err, feedbacks) {
+                if(err) {
+                    res.json({
+                        success : false,
+                        message : 'Error from database.'
+                    })
+                }
+
+                if(!feedbacks) {
+                    res.json({
+                        success : false,
+                        message : 'No feedbacks found.'
+                    })
+                } else {
+                    res.json({
+                        success : true,
+                        feedbacks : feedbacks
+                    })
+                }
+            })
+        }
+    })
 
     router.post('/withdrawRegistration/:college_id/:company_id', function (req, res) {
         console.log(req.params.college_id);

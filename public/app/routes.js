@@ -130,6 +130,14 @@ var app = angular.module('userRoutes', ['ngRoute'])
                controllerAs : 'technical'
            })
 
+           .when('/feedbacks', {
+               templateUrl : '/app/views/pages/feedbacks.html',
+               authenticated : true,
+               controller : 'feedbackCtrl',
+               controllerAs : 'feedback',
+               permission : 'admin'
+           })
+
            .when('/activate/:token', {
                templateUrl : '/app/views/users/activation/activate.html',
                authenticated : false,

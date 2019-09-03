@@ -1,0 +1,24 @@
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h4 class="text-themecolor">Students' Feedbacks</h4>
+    </div>
+</div>
+
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Feedbacks </h5>
+            <h6 class="card-subtitle">Here are the feedbacks from students</h6>
+
+            <div class="steamline m-t-40" ng-repeat="feedback in feedback.feedbacks | orderBy : '-timestamp'">
+                <div class="sl-item">
+                    <div class="sl-left"> <img class="img-circle" alt="user" src="../assets/images/feedbacks/{{feedback.title}}.png"> </div>
+                    <div class="sl-right">
+                        <div class="font-medium">{{ feedback.feedback }} </div>
+                        <div class="desc">{{ feedback.title }} by <b>{{ feedback.author_name }} </b></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

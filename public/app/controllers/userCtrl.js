@@ -638,3 +638,16 @@ angular.module('userCtrl',['userServices'])
     }
 
 })
+
+// feedbacks controller
+.controller('feedbackCtrl', function (user) {
+
+    var app = this;
+
+    user.fetchFeedbacks().then(function (data) {
+        //console.log(data);
+        if(data.data.success) {
+            app.feedbacks = data.data.feedbacks;
+        }
+    })
+});

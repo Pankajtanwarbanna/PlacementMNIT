@@ -232,5 +232,10 @@ angular.module('userServices',[])
         return $http.post('/api/sendEmailToAbsentAndMarkRedFlag/'+ company_id);
     };
 
+    // fetch feedbacks form database
+    userFactory.fetchFeedbacks = function () {
+        return $http.get('/api/fetchFeedbacks');
+    };
+
     return userFactory;
 });

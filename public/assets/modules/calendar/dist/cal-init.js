@@ -522,6 +522,62 @@
                 title: 'Jaro Education',
                 start: new Date('08-31-2019'),
                 className: 'bg-info'
+            },
+            {
+                title: 'Accenture',
+                start: new Date('09-01-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'HyperDart',
+                start: new Date('09-02-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'TransOrg Test',
+                start: new Date('09-02-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Valuefy Test',
+                start: new Date('09-02-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'TransOrg PI',
+                start: new Date('09-03-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Siemens Ltd.',
+                start: new Date('09-04-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'BYJUs',
+                start: new Date('09-05-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Valuefy',
+                start: new Date('09-06-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'L&T Test',
+                start: new Date('09-07-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Analytics Quotient',
+                start: new Date('09-09-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Tally Solutions',
+                start: new Date('09-10-2019'),
+                end: new Date('09-11-2019'),
+                className: 'bg-info'
             }];
 
         var $this = this;
