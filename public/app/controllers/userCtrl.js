@@ -61,7 +61,7 @@ angular.module('userCtrl',['userServices'])
 
     function getAllUpcomingCompaniesFunction() {
         user.getAllUpcomingCompanies().then(function (data) {
-            console.log(data);
+            //console.log(data);
             if(data.data.success) {
                 app.upcomingCompanies = data.data.companies;
                 app.fetchedUpcomingCompanies = true;
@@ -74,7 +74,7 @@ angular.module('userCtrl',['userServices'])
 
     function getAllPreviousCompaniesFunction () {
         user.getAllPreviousCompanies().then(function (data) {
-            console.log(data);
+            //console.log(data);
             if(data.data.success) {
                 app.previousCompanies = data.data.companies;
                 app.fetchedPreviousCompanies = true;
@@ -85,17 +85,19 @@ angular.module('userCtrl',['userServices'])
         });
     }
 
-	getAllUpcomingCompaniesFunction();
-	getAllPreviousCompaniesFunction();
-
-	user.checkCompleteProfile().then(function (data) {
-	   console.log(data);
-	   if(data.data.success) {
-		   app.profileComplete = true;
-	   } else {
-		   app.profileComplete = false;
-	   }
-	});
+    user.checkCompleteProfile().then(function (data) {
+        //console.log(data);
+        if(data.data.success) {
+            app.profileComplete = true;
+            getAllUpcomingCompaniesFunction();
+            getAllPreviousCompaniesFunction();
+        } else {
+            app.profileComplete = false;
+            // No need to fetch companies details
+            app.fetchedUpcomingCompanies = true;
+            app.fetchedPreviousCompanies = true;
+        }
+    });
 
 	// check status in a company
 	/*$scope.getApplyStatusInCompany = function (company_id) {

@@ -144,6 +144,12 @@ var app = angular.module('userRoutes', ['ngRoute'])
                permission : 'admin'
            })
 
+           .when('/students-database', {
+               templateUrl : '/app/views/admin/students-database.html',
+               authenticated : true,
+               permission : 'admin'
+           })
+
            .when('/activate/:token', {
                templateUrl : '/app/views/users/activation/activate.html',
                authenticated : false,
