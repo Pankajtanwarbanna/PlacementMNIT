@@ -1972,6 +1972,135 @@ module.exports = function (router){
                 }
             });
         }
+    });
+
+    // Get student Profile
+    router.get('/searchByID/:studentID', function (req, res) {
+        if(!req.decoded.college_id) {
+            res.json({
+                success : false,
+                message : 'Please login.'
+            })
+        } else {
+            User.findOne({ college_id : req.params.studentID }, function (err, user) {
+                if(err) {
+                    res.json({
+                        success : false,
+                        message : 'Error from database side.'
+                    })
+                }
+
+                if(!user) {
+                    res.json({
+                        success : false,
+                        message : 'College ID is incorrect!'
+                    })
+                } else {
+                    res.json({
+                        success : true,
+                        user : user
+                    })
+                }
+            })
+        }
+    });
+
+    // update user profile
+    router.put('/updateStudentProfile', function (req, res) {
+        console.log(req.body);
+        if(!req.decoded.college_id) {
+            res.json({
+                success : false,
+                message : 'Please login.'
+            })
+        } else {
+            User.findOne({ college_id : req.body.college_id }, function (err, user) {
+                if(err) {
+                    res.json({
+                        success : false,
+                        message : 'Error from database.'
+                    })
+                }
+
+                if(!user) {
+                    res.json({
+                        success : false,
+                        message : 'User not found.'
+                    })
+                } else {
+
+                    if(req.body.student_name) {
+                        user.student_name = req.body.student_name;
+                    }
+                    if(req.body.degree) {
+                        user.degree = req.body.degree;
+                    }
+                    if(req.body.department) {
+                        user.department = req.body.department;
+                    }
+                    if(req.body.alternate_email) {
+                        user.alternate_email = req.body.alternate_email;
+                    }
+                    if(req.body.contact_no) {
+                        user.contact_no = req.body.contact_no;
+                    }
+                    if(req.body.cgpa) {
+                        user.cgpa = req.body.cgpa;
+                    }
+                    if(req.body.red_flags == 0 || req.body.red_flags) {
+                        user.red_flags = req.body.red_flags;
+                    }
+                    if(req.body.matric_marks) {
+                        user.matric_marks = req.body.matric_marks;
+                    }
+                    if(req.body.matric_board) {
+                        user.matric_board = req.body.matric_board;
+                    }
+                    if(req.body.senior_marks) {
+                        user.senior_marks = req.body.senior_marks;
+                    }
+                    if(req.body.senior_board) {
+                        user.senior_board = req.body.senior_board;
+                    }
+                    if(req.body.alternate_contact_no) {
+                        user.alternate_contact_no = req.body.alternate_contact_no;
+                    }
+                    if(req.body.address) {
+                        user.address = req.body.address;
+                    }
+                    if(req.body.city) {
+                        user.city = req.body.city;
+                    }
+                    if(req.body.post_code) {
+                        user.post_code = req.body.post_code;
+                    }
+                    if(req.body.state) {
+                        user.state = req.body.state;
+                    }
+                    if(req.body.country) {
+                        user.country = req.body.country;
+                    }
+                    if(req.body.linkedln_link) {
+                        user.linkedln_link = req.body.linkedln_link;
+                    }
+
+                    user.save(function (err) {
+                        if(err) {
+                            console.log(err);
+                            res.json({
+                                success : false,
+                                message : 'Error while saving to database.'
+                            })
+                        } else {
+                            res.json({
+                                success : true,
+                                message : 'Profile Successfully updated.'
+                            })
+                        }
+                    })
+                }
+            })
+        }
     })
 
 

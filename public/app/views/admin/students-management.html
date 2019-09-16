@@ -1,0 +1,301 @@
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h4 class="text-themecolor">Students Database</h4>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <form class="form-material">
+                            <div class="form-group">
+                                <input type="text" class="form-control form-control-line" placeholder="Enter Students' College ID" ng-model="studentID">
+                                <p style="color: red;margin-top: 10px;">{{ studentsManagement.errorMsg }}</p>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-lg-4 text-center">
+                        <button class="btn btn-primary btn-rounded" ng-click="searchByID(studentID);"><i class="ti-crown"></i> &nbsp; Search Student</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div ng-show="studentsManagement.searchingByID">
+    <div class="row page-titles">
+        <div class="col-md-5 align-self-center">
+            <h4 class="text-themecolor">Students Profile</h4>
+        </div>
+    </div>
+
+    <!-- Row -->
+    <div class="row">
+        <!-- Column -->
+        <div class="col-lg-4 col-xlg-3 col-md-5">
+            <div class="card">
+                <div class="card-body">
+                    <center class="m-t-30">
+                        <img src="assets/images/profile/{{ studentsManagement.studentData.gender }}.png" class="img-circle" width="150" />
+                        <h4 class="card-title m-t-10">{{ studentsManagement.studentData.student_name }}</h4>
+                        <h6 class="card-subtitle">{{ studentsManagement.studentData.department }} STUDENT</h6>
+                        <div class="row text-center">
+                            <div class="col-12"><a href="#" class="link"><i class="ti-location-pin"></i> <font class="font-medium">MNIT Jaipur</font></a></div>
+                        </div>
+                    </center>
+                </div>
+                <div>
+                    <hr> </div>
+                <div class="card-body">
+                    <center>
+                        <h6>{{ studentsManagement.studentData.red_flags}} Red Flags</h6>
+                        <div ng-repeat="x in [].constructor(studentsManagement.studentData.red_flags) track by $index" style="display: inline">
+                            <td><span class="badge badge-danger badge-pill">&nbsp;</span></td>
+                        </div>
+                        <div ng-repeat="x in [].constructor(3 - studentsManagement.studentData.red_flags) track by $index" style="display: inline">
+                            <td><span class="badge badge-success badge-pill">&nbsp;</span></td>
+                        </div>
+                        <br>
+                        <small class="text-muted">*3 Red Flags will lead to suspension </small>
+                    </center>
+                    <br>
+                    <small class="text-muted">Email address </small>
+                    <h6>{{ studentsManagement.studentData.college_email }}</h6>
+                    <small class="text-muted p-t-30 db">Contact No.</small>
+                    <h6>+91 {{ studentsManagement.studentData.contact_no }}</h6>
+                </div>
+            </div>
+        </div>
+        <!-- Column -->
+        <!-- Column -->
+        <div class="col-lg-8 col-xlg-9 col-md-7">
+            <div class="card">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs profile-tab" role="tablist">
+                    <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#" role="tab">Profile Details</a> </li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div class="tab-pane active" id="profile" role="tabpanel">
+                        <div class="card-body">
+                            <form class="form-horizontal form-material" ng-submit="studentsManagement.updateProfile(studentData)">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-md-12">Name</label>
+                                            <div class="col-md-12">
+                                                <input type="text" placeholder="Enter your name" class="form-control form-control-line" ng-value="studentsManagement.studentData.student_name" ng-model="studentsManagement.studentData.student_name" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-md-12">College ID</label>
+                                            <div class="col-md-12">
+                                                <input type="text" placeholder="Enter your college ID" class="form-control form-control-line" value="{{ studentsManagement.studentData.college_id }}" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-md-12">Degree</label>
+                                            <div class="col-md-12">
+                                                <input type="text" placeholder="Enter your degree" class="form-control form-control-line" ng-value="studentsManagement.studentData.degree" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-md-12">Branch </label>
+                                            <div class="col-md-12">
+                                                <input type="text" placeholder="Enter your branch" class="form-control form-control-line" ng-value="studentsManagement.studentData.department" ng-model="studentsManagement.studentData.department" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-md-12">Personal Email</label>
+                                            <div class="col-md-12">
+                                                <input type="text" placeholder="Enter your personal email" class="form-control form-control-line" ng-value="studentsManagement.studentData.alternate_email" ng-model="studentsManagement.studentData.alternate_email" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-md-12">Personal Contact No.</label>
+                                            <div class="col-md-12">
+                                                <input type="text" placeholder="Enter your personal contact no." class="form-control form-control-line" ng-value="studentsManagement.studentData.contact_no" ng-model="studentsManagement.studentData.contact_no" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-md-12">CGPA</label>
+                                            <div class="col-md-12">
+                                                <input type="text" placeholder="Enter your CGPA" class="form-control form-control-line" ng-value="studentsManagement.studentData.cgpa" ng-model="studentsManagement.studentData.cgpa" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-md-12">Red Flags</label>
+                                            <div class="col-md-12">
+                                                <input type="number" placeholder="Enter Red Flags" class="form-control form-control-line" ng-value="studentsManagement.studentData.red_flags" ng-model="studentsManagement.studentData.red_flags" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-md-12">10th Percentage (CGPA)</label>
+                                            <div class="col-md-12">
+                                                <input type="text" placeholder="Enter your 10th percentage (CGPA)" class="form-control form-control-line" ng-value="studentsManagement.studentData.matric_marks" ng-model="studentsManagement.studentData.matric_marks" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-md-12">Board</label>
+                                            <div class="col-md-12">
+                                                <input type="text" placeholder="Enter your 10th board" class="form-control form-control-line" ng-value="studentsManagement.studentData.matric_board" ng-model="studentsManagement.studentData.matric_board" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-md-12">12th Percentage (CGPA)</label>
+                                            <div class="col-md-12">
+                                                <input type="text" placeholder="Enter your 12th percentage (CGPA)" class="form-control form-control-line" ng-value="studentsManagement.studentData.senior_marks" ng-model="studentsManagement.studentData.senior_marks" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-md-12">Board</label>
+                                            <div class="col-md-12">
+                                                <input type="text" placeholder="Enter your 12th board" class="form-control form-control-line" ng-value="studentsManagement.studentData.senior_board" ng-model="studentsManagement.studentData.senior_board" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <!--<div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-md-12">Date of Birth</label>
+                                            <div class="col-md-12">
+                                                <input type="date" placeholder="Enter your date of birth" class="form-control form-control-line" ng-value="studentsManagement.studentData.student_dob | date:'yyyy-MM-dd HH:mm:ss Z'" ng-model="studentsManagement.studentData.student_dob" required>
+                                            </div>
+                                        </div>
+                                    </div>-->
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-md-12">Contact No. for Communication</label>
+                                            <div class="col-md-12">
+                                                <input type="text" placeholder="Enter your contact no." class="form-control form-control-line" ng-value="studentsManagement.studentData.alternate_contact_no" ng-model="studentsManagement.studentData.alternate_contact_no" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label class="col-md-12">Address</label>
+                                            <div class="col-md-12">
+                                                <input type="text" placeholder="Enter your address" class="form-control form-control-line" ng-value="studentsManagement.studentData.address" ng-model="studentsManagement.studentData.address" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-md-12">City</label>
+                                            <div class="col-md-12">
+                                                <input type="text" placeholder="Enter your city" class="form-control form-control-line" ng-value="studentsManagement.studentData.city" ng-model="studentsManagement.studentData.city" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-md-12">Post Code</label>
+                                            <div class="col-md-12">
+                                                <input type="text" placeholder="Enter your post code" class="form-control form-control-line" ng-value="studentsManagement.studentData.post_code" ng-model="studentsManagement.studentData.post_code" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-md-12">State</label>
+                                            <div class="col-md-12">
+                                                <input type="text" placeholder="Enter your state" class="form-control form-control-line" ng-value="studentsManagement.studentData.state" ng-model="studentsManagement.studentData.state" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-md-12">Country</label>
+                                            <div class="col-md-12">
+                                                <input type="text" placeholder="Enter your country" class="form-control form-control-line" ng-value="studentsManagement.studentData.country" ng-model="studentsManagement.studentData.country" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-12">Social Profile Link</label>
+                                    <div class="col-md-12">
+                                        <input type="text" placeholder="Enter your social profile link" class="form-control form-control-line" ng-value="studentsManagement.studentData.linkedln_link" ng-model="studentsManagement.studentData.linkedln_link" required>
+                                    </div>
+                                </div>
+
+                                <div class="alert alert-success alert-rounded" ng-show="studentsManagement.profileUpdateSuccessMsg">
+                                    <i class="icon-check"></i>
+                                    <strong> Yay!</strong> {{ studentsManagement.profileUpdateSuccessMsg }}
+                                </div>
+
+                                <div class="alert alert-danger alert-rounded" ng-show="studentsManagement.profileUpdateErrorMsg">
+                                    <i class="icon-close"></i>
+                                    <strong>Oops! </strong> {{ studentsManagement.profileUpdateErrorMsg }}
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <button type="submit" class="btn btn-success">Update Profile</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Column -->
+    </div>
+</div>
+
+

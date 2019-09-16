@@ -281,3 +281,37 @@ angular.module('managementController', ['userServices'])
     }
 })
 
+.controller('studentsManagementCtrl', function ($scope, user) {
+    var app = this;
+
+    $scope.searchByID = function (studentID) {
+        app.errorMsg = '';
+        //console.log(studentID);
+        app.searchingByID = false;
+        user.searchByID($scope.studentID.toUpperCase()).then(function (data) {
+            console.log(data);
+            if(data.data.success) {
+                app.studentData = data.data.user;
+                app.searchingByID = true;
+            } else {
+                app.errorMsg = data.data.message;
+            }
+        })
+    }
+
+    app.updateProfile = function (studentData) {
+        console.log(app.studentData);
+        app.profileUpdateSuccessMsg = false;
+        app.profileUpdateErrorMsg = false;
+
+        user.updateStudentProfile(app.studentData).then(function (data) {
+            console.log(data);
+            if(data.data.success) {
+                app.profileUpdateSuccessMsg = data.data.message;
+            } else {
+                app.profileUpdateErrorMsg = data.data.message;
+            }
+        })
+    }
+});
+

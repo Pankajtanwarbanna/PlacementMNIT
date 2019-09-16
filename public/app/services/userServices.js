@@ -237,5 +237,15 @@ angular.module('userServices',[])
         return $http.get('/api/fetchFeedbacks');
     };
 
+    // get student profile
+    userFactory.searchByID = function (studentID) {
+        return $http.get('/api/searchByID/' + studentID);
+    };
+
+    // update student profile
+    userFactory.updateStudentProfile = function (studentData) {
+        return $http.put('/api/updateStudentProfile', studentData);
+    };
+
     return userFactory;
 });
