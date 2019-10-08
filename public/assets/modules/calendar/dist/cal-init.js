@@ -578,6 +578,153 @@
                 start: new Date('09-10-2019'),
                 end: new Date('09-11-2019'),
                 className: 'bg-info'
+            },
+            {
+                title: 'AffineAnalytics Test',
+                start: new Date('10-09-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Virtusa Interviews',
+                start: new Date('10-09-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Dell (M.Tech.)',
+                start: new Date('10-10-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Icertis (Skype Interview) ',
+                start: new Date('10-10-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'ITH Technology',
+                start: new Date('10-10-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Texas (M.Tech.) Test',
+                start: new Date('10-10-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'L&T InfoTech',
+                start: new Date('10-11-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Samsung (Noida)',
+                start: new Date('10-11-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Affine PI',
+                start: new Date('10-11-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'NewGen Software',
+                start: new Date('10-11-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'L&T InfoTech',
+                start: new Date('10-12-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Samsung (Noida)',
+                start: new Date('10-12-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Cubastion',
+                start: new Date('10-12-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Ericsson Test',
+                start: new Date('10-13-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Saint Gobain Test',
+                start: new Date('10-13-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Insplore (MBA)',
+                start: new Date('10-14-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Nestaway',
+                start: new Date('10-14-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Samsung Engineering',
+                start: new Date('10-14-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'NAV',
+                start: new Date('10-15-2019'),
+                end: new Date('10-17-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'DMI Test',
+                start: new Date('10-15-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Ericsson PI',
+                start: new Date('10-15-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Saint Gobain PI',
+                start: new Date('10-16-2019'),
+                end : new Date('10-19-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Eclerx',
+                start: new Date('10-17-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'MTX',
+                start: new Date('10-17-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'DCM Shriram(KOTA)',
+                start: new Date('10-18-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'DMI PI',
+                start: new Date('10-18-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'L&T Construction',
+                start: new Date('10-19-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Gxpress',
+                start: new Date('10-21-2019'),
+                className: 'bg-info'
+            },
+            {
+                title: 'Truminds Software',
+                start: new Date('10-22-2019'),
+                className: 'bg-info'
             }];
 
         var $this = this;
