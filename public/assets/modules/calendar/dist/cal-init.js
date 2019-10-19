@@ -725,6 +725,11 @@
                 title: 'Truminds Software',
                 start: new Date('10-22-2019'),
                 className: 'bg-info'
+            },
+            {
+                title: 'Voylla',
+                start: new Date('10-22-2019'),
+                className: 'bg-info'
             }];
 
         var $this = this;
