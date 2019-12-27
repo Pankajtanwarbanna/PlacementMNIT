@@ -36,8 +36,8 @@ module.exports = function (router){
 
         console.log(req.body);
 
-        user.student_name = 'VIRENDRA SINGH YADAV';
-        user.college_id = '2015UMT1238';
+        user.student_name = 'Pankaj Singh';
+        user.college_id = '2016ucp1381';
         user.program = 'UG';
         user.gender = 'M';
         user.contact_no = '8874875070';
@@ -47,7 +47,7 @@ module.exports = function (router){
         user.department = 'METALLURGICAL & MATERIALS ENGG.';
         user.status = 'active';
         user.cgpa = '6.43';
-		user.password = '2015UMT1238';
+		user.password = 'pankaj';
 
         user.temporarytoken = jwt.sign({ student_name : user.student_name , college_id : user.college_id }, secret);
 
@@ -580,7 +580,6 @@ module.exports = function (router){
                         message : 'Error while saving to database.'
                     });
                 } else {
-                    console.log('success.')
                     res.json({
                         success : true,
                         message : 'Successfully new company added.'
@@ -601,7 +600,7 @@ module.exports = function (router){
             });
         } else {
             // todo Add here validation according to branch, cgpa etc
-            Company.find({ deadline_date : { $gte: new Date() -1 }}).select('company_name job_profile package deadline_date').exec(function (err, companies) {
+            Company.find({ deadline_date : { $gte: new Date() -1 }}).select('company_name job_profile package deadline_date').lean().exec(function (err, companies) {
                 if(err) {
                     res.json({
                         success : false,
@@ -1980,7 +1979,7 @@ module.exports = function (router){
             res.json({
                 success : false,
                 message : 'Please login.'
-            })
+            });
         } else {
             User.findOne({ college_id : req.params.studentID }, function (err, user) {
                 if(err) {

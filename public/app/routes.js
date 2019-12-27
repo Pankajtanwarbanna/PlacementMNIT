@@ -46,7 +46,7 @@ var app = angular.module('userRoutes', ['ngRoute'])
            })
 
            .when('/add-new-company', {
-               templateUrl : '/app/views/pages/add-new-company.html',
+               templateUrl : '/app/views/admin/company/add-new-company.html',
                authenticated : true,
                controller : 'addNewCompanyCtrl',
                controllerAs : 'addNewCompany',

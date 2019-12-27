@@ -11,7 +11,6 @@ We are trying to improve the placement portal day by day.
 * Edit Company Page
 * Compress the blank area on pages
 * Delete Announcements Feature (ADMIN)
-* View Feedback Page (ADMIN)
 * Add Bond Agreement 
 * Delete Schedule (ADMIN)
 * Add Achievements Section - User Profile
@@ -19,9 +18,8 @@ We are trying to improve the placement portal day by day.
 * Add SPC as ADMIN (Don't access database)
 * All updates by ADMIN will show the name of ADMIN
 * FAQ & Documentation Page
-* Update user details feature (ADMIN)
-* Remove duplication 
 * Add Resume Option in User Profile
+* Personal Webpage for each student
 * Inform students via Messages OR push notification
 * Create React-Native Web->App 
 * Get Students Data Branch Wise
@@ -39,7 +37,10 @@ We are trying to improve the placement portal day by day.
 * Add Meta Keywords & Descriptions
 * Share the list of students with Resume on Portal itself
 * Filter as per Internship, Placements, B.Tech., M.Tech, Applied & Not Applied
-* Technical Page - Remove Success Message 
+* Make project Open source
+* Better Front end
+* Better code structure
+* Implement Lazy Loading in companies
 
 ## Contributing
 Pull requests are welcome. For major changes, please open a issue first to discuss what you would like to change.
