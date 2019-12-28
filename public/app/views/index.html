@@ -20,7 +20,6 @@
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-
     <!-- App config -->
     <script src="app/app.js"></script>
     <script src="app/routes.js"></script>
@@ -315,7 +314,7 @@
             <!-- Container fluid  -->
             <!-- ============================================================== -->
             <div class="container-fluid">
-                <div class="ng-view"></div>
+                <div class="ng-view" autoscroll="true"></div>
 
                 <div ng-show="main.schedule">
                     <div class="row page-titles">
@@ -739,6 +738,7 @@
     <script src="assets/modules/moment/moment.js"></script>
     <script src='assets/modules/calendar/dist/fullcalendar.min.js'></script>
     <script src="assets/modules/calendar/dist/cal-init.js"></script>
+
 </body>
 
 </html>

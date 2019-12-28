@@ -6,6 +6,7 @@ var Schedule = require('../models/schedule');
 var Announcement = require('../models/announcement');
 var Feedback = require('../models/feedback');
 var Company = require('../models/company');
+var auth = require('../middlewares/authPermission');
 var jwt = require('jsonwebtoken');
 var secret = 'placementmnit';
 var nodemailer = require('nodemailer');
@@ -540,54 +541,24 @@ module.exports = function (router){
     });
 
     // post new company to db
-    router.post('/postCompanyDetails', function (req, res) {
+    router.post('/postCompanyDetails', auth.ensureAdmin, function (req, res) {
 
-        if(!req.decoded.college_id) {
-            res.json({
-                success : false,
-                message : 'Please login.'
-            });
-        } else {
+        let company = new Company(req.body);
 
-            var company = new Company();
-
-            company.eligibility = req.body.eligibility;
-
-            company.company_name = req.body.company_name;
-            company.company_website_url = req.body.company_website_url;
-            company.about_company = req.body.about_company;
-
-            company.job_profile = req.body.job_profile;
-            company.posting_location = req.body.posting_location;
-            company.recruitment = req.body.recruitment;
-            company.duration = req.body.duration;
-            company.package = req.body.package;
-            company.other_facility = req.body.other_facility;
-
-            company.min_cgpa = req.body.min_cgpa;
-            company.min_10_percent = req.body.min_10_percent;
-            company.min_12_percent = req.body.min_12_percent;
-            company.other_eligibility = req.body.other_eligibility;
-
-            company.deadline_date = req.body.deadline_date;
-            company.timestamp = new Date();
-
-            company.save(function (err) {
-                if(err) {
-                    console.log(err);
-                    res.json({
-                        success : false,
-                        message : 'Error while saving to database.'
-                    });
-                } else {
-                    res.json({
-                        success : true,
-                        message : 'Successfully new company added.'
-                    })
-                }
-            })
-
-        }
+        company.save(function (err) {
+            if(err) {
+                console.log(err);
+                res.json({
+                    success : false,
+                    message : 'Error while saving to database.'
+                });
+            } else {
+                res.json({
+                    success : true,
+                    message : 'Successfully new company added.'
+                })
+            }
+        })
     });
 
     // get companies details from db

@@ -13,40 +13,42 @@
 
                         <h4 class="card-title text-center"> {{ company.companyDetail.company_name}}</h4>
                         <h6 class="card-subtitle text-center">{{ company.companyDetail.job_profile}}</h6>
-                        <div class="table-responsive">
-                            <table class="table stylish-table">
-                                <tbody>
-                                <tr>
-                                    <td><span class="round"><i class="ti-briefcase"></i></span></td>
-                                    <td style="vertical-align: inherit;">
-                                        <h5 style="font-weight: 500;">Company Name</h5>                           </td>
-                                    <td style="vertical-align: inherit;">
-                                        <h5>{{ company.companyDetail.company_name}}</h5>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td><span class="round bg-purple"><i class="ti-world"></i></span></td>
-                                    <td style="vertical-align: inherit;">
-                                        <h5 style="font-weight: 500;">Company Website </h5>
-                                    </td>
-                                    <td style="vertical-align: inherit;">
-                                        <a href="{{ company.companyDetail.company_website_url }}" target="_blank">{{ company.companyDetail.company_website_url }}</a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td><span class="round bg-cyan"><i class="ti-blackboard"></i></span></td>
-                                    <td>
-                                        <h5 style="font-weight: 500;margin-top: 1rem;">About Company</h5>
-                                    </td>
-                                    <td style="vertical-align: inherit;">
-                                        <h5>{{ company.companyDetail.about_company }}</h5>
-                                    </td>
-                                </tr>
-
-                                </tbody>
-                            </table>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label text-muted">Company Name</label>
+                                    <h5><i class="ti-briefcase text-primary"></i> &nbsp; {{ company.companyDetail.company_name }}</h5>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label text-muted">Company Website Link</label>
+                                    <h5><i class="ti-world text-primary"></i> <a href="{{ company.companyDetail.company_website_url }}" target="_blank"> &nbsp; {{ company.companyDetail.company_website_url }}</a> </h5>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label text-muted">Organization Type</label>
+                                    <h5><i class="icon-tag text-primary"></i> &nbsp; {{ company.companyDetail.organization_type }}</h5>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label text-muted">Industry Sector</label>
+                                    <h5><i class="icon-tag text-primary"></i>  &nbsp; {{ company.companyDetail.industry_sector }}</h5>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label text-muted">About Company</label>
+                                    <h5><i class="ti-blackboard text-primary"></i>  &nbsp; {{company.companyDetail.about_company }} </h5>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -56,71 +58,51 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <h4 class="card-title text-center"> Job Details</h4>
-                        <div class="table-responsive">
-                            <table class="table stylish-table">
-                                <tbody>
-                                <tr>
-                                    <td><span class="round bg-success"><i class="ti-id-badge"></i></span></td>
-                                    <td style="vertical-align: inherit;">
-                                        <h5 style="font-weight: 500;">Job Profile</h5>
-                                    </td>
-                                    <td style="vertical-align: inherit;">
-                                        <h5>{{ company.companyDetail.job_profile}}</h5>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td><span class="round bg-primary"><i class="icon-graduation"></i></span></td>
-                                    <td style="vertical-align: inherit;">
-                                        <h5 style="font-weight: 500;">Recruitment </h5>
-                                    </td>
-                                    <td style="vertical-align: inherit;">
-                                        <h5>{{ company.companyDetail.recruitment }} </h5>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td><span class="round bg-danger"><i class="ti-time"></i></span></td>
-                                    <td style="vertical-align: inherit;">
-                                        <h5 style="font-weight: 500;">Duration </h5>
-                                    </td>
-                                    <td style="vertical-align: inherit;">
-                                        <h5>{{ company.companyDetail.duration }} </h5>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td><span class="round bg-info"><i class="ti-credit-card"></i></span></td>
-                                    <td style="vertical-align: inherit;">
-                                        <h5 style="font-weight: 500;">Package</h5>
-                                    </td>
-                                    <td style="vertical-align: inherit;">
-                                        <h5> {{ company.companyDetail.package }}  </h5>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td><span class="round bg-success"><i class="ti-gift"></i></span></td>
-                                    <td style="vertical-align: inherit;">
-                                        <h5 style="font-weight: 500;">Other Facilities</h5>
-                                    </td>
-                                    <td style="vertical-align: inherit;">
-                                        <h5> {{ company.companyDetail.other_facility }}  </h5>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td><span class="round bg-over"><i class="ti-location-pin"></i></span></td>
-                                    <td style="vertical-align: inherit;">
-                                        <h5 style="font-weight: 500;">Location of Posting </h5>
-                                    </td>
-                                    <td style="vertical-align: inherit;">
-                                        <h5>{{ company.companyDetail.posting_location }}</h5>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
+                        <h4 class="card-title text-center"> Job Profile</h4>
+                        <h6 class="card-subtitle text-center">Below are the job profile details</h6>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label text-muted">Job Profile</label>
+                                    <h5><i class="ti-briefcase text-primary"></i> &nbsp; {{ company.companyDetail.job_profile }}</h5>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label text-muted">Passout Batch</label>
+                                    <h5><i class="icon-graduation text-primary"></i> &nbsp; {{ company.companyDetail.passout_batch }} Batch</h5>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label text-muted">Recruitment</label>
+                                    <h5><i class="icon-badge text-primary"></i> &nbsp; {{ company.companyDetail.recruitment }}</h5>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label text-muted">Internship Duration</label>
+                                    <h5><i class="ti-time text-primary"></i>  &nbsp; {{ company.companyDetail.duration }}</h5>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label text-muted">Location of Posting</label>
+                                    <h5><i class="ti-location-pin text-primary"></i> &nbsp; {{ company.companyDetail.posting_location }}</h5>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label text-muted">Tentative Date of Joining</label>
+                                    <h5><i class="ti-calendar text-primary"></i>  &nbsp; {{ company.companyDetail.joining_date | date : 'dd MMMM yyyy' }}</h5>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -130,75 +112,71 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <h4 class="card-title text-center"> Eligibility Information</h4>
-                        <div class="table-responsive">
-                            <table class="table stylish-table">
-                                <tbody>
-                                <tr>
-                                    <td><span class="round"><i class="icon-graduation"></i></span></td>
-                                    <td>
-                                        <h5 style="font-weight: 500;margin-top: 1rem;">Eligibility</h5>
-                                    </td>
-                                    <td style="vertical-align: inherit;">
-                                        <div ng-repeat="(key, value) in company.companyDetail.eligibility">
-                                            <h5> <b>{{ key }}</b></h5>
-                                            <h5 ng-repeat="(key, value) in company.companyDetail.eligibility[key]">{{ key }}</h5>
+                        <h4 class="card-title text-center"> Eligibility Details</h4>
+                        <h6 class="card-subtitle text-center">Below are the student eligibility details</h6>
+                        <hr>
+                        <div class="p-3 border shadow-sm rounded">
+                            <h4 class="card-title">Eligible Branches</h4>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-12" ng-repeat="(key, value) in company.companyDetail.eligibility">
+                                    <ul class="list-style-none">
+                                        <li class="my-2">
+                                            <span class="font-weight-medium text-dark"><i class="ti-blackboard mr-2 text-primary"></i> <b>{{ key }}</b></span>
+                                        </li>
+                                        <div class="row">
+                                            <div class="col-lg-4" ng-repeat="(key, value) in company.companyDetail.eligibility[key]">
+                                                <li class="my-1">
+                                                    <span><i class="icon-check mr-2 text-success"></i> {{ key }}</span>
+                                                </li>
+                                            </div>
                                         </div>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td><span class="round bg-success"><i class="ti-medall"></i></span></td>
-                                    <td style="vertical-align: inherit;">
-                                        <h5 style="font-weight: 500;">Minimum CGPA </h5>
-                                    </td>
-                                    <td style="vertical-align: inherit;">
-                                        <h5>{{ company.companyDetail.min_cgpa  }} CGPA</h5>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td><span class="round bg-primary"><i class="ti-cup"></i></span></td>
-                                    <td style="vertical-align: inherit;">
-                                        <h5 style="font-weight: 500;">Minimum Marks in 10th </h5>
-                                    </td>
-                                    <td style="vertical-align: inherit;">
-                                        <h5>{{ company.companyDetail.min_10_percent }} %</h5>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td><span class="round bg-primary"><i class="ti-cup"></i></span></td>
-                                    <td style="vertical-align: inherit;">
-                                        <h5 style="font-weight: 500;">Minimum Marks in 12th </h5>
-                                    </td>
-                                    <td style="vertical-align: inherit;">
-                                        <h5>{{ company.companyDetail.min_12_percent }} %</h5>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td><span class="round bg-danger"><i class="icon-tag"></i></span></td>
-                                    <td style="vertical-align: inherit;">
-                                        <h5 style="font-weight: 500;">Other Eligibility </h5>
-                                    </td>
-                                    <td style="vertical-align: inherit;">
-                                        <h5>{{ company.companyDetail.other_eligibility}}</h5>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td><span class="round bg-cyan"><i class="icon-link"></i></span></td>
-                                    <td style="vertical-align: inherit;">
-                                        <h5 style="font-weight: 500;">Bond Requirement</h5>
-                                    </td>
-                                    <td style="vertical-align: inherit;">
-                                        <h5>No</h5>
-                                    </td>
-                                </tr>
-
-                                </tbody>
-                            </table>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row p-t-20">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label text-muted">Minimum CGPA</label>
+                                    <h5><i class="ti-medall text-primary"></i> &nbsp; {{ company.companyDetail.min_cgpa }} CGPA</h5>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label text-muted">Min. Marks in 10th</label>
+                                    <h5><i class="icon-trophy text-primary"></i> &nbsp; {{ company.companyDetail.min_10_percent }} %</h5>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label text-muted">Min. Marks in 12th</label>
+                                    <h5><i class="icon-trophy text-primary"></i> &nbsp; {{ company.companyDetail.min_12_percent }} %</h5>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label text-muted">Medical Requirements</label>
+                                    <h5><i class="ti-support text-primary"></i>  &nbsp; {{ company.companyDetail.medical_requirement }}</h5>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label text-muted">Service Agreement</label>
+                                    <h5><i class="ti-link text-primary"></i> &nbsp; {{ company.companyDetail.service_agreement }} <span ng-if="company.companyDetail.service_agreement == 'Yes'"> ( {{ company.companyDetail.service_agreement_duration }} )</span></h5>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label text-muted">Other Eligibility</label>
+                                    <h5><i class="ti-tag text-primary"></i>  &nbsp; {{ company.companyDetail.other_eligibility }}</h5>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -208,24 +186,163 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <h4 class="card-title text-center"> Deadline</h4>
-                        <div class="table-responsive">
-                            <table class="table stylish-table">
-                                <tbody>
-                                <tr>
-                                    <td><span class="round"><i class="ti-calendar"></i></span></td>
-                                    <td style="vertical-align: inherit;">
-                                        <h5 style="font-weight: 500;">Last Date to Apply</h5>                           </td>
-                                    <td style="vertical-align: inherit;">
-                                        <h5>{{ company.companyDetail.deadline_date | date : 'dd MMMM yyyy h:mm a'}} </h5>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
+                        <h4 class="card-title text-center"> Package Details</h4>
+                        <h6 class="card-subtitle text-center">Below are the Package details</h6>
+                        <hr>
+                        <div class="p-3 border shadow-sm rounded">
+                            <div class="row">
+                                <div class="col-md-12" ng-repeat="(key, value) in company.companyDetail.eligibility">
+                                    <ul class="list-style-none">
+                                        <li class="my-2">
+                                            <span class="font-weight-medium text-dark"><i class="ti-blackboard mr-2 text-primary"></i> <b>{{ key }} PACKAGE </b></span>
+                                        </li>
+                                        <div class="row">
+                                            <div class="col-lg-2">
+                                                <li class="my-1">
+                                                    <label class="control-label text-muted">Basic Pay</label>
+                                                    <h5><i class="ti-wallet text-primary"></i> &nbsp; {{ company.companyDetail.package[key].basic_pay }} </h5>
+                                                </li>
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <li class="my-1">
+                                                    <label class="control-label text-muted">HRA</label>
+                                                    <h5><i class="ti-wallet text-primary"></i> &nbsp; {{ company.companyDetail.package[key].hra }} </h5>
+                                                </li>
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <li class="my-1">
+                                                    <label class="control-label text-muted">Perks & Bonus</label>
+                                                    <h5><i class="ti-wallet text-primary"></i> &nbsp; {{ company.companyDetail.package[key].perks_bonus }} </h5>
+                                                </li>
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <li class="my-1">
+                                                    <label class="control-label text-muted">Gross</label>
+                                                    <h5><i class="ti-wallet text-primary"></i> &nbsp; {{ company.companyDetail.package[key].gross }} </h5>
+                                                </li>
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <li class="my-1">
+                                                    <label class="control-label text-muted">Take Home</label>
+                                                    <h5><i class="ti-wallet text-primary"></i> &nbsp; {{ company.companyDetail.package[key].take_home }} </h5>
+                                                </li>
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <li class="my-1">
+                                                    <label class="control-label text-muted">CTC</label>
+                                                    <h5><i class="ti-wallet text-primary"></i> &nbsp; {{ company.companyDetail.package[key].ctc }} </h5>
+                                                </li>
+                                            </div>
+                                        </div>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row p-t-20">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label text-muted">Company Accommodation</label>
+                                    <h5><i class="ti-home text-primary"></i> &nbsp; {{ company.companyDetail.company_accommodation }}</h5>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label text-muted">Other Facility</label>
+                                    <h5><i class="ti-gift text-primary"></i> &nbsp; {{ company.companyDetail.other_facility }} </h5>
+                                </div>
+                            </div>
+                            <!--/span-->
                         </div>
                     </div>
                 </div>
             </div>
+
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+
+                        <h4 class="card-title text-center"> Selection Process</h4>
+                        <h6 class="card-subtitle text-center">Below are the selection process details details</h6>
+                        <hr>
+                        <div class="p-3 border shadow-sm rounded">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4 class="card-title">Selection Process</h4>
+                                    <hr>
+                                    <ul class="list-style-none">
+                                        <div class="row">
+                                            <div class="col-lg-3">
+                                                <li class="my-1">
+                                                    <label class="control-label text-muted">Pre Placement Talk</label>
+                                                    <h5><i class="ti-blackboard text-primary"></i> &nbsp; {{ company.companyDetail.selection_process.pre_placement_talk.ppt }} <span ng-if="company.companyDetail.selection_process.pre_placement_talk.ppt == 'Yes'">: {{ company.companyDetail.selection_process.pre_placement_talk.date | date : 'dd MMM yyyy' }} </span></h5>
+                                                </li>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <li class="my-1">
+                                                    <label class="control-label text-muted">Aptitude Test</label>
+                                                    <h5><i class="ti-clipboard text-primary"></i> &nbsp; {{ company.companyDetail.selection_process.aptitude_test.test }}  <span ng-if="company.companyDetail.selection_process.aptitude_test.test == 'Yes'">: {{ company.companyDetail.selection_process.aptitude_test.date | date : 'dd MMM yyyy' }} </span></h5>
+                                                </li>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <li class="my-1">
+                                                    <label class="control-label text-muted">Technical Test</label>
+                                                    <h5><i class="ti-pencil-alt text-primary"></i> &nbsp; {{ company.companyDetail.selection_process.technical_test.test }}  <span ng-if="company.companyDetail.selection_process.technical_test.test == 'Yes'">: {{ company.companyDetail.selection_process.technical_test.date | date : 'dd MMM yyyy' }}</span> </h5>
+                                                </li>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <li class="my-1">
+                                                    <label class="control-label text-muted">Group Discussion</label>
+                                                    <h5><i class="icon-people text-primary"></i> &nbsp; {{ company.companyDetail.selection_process.group_discussion.gd }}  <span ng-if="company.companyDetail.selection_process.group_discussion.gd == 'Yes'">: {{ company.companyDetail.selection_process.group_discussion.date | date : 'dd MMM yyyy' }} </span></h5>
+                                                </li>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row text-center">
+                                            <div class="col-lg-12">
+                                                <li class="my-1">
+                                                    <label class="control-label text-muted">Personal Interview</label>
+                                                    <h5><i class="icon-star text-primary"></i> &nbsp; {{ company.companyDetail.selection_process.personal_interview.rounds }} Rounds : {{ company.companyDetail.selection_process.personal_interview.date | date : 'dd MMM yyyy' }} </h5>
+                                                </li>
+                                            </div>
+                                        </div>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row p-t-20">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label text-muted">Provision for Waitlist</label>
+                                    <h5><i class="icon-ghost text-primary"></i> &nbsp; {{ company.companyDetail.waitlist }}</h5>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label text-muted">Final Offer to be Announcement</label>
+                                    <h5><i class="icon-badge text-primary"></i> &nbsp; {{ company.companyDetail.final_offer }} </h5>
+                                </div>
+                            </div>
+                            <!--/span-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="card text-center">
+                    <div class="card-header">
+                        <h4 class="m-b-0">Deadline </h4></div>
+                    <div class="card-body">
+                        <h3 class="card-title">{{ company.companyDetail.deadline_date | date : 'dd MMMM yyyy h:mm a'}} </h3>
+                        <p class="card-text"> Last Date to Apply</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
 
             <div class="col-lg-12" ng-show="main.authorized">
                 <div class="row">

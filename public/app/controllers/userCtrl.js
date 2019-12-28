@@ -184,12 +184,13 @@ angular.module('userCtrl',['userServices'])
         $scope.programsDiv[program.toLowerCase()] = !$scope.programsDiv[program.toLowerCase()];
     }
 
+    // Add New Company
     app.postCompanyDetails = function (newCompanyData) {
-        console.log(app.newCompanyData);
         user.postCompanyDetails(app.newCompanyData).then(function (data) {
-            console.log(data);
             if(data.data.success) {
                 app.successMsg = data.data.message;
+            } else {
+                app.errorMsg = data.data.message;
             }
         });
     }

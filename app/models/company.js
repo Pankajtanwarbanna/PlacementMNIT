@@ -11,6 +11,12 @@ var companySchema = new mongoose.Schema({
     company_website_url : {
         type : String
     },
+    organization_type : {
+        type : String
+    },
+    industry_sector : {
+        type : String
+    },
     about_company : {
         type : String
     },
@@ -20,23 +26,24 @@ var companySchema = new mongoose.Schema({
         type : String,
         required: true
     },
-    posting_location : {
-        type : String
+    passout_batch : {
+        type : String,
+        required : true
     },
     recruitment : {
         type : String
     },
     duration : {
-        type : String,
-    },
-    package : {
         type : String
     },
-    other_facility : {
+    posting_location : {
         type : String
+    },
+    joining_date : {
+        type : Date
     },
 
-    // student
+    // student eligibility
     eligibility : {
         type : Object
     },
@@ -49,7 +56,38 @@ var companySchema = new mongoose.Schema({
     min_12_percent : {
         type : String
     },
+    medical_requirement : {
+        type : String
+    },
+    service_agreement : {
+        type : String
+    },
+    service_agreement_duration : {
+        type : String
+    },
     other_eligibility : {
+        type : String
+    },
+
+    // Package Details
+    package : {
+        type : Object
+    },
+    company_accommodation : {
+        type : String
+    },
+    other_facility : {
+        type : String
+    },
+
+    // Selection Process
+    selection_process : {
+        type : Object
+    },
+    waitlist : {
+        type : String
+    },
+    final_offer : {
         type : String
     },
 
@@ -84,7 +122,8 @@ var companySchema = new mongoose.Schema({
     }],
     timestamp: {
         type : Date,
-        required : true
+        required : true,
+        default: Date.now()
     },
     company_schedule : [{
         date_time : {
@@ -134,7 +173,7 @@ var companySchema = new mongoose.Schema({
 
 // Mongoose title case plugin
 companySchema.plugin(titlize, {
-    paths: [ 'company_name','job_profile', 'posting_location' ], // Array of paths
+    paths: [ 'company_name','job_profile', 'posting_location'], // Array of paths
 });
 
 module.exports = mongoose.model('company',companySchema);
