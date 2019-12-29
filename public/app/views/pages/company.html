@@ -32,14 +32,14 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label text-muted">Organization Type</label>
-                                    <h5><i class="icon-tag text-primary"></i> &nbsp; {{ company.companyDetail.organization_type }}</h5>
+                                    <h5><i class="icon-tag text-primary"></i> &nbsp; {{ company.companyDetail.organization_type || 'N/A' }}</h5>
                                 </div>
                             </div>
                             <!--/span-->
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label text-muted">Industry Sector</label>
-                                    <h5><i class="icon-tag text-primary"></i>  &nbsp; {{ company.companyDetail.industry_sector }}</h5>
+                                    <h5><i class="icon-tag text-primary"></i>  &nbsp; {{ company.companyDetail.industry_sector || 'N/A' }}</h5>
                                 </div>
                             </div>
                             <!--/span-->
@@ -72,7 +72,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label text-muted">Passout Batch</label>
-                                    <h5><i class="icon-graduation text-primary"></i> &nbsp; {{ company.companyDetail.passout_batch }} Batch</h5>
+                                    <h5><i class="icon-graduation text-primary"></i> &nbsp; {{ company.companyDetail.passout_batch || '2020' }} Batch</h5>
                                 </div>
                             </div>
                             <!--/span-->
@@ -85,8 +85,8 @@
                             <!--/span-->
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="control-label text-muted">Internship Duration</label>
-                                    <h5><i class="ti-time text-primary"></i>  &nbsp; {{ company.companyDetail.duration }}</h5>
+                                    <label class="control-label text-muted"> Duration</label>
+                                    <h5><i class="ti-time text-primary"></i>  &nbsp; {{ company.companyDetail.duration || 'Full Time' }}</h5>
                                 </div>
                             </div>
                             <!--/span-->
@@ -100,7 +100,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label text-muted">Tentative Date of Joining</label>
-                                    <h5><i class="ti-calendar text-primary"></i>  &nbsp; {{ company.companyDetail.joining_date | date : 'dd MMMM yyyy' }}</h5>
+                                    <h5><i class="ti-calendar text-primary"></i>  &nbsp; {{ ( company.companyDetail.joining_date | date : 'dd MMMM yyyy' ) || 'Not Disclosed yet!' }}</h5>
                                 </div>
                             </div>
                         </div>
@@ -125,9 +125,9 @@
                                             <span class="font-weight-medium text-dark"><i class="ti-blackboard mr-2 text-primary"></i> <b>{{ key }}</b></span>
                                         </li>
                                         <div class="row">
-                                            <div class="col-lg-4" ng-repeat="(key, value) in company.companyDetail.eligibility[key]">
-                                                <li class="my-1">
-                                                    <span><i class="icon-check mr-2 text-success"></i> {{ key }}</span>
+                                            <div class="col-lg-4" ng-repeat="(branch, value) in company.companyDetail.eligibility[key]">
+                                                <li class="my-1" ng-if="company.companyDetail.eligibility[key][branch] == true">
+                                                    <span><i class="icon-check mr-2 text-success"></i> {{ branch }}</span>
                                                 </li>
                                             </div>
                                         </div>
@@ -146,28 +146,28 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label text-muted">Min. Marks in 10th</label>
-                                    <h5><i class="icon-trophy text-primary"></i> &nbsp; {{ company.companyDetail.min_10_percent }} %</h5>
+                                    <h5><i class="icon-trophy text-primary"></i> &nbsp; {{ company.companyDetail.min_10_percent || 'N/A'}} %</h5>
                                 </div>
                             </div>
                             <!--/span-->
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label text-muted">Min. Marks in 12th</label>
-                                    <h5><i class="icon-trophy text-primary"></i> &nbsp; {{ company.companyDetail.min_12_percent }} %</h5>
+                                    <h5><i class="icon-trophy text-primary"></i> &nbsp; {{ company.companyDetail.min_12_percent || 'N/A' }} %</h5>
                                 </div>
                             </div>
                             <!--/span-->
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label text-muted">Medical Requirements</label>
-                                    <h5><i class="ti-support text-primary"></i>  &nbsp; {{ company.companyDetail.medical_requirement }}</h5>
+                                    <h5><i class="ti-support text-primary"></i>  &nbsp; {{ company.companyDetail.medical_requirement || 'N/A' }}</h5>
                                 </div>
                             </div>
                             <!--/span-->
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label text-muted">Service Agreement</label>
-                                    <h5><i class="ti-link text-primary"></i> &nbsp; {{ company.companyDetail.service_agreement }} <span ng-if="company.companyDetail.service_agreement == 'Yes'"> ( {{ company.companyDetail.service_agreement_duration }} )</span></h5>
+                                    <h5><i class="ti-link text-primary"></i> &nbsp; {{ company.companyDetail.service_agreement || 'N/A' }} <span ng-if="company.companyDetail.service_agreement == 'Yes'"> ( {{ company.companyDetail.service_agreement_duration }} )</span></h5>
                                 </div>
                             </div>
                             <!--/span-->
@@ -200,37 +200,37 @@
                                             <div class="col-lg-2">
                                                 <li class="my-1">
                                                     <label class="control-label text-muted">Basic Pay</label>
-                                                    <h5><i class="ti-wallet text-primary"></i> &nbsp; {{ company.companyDetail.package[key].basic_pay }} </h5>
+                                                    <h5><i class="ti-wallet text-primary"></i> &nbsp; {{ company.companyDetail.package[key].basic_pay || 'N/A'}} </h5>
                                                 </li>
                                             </div>
                                             <div class="col-lg-2">
                                                 <li class="my-1">
                                                     <label class="control-label text-muted">HRA</label>
-                                                    <h5><i class="ti-wallet text-primary"></i> &nbsp; {{ company.companyDetail.package[key].hra }} </h5>
+                                                    <h5><i class="ti-wallet text-primary"></i> &nbsp; {{ company.companyDetail.package[key].hra || 'N/A'}} </h5>
                                                 </li>
                                             </div>
                                             <div class="col-lg-2">
                                                 <li class="my-1">
                                                     <label class="control-label text-muted">Perks & Bonus</label>
-                                                    <h5><i class="ti-wallet text-primary"></i> &nbsp; {{ company.companyDetail.package[key].perks_bonus }} </h5>
+                                                    <h5><i class="ti-wallet text-primary"></i> &nbsp; {{ company.companyDetail.package[key].perks_bonus || 'N/A' }} </h5>
                                                 </li>
                                             </div>
                                             <div class="col-lg-2">
                                                 <li class="my-1">
                                                     <label class="control-label text-muted">Gross</label>
-                                                    <h5><i class="ti-wallet text-primary"></i> &nbsp; {{ company.companyDetail.package[key].gross }} </h5>
+                                                    <h5><i class="ti-wallet text-primary"></i> &nbsp; {{ company.companyDetail.package[key].gross || 'N/A' }} </h5>
                                                 </li>
                                             </div>
                                             <div class="col-lg-2">
                                                 <li class="my-1">
                                                     <label class="control-label text-muted">Take Home</label>
-                                                    <h5><i class="ti-wallet text-primary"></i> &nbsp; {{ company.companyDetail.package[key].take_home }} </h5>
+                                                    <h5><i class="ti-wallet text-primary"></i> &nbsp; {{ company.companyDetail.package[key].take_home || 'N/A' }} </h5>
                                                 </li>
                                             </div>
                                             <div class="col-lg-2">
                                                 <li class="my-1">
                                                     <label class="control-label text-muted">CTC</label>
-                                                    <h5><i class="ti-wallet text-primary"></i> &nbsp; {{ company.companyDetail.package[key].ctc }} </h5>
+                                                    <h5><i class="ti-wallet text-primary"></i> &nbsp; {{ company.companyDetail.package[key].ctc || company.companyDetail.package }} </h5>
                                                 </li>
                                             </div>
                                         </div>
@@ -242,14 +242,14 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label text-muted">Company Accommodation</label>
-                                    <h5><i class="ti-home text-primary"></i> &nbsp; {{ company.companyDetail.company_accommodation }}</h5>
+                                    <h5><i class="ti-home text-primary"></i> &nbsp; {{ company.companyDetail.company_accommodation || 'N/A' }}</h5>
                                 </div>
                             </div>
                             <!--/span-->
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label text-muted">Other Facility</label>
-                                    <h5><i class="ti-gift text-primary"></i> &nbsp; {{ company.companyDetail.other_facility }} </h5>
+                                    <h5><i class="ti-gift text-primary"></i> &nbsp; {{ company.companyDetail.other_facility || 'N/A'}} </h5>
                                 </div>
                             </div>
                             <!--/span-->
@@ -258,7 +258,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-12">
+            <div class="col-lg-12" ng-if="company.companyDetail.selection_process">
                 <div class="card">
                     <div class="card-body">
 
@@ -275,25 +275,25 @@
                                             <div class="col-lg-3">
                                                 <li class="my-1">
                                                     <label class="control-label text-muted">Pre Placement Talk</label>
-                                                    <h5><i class="ti-blackboard text-primary"></i> &nbsp; {{ company.companyDetail.selection_process.pre_placement_talk.ppt }} <span ng-if="company.companyDetail.selection_process.pre_placement_talk.ppt == 'Yes'">: {{ company.companyDetail.selection_process.pre_placement_talk.date | date : 'dd MMM yyyy' }} </span></h5>
+                                                    <h5><i class="ti-blackboard text-primary"></i> &nbsp; {{ company.companyDetail.selection_process.pre_placement_talk.ppt || 'N/A' }} <span ng-if="company.companyDetail.selection_process.pre_placement_talk.ppt == 'Yes'">: {{ company.companyDetail.selection_process.pre_placement_talk.date | date : 'dd MMM yyyy' }} </span></h5>
                                                 </li>
                                             </div>
                                             <div class="col-lg-3">
                                                 <li class="my-1">
                                                     <label class="control-label text-muted">Aptitude Test</label>
-                                                    <h5><i class="ti-clipboard text-primary"></i> &nbsp; {{ company.companyDetail.selection_process.aptitude_test.test }}  <span ng-if="company.companyDetail.selection_process.aptitude_test.test == 'Yes'">: {{ company.companyDetail.selection_process.aptitude_test.date | date : 'dd MMM yyyy' }} </span></h5>
+                                                    <h5><i class="ti-clipboard text-primary"></i> &nbsp; {{ company.companyDetail.selection_process.aptitude_test.test || 'N/A' }}  <span ng-if="company.companyDetail.selection_process.aptitude_test.test == 'Yes'">: {{ company.companyDetail.selection_process.aptitude_test.date | date : 'dd MMM yyyy' }} </span></h5>
                                                 </li>
                                             </div>
                                             <div class="col-lg-3">
                                                 <li class="my-1">
                                                     <label class="control-label text-muted">Technical Test</label>
-                                                    <h5><i class="ti-pencil-alt text-primary"></i> &nbsp; {{ company.companyDetail.selection_process.technical_test.test }}  <span ng-if="company.companyDetail.selection_process.technical_test.test == 'Yes'">: {{ company.companyDetail.selection_process.technical_test.date | date : 'dd MMM yyyy' }}</span> </h5>
+                                                    <h5><i class="ti-pencil-alt text-primary"></i> &nbsp; {{ company.companyDetail.selection_process.technical_test.test || 'N/A' }}  <span ng-if="company.companyDetail.selection_process.technical_test.test == 'Yes'">: {{ company.companyDetail.selection_process.technical_test.date | date : 'dd MMM yyyy' }}</span> </h5>
                                                 </li>
                                             </div>
                                             <div class="col-lg-3">
                                                 <li class="my-1">
                                                     <label class="control-label text-muted">Group Discussion</label>
-                                                    <h5><i class="icon-people text-primary"></i> &nbsp; {{ company.companyDetail.selection_process.group_discussion.gd }}  <span ng-if="company.companyDetail.selection_process.group_discussion.gd == 'Yes'">: {{ company.companyDetail.selection_process.group_discussion.date | date : 'dd MMM yyyy' }} </span></h5>
+                                                    <h5><i class="icon-people text-primary"></i> &nbsp; {{ company.companyDetail.selection_process.group_discussion.gd || 'N/A' }}  <span ng-if="company.companyDetail.selection_process.group_discussion.gd == 'Yes'">: {{ company.companyDetail.selection_process.group_discussion.date | date : 'dd MMM yyyy' }} </span></h5>
                                                 </li>
                                             </div>
                                         </div>
@@ -302,7 +302,7 @@
                                             <div class="col-lg-12">
                                                 <li class="my-1">
                                                     <label class="control-label text-muted">Personal Interview</label>
-                                                    <h5><i class="icon-star text-primary"></i> &nbsp; {{ company.companyDetail.selection_process.personal_interview.rounds }} Rounds : {{ company.companyDetail.selection_process.personal_interview.date | date : 'dd MMM yyyy' }} </h5>
+                                                    <h5><i class="icon-star text-primary"></i> &nbsp; {{ company.companyDetail.selection_process.personal_interview.rounds || 'N/A' }} Rounds : {{ company.companyDetail.selection_process.personal_interview.date | date : 'dd MMM yyyy' }} </h5>
                                                 </li>
                                             </div>
                                         </div>
@@ -314,14 +314,14 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label text-muted">Provision for Waitlist</label>
-                                    <h5><i class="icon-ghost text-primary"></i> &nbsp; {{ company.companyDetail.waitlist }}</h5>
+                                    <h5><i class="icon-ghost text-primary"></i> &nbsp; {{ company.companyDetail.waitlist || 'N/A' }}</h5>
                                 </div>
                             </div>
                             <!--/span-->
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label text-muted">Final Offer to be Announcement</label>
-                                    <h5><i class="icon-badge text-primary"></i> &nbsp; {{ company.companyDetail.final_offer }} </h5>
+                                    <h5><i class="icon-badge text-primary"></i> &nbsp; {{ company.companyDetail.final_offer || 'N/A' }} </h5>
                                 </div>
                             </div>
                             <!--/span-->
@@ -352,7 +352,7 @@
                                 <div class="text-center">
                                     <div>
                                         <!--<a href="/editCompany/{{ company.companyDetail._id }}"><button class="btn btn-primary btn-rounded"><i class="ti-pencil"></i> &nbsp; Edit</button></a>-->
-                                        <a href="#"><button class="btn btn-primary btn-rounded"><i class="ti-pencil"></i> &nbsp; Edit</button></a>
+                                        <a href="/editCompany/{{ company.companyDetail._id }}"><button class="btn btn-primary btn-rounded"><i class="ti-pencil"></i> &nbsp; Edit</button></a>
                                     </div>
                                 </div>
                             </div>

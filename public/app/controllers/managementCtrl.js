@@ -229,17 +229,123 @@ angular.module('managementController', ['userServices'])
     }
 })
 
-.controller('editCompanyCtrl', function ($routeParams, user) {
+.controller('editCompanyCtrl', function ($routeParams, user, $scope) {
 
     var app = this;
 
+    $scope.programs = [
+        'UG',
+        'MTech',
+        'MPlan',
+        'MSc',
+        'PhD',
+        'MBA'
+    ];
+
+    $scope.programsBranches = {
+        ug : [
+            'Civil Engineering',
+            'Electrical Engineering',
+            'Chemical Engineering',
+            'Mechanical Engineering',
+            'Computer Science & Engineering',
+            'Metallurgical & Material Science',
+            'Electronics & Communication Engineering',
+            'Architecture & Planing Engineering'
+        ],
+        mtech : [
+            'Electronics & Communication',
+            'Computer Science & Engineering',
+            'Electrical Engineering',
+            'Chemical Engineering',
+            'Mechanical Engineering',
+            'Civil Engineering',
+            'Metallurgical &Materials Engineering',
+            'Materials Research Centre',
+            'National Centre for Disaster Mitigation and Management',
+            'Centre for Energy and Environment',
+        ],
+        mplan : [
+            'Master of Planning: Urban Planning'
+        ],
+        msc : [
+            'Mathematics',
+            'Chemistry',
+            'Physics'
+        ],
+        mba : [
+            'Marketing',
+            'Human Resource',
+            'Finance',
+            'Operations'
+        ],
+        phd : [
+            'Architecture',
+            'Management',
+            'Engineering',
+            'Sciences'
+        ]
+    };
+
     user.getCompanyDetails($routeParams.company_id).then(function (data) {
-        console.log(data);
         if(data.data.success) {
-            app.companyDetail = data.data.companyDetail;
-            //console.log(app.companyDetail)
+            app.company = data.data.companyDetail;
+            convertAllDateStringsToDateObj(app.company);
         }
     });
+
+    // Convert all date strings to date objects for editing
+    function convertAllDateStringsToDateObj(company) {
+
+        if('selection_process' in company) {
+            if('pre_placement_talk' in company.selection_process) {
+                if('date' in app.company.selection_process.pre_placement_talk) {
+                    app.company.selection_process.pre_placement_talk.date = new Date(company.selection_process.pre_placement_talk.date);
+                }
+            }
+            if('aptitude_test' in company.selection_process) {
+                if('date' in app.company.selection_process.aptitude_test) {
+                    app.company.selection_process.aptitude_test.date = new Date(company.selection_process.aptitude_test.date);
+                }
+            }
+            if('technical_test' in company.selection_process) {
+                if('date' in app.company.selection_process.technical_test) {
+                    app.company.selection_process.technical_test.date = new Date(company.selection_process.technical_test.date);
+                }
+            }
+            if('group_discussion' in company.selection_process) {
+                if('date' in app.company.selection_process.group_discussion) {
+                    app.company.selection_process.group_discussion.date = new Date(company.selection_process.group_discussion.date);
+
+                }
+            }
+            if('personal_interview' in company.selection_process) {
+                if('date' in app.company.selection_process.personal_interview) {
+                    app.company.selection_process.personal_interview.date = new Date(company.selection_process.personal_interview.date);
+                }
+            }
+        }
+        if('joining_date' in company) {
+            app.company.joining_date = new Date(company.joining_date);
+        }
+        if(company.deadline_date) {
+            app.company.deadline_date = new Date(company.deadline_date);
+        }
+    }
+
+    // update company details
+    app.updateCompanyDetails = function (company) {
+        console.log(company);
+        user.updateCompanyDetails(company).then(function (data) {
+            console.log(data);
+            if(data.data.success) {
+                app.successMsg = data.data.message;
+            } else {
+                app.errorMsg = data.data.message;
+                console.log(data.data.error);
+            }
+        })
+    }
 })
 
 .controller('registeredStudentsCtrl', function ($routeParams, user,$scope) {

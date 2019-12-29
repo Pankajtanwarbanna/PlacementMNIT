@@ -93,7 +93,7 @@ var app = angular.module('userRoutes', ['ngRoute'])
 
            // Management routes
            .when('/editCompany/:company_id', {
-               templateUrl : '/app/views/admin/editCompany.html',
+               templateUrl : '/app/views/admin/company/editCompany.html',
                authenticated : true,
                controller : 'editCompanyCtrl',
                controllerAs : 'editCompany',

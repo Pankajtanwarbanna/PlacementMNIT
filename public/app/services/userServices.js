@@ -96,6 +96,11 @@ angular.module('userServices',[])
         return $http.post('/api/postCompanyDetails', newCompanyData);
     };
 
+    // update company details
+    userFactory.updateCompanyDetails = function(company) {
+        return $http.post('/api/updateCompanyDetails', company);
+    };
+
     // get all upcoming companies from db
     userFactory.getAllUpcomingCompanies = function () {
         return $http.get('/api/getAllUpcomingCompanies');

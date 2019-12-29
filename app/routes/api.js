@@ -561,6 +561,24 @@ module.exports = function (router){
         })
     });
 
+    // update company details
+    router.post('/updateCompanyDetails', function (req, res) {
+        Company.findByIdAndUpdate( { _id : req.body._id } , req.body , function (err) {
+            if(err) {
+                res.json({
+                    success : false,
+                    message : 'Something went wrong!',
+                    error : err
+                })
+            } else {
+                res.json({
+                    success : true,
+                    message : 'Company Details successfully updated.'
+                })
+            }
+        })
+    });
+
     // get companies details from db
     router.get('/getAllUpcomingCompanies', function (req, res) {
 
