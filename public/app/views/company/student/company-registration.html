@@ -125,13 +125,13 @@
                     <div class="d-flex no-block flex-row">
                         <div class="round align-self-center round-success m-t-10 m-b-10"><i class="ti-briefcase"></i></div>
                         <div class="m-l-10 align-self-center">
-                            <h4 class="m-b-0">{{ company.company_name }}</h4>
-                            <h5 class="text-muted m-b-0"> {{ company.job_profile }}</h5>
+                            <h4 class="m-b-0">{{ company.company_name | limitTo: 18 }}{{company.company_name.length > 18 ? '...' : '' }} <!--<span class="badge badge-pill badge-danger text-white" ng-show="getApplyStatusInCompany(company._id);">Applied</span> <span class="badge badge-pill badge-primary text-white" ng-show="!getApplyStatusInCompany(company._id);">Pending</span>--></h4>
+                            <h5 class="text-muted m-b-0"> {{ company.job_profile | limitTo: 20 }}{{company.job_profile.length > 20 ? '...' : '' }}</h5>
                         </div>
                     </div>
                     <div class="d-flex no-block flex-row m-t-20 cc-details text-center">
                         <div class="col-lg-6 p-10 p-l-0 border-right">
-                            <h6 class="font-light">Package</h6><b class="growth">₹ {{company.package}}</b></div>
+                            <h6 class="font-light">Package</h6><b class="growth">₹ {{company.package | package }}</b></div>
                         <div class="col-lg-6 p-10">
                             <h6 class="font-light">Last Date</h6><b class="down">{{ company.deadline_date | date : 'dd MMMM'}}</b>
                         </div>
