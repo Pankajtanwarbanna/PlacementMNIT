@@ -2,9 +2,9 @@
     Controller written by - Pankaj tanwar
 */
 
-angular.module('mainController', ['authServices'])
+angular.module('mainController', ['authServices','studentServices'])
 
-.controller('mainCtrl', function ($window,$http, auth, $timeout, $location, authToken, $rootScope, user) {
+.controller('mainCtrl', function ($window,$http, auth, $timeout, $location, authToken, $rootScope, student) {
 
     var app = this;
 
@@ -40,12 +40,11 @@ angular.module('mainController', ['authServices'])
                 app.college_id = data.data.college_id;
                 app.gender = data.data.gender;
                 app.department = data.data.department;
-                console.log(data.data.red_flags);
                 if(data.data.red_flags >= 3) {
                     app.blockedProfile = true;
                 }
 
-                user.getPermission().then(function (data) {
+                student.getPermission().then(function (data) {
 
                     app.permission = data.data.permission;
 

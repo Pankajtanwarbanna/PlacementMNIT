@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Description Meta tag -->
     <meta name="description" content="Welcome to Online Web Placement Portal of Malaviya National Institute of Technology Jaipur.">
-    <meta name="author" content="Pankaj Tanwar (pankajtanwar510@gmail.com - MNIT Jaipur)">
+    <meta name="author" content="Pankaj Tanwar (2016ucp1381@mnit.ac.in - MNIT Jaipur)">
     <meta name="keywords" content="Placement Portal, MNIT Jaipur, Online Platform Placements, Campus Recruitment, Training & Placement Cell, Malaviya National Institute of Technology, Jaipur">
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="assets/images/favicon/logo.png"/>
@@ -28,13 +28,14 @@
     <script src="app/filters/angularFilters.js"></script>
 
     <!-- Angular Controller files -->
-    <script src="app/controllers/userCtrl.js"></script>
+    <script src="app/controllers/studentCtrl.js"></script>
     <script src="app/controllers/mainCtrl.js"></script>
-    <script src="app/controllers/managementCtrl.js"></script>
+    <script src="app/controllers/adminCtrl.js"></script>
     <script src="app/controllers/emailCtrl.js"></script>
 
     <!-- Angular Services -->
-    <script src="app/services/userServices.js"></script>
+    <script src="app/services/adminServices.js"></script>
+    <script src="app/services/studentServices.js"></script>
     <script src="app/services/authServices.js"></script>
 
     <!-- Calendar CSS -->
@@ -130,106 +131,6 @@
                         <li class="nav-item hidden-sm-up"> <a class="nav-link nav-toggler waves-effect waves-light" href="javascript:void(0)"><i class="ti-menu"></i></a></li>
                         <li class="nav-item d-none d-lg-block"><a class="nav-link nav-lock waves-effect waves-light" href="javascript:void(0)"><i class="ti-menu"></i></a></li>
 
-<!--                        <li class="nav-item dropdown">-->
-<!--                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="ti-email"></i>-->
-<!--                                <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>-->
-<!--                            </a>-->
-<!--                            <div class="dropdown-menu mailbox animated bounceInDown">-->
-<!--                                <span class="with-arrow"><span class="bg-primary"></span></span>-->
-<!--                                <ul>-->
-<!--                                    <li>-->
-<!--                                        <div class="drop-title bg-primary text-white">-->
-<!--                                            <h4 class="m-b-0 m-t-5">4 New</h4>-->
-<!--                                            <span class="font-light">Notifications</span>-->
-<!--                                        </div>-->
-<!--                                    </li>-->
-<!--                                    <li>-->
-<!--                                        <div class="message-center">-->
-<!--                                            &lt;!&ndash; Message &ndash;&gt;-->
-<!--                                            <a href="javascript:void(0)">-->
-<!--                                                <div class="btn btn-danger btn-circle"><i class="fa fa-link"></i></div>-->
-<!--                                                <div class="mail-contnet">-->
-<!--                                                    <h5>Luanch Admin</h5> <span class="mail-desc">Just see the my new admin!</span> <span class="time">9:30 AM</span> </div>-->
-<!--                                            </a>-->
-<!--                                            &lt;!&ndash; Message &ndash;&gt;-->
-<!--                                            <a href="javascript:void(0)">-->
-<!--                                                <div class="btn btn-success btn-circle"><i class="ti-calendar"></i></div>-->
-<!--                                                <div class="mail-contnet">-->
-<!--                                                    <h5>Event today</h5> <span class="mail-desc">Just a reminder that you have event</span> <span class="time">9:10 AM</span> </div>-->
-<!--                                            </a>-->
-<!--                                            &lt;!&ndash; Message &ndash;&gt;-->
-<!--                                            <a href="javascript:void(0)">-->
-<!--                                                <div class="btn btn-info btn-circle"><i class="ti-settings"></i></div>-->
-<!--                                                <div class="mail-contnet">-->
-<!--                                                    <h5>Settings</h5> <span class="mail-desc">You can customize this template as you want</span> <span class="time">9:08 AM</span> </div>-->
-<!--                                            </a>-->
-<!--                                            &lt;!&ndash; Message &ndash;&gt;-->
-<!--                                            <a href="javascript:void(0)">-->
-<!--                                                <div class="btn btn-primary btn-circle"><i class="ti-user"></i></div>-->
-<!--                                                <div class="mail-contnet">-->
-<!--                                                    <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:02 AM</span> </div>-->
-<!--                                            </a>-->
-<!--                                        </div>-->
-<!--                                    </li>-->
-<!--                                    <li>-->
-<!--                                        <a class="nav-link text-center m-b-5" href="javascript:void(0);"> <strong>Check all notifications</strong> <i class="fa fa-angle-right"></i> </a>-->
-<!--                                    </li>-->
-<!--                                </ul>-->
-<!--                            </div>-->
-<!--                        </li>-->
-                        <!-- ============================================================== -->
-                        <!-- End Comment -->
-                        <!-- ============================================================== -->
-                        <!-- ============================================================== -->
-                        <!-- Messages -->
-                        <!-- ============================================================== -->
-<!--                        <li class="nav-item dropdown">-->
-<!--                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="#" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="icon-note"></i>-->
-<!--                                <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>-->
-<!--                            </a>-->
-<!--                            <div class="dropdown-menu mailbox animated bounceInDown" aria-labelledby="2">-->
-<!--                                <span class="with-arrow"><span class="bg-danger"></span></span>-->
-<!--                                <ul>-->
-<!--                                    <li>-->
-<!--                                        <div class="drop-title text-white bg-danger">-->
-<!--                                            <h4 class="m-b-0 m-t-5">5 New</h4>-->
-<!--                                            <span class="font-light">Messages</span>-->
-<!--                                        </div>-->
-<!--                                    </li>-->
-<!--                                    <li>-->
-<!--                                        <div class="message-center">-->
-<!--                                            &lt;!&ndash; Message &ndash;&gt;-->
-<!--                                            <a href="javascript:void(0)">-->
-<!--                                                <div class="user-img"> <img src="assets/images/users/1.jpg" alt="user" class="img-circle"> <span class="profile-status online float-right"></span> </div>-->
-<!--                                                <div class="mail-contnet">-->
-<!--                                                    <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:30 AM</span> </div>-->
-<!--                                            </a>-->
-<!--                                            &lt;!&ndash; Message &ndash;&gt;-->
-<!--                                            <a href="javascript:void(0)">-->
-<!--                                                <div class="user-img"> <img src="assets/images/users/2.jpg" alt="user" class="img-circle"> <span class="profile-status busy float-right"></span> </div>-->
-<!--                                                <div class="mail-contnet">-->
-<!--                                                    <h5>Sonu Nigam</h5> <span class="mail-desc">I've sung a song! See you at</span> <span class="time">9:10 AM</span> </div>-->
-<!--                                            </a>-->
-<!--                                            &lt;!&ndash; Message &ndash;&gt;-->
-<!--                                            <a href="javascript:void(0)">-->
-<!--                                                <div class="user-img"> <img src="assets/images/users/3.jpg" alt="user" class="img-circle"> <span class="profile-status away float-right"></span> </div>-->
-<!--                                                <div class="mail-contnet">-->
-<!--                                                    <h5>Arijit Sinh</h5> <span class="mail-desc">I am a singer!</span> <span class="time">9:08 AM</span> </div>-->
-<!--                                            </a>-->
-<!--                                            &lt;!&ndash; Message &ndash;&gt;-->
-<!--                                            <a href="javascript:void(0)">-->
-<!--                                                <div class="user-img"> <img src="assets/images/users/pankaj-tanwar.jpg" alt="user" class="img-circle"> <span class="profile-status offline float-right"></span> </div>-->
-<!--                                                <div class="mail-contnet">-->
-<!--                                                    <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:02 AM</span> </div>-->
-<!--                                            </a>-->
-<!--                                        </div>-->
-<!--                                    </li>-->
-<!--                                    <li>-->
-<!--                                        <a class="nav-link text-center link m-b-5" href="javascript:void(0);"> <b>See all e-Mails</b> <i class="fa fa-angle-right"></i> </a>-->
-<!--                                    </li>-->
-<!--                                </ul>-->
-<!--                            </div>-->
-<!--                        </li>-->
                     </ul>
                     <ul class="navbar-nav my-lg-0" ng-show="main.isLoggedIn">
                         <!-- ============================================================== -->
@@ -276,29 +177,26 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        <li ng-show="main.isLoggedIn"> <a class="waves-effect waves-dark" href="/" aria-expanded="false"><i class="ti-home"></i><span class="hide-menu">Home</span></a></li>
+                        <li ng-show="main.isLoggedIn"> <a class="nav-toggler waves-effect waves-dark" href="/" aria-expanded="false"><i class="ti-home"></i><span class="hide-menu">Home</span></a></li>
 <!--
                         <li ng-show="!main.isLoggedIn"> <a class="waves-effect waves-dark" href="/register" aria-expanded="false"><i class="icon-user-follow"></i><span class="hide-menu">Register </span></a></li>
 -->
-                        <li ng-show="!main.isLoggedIn"> <a class="waves-effect waves-dark" href="/login" aria-expanded="false"><i class="icon-login"></i><span class="hide-menu">Login </span></a></li>
-                        <li ng-show="main.isLoggedIn"> <a class="waves-effect waves-dark" href="/company-registration" aria-expanded="false"><i class="icon-briefcase"></i><span class="hide-menu">Company Registration</span></a></li>
-                        <li ng-show="main.isLoggedIn"> <a class="waves-effect waves-dark" href="/schedule" aria-expanded="false"><i class="ti-calendar"></i><span class="hide-menu">Company Schedule</span></a></li>
-                        <li ng-show="main.isLoggedIn && main.authorized"> <a class="waves-effect waves-dark" href="/add-new-company" aria-expanded="false"><i class="icon-briefcase"></i><span class="hide-menu">Add New Company</span></a></li>
-                        <li ng-show="main.isLoggedIn && main.authorized"> <a class="waves-effect waves-dark" href="/admin-management" aria-expanded="false"><i class="icon-fire"></i><span class="hide-menu">Admin Management</span></a></li>
-                        <li ng-show="main.isLoggedIn"> <a class="waves-effect waves-dark" href="/announcements" aria-expanded="false"><i class="ti-announcement"></i><span class="hide-menu">Announcements </span></a></li>
-                        <li ng-show="main.isLoggedIn && !main.authorized"> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="icon-user"></i><span class="hide-menu">User Profile</span></a>
+                        <li ng-show="!main.isLoggedIn"> <a class="nav-toggler waves-effect waves-dark" href="/login" aria-expanded="false"><i class="icon-login"></i><span class="hide-menu">Login </span></a></li>
+                        <li ng-show="main.isLoggedIn"> <a class="nav-toggler waves-effect waves-dark" href="/company-registration" aria-expanded="false"><i class="icon-briefcase"></i><span class="hide-menu">Company Registration</span></a></li>
+                        <li ng-show="main.isLoggedIn && main.authorized"> <a class="nav-toggler waves-effect waves-dark" href="/add-new-company" aria-expanded="false"><i class="icon-briefcase"></i><span class="hide-menu">Add New Company</span></a></li>
+                        <li ng-show="main.isLoggedIn && main.authorized"> <a class="nav-toggler waves-effect waves-dark" href="/admin-management" aria-expanded="false"><i class="icon-fire"></i><span class="hide-menu">Admin Management</span></a></li>
+                        <li ng-show="main.isLoggedIn"> <a class="nav-toggler waves-effect waves-dark" href="/announcements" aria-expanded="false"><i class="ti-announcement"></i><span class="hide-menu">Announcements </span></a></li>
+                        <li ng-show="main.isLoggedIn && !main.authorized"> <a class="nav-toggler has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="icon-user"></i><span class="hide-menu">User Profile</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="/profile">Profile Page <i class="ti-user text-success"></i></a></li>
-                                <li><a href="/timeline">Timeline <i class="ti-stats-up text-info"></i></a></li>
-                                <li><a href="/achievement">Achievement <i class="ti-medall text-danger"></i></a></li>
+                                <li><a class="nav-toggler" href="/profile">Profile Page <i class="ti-user text-success"></i></a></li>
+                                <li><a class="nav-toggler" href="/timeline">Timeline <i class="ti-stats-up text-info"></i></a></li>
+                                <li><a class="nav-toggler" href="/achievement">Achievement <i class="ti-medall text-danger"></i></a></li>
                             </ul>
                         </li>
-                        <li ng-show="main.isLoggedIn"> <a class="waves-effect waves-dark" href="/team" aria-expanded="false"><i class="icon-people"></i><span class="hide-menu">Team</span></a></li>
-                        <li ng-show="main.isLoggedIn"> <a class="waves-effect waves-dark" href="/technical" aria-expanded="false"><i class="icon-screen-desktop"></i><span class="hide-menu">Developer</span></a></li>
-                        <li> <a class="waves-effect waves-dark" href="/contact" aria-expanded="false"><i class="icon-phone"></i><span class="hide-menu">Contact Us </span></a></li>
-                        <li ng-show="main.isLoggedIn"> <a class="waves-effect waves-dark" href="/placements2019-20" aria-expanded="false"><span class="hide-menu">Hall of Fame &nbsp; <span class="badge badge-pill badge-primary text-white">New</span></span></a></li>
-
-
+                        <li ng-show="main.isLoggedIn"> <a class="nav-toggler waves-effect waves-dark" href="/team" aria-expanded="false"><i class="icon-people"></i><span class="hide-menu">Team</span></a></li>
+                        <li ng-show="main.isLoggedIn"> <a class="nav-toggler waves-effect waves-dark" href="/technical" aria-expanded="false"><i class="icon-screen-desktop"></i><span class="hide-menu">Developer</span></a></li>
+                        <li> <a class="nav-toggler waves-effect waves-dark" href="/contact" aria-expanded="false"><i class="icon-phone"></i><span class="hide-menu">Contact Us </span></a></li>
+                        <li ng-show="main.isLoggedIn"> <a class="nav-toggler waves-effect waves-dark" href="/placements2019-20" aria-expanded="false"><span class="hide-menu">Hall of Fame &nbsp; <span class="badge badge-pill badge-primary text-white">New</span></span></a></li>
 
                     </ul>
                 </nav>
@@ -372,317 +270,7 @@
                 </div>
 
                 <div ng-show="main.home">
-                    <div class="row page-titles">
-                        <div class="col-md-5 align-self-center">
-                            <h4 class="text-themecolor">Welcome to MNIT Placement Portal </h4>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="card news-slide social-profile" style="background:url(assets/images/MNIT/home.jpg) center center / cover;">
-                                <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-                                    <!-- Carousel items -->
-                                    <div class="carousel-inner">
-                                        <div class="active carousel-item">
-                                            <div class="carousel-caption">
-                                                <span class="label label-danger label-rounded">MNIT Jaipur</span>
-                                                <h3 class="m-t-5 font-light">Don't limit your challenges, challenge your limits.</h3>
-                                            </div>
-                                        </div>
-                                        <div class="carousel-item">
-                                            <div class="carousel-caption">
-                                                <span class="label label-danger label-rounded">MNIT Jaipur</span>
-                                                <h3 class="m-t-5 font-light">The best preparation for tomorrow is doing your best today.</h3>
-                                            </div>
-                                        </div>
-                                        <div class="carousel-item">
-                                            <div class="carousel-caption">
-                                                <span class="label label-danger label-rounded">MNIT Jaipur</span>
-                                                <h3 class="m-t-5 font-light">Believe you can and you're halfway there.</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- UG Placement Stats -->
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <h3>UG Placement Statistics 2018-19</h3>
-                                            <h5 class="font-light m-t-0">Training & Placement Cell, MNIT Jaipur</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="table-responsive">
-                                    <table class="table table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th class="text-center">#</th>
-                                            <th>BRANCH</th>
-                                            <th>ELIGIBLE</th>
-                                            <th>OFFERS</th>
-                                            <th>PLACED</th>
-                                            <th>% PLACEMENT</th>
-                                            <th>HIGHEST</th>
-                                            <th>AVERAGE</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td class="text-center">1</td>
-                                            <td class="txt-oflo">B.ARCH.</td>
-                                            <td><span class="text-info">30</span></td>
-                                            <td class="txt-oflo">30</td>
-                                            <td><span class="text-success">30</span></td>
-                                            <td class="txt-oflo">100 %</td>
-                                            <td class="txt-oflo">7 LPA</td>
-                                            <td class="txt-oflo">5.03 LPA</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">2</td>
-                                            <td class="txt-oflo">CHEMICAL</td>
-                                            <td><span class="text-info">89</span></td>
-                                            <td class="txt-oflo">77</td>
-                                            <td><span class="text-success">67</span></td>
-                                            <td class="txt-oflo">75.28 %</td>
-                                            <td class="txt-oflo">11 LPA</td>
-                                            <td class="txt-oflo">6.68 LPA</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">3</td>
-                                            <td class="txt-oflo">CIVIL</td>
-                                            <td><span class="text-info">75</span></td>
-                                            <td class="txt-oflo">65</td>
-                                            <td><span class="text-success">59</span></td>
-                                            <td class="txt-oflo">78.67 %</td>
-                                            <td class="txt-oflo">10.5 LPA</td>
-                                            <td class="txt-oflo">5.99 LPA</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">4</td>
-                                            <td class="txt-oflo">COMPUTER SCIENCE</td>
-                                            <td><span class="text-info">87</span></td>
-                                            <td class="txt-oflo">90</td>
-                                            <td><span class="text-success">86</span></td>
-                                            <td class="txt-oflo">98.85 %</td>
-                                            <td class="txt-oflo">37 LPA</td>
-                                            <td class="txt-oflo">13.36 LPA</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">5</td>
-                                            <td class="txt-oflo">ELECTRONICS & COMM.</td>
-                                            <td><span class="text-info">92</span></td>
-                                            <td class="txt-oflo">74</td>
-                                            <td><span class="text-success">70</span></td>
-                                            <td class="txt-oflo">76.09 %</td>
-                                            <td class="txt-oflo">32.5 LPA</td>
-                                            <td class="txt-oflo">10.03 LPA</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">6</td>
-                                            <td class="txt-oflo">ELECTRICAL</td>
-                                            <td><span class="text-info">69</span> </td>
-                                            <td class="txt-oflo">72</td>
-                                            <td><span class="text-success">61</span></td>
-                                            <td class="txt-oflo">88.41 %</td>
-                                            <td class="txt-oflo">14 LPA</td>
-                                            <td class="txt-oflo">6.82 LPA</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">7</td>
-                                            <td class="txt-oflo">MECHANICAL</td>
-                                            <td><span class="text-info">82</span></td>
-                                            <td class="txt-oflo">82</td>
-                                            <td><span class="text-success">74</span></td>
-                                            <td class="txt-oflo">90.24 %</td>
-                                            <td class="txt-oflo">11 LPA</td>
-                                            <td class="txt-oflo">6.59 LPA</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">8</td>
-                                            <td class="txt-oflo">METALLURGY</td>
-                                            <td><span class="text-info">71</span></td>
-                                            <td class="txt-oflo">60</td>
-                                            <td><span class="text-success">58</span></td>
-                                            <td class="txt-oflo">80.69 %</td>
-                                            <td class="txt-oflo">12.93 LPA</td>
-                                            <td class="txt-oflo">6.58 LPA</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center"></td>
-                                            <td class="txt-oflo"><b>TOTAL</b></td>
-                                            <td><span class="text-info"><b>595</b></span></td>
-                                            <td class="txt-oflo"><b>550</b></td>
-                                            <td><span class="text-success"><b>505</b></span></td>
-                                            <td class="txt-oflo"><b>84.87 %</b></td>
-                                            <td class="txt-oflo"><b>37 LPA</b></td>
-                                            <td class="txt-oflo"><b>8.09 LPA</b></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- UG Placed & Offers graph-->
-                    <div class="card-group">
-                        <!-- card -->
-                        <div class="card o-income">
-                            <div class="card-body">
-                                <div class="d-flex m-b-30 no-block">
-                                    <h4 class="card-title m-b-0 align-self-center">Students Placed vs Total Eligible Students</h4>
-                                </div>
-                                <div id="ugplacementgraph" style="height:260px; width:100%;"></div>
-                            </div>
-                        </div>
-                        <!-- card -->
-                    </div>
-
-                    <!-- PG Placement Stats -->
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <h3>PG Placement Statistics 2018-19</h3>
-                                            <h5 class="font-light m-t-0">Training & Placement Cell, MNIT Jaipur</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="table-responsive">
-                                    <table class="table table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th class="text-center">#</th>
-                                            <th>BRANCH</th>
-                                            <th>NO. OF PLACED STUDENTS</th>
-                                            <th>NO. OF OFFERS</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td class="text-center">1</td>
-                                            <td class="txt-oflo">M.Tech (CHEMICAL)</td>
-                                            <td><span class="text-info">2</span></td>
-                                            <td class="txt-oflo">2</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">2</td>
-                                            <td class="txt-oflo">M.Tech (CIVIL)</td>
-                                            <td><span class="text-info">5</span></td>
-                                            <td class="txt-oflo">5</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">3</td>
-                                            <td class="txt-oflo">M.Tech (COMPUTER ENGINEERING)</td>
-                                            <td><span class="text-info">20</span></td>
-                                            <td class="txt-oflo">21</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">4</td>
-                                            <td class="txt-oflo">M.Tech (ELECTRONICS AND COMM.)</td>
-                                            <td><span class="text-info">16</span></td>
-                                            <td class="txt-oflo">17</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">5</td>
-                                            <td class="txt-oflo">M.Tech (ELECTRICAL)</td>
-                                            <td><span class="text-info">1</span></td>
-                                            <td class="txt-oflo">1</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">6</td>
-                                            <td class="txt-oflo">M.Tech (MECHANICAL)</td>
-                                            <td><span class="text-info">19</span> </td>
-                                            <td class="txt-oflo">19</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">7</td>
-                                            <td class="txt-oflo">M.Tech (NATIONAL CENTRE FOR DISASTER MITIGATION & MANAGEMENT)</td>
-                                            <td><span class="text-info">3</span></td>
-                                            <td class="txt-oflo">4</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">8</td>
-                                            <td class="txt-oflo">M.Tech (RENEWABLE ENERGY)</td>
-                                            <td><span class="text-info">1</span></td>
-                                            <td class="txt-oflo">2</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">9</td>
-                                            <td class="txt-oflo">M.Tech (METALLURGY)</td>
-                                            <td><span class="text-info">1</span></td>
-                                            <td class="txt-oflo">1</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">10</td>
-                                            <td class="txt-oflo">M.Sc.</td>
-                                            <td><span class="text-info">6</span></td>
-                                            <td class="txt-oflo">6</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">11</td>
-                                            <td class="txt-oflo">MBA</td>
-                                            <td><span class="text-info">37</span></td>
-                                            <td class="txt-oflo">45</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">12</td>
-                                            <td class="txt-oflo">Ph.D.</td>
-                                            <td><span class="text-info">4</span></td>
-                                            <td class="txt-oflo">4</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center"></td>
-                                            <td class="txt-oflo"><b>TOTAL</b></td>
-                                            <td><span class="text-info"><b>115</b></span></td>
-                                            <td class="txt-oflo"><b>127</b></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="card-body">
-                                    <h3 class="text-center">PG Package Details</h3>
-                                    <div class="row">
-                                        <div class="col-6 text-center">
-                                            <h5 class="font-light m-t-0"><b>Maximum</b> : 14 LPA</h5>
-                                        </div>
-                                        <div class="col-6 text-center">
-                                            <h5 class="font-light m-t-0"><b>Average</b> : 5.2 LPA</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="card oh">
-                                        <div class="card-body bg-light">
-                                            <div class="row text-center m-b-20">
-                                                <div class="col-lg-4 col-md-4 m-t-20">
-                                                    <h2 class="m-b-0 font-light">50</h2><span class="text-muted">Pre-Placement Offers</span>
-                                                </div>
-                                                <div class="col-lg-4 col-md-4 m-t-20">
-                                                    <h2 class="m-b-0 font-light">167</h2><span class="text-muted">No. of Companies Visited</span>
-                                                </div>
-                                                <div class="col-lg-4 col-md-4 m-t-20">
-                                                    <h2 class="m-b-0 font-light">152</h2><span class="text-muted">On-Campus Internships (UG + PG)</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                    <home ng-include="'app/views/layout/home.html'"></home>
                 </div>
 
             </div>
@@ -696,7 +284,7 @@
         <!-- ============================================================== -->
         <!-- footer -->
         <!-- ============================================================== -->
-       
+
         <!-- ============================================================== -->
         <!-- End footer -->
         <!-- ============================================================== -->

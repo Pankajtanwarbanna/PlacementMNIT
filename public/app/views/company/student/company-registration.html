@@ -51,8 +51,8 @@
                     <div class="d-flex no-block flex-row">
                         <div class="round align-self-center round-success m-t-10 m-b-10"><i class="ti-briefcase"></i></div>
                         <div class="m-l-10 align-self-center">
-                            <h4 class="m-b-0">{{ company.company_name }} <!--<span class="badge badge-pill badge-danger text-white" ng-show="getApplyStatusInCompany(company._id);">Applied</span> <span class="badge badge-pill badge-primary text-white" ng-show="!getApplyStatusInCompany(company._id);">Pending</span>--></h4>
-                            <h5 class="text-muted m-b-0" style="text-overflow: ellipsis"> {{ company.job_profile }}</h5>
+                            <h4 class="m-b-0">{{ company.company_name | limitTo: 18 }}{{company.company_name.length > 18 ? '...' : '' }} <!--<span class="badge badge-pill badge-danger text-white" ng-show="getApplyStatusInCompany(company._id);">Applied</span> <span class="badge badge-pill badge-primary text-white" ng-show="!getApplyStatusInCompany(company._id);">Pending</span>--></h4>
+                            <h5 class="text-muted m-b-0"> {{ company.job_profile | limitTo: 20 }}{{company.job_profile.length > 20 ? '...' : '' }}</h5>
                         </div>
                     </div>
                     <div class="d-flex no-block flex-row m-t-20 cc-details text-center">
@@ -110,7 +110,7 @@
     </div>
 </div>
 
-<div class="row page-titles" id="previousCompanies" ng-show="companyRegistration.profileComplete || main.authorized"> 
+<div class="row page-titles" id="previousCompanies" ng-show="companyRegistration.profileComplete || main.authorized">
     <div class="col-md-5 align-self-center">
         <h4 class="text-themecolor">Previous Companies</h4>
     </div>

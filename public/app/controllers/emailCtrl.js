@@ -2,7 +2,7 @@
    Controller written by - Pankaj tanwar
 */
 
-angular.module('emailController', ['userServices'])
+angular.module('emailController', ['studentServices'])
 
 // Email controller
 .controller('emailCtrl', function ($routeParams,user,$timeout,$location) {

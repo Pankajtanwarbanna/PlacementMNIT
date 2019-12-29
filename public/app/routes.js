@@ -3,97 +3,76 @@ var app = angular.module('userRoutes', ['ngRoute'])
    .config(function ($routeProvider, $locationProvider) {
        $routeProvider
 
+           // Announcement Routes
+           .when('/announcements', {
+               templateUrl : '/app/views/announcement/announcements.html',
+               authenticated : true,
+               controller : 'announcementsCtrl',
+               controllerAs : 'announcements'
+           })
+
+           // Authentication Routes
            .when('/register', {
-               templateUrl : '/app/views/users/register.html',
+               templateUrl : '/app/views/authentication/register.html',
                controller : 'regCtrl',
                controllerAs : 'register',
                authenticated : false
            })
 
            .when('/login', {
-               templateUrl : '/app/views/users/login.html',
+               templateUrl : '/app/views/authentication/login.html',
                controller : 'regCtrl',
                controllerAs : 'register',
                authenticated : false
            })
 
            .when('/logout', {
-               templateUrl : '/app/views/users/logout.html',
+               templateUrl : '/app/views/authentication/logout.html',
                authenticated : false,
                controller : 'editCtrl',
                controllerAs : 'edit'
            })
 
-           .when('/profile', {
-               templateUrl : '/app/views/users/userProfile.html',
-               authenticated : true,
-               controller : 'profileCtrl',
-               controllerAs : 'profile'
+           .when('/activate/:token', {
+               templateUrl : '/app/views/authentication/activation/activate.html',
+               authenticated : false,
+               controller : 'emailCtrl',
+               controllerAs : 'email'
            })
 
-           .when('/company-registration', {
-               templateUrl : '/app/views/pages/company-registration.html',
-               authenticated : true,
-               controller : 'companyRegistrationCtrl',
-               controllerAs : 'companyRegistration'
+           .when('/resend', {
+               templateUrl : '/app/views/authentication/activation/resend.html',
+               authenticated : false,
+               controller : 'resendCtrl',
+               controllerAs : 'resend'
            })
 
-           .when('/schedule', {
-               templateUrl : '/app/views/pages/company-schedule.html',
-               authenticated : true,
-               controller : 'companyScheduleCtrl',
-               controllerAs : 'companySchedule'
+           .when('/reset-password', {
+               templateUrl : '/app/views/authentication/forgot.html',
+               authenticated : false,
+               controller : 'forgotCtrl',
+               controllerAs : 'forgot'
            })
 
+           .when('/forgotPassword/:token', {
+               templateUrl : 'app/views/authentication/resetPassword.html',
+               authenticated : false,
+               controller : 'resetCtrl',
+               controllerAs : 'reset'
+           })
+
+           // Company Routes
+           // 1. Admin Routes
            .when('/add-new-company', {
-               templateUrl : '/app/views/admin/company/add-new-company.html',
+               templateUrl : '/app/views/company/admin/add-new-company.html',
                authenticated : true,
                controller : 'addNewCompanyCtrl',
                controllerAs : 'addNewCompany',
                permission : 'admin'
            })
 
-           .when('/company/:company_id', {
-               templateUrl : '/app/views/pages/company.html',
-               authenticated : true,
-               controller : 'companyCtrl',
-               controllerAs : 'company'
-           })
-
-           /*.when('/company-schedule', {
-               templateUrl : '/app/views/pages/company-schedule.html',
-               authenticated : true,
-               controller : 'companyscheduleCtrl',
-               controllerAs : 'companySchedule'
-           })*/
-
-           .when('/announcements', {
-               templateUrl : '/app/views/pages/announcements.html',
-               authenticated : true,
-               controller : 'announcementsCtrl',
-               controllerAs : 'announcements'
-           })
-
-           .when('/placements2019-20', {
-               templateUrl : '/app/views/pages/placement-stats.html',
-               authenticated : true
-           })
-
-           /*.when('/result', {
-               templateUrl : '/app/views/pages/result.html',
-               authenticated : true
-           })*/
-
-           .when('/timeline', {
-               templateUrl : '/app/views/student/timeline.html',
-               authenticated : true,
-               controller : 'timelineCtrl',
-               controllerAs : 'timeline'
-           })
-
-           // Management routes
            .when('/editCompany/:company_id', {
-               templateUrl : '/app/views/admin/company/editCompany.html',
+               templateUrl : '/app/views/company/admin/editCompany.html',
                authenticated : true,
                controller : 'editCompanyCtrl',
                controllerAs : 'editCompany',
@@ -101,107 +80,108 @@ var app = angular.module('userRoutes', ['ngRoute'])
            })
 
            .when('/registeredStudents/:company_id', {
-               templateUrl : '/app/views/admin/registeredStudents.html',
+               templateUrl : '/app/views/company/admin/registeredStudents.html',
                authenticated : true,
                controller : 'registeredStudentsCtrl',
                controllerAs : 'registeredStudents',
                permission : 'admin'
            })
 
-
-           .when('/achievement', {
-               templateUrl : '/app/views/student/achievement.html',
-               authenticated : true
-           })
-
-           .when('/contact', {
-               templateUrl : '/app/views/pages/contact.html',
-           })
-
-           .when('/team', {
-               templateUrl : '/app/views/pages/team.html',
-               authenticated : true
-           })
-
-           .when('/technical', {
-               templateUrl : '/app/views/pages/technical.html',
+           // 2. Student Routes
+           .when('/company/:company_id', {
+               templateUrl : '/app/views/company/student/company.html',
                authenticated : true,
-               controller : 'technicalCtrl',
-               controllerAs : 'technical'
+               controller : 'companyCtrl',
+               controllerAs : 'company'
            })
 
+           .when('/company-registration', {
+               templateUrl : '/app/views/company/student/company-registration.html',
+               authenticated : true,
+               controller : 'companyRegistrationCtrl',
+               controllerAs : 'companyRegistration'
+           })
+
+           // Contact Routes
+           .when('/contact', {
+               templateUrl : '/app/views/contact/contact.html',
+           })
+
+           // Developer Routes
            .when('/feedbacks', {
-               templateUrl : '/app/views/pages/feedbacks.html',
+               templateUrl : '/app/views/developer/feedbacks.html',
                authenticated : true,
                controller : 'feedbackCtrl',
                controllerAs : 'feedback',
                permission : 'admin'
            })
 
+           .when('/technical', {
+               templateUrl : '/app/views/developer/technical.html',
+               authenticated : true,
+               controller : 'technicalCtrl',
+               controllerAs : 'technical'
+           })
+
+           // Hall of Fame Routes
+           .when('/placements2019-20', {
+               templateUrl : '/app/views/hall-of-fame/placement-stats.html',
+               authenticated : true
+           })
+
+           // Admin Management Routes
            .when('/admin-management', {
-               templateUrl : '/app/views/admin/admin-management.html',
+               templateUrl : '/app/views/management/admin-management.html',
+               authenticated : true,
+               permission : 'admin'
+           })
+
+           .when('/management', {
+               templateUrl : 'app/views/management/management.html',
+               authenticated : true,
+               permission : 'admin'
+           })
+
+           .when('/students-database', {
+               templateUrl : '/app/views/management/students-database.html',
                authenticated : true,
                permission : 'admin'
            })
 
            .when('/students-management', {
-               templateUrl : '/app/views/admin/students-management.html',
+               templateUrl : '/app/views/management/students-management.html',
                authenticated : true,
                permission : 'admin',
                controller : 'studentsManagementCtrl',
                controllerAs : 'studentsManagement'
            })
 
-           .when('/students-database', {
-               templateUrl : '/app/views/admin/students-database.html',
+           // User Profile
+           // 1. Student
+           .when('/profile', {
+               templateUrl : '/app/views/profile/student/userProfile.html',
                authenticated : true,
-               permission : 'admin'
+               controller : 'profileCtrl',
+               controllerAs : 'profile'
            })
 
-           .when('/activate/:token', {
-               templateUrl : '/app/views/users/activation/activate.html',
-               authenticated : false,
-               controller : 'emailCtrl',
-               controllerAs : 'email'
-           })
-
-           .when('/resend', {
-               templateUrl : '/app/views/users/activation/resend.html',
-               authenticated : false,
-               controller : 'resendCtrl',
-               controllerAs : 'resend'
-           })
-
-           .when('/reset-password', {
-               templateUrl : '/app/views/users/forgot.html',
-               authenticated : false,
-               controller : 'forgotCtrl',
-               controllerAs : 'forgot'
-           })
-
-           .when('/forgotPassword/:token', {
-               templateUrl : 'app/views/users/resetPassword.html',
-               authenticated : false,
-               controller : 'resetCtrl',
-               controllerAs : 'reset'
-           })
-
-           .when('/management', {
-               templateUrl : 'app/views/admin/management.html',
+           .when('/timeline', {
+               templateUrl : '/app/views/profile/student/timeline.html',
                authenticated : true,
-               controller : 'managementCtrl',
-               controllerAs : 'management',
-               permission : 'admin'
+               controller : 'timelineCtrl',
+               controllerAs : 'timeline'
            })
 
-           .when('/edit/:id', {
-               templateUrl : 'app/views/admin/edit.html',
-               authenticated : true,
-               controller : 'editCtrl',
-               controllerAs : 'edit',
-               permission : 'admin'
+           .when('/achievement', {
+               templateUrl : '/app/views/profile/student/achievement.html',
+               authenticated : true
            })
 
+           // Team Routes
+           .when('/team', {
+               templateUrl : '/app/views/team/team.html',
+               authenticated : true
+           })
 
            .otherwise( { redirectTo : '/'});
 
@@ -211,7 +191,7 @@ var app = angular.module('userRoutes', ['ngRoute'])
        })
    });
 
-app.run(['$rootScope','auth','$location', 'user', function ($rootScope,auth,$location,user) {
+app.run(['$rootScope','auth','$location', 'student', function ($rootScope,auth,$location,student) {
 
    $rootScope.$on('$routeChangeStart', function (event, next, current) {
 
@@ -224,7 +204,7 @@ app.run(['$rootScope','auth','$location', 'user', function ($rootScope,auth,$loc
                    $location.path('/');
                } else if(next.$$route.permission) {
 
-                   user.getPermission().then(function (data) {
+                   student.getPermission().then(function (data) {
 
                        if(next.$$route.permission !== data.data.permission) {
                            event.preventDefault();
