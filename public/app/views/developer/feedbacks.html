@@ -15,7 +15,7 @@
                     <div class="sl-left"> <img class="img-circle" alt="user" src="../assets/images/feedbacks/{{feedback.title}}.png"> </div>
                     <div class="sl-right">
                         <div class="font-medium">{{ feedback.feedback }} </div>
-                        <div class="desc">{{ feedback.title }} by <b>{{ feedback.author_name }} </b></div>
+                        <div class="desc">{{ feedback.title }} by <b>{{ feedback.author_name || 'User'}} </b></div>
                     </div>
                 </div>
             </div>

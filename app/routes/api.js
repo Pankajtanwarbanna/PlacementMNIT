@@ -204,7 +204,7 @@ module.exports = function (router){
                 if(!user) {
                     res.json({
                         success : false,
-                        message : 'Username not found.'
+                        message : 'College ID not found.'
                     });
                 } else {
 

@@ -12,25 +12,14 @@ var app = angular.module('userRoutes', ['ngRoute'])
            })
 
            // Authentication Routes
-           .when('/register', {
-               templateUrl : '/app/views/authentication/register.html',
-               controller : 'regCtrl',
-               controllerAs : 'register',
-               authenticated : false
-           })
-
            .when('/login', {
                templateUrl : '/app/views/authentication/login.html',
-               controller : 'regCtrl',
-               controllerAs : 'register',
                authenticated : false
            })
 
            .when('/logout', {
                templateUrl : '/app/views/authentication/logout.html',
-               authenticated : false,
-               controller : 'editCtrl',
-               controllerAs : 'edit'
+               authenticated : false
            })
 
            .when('/activate/:token', {

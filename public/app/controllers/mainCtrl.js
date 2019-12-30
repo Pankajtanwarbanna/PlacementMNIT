@@ -20,14 +20,8 @@ angular.module('mainController', ['authServices','studentServices'])
         if(next.$$route) {
             //console.log('we are not at home page');
             app.home = false;
-            if(next.$$route.originalPath === '/schedule') {
-                app.schedule = true;
-            } else {
-                app.schedule = false;
-            }
         } else {
             app.home = true;
-            app.schedule = false;
         }
 
         if(auth.isLoggedIn()) {

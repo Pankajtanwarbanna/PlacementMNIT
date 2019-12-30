@@ -5,11 +5,11 @@
 angular.module('emailController', ['studentServices'])
 
 // Email controller
-.controller('emailCtrl', function ($routeParams,user,$timeout,$location) {
+.controller('emailCtrl', function ($routeParams,student,$timeout,$location) {
 
    var app =  this;
 
-   user.activateAccount($routeParams.token).then(function (data) {
+   student.activateAccount($routeParams.token).then(function (data) {
 
        app.successMsg = false;
        app.errorMsg = false;
@@ -28,7 +28,7 @@ angular.module('emailController', ['studentServices'])
 })
 
 // Resend activation link controller
-.controller('resendCtrl', function (user,$timeout, $location) {
+.controller('resendCtrl', function (student,$timeout, $location) {
 
    var app = this;
 
@@ -39,11 +39,11 @@ angular.module('emailController', ['studentServices'])
        app.loading = true;
        app.disabled = false;
 
-       user.checkCredientials(app.logData).then(function (data) {
+       student.checkCredientials(app.logData).then(function (data) {
 
            if(data.data.success) {
 
-               user.resendEmail(app.logData).then(function (data) {
+               student.resendEmail(app.logData).then(function (data) {
 
                    if(data.data.success) {
                        app.disabled = true;
@@ -71,10 +71,8 @@ angular.module('emailController', ['studentServices'])
 })
 
 // Forgot username and password controller
-.controller('forgotCtrl', function (user,$timeout,$location) {
+.controller('forgotCtrl', function (student,$timeout,$location) {
    var app = this;
-
-   console.log(window.location.origin)
 
    this.forgotUsername = function (logData) {
 
@@ -82,7 +80,7 @@ angular.module('emailController', ['studentServices'])
        app.errorMsgUsername = false;
        app.disabledUsername = true;
 
-       user.forgotUsername(app.logData).then(function (data) {
+       student.forgotUsername(app.logData).then(function (data) {
 
            if(data.data.success) {
                app.successMsgUsername = data.data.message + ' Redirecting....';
@@ -99,17 +97,18 @@ angular.module('emailController', ['studentServices'])
 
     app.forgotPassword = function (logData) {
 
-       app.successMsgPassword = 'Sending Email...';
+       app.successMsgPassword = 'Checking credentials...';
        app.errorMsgPassword = '';
        app.disabledPassword = true;
 
        app.logData.hostname = window.location.origin;
 
-       user.forgotPasswordLink(app.logData).then(function (data) {
+       student.forgotPasswordLink(app.logData).then(function (data) {
 
            if(data.data.success) {
                app.successMsgPassword = data.data.message;
            } else {
+               app.successMsgPassword = '';
                app.disabledPassword = false;
                app.errorMsgPassword = data.data.message;
            }
@@ -120,8 +119,7 @@ angular.module('emailController', ['studentServices'])
 
 
 // Controller to reset password
-.controller('resetCtrl', function ($routeParams,user,$timeout, $location) {
-   console.log($routeParams.token);
+.controller('resetCtrl', function ($routeParams,student,$timeout, $location) {
 
    var app = this;
    app.successMsg = false;
@@ -129,7 +127,7 @@ angular.module('emailController', ['studentServices'])
    app.disabled = true;
    app.resetPassword = false;
 
-   user.forgotPasswordCheckToken($routeParams.token).then(function (data) {
+   student.forgotPasswordCheckToken($routeParams.token).then(function (data) {
 
        if(data.data.success) {
            app.disabled = false;
@@ -148,7 +146,7 @@ angular.module('emailController', ['studentServices'])
 
        if(app.resetPassword) {
 
-           user.resetPassword($routeParams.token,app.logData).then(function (data) {
+           student.resetPassword($routeParams.token,app.logData).then(function (data) {
 
                if(data.data.success) {
                    app.successMsg = data.data.message + ' Redirecting....';
