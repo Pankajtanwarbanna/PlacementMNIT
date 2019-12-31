@@ -91,6 +91,13 @@ var app = angular.module('userRoutes', ['ngRoute'])
                controllerAs : 'companyRegistration'
            })
 
+           .when('/previous-companies', {
+               templateUrl : '/app/views/company/student/previous-companies.html',
+               authenticated : true,
+               controller : 'previousCompaniesCtrl',
+               controllerAs : 'previousCompanies'
+           })
+
            // Contact Routes
            .when('/contact', {
                templateUrl : '/app/views/contact/contact.html',

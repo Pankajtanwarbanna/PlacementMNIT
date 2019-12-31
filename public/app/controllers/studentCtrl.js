@@ -4,16 +4,15 @@
 angular.module('studentController',['studentServices'])
 
 // Company Registration Controller
-.controller('companyRegistrationCtrl', function (student) {
+.controller('companyRegistrationCtrl', function (student, admin, $scope) {
 
     var app = this;
 
     app.noUpcomingCompanies = false;
-    app.noPreviousCompanies = false;
     app.fetchedUpcomingCompanies = false;
-    app.fetchedPreviousCompanies = false;
     app.profileComplete = false;
 
+    // Get all upcoming companies
     function getAllUpcomingCompaniesFunction() {
         student.getAllUpcomingCompanies().then(function (data) {
             //console.log(data);
@@ -22,10 +21,46 @@ angular.module('studentController',['studentServices'])
                 app.fetchedUpcomingCompanies = true;
                 if(app.upcomingCompanies.length === 0) {
                     app.noUpcomingCompanies = true;
+                } else {
+                    app.noUpcomingCompanies = false;
                 }
             }
         });
     }
+
+    // Check Profile
+    student.checkCompleteProfile().then(function (data) {
+        //console.log(data);
+        if(data.data.success) {
+            app.profileComplete = true;
+            getAllUpcomingCompaniesFunction();
+        } else {
+            app.profileComplete = false;
+            // No need to fetch companies details
+            app.fetchedUpcomingCompanies = true;
+            app.fetchedPreviousCompanies = true;
+        }
+    });
+
+    // update admin's passout batch
+    $scope.updateBatch = function (batch) {
+        admin.updateAdminBatch(batch).then(function (data) {
+            if(data.data.success) {
+                app.fetchedUpcomingCompanies = false;
+                getAllUpcomingCompaniesFunction();
+            }
+        });
+    }
+})
+
+
+// Previous Companies controller
+.controller('previousCompaniesCtrl', function (student, $scope,admin) {
+
+    let app = this;
+
+    app.noPreviousCompanies = false;
+    app.fetchedPreviousCompanies = false;
 
     function getAllPreviousCompaniesFunction () {
         student.getAllPreviousCompanies().then(function (data) {
@@ -35,24 +70,25 @@ angular.module('studentController',['studentServices'])
                 app.fetchedPreviousCompanies = true;
                 if(app.previousCompanies.length === 0) {
                     app.noPreviousCompanies = true;
+                } else {
+                    app.noPreviousCompanies = false;
                 }
             }
         });
     }
 
-    student.checkCompleteProfile().then(function (data) {
-        //console.log(data);
-        if(data.data.success) {
-            app.profileComplete = true;
-            getAllUpcomingCompaniesFunction();
-            getAllPreviousCompaniesFunction();
-        } else {
-            app.profileComplete = false;
-            // No need to fetch companies details
-            app.fetchedUpcomingCompanies = true;
-            app.fetchedPreviousCompanies = true;
-        }
-    });
+    // Get All Previous Companies Function
+    getAllPreviousCompaniesFunction();
+
+    // update admin's passout batch
+    $scope.updateBatch = function (batch) {
+        admin.updateAdminBatch(batch).then(function (data) {
+            if(data.data.success) {
+                app.fetchedUpcomingCompanies = false;
+                getAllPreviousCompaniesFunction();
+            }
+        });
+    }
 })
 
 // company controller
@@ -91,7 +127,6 @@ angular.module('studentController',['studentServices'])
         }
     });
 
-
     app.notMarkedAttendance = false;
 
     function getCandidateApplyStatusFunction() {
@@ -120,7 +155,6 @@ angular.module('studentController',['studentServices'])
         document.getElementById('oneClickApplyButton').innerHTML = 'Applying.....Please wait!!';
         document.getElementById('oneClickApplyButton').disabled = true;
         student.oneClickApply($routeParams.company_id).then(function (data) {
-            //console.log(data);
             if(data.data.success) {
                 getCandidateApplyStatusFunction();
             }
@@ -129,7 +163,6 @@ angular.module('studentController',['studentServices'])
 
     app.withdrawApplication = function() {
         student.withdrawApplication($routeParams.company_id).then(function (data) {
-            console.log(data);
             if(data.data.success) {
                 getCandidateApplyStatusFunction();
             }
@@ -164,7 +197,6 @@ angular.module('studentController',['studentServices'])
     app.markCompanyAttendanceErrorMsg = '';
 
     app.markCompanyAttendance = function (attendanceData) {
-        console.log(app.attendanceData);
         student.markCompanyAttendance(app.attendanceData,$routeParams.company_id).then(function (data) {
             console.log(data);
             if(data.data.success) {

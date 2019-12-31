@@ -29,11 +29,11 @@ angular.module('mainController', ['authServices','studentServices'])
             //console.log('User is logged in.');
             app.isLoggedIn = true;
             auth.getUser().then(function (data){
-                //console.log(data);
                 app.student_name = data.data.student_name;
                 app.college_id = data.data.college_id;
                 app.gender = data.data.gender;
                 app.department = data.data.department;
+                app.passout_batch = data.data.passout_batch;
                 if(data.data.red_flags >= 3) {
                     app.blockedProfile = true;
                 }
@@ -57,7 +57,6 @@ angular.module('mainController', ['authServices','studentServices'])
             //console.log('User is not logged in.');
             app.isLoggedIn = false;
             app.name = '';
-
             app.loadme = true;
         }
 

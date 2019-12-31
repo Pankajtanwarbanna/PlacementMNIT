@@ -71,5 +71,10 @@ angular.module('adminServices',[])
         return $http.put('/api/updateStudentProfile', studentData);
     };
 
+    // update admin passout batch
+    adminFactory.updateAdminBatch = function (batch) {
+        return $http.post('/api/updateAdminBatch/' + batch);
+    };
+
     return adminFactory;
 });

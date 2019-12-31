@@ -1,13 +1,13 @@
 let User = require('../models/user');
 
 function ensureAdmin(req, res, next) {
-    if(!req.decoded.email) {
+    if(!req.decoded.college_id ) {
         res.json({
             success : false,
             message : 'Please login.'
         })
     } else {
-        User.findOne({ email : req.decoded.email }).select('permission').lean().exec(function (err, user) {
+        User.findOne({ college_id : req.decoded.college_id }).select('permission').lean().exec(function (err, user) {
             if(err) {
                 res.json({
                     success : false,
@@ -35,13 +35,13 @@ function ensureAdmin(req, res, next) {
 }
 
 function ensureStudent(req, res, next) {
-    if(!req.decoded.email) {
+    if(!req.decoded.college_id) {
         res.json({
             success : false,
             message : 'Please login.'
         })
     } else {
-        User.findOne({ email : req.decoded.email }).select('permission').lean().exec(function (err, user) {
+        User.findOne({ college_id : req.decoded.college_id }).select('permission').lean().exec(function (err, user) {
             if(err) {
                 res.json({
                     success : false,

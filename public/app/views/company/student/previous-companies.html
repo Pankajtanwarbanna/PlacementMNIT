@@ -1,18 +1,6 @@
-<div class="row page-titles" id="upcomingCompanies">
+<div class="row page-titles" id="previousCompanies">
     <div class="col-md-5 align-self-center">
-        <h4 class="text-themecolor">Company Registration</h4>
-    </div>
-</div>
-
-<div class="row" ng-show="main.blockedProfile">
-    <div class="col-md-12">
-        <div class="card text-white bg-danger">
-            <div class="card-body">
-                <h3 class="card-title">Your profile is blocked!</h3>
-                <p class="card-text">You violated Placement Rule 3 times so, your profile is blocked. Reach ptcell@mnit.ac.in in case of any help.</p>
-                <!--<a href="javascript:void(0)" class="btn btn-dark">Go somewhere</a>-->
-            </div>
-        </div>
+        <h4 class="text-themecolor">Previous Companies</h4>
     </div>
 </div>
 
@@ -30,22 +18,26 @@
     </div>
 </div>
 
-<div ng-show="companyRegistration.fetchedUpcomingCompanies && !main.blockedProfile">
-    <div class="row">
-        <div class="col-md-12" ng-show="!companyRegistration.profileComplete && !main.authorized">
-            <div class="card text-white bg-success">
-                <div class="card-body">
-                    <h3 class="card-title">Profile not updated!</h3>
-                    <p class="card-text">Kindly update your profile to proceed further with company registration.</p>
-                    <a href="/profile" class="btn btn-dark">Go to Profile Page</a>
-                </div>
+<!-- Searching Company by Name -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <form class="form-material">
+                    <div class="form-group">
+                        <input type="text" class="form-control form-control-line" placeholder="Type here to Search for Company" ng-model="companyName">
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="row" ng-show="companyRegistration.profileComplete || main.authorized">
+<!-- Previous Companies -->
+<div ng-show="previousCompanies.fetchedPreviousCompanies">
+    <div class="row">
         <!-- Column -->
-        <div class="col-lg-4 col-md-6" ng-repeat="company in companyRegistration.upcomingCompanies | orderBy : 'deadline_date'">
+        <div class="col-lg-4 col-md-6" ng-repeat="company in previousCompanies.previousCompanies | orderBy : '-deadline_date' | filter : companyName">
             <div class="card cc-widget">
                 <div class="card-body">
                     <div class="d-flex no-block flex-row">
@@ -70,18 +62,21 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12" ng-show="companyRegistration.noUpcomingCompanies">
-            <div class="card text-white bg-success">
+
+        <div class="col-md-12" ng-show="previousCompanies.noPreviousCompanies">
+            <div class="card text-white bg-danger">
                 <div class="card-body">
-                    <h3 class="card-title">No upcoming companies!</h3>
-                    <p class="card-text">Placement & Training Cell will update you soon.</p>
+                    <h3 class="card-title">No previous companies!</h3>
+                    <p class="card-text">No companies visited till now for campus recruitment this session.</p>
                     <!--<a href="javascript:void(0)" class="btn btn-dark">Go somewhere</a>-->
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div class="row" ng-show="!companyRegistration.fetchedUpcomingCompanies">
+
+<!-- Pre Loader -->
+<div class="row" ng-show="!previousCompanies.fetchedPreviousCompanies">
     <div class="col-md-12">
         <div class="card-body text-center">
             <!--<h4 class="card-title">Loading Announcements!</h4>-->
@@ -107,12 +102,5 @@
                 <span class="sr-only">Loading...</span>
             </div>
         </div>
-    </div>
-</div>
-
-<!-- Link to Previous Company Page -->
-<div class="row">
-    <div class="col-12">
-        <a href="/previous-companies" class="btn btn-block btn-rounded btn-primary"><i class="icon-eye"></i> &nbsp; View Previous Companies</a>
     </div>
 </div>

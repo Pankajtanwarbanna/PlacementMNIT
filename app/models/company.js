@@ -27,8 +27,7 @@ var companySchema = new mongoose.Schema({
         required: true
     },
     passout_batch : {
-        type : String,
-        required : true
+        type : String
     },
     recruitment : {
         type : String

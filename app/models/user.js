@@ -39,6 +39,9 @@ var userSchema = new mongoose.Schema({
         type : String,
         unique : true
     },
+    passout_batch : {
+        type : String
+    },
     program : {
         type : String,
     },
