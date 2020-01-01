@@ -215,64 +215,11 @@
             <!-- Container fluid  -->
             <!-- ============================================================== -->
             <div class="container-fluid">
-                <div class="ng-view" autoscroll="true"></div>
-
-                <div ng-show="main.schedule">
-                    <div class="row page-titles">
-                        <div class="col-md-5 align-self-center">
-                            <h4 class="text-themecolor">Company Schedule</h4>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-12 text-center">
-                                            <h3>Placement Drive 2019-20 Schedule</h3>
-                                            <h5 class="font-light m-t-0">*Click on 'month' to view complete schedule*</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="card-body b-l calender-sidebar">
-                                                <div id="calendar"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- BEGIN MODAL -->
-                    <div class="modal none-border" id="my-event">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title"><strong>Schedule</strong></h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                </div>
-                                <div class="modal-body"></div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <div ng-show="main.home">
                     <home ng-include="'app/views/layout/home.html'"></home>
                 </div>
 
+                <div class="ng-view" autoscroll="true"></div>
             </div>
             <!-- ============================================================== -->
             <!-- End Container fluid  -->

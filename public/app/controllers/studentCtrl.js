@@ -116,6 +116,7 @@ angular.module('studentController',['studentServices'])
     }
 
     student.getCompanyDetails($routeParams.company_id).then(function (data) {
+        console.log(data)
         if(data.data.success) {
             app.companyDetail = data.data.companyDetail;
             app.fetchedCompanyDetails = true;

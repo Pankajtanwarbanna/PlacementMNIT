@@ -686,7 +686,7 @@ module.exports = function (router){
                 message : 'Please login.'
             });
         } else {
-            Company.findOne({ _id : req.params.company_id}, function (err, companyDetail) {
+            Company.findOne({ _id : req.params.company_id}).select('-candidates').lean().exec(function (err, companyDetail) {
                 if(err) {
                     console.log(err);
                     res.json({
