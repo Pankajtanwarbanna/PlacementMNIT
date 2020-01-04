@@ -565,6 +565,7 @@ module.exports = function (router){
     router.post('/updateCompanyDetails', function (req, res) {
         Company.findByIdAndUpdate( { _id : req.body._id } , req.body , function (err) {
             if(err) {
+                console.log(err);
                 res.json({
                     success : false,
                     message : 'Something went wrong!',

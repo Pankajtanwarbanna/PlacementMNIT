@@ -119,6 +119,7 @@ angular.module('studentController',['studentServices'])
         console.log(data)
         if(data.data.success) {
             app.companyDetail = data.data.companyDetail;
+            convertAllDateStringsToDateObj(app.companyDetail);
             app.fetchedCompanyDetails = true;
             if(checkDateDifference(app.companyDetail.deadline_date) === true) {
                 app.missedLastDate = true;
@@ -127,6 +128,76 @@ angular.module('studentController',['studentServices'])
             }
         }
     });
+
+    // Convert all date strings to date objects for editing
+    function convertAllDateStringsToDateObj(company) {
+        if('selection_process' in company) {
+            if('pre_placement_talk' in company.selection_process) {
+                if('date' in company.selection_process.pre_placement_talk) {
+                    if(company.selection_process.pre_placement_talk.date == null) {
+                        app.companyDetail.selection_process.pre_placement_talk.date = '';
+                    } else {
+                        app.companyDetail.selection_process.pre_placement_talk.date = new Date(company.selection_process.pre_placement_talk.date);
+                    }
+                }
+            }
+            if('aptitude_test' in company.selection_process) {
+                if('date' in company.selection_process.aptitude_test) {
+                    if(company.selection_process.aptitude_test.date == null) {
+                        app.companyDetail.selection_process.aptitude_test.date = '';
+                    } else {
+                        app.companyDetail.selection_process.aptitude_test.date = new Date(company.selection_process.aptitude_test.date);
+                    }
+                }
+            }
+            if('technical_test' in company.selection_process) {
+                if('date' in company.selection_process.technical_test) {
+
+                    if(company.selection_process.technical_test.date == null) {
+                        app.companyDetail.selection_process.technical_test.date = '';
+                    } else {
+                        app.companyDetail.selection_process.technical_test.date = new Date(company.selection_process.technical_test.date);
+                    }
+                }
+            }
+            if('group_discussion' in company.selection_process) {
+                if('date' in company.selection_process.group_discussion) {
+                    if(company.selection_process.group_discussion.date == null) {
+                        app.companyDetail.selection_process.group_discussion.date = '';
+                    } else {
+                        app.companyDetail.selection_process.group_discussion.date = new Date(company.selection_process.group_discussion.date);
+                    }
+                }
+            }
+            if('personal_interview' in company.selection_process) {
+                if('date' in company.selection_process.personal_interview) {
+
+                    if(company.selection_process.personal_interview.date == null) {
+                        app.companyDetail.selection_process.personal_interview.date = '';
+                        console.log(app.companyDetail.selection_process.personal_interview.date)
+                    } else {
+                        app.companyDetail.selection_process.personal_interview.date = new Date(company.selection_process.personal_interview.date);
+                    }
+
+                    app.companyDetail.selection_process.personal_interview.date = new Date(company.selection_process.personal_interview.date);
+                }
+            }
+        }
+        if('joining_date' in company) {
+            if('joining_date' in company) {
+
+                if(company.joining_date == null) {
+                    app.companyDetail.joining_date = '';
+                } else {
+                    app.companyDetail.joining_date = new Date(company.joining_date);
+                }
+
+            }
+        }
+        if(company.deadline_date) {
+            app.companyDetail.deadline_date = new Date(company.deadline_date);
+        }
+    }
 
     app.notMarkedAttendance = false;
 

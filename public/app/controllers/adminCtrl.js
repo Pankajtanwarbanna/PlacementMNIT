@@ -79,6 +79,7 @@ angular.module('adminController', ['adminServices'])
 
     // Add New Company
     app.postCompanyDetails = function (newCompanyData) {
+        console.log(app.newCompanyData);
         admin.postCompanyDetails(app.newCompanyData).then(function (data) {
             if(data.data.success) {
                 app.successMsg = data.data.message;
@@ -150,47 +151,84 @@ angular.module('adminController', ['adminServices'])
     // Get Company Details
     student.getCompanyDetails($routeParams.company_id).then(function (data) {
         if(data.data.success) {
-            app.company = data.data.companyDetail;
-            convertAllDateStringsToDateObj(app.company);
+            app.companyDetail = data.data.companyDetail;
+            if(typeof app.companyDetail.package === 'string') {
+                app.dontShowProgramWisePackage = true;
+            }
+            convertAllDateStringsToDateObj(app.companyDetail);
         }
     });
+
+
 
     // Convert all date strings to date objects for editing
     function convertAllDateStringsToDateObj(company) {
 
         if('selection_process' in company) {
             if('pre_placement_talk' in company.selection_process) {
-                if('date' in app.company.selection_process.pre_placement_talk) {
-                    app.company.selection_process.pre_placement_talk.date = new Date(company.selection_process.pre_placement_talk.date);
+                if('date' in company.selection_process.pre_placement_talk) {
+                    if(company.selection_process.pre_placement_talk.date == null) {
+                        app.companyDetail.selection_process.pre_placement_talk.date = '';
+                    } else {
+                        app.companyDetail.selection_process.pre_placement_talk.date = new Date(company.selection_process.pre_placement_talk.date);
+                    }
                 }
             }
             if('aptitude_test' in company.selection_process) {
-                if('date' in app.company.selection_process.aptitude_test) {
-                    app.company.selection_process.aptitude_test.date = new Date(company.selection_process.aptitude_test.date);
+                if('date' in company.selection_process.aptitude_test) {
+                    if(company.selection_process.aptitude_test.date == null) {
+                        app.companyDetail.selection_process.aptitude_test.date = '';
+                    } else {
+                        app.companyDetail.selection_process.aptitude_test.date = new Date(company.selection_process.aptitude_test.date);
+                    }
                 }
             }
             if('technical_test' in company.selection_process) {
-                if('date' in app.company.selection_process.technical_test) {
-                    app.company.selection_process.technical_test.date = new Date(company.selection_process.technical_test.date);
+                if('date' in company.selection_process.technical_test) {
+
+                    if(company.selection_process.technical_test.date == null) {
+                        app.companyDetail.selection_process.technical_test.date = '';
+                    } else {
+                        app.companyDetail.selection_process.technical_test.date = new Date(company.selection_process.technical_test.date);
+                    }
                 }
             }
             if('group_discussion' in company.selection_process) {
-                if('date' in app.company.selection_process.group_discussion) {
-                    app.company.selection_process.group_discussion.date = new Date(company.selection_process.group_discussion.date);
+                if('date' in company.selection_process.group_discussion) {
 
+                    if(company.selection_process.group_discussion.date == null) {
+                        app.companyDetail.selection_process.group_discussion.date = '';
+                    } else {
+                        app.companyDetail.selection_process.group_discussion.date = new Date(company.selection_process.group_discussion.date);
+                    }
                 }
             }
             if('personal_interview' in company.selection_process) {
-                if('date' in app.company.selection_process.personal_interview) {
-                    app.company.selection_process.personal_interview.date = new Date(company.selection_process.personal_interview.date);
+                if('date' in company.selection_process.personal_interview) {
+
+                    if(company.selection_process.personal_interview.date == null) {
+                        app.companyDetail.selection_process.personal_interview.date = '';
+                    } else {
+                        app.companyDetail.selection_process.personal_interview.date = new Date(company.selection_process.personal_interview.date);
+                    }
+
+                    app.companyDetail.selection_process.personal_interview.date = new Date(company.selection_process.personal_interview.date);
                 }
             }
         }
         if('joining_date' in company) {
-            app.company.joining_date = new Date(company.joining_date);
+            if('joining_date' in company) {
+
+                if(company.joining_date == null) {
+                    app.companyDetail.joining_date = '';
+                } else {
+                    app.companyDetail.joining_date = new Date(company.joining_date);
+                }
+
+            }
         }
         if(company.deadline_date) {
-            app.company.deadline_date = new Date(company.deadline_date);
+            app.companyDetail.deadline_date = new Date(company.deadline_date);
         }
     }
 

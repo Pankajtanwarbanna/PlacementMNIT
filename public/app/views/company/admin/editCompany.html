@@ -19,7 +19,7 @@
 </div>
 
 <!--update Company details Form -->
-<form ng-submit="editCompany.updateCompanyDetails(editCompany.company);" ng-show="!editCompany.successMsg">
+<form ng-submit="editCompany.updateCompanyDetails(editCompany.companyDetail);" ng-show="!editCompany.successMsg">
 
     <div class="row">
 
@@ -34,7 +34,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Company Name</label>
-                                <input type="text" class="form-control" placeholder="Enter name" ng-model="editCompany.company.company_name">
+                                <input type="text" class="form-control" placeholder="Enter name" ng-model="editCompany.companyDetail.company_name">
                             </div>
                         </div>
                         <!--/span-->
@@ -42,7 +42,7 @@
                             <div class="form-group">
                                 <label class="control-label">Company Website Link</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Enter URL" ng-model="editCompany.company.company_website_url">
+                                    <input type="text" class="form-control" placeholder="Enter URL" ng-model="editCompany.companyDetail.company_website_url">
                                 </div>
                                 <small class="form-control-feedback"> *Don't forget to add http:// or https://. </small>
                             </div>
@@ -53,7 +53,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Organization Type</label>
-                                <select class="form-control" ng-model="editCompany.company.organization_type">
+                                <select class="form-control" ng-model="editCompany.companyDetail.organization_type">
                                     <option value="">-- Select Organization Type --</option>
                                     <option>Private sector</option>
                                     <option>Start-up</option>
@@ -67,7 +67,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Industry Sector</label>
-                                <select class="form-control" ng-model="editCompany.company.industry_sector">
+                                <select class="form-control" ng-model="editCompany.companyDetail.industry_sector">
                                     <option value=""> -- Select Industry Sector --</option>
                                     <option>Analytics</option>
                                     <option>Consulting</option>
@@ -84,7 +84,7 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label">About Company</label>
-                        <textarea type="text" class="form-control" rows="3" ng-model="editCompany.company.about_company" placeholder="Something about company..."></textarea>
+                        <textarea type="text" class="form-control" rows="3" ng-model="editCompany.companyDetail.about_company" placeholder="Something about company..."></textarea>
                     </div>
                 </div>
             </div>
@@ -101,14 +101,14 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Job Profile</label>
-                                <input type="text" class="form-control" placeholder="Enter job profile" ng-model="editCompany.company.job_profile">
+                                <input type="text" class="form-control" placeholder="Enter job profile" ng-model="editCompany.companyDetail.job_profile">
                             </div>
                         </div>
                         <!--/span-->
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Passout Batch</label>
-                                <select class="form-control" ng-model="editCompany.company.passout_batch">
+                                <select class="form-control" ng-model="editCompany.companyDetail.passout_batch">
                                     <option value=""> -- Select Batch --</option>
                                     <option value="2020">2020</option>
                                     <option value="2021">2021</option>
@@ -124,27 +124,18 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Recruitment</label>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="custom-control custom-radio">
-                                            <input type="radio" id="recruitmentRadio1" class="custom-control-input" value="Internship" ng-model="editCompany.company.recruitment">
-                                            <label class="custom-control-label" for="recruitmentRadio1">Internship</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="custom-control custom-radio">
-                                            <input type="radio" id="recruitmentRadio2" class="custom-control-input" value="Placement" ng-model="editCompany.company.recruitment">
-                                            <label class="custom-control-label" for="recruitmentRadio2">Placement</label>
-                                        </div>
-                                    </div>
-                                </div>
+                                <select class="form-control" ng-model="editCompany.companyDetail.recruitment">
+                                    <option value=""> -- Select Recruitment --</option>
+                                    <option value="Internship">Internship</option>
+                                    <option value="Placement">Placement</option>
+                                </select>
                             </div>
                         </div>
                         <!--/span-->
-                        <div class="col-md-6" ng-if="editCompany.company.recruitment == 'Internship'">
+                        <div class="col-md-6" ng-if="editCompany.companyDetail.recruitment == 'Internship'">
                             <div class="form-group">
                                 <label class="control-label">Duration</label>
-                                <input type="text" class="form-control" placeholder="Enter duration" ng-model="editCompany.company.duration">
+                                <input type="text" class="form-control" placeholder="Enter duration" ng-model="editCompany.companyDetail.duration">
                                 <!--<small class="form-control-feedback"> This field has error. </small>-->
                             </div>
                         </div>
@@ -156,7 +147,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Location of Posting</label>
-                                <input type="text" class="form-control" placeholder="Enter posting location" ng-model="editCompany.company.posting_location">
+                                <input type="text" class="form-control" placeholder="Enter posting location" ng-model="editCompany.companyDetail.posting_location">
                                 <!--<small class="form-control-feedback"> This field has error. </small>-->
                             </div>
                         </div>
@@ -165,7 +156,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Tentative Date of Joining </label>
-                                <input type="date" class="form-control" ng-model="editCompany.company.joining_date">
+                                <input type="date" class="form-control" ng-model="editCompany.companyDetail.joining_date">
                             </div>
                         </div>
                         <!--/span-->
@@ -188,7 +179,7 @@
                                 <div class="row">
                                     <div class="col-md-6" ng-repeat="branch in programsBranches[program.toLowerCase()]">
                                         <label class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" value="branch" ng-model="editCompany.company.eligibility[program][branch]">
+                                            <input type="checkbox" class="custom-control-input" value="branch" ng-model="editCompany.companyDetail.eligibility[program][branch]">
                                             <span class="custom-control-label">{{ branch }}</span>
                                         </label>
                                     </div>
@@ -201,7 +192,7 @@
                             <div class="form-group">
                                 <label class="control-label">Minimum CGPA</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Enter minimum CGPA" ng-model="editCompany.company.min_cgpa">
+                                    <input type="text" class="form-control" placeholder="Enter minimum CGPA" ng-model="editCompany.companyDetail.min_cgpa">
                                     <div class="input-group-append">
                                         <span class="input-group-text">CGPA</span>
                                     </div>
@@ -214,7 +205,7 @@
                             <div class="form-group">
                                 <label class="control-label">Min. Marks in 10th</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Enter percentage" ng-model="editCompany.company.min_10_percent">
+                                    <input type="text" class="form-control" placeholder="Enter percentage" ng-model="editCompany.companyDetail.min_10_percent">
                                     <div class="input-group-append">
                                         <span class="input-group-text">% Marks in 10th</span>
                                     </div>
@@ -229,7 +220,7 @@
                             <div class="form-group">
                                 <label class="control-label">Min. Marks in 12th</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Enter percentage" ng-model="editCompany.company.min_12_percent">
+                                    <input type="text" class="form-control" placeholder="Enter percentage" ng-model="editCompany.companyDetail.min_12_percent">
                                     <div class="input-group-append">
                                         <span class="input-group-text">% Marks in 12th</span>
                                     </div>
@@ -241,7 +232,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Medical Requirement</label>
-                                <select class="form-control" ng-model="editCompany.company.medical_requirement">
+                                <select class="form-control" ng-model="editCompany.companyDetail.medical_requirement">
                                     <option value=""> -- Select Medical Requirement --</option>
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
@@ -254,7 +245,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Service Agreement</label>
-                                <select class="form-control" ng-model="editCompany.company.service_agreement">
+                                <select class="form-control" ng-model="editCompany.companyDetail.service_agreement">
                                     <option value=""> -- Select Service Agreement -- </option>
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
@@ -262,10 +253,10 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6" ng-if="editCompany.company.service_agreement == 'Yes'">
+                        <div class="col-md-6" ng-if="editCompany.companyDetail.service_agreement == 'Yes'">
                             <div class="form-group">
                                 <label class="control-label">Service Agreement Duration</label>
-                                <input type="text" class="form-control" placeholder="Enter service agreement duration" ng-model="editCompany.company.service_agreement_duration">
+                                <input type="text" class="form-control" placeholder="Enter service agreement duration" ng-model="editCompany.companyDetail.service_agreement_duration">
                                 <small class="form-control-feedback"> *Duration in months. </small>
                             </div>
                         </div>
@@ -273,7 +264,7 @@
 
                     <div class="form-group">
                         <label class="control-label">Other Eligibility</label>
-                        <input type="text" class="form-control" placeholder="Enter other eligibility" ng-model="editCompany.company.other_eligibility">
+                        <input type="text" class="form-control" placeholder="Enter other eligibility" ng-model="editCompany.companyDetail.other_eligibility">
                         <!--<small class="form-control-feedback"> This field has error. </small>-->
                     </div>
 
@@ -288,20 +279,26 @@
                     <h4 class="card-title">Package Details</h4>
                     <h6 class="card-subtitle">Enter package details for placement session</h6>
 
-                    <div ng-repeat="program in programs">
+                    <div class="form-group" ng-show="editCompany.dontShowProgramWisePackage">
+                        <label class="control-label">Package</label>
+                        <input type="text" class="form-control" placeholder="Enter other eligibility" ng-model="editCompany.companyDetail.package">
+                        <!--<small class="form-control-feedback"> This field has error. </small>-->
+                    </div>
+
+                    <div ng-repeat="program in programs" ng-show="!editCompany.dontShowProgramWisePackage">
                         <h4 class="text-center"><b>{{ program }} Package</b></h4>
                         <div class="row p-t-20">
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label class="control-label">Basic Pay</label>
-                                    <input type="text" class="form-control" placeholder=".... ₹" ng-model="editCompany.company.package[program].basic_pay">
+                                    <input type="text" class="form-control" placeholder=".... ₹" ng-model="editCompany.companyDetail.package[program].basic_pay">
                                 </div>
                             </div>
                             <!--/span-->
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label class="control-label">HRA</label>
-                                    <input type="text" class="form-control" placeholder="...... ₹" ng-model="editCompany.company.package[program].hra">
+                                    <input type="text" class="form-control" placeholder="...... ₹" ng-model="editCompany.companyDetail.package[program].hra">
                                     <!--<small class="form-control-feedback"> This field has error. </small>-->
                                 </div>
                             </div>
@@ -309,14 +306,14 @@
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label class="control-label">Perks & Bonus</label>
-                                    <input type="text" class="form-control" placeholder="...... ₹" ng-model="editCompany.company.package[program].perks_bonus">
+                                    <input type="text" class="form-control" placeholder="...... ₹" ng-model="editCompany.companyDetail.package[program].perks_bonus">
                                 </div>
                             </div>
                             <!--/span-->
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label class="control-label">Gross</label>
-                                    <input type="text" class="form-control" placeholder="...... ₹" ng-model="editCompany.company.package[program].gross">
+                                    <input type="text" class="form-control" placeholder="...... ₹" ng-model="editCompany.companyDetail.package[program].gross">
                                     <!--<small class="form-control-feedback"> This field has error. </small>-->
                                 </div>
                             </div>
@@ -324,14 +321,14 @@
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label class="control-label">Take Home</label>
-                                    <input type="text" class="form-control" placeholder="...... ₹" ng-model="editCompany.company.package[program].take_home">
+                                    <input type="text" class="form-control" placeholder="...... ₹" ng-model="editCompany.companyDetail.package[program].take_home">
                                 </div>
                             </div>
                             <!--/span-->
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label class="control-label">CTC</label>
-                                    <input type="text" class="form-control" placeholder="...... ₹" ng-model="editCompany.company.package[program].ctc">
+                                    <input type="text" class="form-control" placeholder="...... ₹" ng-model="editCompany.companyDetail.package[program].ctc">
                                     <!--<small class="form-control-feedback"> This field has error. </small>-->
                                 </div>
                             </div>
@@ -343,7 +340,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Company Accommodation</label>
-                                <select class="form-control" ng-model="editCompany.company.company_accommodation">
+                                <select class="form-control" ng-model="editCompany.companyDetail.company_accommodation">
                                     <option value=""> -- Select --</option>
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
@@ -353,7 +350,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Extra Facility</label>
-                                <input type="text" class="form-control" placeholder="Enter other facility" ng-model="editCompany.company.other_facility">
+                                <input type="text" class="form-control" placeholder="Enter other facility" ng-model="editCompany.companyDetail.other_facility">
                                 <!--<small class="form-control-feedback"> This field has error. </small>-->
                             </div>
                         </div>
@@ -372,14 +369,14 @@
                     <div class="form-group row p-t-20">
                         <label class="col-4 col-form-label">Pre Placement Talk</label>
                         <div class="col-4">
-                            <select class="form-control" ng-model="editCompany.company.selection_process.pre_placement_talk.ppt">
+                            <select class="form-control" ng-model="editCompany.companyDetail.selection_process.pre_placement_talk.ppt">
                                 <option value=""> -- Select --</option>
                                 <option value="Yes">Yes</option>
                                 <option value="No">No</option>
                             </select>
                         </div>
-                        <div class="col-4" ng-if="editCompany.company.selection_process.pre_placement_talk.ppt == 'Yes'">
-                            <input type="date" class="form-control" ng-model="editCompany.company.selection_process.pre_placement_talk.date">
+                        <div class="col-4" ng-if="editCompany.companyDetail.selection_process.pre_placement_talk.ppt == 'Yes'">
+                            <input type="date" class="form-control" ng-model="editCompany.companyDetail.selection_process.pre_placement_talk.date">
                         </div>
                     </div>
 
@@ -387,14 +384,14 @@
                     <div class="form-group row">
                         <label class="col-4 col-form-label">Aptitude Test</label>
                         <div class="col-4">
-                            <select class="form-control" ng-model="editCompany.company.selection_process.aptitude_test.test">
+                            <select class="form-control" ng-model="editCompany.companyDetail.selection_process.aptitude_test.test">
                                 <option value=""> -- Select --</option>
                                 <option value="Yes">Yes</option>
                                 <option value="No">No</option>
                             </select>
                         </div>
-                        <div class="col-4" ng-if="editCompany.company.selection_process.aptitude_test.test == 'Yes'">
-                            <input type="date" class="form-control" ng-model="editCompany.company.selection_process.aptitude_test.date">
+                        <div class="col-4" ng-if="editCompany.companyDetail.selection_process.aptitude_test.test == 'Yes'">
+                            <input type="date" class="form-control" ng-model="editCompany.companyDetail.selection_process.aptitude_test.date">
                         </div>
                     </div>
 
@@ -402,14 +399,14 @@
                     <div class="form-group row">
                         <label class="col-4 col-form-label">Technical Test</label>
                         <div class="col-4">
-                            <select class="form-control" ng-model="editCompany.company.selection_process.technical_test.test">
+                            <select class="form-control" ng-model="editCompany.companyDetail.selection_process.technical_test.test">
                                 <option value=""> -- Select --</option>
                                 <option value="Yes">Yes</option>
                                 <option value="No">No</option>
                             </select>
                         </div>
-                        <div class="col-4" ng-if="editCompany.company.selection_process.technical_test.test == 'Yes'">
-                            <input type="date" class="form-control" ng-model="editCompany.company.selection_process.technical_test.date">
+                        <div class="col-4" ng-if="editCompany.companyDetail.selection_process.technical_test.test == 'Yes'">
+                            <input type="date" class="form-control" ng-model="editCompany.companyDetail.selection_process.technical_test.date">
                         </div>
                     </div>
 
@@ -417,14 +414,14 @@
                     <div class="form-group row">
                         <label class="col-4 col-form-label">Group Discussion</label>
                         <div class="col-4">
-                            <select class="form-control" ng-model="editCompany.company.selection_process.group_discussion.gd">
+                            <select class="form-control" ng-model="editCompany.companyDetail.selection_process.group_discussion.gd">
                                 <option value=""> -- Select --</option>
                                 <option value="Yes">Yes</option>
                                 <option value="No">No</option>
                             </select>
                         </div>
-                        <div class="col-4" ng-if="editCompany.company.selection_process.group_discussion.gd == 'Yes'">
-                            <input type="date" class="form-control" ng-model="editCompany.company.selection_process.group_discussion.date">
+                        <div class="col-4" ng-if="editCompany.companyDetail.selection_process.group_discussion.gd == 'Yes'">
+                            <input type="date" class="form-control" ng-model="editCompany.companyDetail.selection_process.group_discussion.date">
                         </div>
                     </div>
 
@@ -432,14 +429,14 @@
                         <label class="col-4 col-form-label">Personal Interview</label>
                         <div class="col-4">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="No. of rounds" ng-model="editCompany.company.selection_process.personal_interview.rounds">
+                                <input type="text" class="form-control" placeholder="No. of rounds" ng-model="editCompany.companyDetail.selection_process.personal_interview.rounds">
                                 <div class="input-group-append">
                                     <span class="input-group-text">Rounds</span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-4">
-                            <input type="date" class="form-control" ng-model="editCompany.company.selection_process.personal_interview.date">
+                            <input type="date" class="form-control" ng-model="editCompany.companyDetail.selection_process.personal_interview.date">
                         </div>
                     </div>
 
@@ -447,7 +444,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Provision for Waitlist</label>
-                                <select class="form-control" ng-model="editCompany.company.waitlist">
+                                <select class="form-control" ng-model="editCompany.companyDetail.waitlist">
                                     <option value=""> -- Select --</option>
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
@@ -457,7 +454,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Final Offer to be announced</label>
-                                <select class="form-control" ng-model="editCompany.company.final_offer">
+                                <select class="form-control" ng-model="editCompany.companyDetail.final_offer">
                                     <option value=""> -- Select --</option>
                                     <option value="Same Day">Same Day</option>
                                     <option value="Later, but no further interviews">Later, but no further interviews</option>
@@ -480,7 +477,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label class="m-t-20">Last Date to Apply</label>
-                            <input type="datetime-local" class="form-control" placeholder="Enter date" ng-model="editCompany.company.deadline_date">
+                            <input type="datetime-local" class="form-control" placeholder="Enter date" ng-model="editCompany.companyDetail.deadline_date">
                         </div>
                     </div>
                 </div>
