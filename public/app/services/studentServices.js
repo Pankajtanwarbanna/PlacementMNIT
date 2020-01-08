@@ -171,5 +171,10 @@ angular.module('studentServices',[])
         return $http.post('/api/sendEmailToAbsentAndMarkRedFlag/'+ company_id);
     };
 
+    // change password
+    studentFactory.changePassword = function (passwordData) {
+        return $http.post('/api/changePassword', passwordData);
+    };
+
     return studentFactory;
 });

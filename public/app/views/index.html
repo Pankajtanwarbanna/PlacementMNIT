@@ -148,10 +148,11 @@
                                         <p class=" m-b-0"> {{ main.permission }} </p>
                                     </div>
                                 </div>
-                                <a class="dropdown-item" href="/profile" ng-show="!main.authorized"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
+                                <a class="dropdown-item" href="/profile"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
                                 <a class="dropdown-item" href="/timeline" ng-show="!main.authorized"><i class="ti-stats-up m-r-5 m-l-5"></i> My Timeline</a>
                                 <a class="dropdown-item" href="/achievement" ng-show="!main.authorized"><i class="ti-medall m-r-5 m-l-5"></i> My Achievements</a>
-                                <a class="dropdown-item" href="/announcements" ng-show="!main.authorized"><i class="ti-announcement m-r-5 m-l-5"></i> Announcements</a>
+                                <a class="dropdown-item" href="/announcements"><i class="ti-announcement m-r-5 m-l-5"></i> Announcements</a>
+                                <a class="dropdown-item" href="/settings"><i class="ti-settings m-r-5 m-l-5"></i> Account Settings</a>
                                 <div class="dropdown-divider"></div>
                                 <div class="p-l-30 p-10"><a href="#" ng-click="main.logout();" class="btn btn-sm btn-success btn-rounded">Logout</a></div>
                             </div>
@@ -191,6 +192,7 @@
                                 <li><a class="nav-toggler" href="/profile">Profile Page <i class="ti-user text-success"></i></a></li>
                                 <li><a class="nav-toggler" href="/timeline">Timeline <i class="ti-stats-up text-info"></i></a></li>
                                 <li><a class="nav-toggler" href="/achievement">Achievement <i class="ti-medall text-danger"></i></a></li>
+                                <li><a class="nav-toggler" href="/settings">Account Settings <i class="ti-settings text-success"></i></a></li>
                             </ul>
                         </li>
                         <li ng-show="main.isLoggedIn"> <a class="nav-toggler waves-effect waves-dark" href="/team" aria-expanded="false"><i class="icon-people"></i><span class="hide-menu">Team</span></a></li>

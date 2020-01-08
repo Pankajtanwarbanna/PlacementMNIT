@@ -136,7 +136,7 @@
                                     <div class="form-group">
                                         <label class="col-md-12">Active Backlogs</label>
                                         <div class="col-md-12">
-                                            <input type="text" placeholder="Enter Active Backlogs" class="form-control form-control-line" value="No" disabled>
+                                            <input type="text" placeholder="Enter Active Backlogs" class="form-control form-control-line" value="N/A" disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -149,7 +149,7 @@
                                         <div class="col-md-12">
                                             <input type="text" placeholder="Enter your 10th percentage (CGPA)" class="form-control form-control-line" ng-value="profile.userProfile.matric_marks" ng-model="profile.profileData.matric_marks" required>
                                         </div>
-                                    </div>value
+                                    </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
@@ -257,12 +257,12 @@
                             </div>
 
                             <div class="alert alert-success alert-rounded" ng-show="profile.profileUpdateSuccessMsg">
-                                <i class="icon-check"></i>
+                                <i class="ti-face-smile"></i>
                                 <strong> Yay!</strong> {{ profile.profileUpdateSuccessMsg }}
                             </div>
 
                             <div class="alert alert-danger alert-rounded" ng-show="profile.profileUpdateErrorMsg">
-                                <i class="icon-close"></i>
+                                <i class="ti-face-sad"></i>
                                 <strong>Oops! </strong> {{ profile.profileUpdateErrorMsg }}
                             </div>
 

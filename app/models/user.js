@@ -145,7 +145,7 @@ userSchema.pre('save', function (next) {
 // Mongoose title case plugin
 userSchema.plugin(titlize, {
     // addition here also
-    paths: [ 'student_name','address','city','state','country' ], // Array of paths
+    paths: ['address','city','state','country' ], // Array of paths
 });
 
 // Password compare method

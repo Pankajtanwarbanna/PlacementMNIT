@@ -426,4 +426,33 @@ angular.module('studentController',['studentServices'])
             })
         }
     }
+})
+
+.controller('settingsCtrl', function (student) {
+
+    let app = this;
+
+    app.loading = false;
+
+    app.changePassword = function (passwordData) {
+
+        app.loading = true;
+        app.successMsg = '';
+        app.errorMsg = '';
+
+        if(app.passwordData.new_password === app.passwordData.confirm_password) {
+            student.changePassword(app.passwordData).then(function (data) {
+                if(data.data.success) {
+                    app.loading = false;
+                    app.successMsg = data.data.message;
+                } else {
+                    app.loading = false;
+                    app.errorMsg = data.data.message;
+                }
+            })
+        } else {
+            app.loading = false;
+            app.errorMsg = 'Confirm password did not match.'
+        }
+    }
 });

@@ -173,6 +173,13 @@ var app = angular.module('userRoutes', ['ngRoute'])
                authenticated : true
            })
 
+           .when('/settings', {
+               templateUrl : '/app/views/profile/student/settings.html',
+               authenticated : true,
+               controller : 'settingsCtrl',
+               controllerAs : 'settings'
+           })
+
            // Team Routes
            .when('/team', {
                templateUrl : '/app/views/team/team.html',

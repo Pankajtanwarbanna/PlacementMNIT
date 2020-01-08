@@ -1,0 +1,95 @@
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h4 class="text-themecolor">Account Settings</h4>
+    </div>
+</div>
+
+<!--Timeline page-->
+<div class="row">
+    <!-- Column -->
+    <div class="col-lg-4 col-xlg-3 col-md-5">
+        <div class="card">
+            <div class="card-body">
+                <center class="m-t-30">
+                    <img src="assets/images/profile/{{ main.gender }}.png" class="img-circle" width="150" />
+                    <h4 class="card-title m-t-10">{{ main.student_name }}</h4>
+                    <h6 class="card-subtitle">{{ main.department }}</h6>
+                    <div class="row text-center">
+                        <div class="col-12"><a href="#" class="link"><i class="ti-location-pin"></i> <font class="font-medium">MNIT Jaipur</font></a></div>
+                    </div>
+                </center>
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+    <div class="col-lg-8 col-xlg-9 col-md-7">
+        <div class="card">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs profile-tab" role="tablist">
+                <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#" role="tab">Change Password</a> </li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane active" id="home" role="tabpanel">
+                    <div class="card-body">
+
+                        <form class="form-horizontal form-material" ng-submit="settings.changePassword(passwordData)">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="col-md-12">Your Current Password</label>
+                                        <div class="col-md-12">
+                                            <input type="password" placeholder="Enter your current password" class="form-control form-control-line" ng-model="settings.passwordData.old_password" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="col-md-12">Your New Password</label>
+                                        <div class="col-md-12">
+                                            <input type="password" placeholder="Enter your new password" class="form-control form-control-line" ng-model="settings.passwordData.new_password" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="col-md-12">Confirm Password</label>
+                                        <div class="col-md-12">
+                                            <input type="password" placeholder="Confirm your new password" class="form-control form-control-line" ng-model="settings.passwordData.confirm_password" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="alert alert-primary alert-rounded" ng-show="settings.loading">
+                                <i class="ti-time"></i>
+                                <strong> &nbsp;Loading.....</strong> Updating password details, please wait!
+                            </div>
+
+                            <div class="alert alert-success alert-rounded" ng-show="settings.successMsg">
+                                <i class="ti-face-smile"></i>
+                                <strong> Yay!</strong> {{ settings.successMsg }}
+                            </div>
+
+                            <div class="alert alert-danger alert-rounded" ng-show="settings.errorMsg">
+                                <i class="ti-face-sad"></i>
+                                <strong>Oops! </strong> {{ settings.errorMsg }}
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <button type="submit" class="btn btn-success">Update Password</button>
+                                </div>
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+</div>
+<!-- Row -->

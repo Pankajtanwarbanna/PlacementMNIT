@@ -1827,6 +1827,57 @@ module.exports = function (router){
         })
     });
 
+    // change password
+    router.post('/changePassword', function (req, res) {
+        if(!req.decoded.college_id) {
+            res.json({
+                success : false,
+                message : 'Please login first.'
+            })
+        } else {
+            User.findOne({ college_id : req.decoded.college_id }).select('password').exec(function (err, user) {
+                if(err) {
+                    res.json({
+                        success : false,
+                        message : 'Something went wrong!'
+                    })
+                } else {
+                    if(!user) {
+                        res.json({
+                            success : false,
+                            message : 'User not found.'
+                        })
+                    } else {
+                        let validPassword = user.comparePassword(req.body.old_password);
+
+                        if(validPassword) {
+                            user.password = req.body.new_password;
+
+                            user.save(function (err) {
+                                if(err) {
+                                    res.json({
+                                        success : false,
+                                        message : 'Something went wrong!'
+                                    })
+                                } else {
+                                    res.json({
+                                        success : true,
+                                        message : 'Password successfully updated.'
+                                    })
+                                }
+                            })
+                        } else {
+                            res.json({
+                                success : false,
+                                message : 'Old Password is incorrect.'
+                            })
+                        }
+                    }
+                }
+            })
+        }
+    })
+
 
     return router;
 };
