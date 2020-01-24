@@ -10,129 +10,17 @@ var auth = require('../middlewares/authPermission');
 var jwt = require('jsonwebtoken');
 var secret = 'placementmnit';
 var nodemailer = require('nodemailer');
-var sgTransport = require('nodemailer-sendgrid-transport');
 var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'ptcell@mnit.ac.in',
-        pass: 'ptcell2020'
+        user: process.env.PTP_EMAIL,
+        pass: process.env.PTP_EMAIL_PASSWORD
     }
 });
+
 const fs = require('fs');
 
 module.exports = function (router){
-
-    // Nodemailer-sandgrid stuff
-    var options = {
-        auth: {
-            api_key: 'YOUR_API_KEY'
-        }
-    };
-
-    var client = nodemailer.createTransport(sgTransport(options));
-
-   // User register API
-    router.post('/registeruser',function (req, res) {
-        var user = new User();
-
-        console.log(req.body);
-
-        user.student_name = 'Pankaj Singh';
-        user.college_id = '2016ucp1381';
-        user.program = 'UG';
-        user.gender = 'M';
-        user.contact_no = '8874875070';
-        user.college_email = '2015UMT1238@mnit.ac.in';
-        user.alternate_email = 'yadavvirendra553@gmail.com';
-        user.degree = 'B.Tech';
-        user.department = 'METALLURGICAL & MATERIALS ENGG.';
-        user.status = 'active';
-        user.cgpa = '6.43';
-		user.password = 'pankaj';
-
-        user.temporarytoken = jwt.sign({ student_name : user.student_name , college_id : user.college_id }, secret);
-
-        //console.log(req.body);
-        if(!user.student_name || !user.college_id || !user.password) {
-            res.json({
-                success : false,
-                message : 'Ensure you filled all entries!'
-            });
-        } else {
-            user.save(function(err) {
-                if(err) {
-                    if(err.errors != null) {
-                        // validation errors
-                        if(err.errors.name) {
-                            res.json({
-                                success: false,
-                                message: err.errors.name.message
-                            });
-                        } else if(err.errors.password) {
-                            res.json({
-                                success : false,
-                                message : err.errors.password.message
-                            });
-                        } else {
-                            res.json({
-                                success : false,
-                                message : err
-                            });
-                        }
-                    } else {
-                        // duplication errors
-                        if(err.code === 11000) {
-                            console.log(err.errmsg);
-                            console.log(err.errmsg[57]);
-                            console.log(err.errmsg[58]);
-                            if(err.errmsg[66] === 'c') {
-                                res.json({
-                                    success: false,
-                                    message: 'College ID is already registered.'
-                                });
-                            } else {
-                                res.json({
-                                    success : false,
-                                    message : err
-                                });
-                            }
-                        } else {
-                            res.json({
-                                success: false,
-                                message: err
-                            })
-                        }
-                    }
-                } else {
-
-                    var email = {
-                        from: 'Placement Portal Registration, placements@mnit.ac.in',
-                        to: user.college_id + '@mnit.ac.in',
-                        subject: 'Activation Link - Placement Portal Registration',
-                        text: 'Hello '+ user.name + 'Thank you for registering with placement portal.Please find the below activation link Activation link Thank you Placement & Training Cell, MNIT Jaipur',
-                        html: 'Hello <strong>'+ user.name + '</strong>,<br><br>Thank you for registering with placement portal. Please find the below activation link<br><br><a href="http://localhost:8080/activate/'+ user.temporarytoken+'">Activation link</a><br><br>Thank you<br>Placement & Training Cell<br>MNIT Jaipur'
-                    };
-
-                    client.sendMail(email, function(err, info){
-                        if (err ){
-                            console.log(err);
-                            res.json({
-                                success : false,
-                                message : 'Account registered but activation link was not send.(Issue with Email service - Contact Developer)'
-                            });
-                        }
-                        else {
-                            console.log('Message sent: ' + info.response);
-                            res.json({
-                                success : true,
-                                message : 'Account registered! Please check your E-mail inbox for the activation link.'
-                            });
-                        }
-                    });
-                }
-            });
-        }
-    });
 
     // User login API
     router.post('/authenticate', function (req,res) {
@@ -479,7 +367,7 @@ module.exports = function (router){
     });
 
     // Post new announcement
-    router.post('/postAnnouncement', function (req, res) {
+    router.post('/postAnnouncement', auth.ensureAdmin, function (req, res) {
 
         if(!req.decoded.college_id) {
             res.json({
