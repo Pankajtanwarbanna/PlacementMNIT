@@ -1,5 +1,6 @@
 var express  = require('express');
 var app = express();
+require('dotenv').config();
 var morgan = require('morgan');     // middleware to log http requests
 var port = process.env.PORT || 80; // localhost : PORT=8080 nodemon server.js
 var mongoose = require('mongoose');
