@@ -1,4 +1,5 @@
-# MNIT Placement Portal
+> Call for Contributors! We're looking for developers & content writers to contribute. Say hello to 2016ucp1381@mnit.ac.in & help the community!
+ 
 ![MNIT_Placement_Portal](./public/assets/images/github-mnit-placement-portal.png)
 > An Online Placement & Internship automation web portal for MNIT Jaipur students using MEAN Stack (Node.js, AngularJs, Express.js & MongoDb)
 
