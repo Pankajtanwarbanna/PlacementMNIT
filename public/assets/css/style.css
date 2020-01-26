@@ -84,3 +84,19 @@
 
 .cc-widget .cc-details .down {
     color: #f62d51; }
+
+.btn{
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 5px;
+    margin: 5px 5px 5px 5px;
+}
+.fa { font-family: 'FontAwesome' !important; }
+
+.ta-scroll-window > .ta-bind {
+    height: auto;
+    min-height: 300px;
+    padding: 6px 12px;
+    border: 2px solid;
+    border-radius: 10px;
+}

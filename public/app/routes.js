@@ -98,6 +98,17 @@ var app = angular.module('userRoutes', ['ngRoute'])
                controllerAs : 'previousCompanies'
            })
 
+           // Interview Experiences Routes
+           .when('/interview-experiences', {
+               templateUrl : '/app/views/interview-experiences/interview-experiences.html',
+               authenticated : true
+           })
+
+           .when('/compose', {
+               templateUrl : '/app/views/interview-experiences/compose.html',
+               authenticated : true
+           })
+
            // Contact Routes
            .when('/contact', {
                templateUrl : '/app/views/contact/contact.html',

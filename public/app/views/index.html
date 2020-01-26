@@ -21,25 +21,25 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <!-- App config -->
-    <script src="https://cdn.statically.io/gh/Pankajtanwarbanna/PlacementMNIT/d4e8ceac/public/app/app.js"></script>
-    <script src="https://cdn.statically.io/gh/Pankajtanwarbanna/PlacementMNIT/d4e8ceac/public/app/routes.js"></script>
+    <script src="/app/app.js"></script>
+    <script src="/app/routes.js"></script>
 
     <!-- Angularjs Filters -->
-    <script src="https://cdn.statically.io/gh/Pankajtanwarbanna/PlacementMNIT/d4e8ceac/public/app/filters/angularFilters.js"></script>
+    <script src="/app/filters/angularFilters.js"></script>
 
     <!-- Angular Controller files -->
-    <script src="https://cdn.statically.io/gh/Pankajtanwarbanna/PlacementMNIT/d4e8ceac/public/app/controllers/studentCtrl.js"></script>
-    <script src="https://cdn.statically.io/gh/Pankajtanwarbanna/PlacementMNIT/d4e8ceac/public/app/controllers/mainCtrl.js"></script>
-    <script src="https://cdn.statically.io/gh/Pankajtanwarbanna/PlacementMNIT/d4e8ceac/public/app/controllers/adminCtrl.js"></script>
-    <script src="https://cdn.statically.io/gh/Pankajtanwarbanna/PlacementMNIT/d4e8ceac/public/app/controllers/emailCtrl.js"></script>
+    <script src="/app/controllers/studentCtrl.js"></script>
+    <script src="/app/controllers/mainCtrl.js"></script>
+    <script src="/app/controllers/adminCtrl.js"></script>
+    <script src="/app/controllers/emailCtrl.js"></script>
 
     <!-- Angular Services -->
-    <script src="https://cdn.statically.io/gh/Pankajtanwarbanna/PlacementMNIT/d4e8ceac/public/app/services/adminServices.js"></script>
-    <script src="https://cdn.statically.io/gh/Pankajtanwarbanna/PlacementMNIT/d4e8ceac/public/app/services/studentServices.js"></script>
-    <script src="https://cdn.statically.io/gh/Pankajtanwarbanna/PlacementMNIT/d4e8ceac/public/app/services/authServices.js"></script>
+    <script src="/app/services/adminServices.js"></script>
+    <script src="/app/services/studentServices.js"></script>
+    <script src="/app/services/authServices.js"></script>
 
     <!-- Font library -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="assets/css/style.min.css" rel="stylesheet">
@@ -47,6 +47,9 @@
     <link href="assets/css/style.css" rel="stylesheet">
     <!--Timeline Page CSS-->
     <link href="assets/css/pages/timeline-vertical-horizontal.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="http://textangular.com/dist/textAngular.css" type="text/css">
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -173,6 +176,7 @@
                         <li ng-show="main.isLoggedIn"> <a class="nav-toggler waves-effect waves-dark" href="/company-registration" aria-expanded="false"><i class="icon-briefcase"></i><span class="hide-menu">Company Registration</span></a></li>
                         <li ng-show="main.isLoggedIn && main.authorized"> <a class="nav-toggler waves-effect waves-dark" href="/add-new-company" aria-expanded="false"><i class="icon-briefcase"></i><span class="hide-menu">Add New Company</span></a></li>
                         <li ng-show="main.isLoggedIn && main.authorized"> <a class="nav-toggler waves-effect waves-dark" href="/admin-management" aria-expanded="false"><i class="icon-fire"></i><span class="hide-menu">Admin Management</span></a></li>
+                        <li ng-show="main.isLoggedIn"> <a class="nav-toggler waves-effect waves-dark" href="/interview-experiences" aria-expanded="false"><i class="icon-rocket"></i><span class="hide-menu">Interview Experiences </span></a></li>
                         <li ng-show="main.isLoggedIn"> <a class="nav-toggler waves-effect waves-dark" href="/announcements" aria-expanded="false"><i class="ti-announcement"></i><span class="hide-menu">Announcements </span></a></li>
                         <li ng-show="main.isLoggedIn && !main.authorized"> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="icon-user"></i><span class="hide-menu">User Profile</span></a>
                             <ul aria-expanded="false" class="collapse">
@@ -249,6 +253,12 @@
     <!--Custom JavaScript -->
     <script src="https://cdn.statically.io/gh/Pankajtanwarbanna/PlacementMNIT/d4e8ceac/public/assets/js/custom.min.js"></script>
     <!-- ============================================================== -->
+    <script src='http://textangular.com/dist/textAngular-rangy.min.js'></script>
+
+    <script src='http://textangular.com/dist/textAngular-sanitize.min.js'></script>
+
+    <script src='http://textangular.com/dist/textAngular.min.js'></script>
+
 </body>
 
 </html>
