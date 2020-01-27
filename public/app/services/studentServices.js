@@ -176,5 +176,20 @@ angular.module('studentServices',[])
         return $http.post('/api/changePassword', passwordData);
     };
 
+    // get all interview experiences
+    studentFactory.getAllInterviewExperiences = function() {
+        return $http.get('/api/getAllInterviewExperiences');
+    };
+
+    // get interview experience
+    studentFactory.getExperience = function(experience_id) {
+        return $http.get('/api/getExperience/' + experience_id);
+    };
+
+    // post interview experience
+    studentFactory.postInterviewExperience = function (experienceData) {
+        return $http.post('/api/postInterviewExperience', experienceData);
+    };
+
     return studentFactory;
 });

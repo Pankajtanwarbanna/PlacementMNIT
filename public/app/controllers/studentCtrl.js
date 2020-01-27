@@ -456,7 +456,82 @@ angular.module('studentController',['studentServices','textAngular'])
         }
     }
 })
-    
-.controller('composeCtrl', function ($scope) {
-    $scope.orightml = '<h2>Try me!</h2><p>textAngular is a super cool WYSIWYG Text Editor directive for AngularJS</p><p><img class="ta-insert-video" ta-insert-video="http://www.youtube.com/embed/2maA1-mvicY" src="" allowfullscreen="true" width="300" frameborder="0" height="250"/></p><p><b>Features:</b></p><ol><li>Automatic Seamless Two-Way-Binding</li><li>Super Easy <b>Theming</b> Options</li><li style="color: green;">Simple Editor Instance Creation</li><li>Safely Parses Html for Custom Toolbar Icons</li><li class="text-danger">Doesn&apos;t Use an iFrame</li><li>Works with Firefox, Chrome, and IE9+</li></ol><p><b>Code at GitHub:</b> <a href="https://github.com/fraywing/textAngular">Here</a> </p><h4>Supports non-latin Characters</h4>';
+
+.controller('interviewCtrl', function (student) {
+
+    var app = this;
+
+    // get all interview experiences
+    student.getAllInterviewExperiences().then(function (data) {
+        if(data.data.success) {
+            app.interviews = data.data.interviews;
+        } else {
+            app.errorMsg = data.data.message;
+        }
+    })
 })
+
+// read experience ctrl
+.controller('experienceCtrl', function (student, $routeParams) {
+
+    let app = this;
+
+    // get interview experience
+    student.getExperience($routeParams.experience_id).then(function (data) {
+        if(data.data.success) {
+            app.experience = data.data.experience;
+        } else {
+            app.errorMsg = data.data.message;
+        }
+    })
+
+})
+
+.controller('composeCtrl', function ($scope, student) {
+
+    let app = this;
+
+    // Tags array
+    app.tags = [];
+
+    // Add tag to an array
+    app.addTag = function (tag) {
+        if(tag) {
+            if(app.tags.indexOf(tag.toLowerCase()) === -1) {
+                app.tags.push(tag.toLowerCase());
+                $scope.tag = '';
+                app.errorMsg = '';
+            } else {
+                app.errorMsg = 'Tag already selected.'
+            }
+        } else {
+            app.errorMsg = "Tag can't be empty!"
+        }
+    };
+
+    // remove tag
+    app.removeTag = function (tag) {
+        app.tags.splice(app.tags.indexOf(tag.toLowerCase()),1);
+    };
+
+    // add interview experience
+    app.postInterviewExperience = function (experienceData) {
+        if(app.tags.length === 0) {
+            app.errorMsg = "Tags can't be empty!"
+        } else {
+            app.loading = true;
+            app.experienceData.tags = app.tags;
+            console.log(app.experienceData);
+            student.postInterviewExperience(app.experienceData).then(function (data) {
+                console.log(data);
+                if(data.data.success) {
+                    app.loading = false;
+                    app.successMsg = data.data.message;
+                } else {
+                    app.loading = false;
+                    app.errorMsg = data.data.message;
+                }
+            });
+        }
+    }
+});

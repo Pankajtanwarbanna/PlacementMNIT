@@ -17,79 +17,62 @@
 <div>
     <div class="row">
         <!-- Column -->
-        <div class="col-lg-8">
+        <div class="col-lg-3">
             <div class="card cc-widget">
                 <div class="card-body">
-                    <div class="d-flex no-block flex-row">
-                        <div class="round align-self-center round-primary m-t-10 m-b-10"><i class="icon-rocket"></i></div>
-                        <div class="m-l-10 align-self-center">
-                            <h4 class="m-b-0">Amazon | SDE-1 | Bangalore | Jan 2020 [Offer]
-                                <!--<span class="badge badge-pill badge-danger text-white" ng-show="getApplyStatusInCompany(company._id);">Applied</span> <span class="badge badge-pill badge-primary text-white" ng-show="!getApplyStatusInCompany(company._id);">Pending</span>--></h4>
-                            <h5 class="text-muted m-b-0"> Pankaj Tanwar created at 21 Jan 2020, 12:30 PM</h5>
-                        </div>
-                    </div>
-                    <div class="d-flex no-block flex-row m-t-20 cc-details">
-                        I was applying to full time opportunities via LinkedIn, job websites, indeed, etc. Unfortunately I had not heard back from many of the major technology companies I applied to and the ones I did hear back from weren't interested at this time. One of the companies I had not hear back from was Facebook.
-                    </div>
-                    <br>
-                    <div>
-                        <span class="label label-success">Amazon</span>
-                        <span class="label label-success">Interview Experience</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card cc-widget">
-                <div class="card-body">
-                    <div class="d-flex no-block flex-row">
-                        <div class="round align-self-center round-primary m-t-10 m-b-10"><i class="icon-rocket"></i></div>
-                        <div class="m-l-10 align-self-center">
-                            <h4 class="m-b-0">Amazon | SDE-1 | Bangalore | Jan 2020 [Offer]
-                                <!--<span class="badge badge-pill badge-danger text-white" ng-show="getApplyStatusInCompany(company._id);">Applied</span> <span class="badge badge-pill badge-primary text-white" ng-show="!getApplyStatusInCompany(company._id);">Pending</span>--></h4>
-                            <h5 class="text-muted m-b-0"> By Pankaj Tanwar , 21 Jan 2020</h5>
-                        </div>
-                    </div>
-                    <div class="d-flex no-block flex-row m-t-20 cc-details">
-                        I was applying to full time opportunities via LinkedIn, job websites, indeed, etc. Unfortunately I had not heard back from many of the major technology companies I applied to and the ones I did hear back from weren't interested at this time. One of the companies I had not hear back from was Facebook.
-                    </div>
-                    <br>
-                    <div>
-                        <span class="label label-success">Amazon</span>
-                        <span class="label label-success">Interview Experience</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card cc-widget">
-                <div class="card-body">
-                    <div class="d-flex no-block flex-row">
-                        <div class="round align-self-center round-primary m-t-10 m-b-10"><i class="icon-rocket"></i></div>
-                        <div class="m-l-10 align-self-center">
-                            <h4 class="m-b-0">Amazon | SDE-1 | Bangalore | Jan 2020 [Offer]
-                                <!--<span class="badge badge-pill badge-danger text-white" ng-show="getApplyStatusInCompany(company._id);">Applied</span> <span class="badge badge-pill badge-primary text-white" ng-show="!getApplyStatusInCompany(company._id);">Pending</span>--></h4>
-                            <h5 class="text-muted m-b-0"> By Pankaj Tanwar , 21 Jan 2020</h5>
-                        </div>
-                    </div>
-                    <div class="d-flex no-block flex-row m-t-20 cc-details">
-                        I was applying to full time opportunities via LinkedIn, job websites, indeed, etc. Unfortunately I had not heard back from many of the major technology companies I applied to and the ones I did hear back from weren't interested at this time. One of the companies I had not hear back from was Facebook.
-                    </div>
-                    <br>
-                    <div>
-                        <span class="label label-success">Amazon</span>
-                        <span class="label label-success">Interview Experience</span>
-                    </div>
+                    <a href="/compose" class="btn btn-block btn-success"> <i class="fa fa-pencil"></i> &nbsp; Compose</a>
+                    <button type="button" class="btn btn-block btn-outline-secondary text-primary" data-toggle="modal" data-target="#guidelinesModal"> Guidelines</button>
                 </div>
             </div>
         </div>
-
-        <div class="col-lg-4">
+        <div class="col-lg-9">
             <div class="card cc-widget">
                 <div class="card-body">
-
-
+                    <form class="form-material">
+                        <div class="form-group" style="margin-bottom: 0px;">
+                            <input type="text" class="form-control form-control-line" placeholder="Type here to search for an interview" ng-model="searchInterview">
+                            <br><span class="text-primary" ng-show="searchInterview">{{ results.length }} Results found</span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="card cc-widget" ng-repeat="experience in results=(interview.interviews | filter : searchInterview)">
+                <div class="card-body">
+                    <div class="d-flex no-block flex-row">
+                        <div class="round align-self-center round-primary m-t-10 m-b-10"><i class="icon-rocket"></i></div>
+                        <div class="m-l-10 align-self-center">
+                            <h4 class="m-b-0"><a href="/experience/{{ experience._id }}" style="color: black">{{ experience.title }}</a></h4>
+                            <h5 class="text-muted m-b-0"><i class="fa fa-user"></i> {{ experience.author_name }}</h5>
+                        </div>
+                    </div>
+                    <div class="d-flex no-block flex-row m-t-20 cc-details interview">
+                        <div ng-bind-html="experience.experience | limitHtml : 180"></div>
+                    </div>
+                    <br>
+                    <div>
+                        <span class="label label-success" ng-repeat="tag in experience.tags">{{ tag }}</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Guide Lines to write a interview experience -->
+<div class="modal fade" id="guidelinesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel1">Interview Experience Guidelines</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="container__K-8V">
+                    <div class="post-area__3YJL"><div class="content-area__2vnF"><div class="discuss-markdown-container"><p style="font-size: 14px;">Here are some suggestions for what to include in your post:</p><p style="font-size: 14px;"></p><ol><li><p style="font-size: 14px;"></p><p style="font-size: 14px;"><strong>The title should at least include the company and position</strong> and ideally would follow this format:</p><p style="font-size: 14px;"></p><pre style="font-size: 13px;"><code style="font-size: 13px;color: inherit;background-color: transparent;">Company <span class="hljs-type">Name</span> | Position (<span class="hljs-keyword">level</span>) | <span class="hljs-keyword">Location</span> | <span class="hljs-type">Date</span>     [Result (Reject, Passed, Offer)]<br/></code></pre><p style="font-size: 14px;"></p><p style="font-size: 14px;">For example, this could look like:</p><p style="font-size: 14px;"></p><pre style="font-size: 13px;"><code style="font-size: 13px;color: inherit;background-color: transparent;">Amazon | <span class="hljs-type">SDE2</span> | <span class="hljs-type">Pune</span> | <span class="hljs-type">July</span> <span class="hljs-number">2019</span> [Reject]<br/>JPMC | <span class="hljs-type">Intern</span> | <span class="hljs-type">Mumbai</span> View | <span class="hljs-type">April</span> <span class="hljs-number">2019</span> [Offer]<br/></code></pre></li><li><p style="font-size: 14px;"></p><p style="font-size: 14px;"><strong>The interview process and format of each interview</strong>, for example:</p><p style="font-size: 14px;"></p><pre style="font-size: 13px;"><code style="font-size: 13px;color: inherit;background-color: transparent;">Technical Test Round(1 hour):<br/> - Behavioral + Aptitude questions<br/> - Algorithm + DP question<br/>1st technical interview round: <span class="hljs-built_in">..</span>.<br/>technical Round: <span class="hljs-built_in">..</span>. <br/>Result: <span class="hljs-built_in">..</span>.<br/></code></pre></li><li><p style="font-size: 14px;"></p><p style="font-size: 14px;"><strong>Your thoughts, tips to candidates and anything else you’d like to add</strong>, e.g. questions types, what to focus more, HR questions etc.</p><p style="font-size: 14px;"></p></li><li><p style="font-size: 14px;"></p><p style="font-size: 14px;"><strong>Tag your post</strong>, e.g. <code style="font-size: 13px;">amazon</code>, <code style="font-size: 13px;">oncampus placement interview</code>, <code style="font-size: 13px;">technical interview</code></p><p style="font-size: 14px;"></p></li></ol><p style="font-size: 14px;"></p><p style="font-size: 14px;"><em>Different stages of the same interview process belong in the same thread. For example, if you already shared your experience with a phone interview and you reach the onsite interview, you should update your post instead of creating a new one.</em></p></div></div><div class="tag-list-container__2cDj"><div class="css-9sdfuf"></div></div></div></div><div class="root__3XxC" style="color: rgba(0, 0, 0, 0.65);font-size: 14px;"><div class="header___QdN"></div></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -12,16 +12,81 @@
         </div>
     </div>
 </div>
-
-
-<div class="row page-titles">
+<!-- Write your experience here -->
+<div class="row" ng-show="!compose.successMsg">
     <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
-                <div text-angular data-ng-model="orightml"></div>
+                <form ng-submit="compose.postInterviewExperience(experienceData)">
+                    <div class="row p-t-20">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Interview Experience title</label>
+                                <input type="text" class="form-control" placeholder="Enter title here" ng-model="compose.experienceData.title" required>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div text-angular data-ng-model="compose.experienceData.experience"></div>
+                                <button type="button" class="btn btn-outline-primary d-none d-lg-block m-l-15" ng-show="compose.experienceData.experience && compose.experienceData.title" data-toggle="modal" data-target="#previewExperienceModal"><i class="fa fa-eye"></i> Preview</button>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <button type="button" ng-repeat="tag in compose.tags" ng-click="compose.removeTag(tag)" class="btn btn-danger" style="margin-right: 10px;margin-top: 10px"> {{ tag }} &nbsp; &nbsp;<i class="fa fa-close"></i> </button>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Tags eg. Amazon, Placement" ng-model="tag">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <button type="button" ng-click="compose.addTag(tag);" class="btn btn-success btn-circle"><i class="fa fa-plus"></i> </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="text-align: center" class="text-center">
+                        <p class="text-danger" ng-show="compose.errorMsg">{{ compose.errorMsg }}</p>
+                        <p class="text-primary" ng-show="compose.loading"> Posing your experience... Please wait!</p>
+                        <button type="submit" class="btn btn-primary btn-rounded"><i class="ti-check-box"></i> &nbsp; Post Interview Experience</button>
+                    </div>
+                </form>
             </div>
+        </div>
+    </div>
+</div>
+
+<!--Experience Add Div-->
+<div class="row" ng-show="compose.successMsg">
+    <div class="col-lg-12">
+        <div class="card">
             <div class="card-body">
-                <div ng-bind-html="orightml"></div>
+                <div class="text-md-center">
+                    <i class="icon-check large-success-icon"></i>
+                    <h3 class="success-text">{{ compose.successMsg }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Preview Modal -->
+<div class="modal fade" id="previewExperienceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel1">{{ compose.experienceData.title }}</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div ng-bind-html="compose.experienceData.experience"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

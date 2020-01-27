@@ -101,13 +101,31 @@ var app = angular.module('userRoutes', ['ngRoute'])
            // Interview Experiences Routes
            .when('/interview-experiences', {
                templateUrl : '/app/views/interview-experiences/interview-experiences.html',
-               authenticated : true
+               authenticated : true,
+               controller : 'interviewCtrl',
+               controllerAs : 'interview'
+           })
+
+           .when('/experience/:experience_id', {
+               templateUrl : '/app/views/interview-experiences/experience.html',
+               authenticated : true,
+               controller : 'experienceCtrl',
+               controllerAs : 'experience'
            })
 
            .when('/compose', {
                templateUrl : '/app/views/interview-experiences/compose.html',
+               authenticated : true,
+               controller : 'composeCtrl',
+               controllerAs : 'compose'
+           })
+
+           .when('/contributions', {
+               templateUrl : '/app/views/interview-experiences/contributions.html',
                authenticated : true
            })
+
+
 
            // Contact Routes
            .when('/contact', {

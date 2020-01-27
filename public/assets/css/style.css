@@ -85,12 +85,6 @@
 .cc-widget .cc-details .down {
     color: #f62d51; }
 
-.btn{
-    background-color: white;
-    border: 2px solid black;
-    border-radius: 5px;
-    margin: 5px 5px 5px 5px;
-}
 .fa { font-family: 'FontAwesome' !important; }
 
 .ta-scroll-window > .ta-bind {
@@ -100,3 +94,14 @@
     border: 2px solid;
     border-radius: 10px;
 }
+
+.interviews {
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(5px);
+    background-color: #ccc;
+
+}
+

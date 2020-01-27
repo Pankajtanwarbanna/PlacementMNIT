@@ -6,6 +6,7 @@ var Schedule = require('../models/schedule');
 var Announcement = require('../models/announcement');
 var Feedback = require('../models/feedback');
 var Company = require('../models/company');
+var Interview = require('../models/interview');
 var auth = require('../middlewares/authPermission');
 var jwt = require('jsonwebtoken');
 var secret = 'placementmnit';
@@ -1760,6 +1761,117 @@ module.exports = function (router){
                                 message : 'Old Password is incorrect.'
                             })
                         }
+                    }
+                }
+            })
+        }
+    });
+
+    // get all interview experiences
+    router.get('/getAllInterviewExperiences', function (req, res) {
+        if(!req.decoded.college_id) {
+            res.json({
+                success : false,
+                message : 'Please login.'
+            })
+        } else {
+            Interview.find({ status : 'approved' }).select('title experience author_name created_at tags').lean().exec(function (err, interviews) {
+                if(err) {
+                    res.json({
+                        success : false,
+                        message : 'Something went wrong!'
+                    })
+                } else {
+                    if(!interviews) {
+                        res.json({
+                            success : false,
+                            message : 'Interview not found.'
+                        })
+                    } else {
+                        res.json({
+                            success : true,
+                            interviews : interviews
+                        })
+                    }
+                }
+            })
+        }
+    });
+
+    // get interview experience
+    router.get('/getExperience/:experience_id', function (req, res) {
+        if(!req.decoded.college_id) {
+            res.json({
+                success : false,
+                message : 'Please login.'
+            })
+        } else {
+            Interview.findOne({ _id : req.params.experience_id }).lean().exec(function (err, experience) {
+                if(err) {
+                    res.json({
+                        success : false,
+                        message : 'Something went wrong!'
+                    })
+                } else {
+                    if(!experience) {
+                        res.json({
+                            success : false,
+                            message : 'Interview experience not found.'
+                        })
+                    } else {
+                        res.json({
+                            success : true,
+                            experience : experience
+                        })
+                    }
+                }
+            })
+        }
+    })
+
+    // Posting Interview experiences
+    router.post('/postInterviewExperience', function (req, res) {
+        if(!req.decoded.college_id) {
+            res.json({
+                success : false,
+                message : 'Please login.'
+            })
+        } else {
+            User.findOne({ college_id : req.decoded.college_id }).select('student_name').exec(function (err, user) {
+                if(err) {
+                    res.json({
+                        success : false,
+                        message : 'Something went wrong!'
+                    })
+                } else {
+                    if(!user) {
+                        res.json({
+                            success : false,
+                            message : 'User not found.'
+                        })
+                    } else {
+                        let interview = new Interview();
+
+                        interview.title = req.body.title;
+                        interview.experience = req.body.experience;
+                        interview.tags = req.body.tags;
+                        interview.author_id = req.decoded.college_id;
+                        interview.author_name = user.student_name;
+                        interview.created_at = new Date();
+
+                        interview.save(function (err) {
+                            if(err) {
+                                res.json({
+                                    success : false,
+                                    message : 'Something went wrong!'
+                                })
+                            } else {
+                                res.json({
+                                    success : true,
+                                    message : 'Thanks for your contribution! Sit back and relax while our reviewers approves your interview experience.'
+                                })
+                            }
+                        })
                     }
                 }
             })
