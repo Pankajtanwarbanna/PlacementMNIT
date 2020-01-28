@@ -76,5 +76,15 @@ angular.module('adminServices',[])
         return $http.post('/api/updateAdminBatch/' + batch);
     };
 
+    // get all interviews
+    adminFactory.getAllInterviews = function () {
+        return $http.get('/api/getAllInterviews');
+    };
+
+    // change status
+    adminFactory.changeStatus = function (experience_id) {
+        return $http.post('/api/changeStatus/' + experience_id);
+    }
+
     return adminFactory;
 });

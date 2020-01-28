@@ -314,6 +314,21 @@ angular.module('adminController', ['adminServices'])
     }
 })
 
+.controller('interviewsManagementCtrl', function (admin) {
+
+    var app = this;
+
+    // get all interviews
+    admin.getAllInterviews().then(function (data) {
+        console.log(data);
+        if(data.data.success) {
+            app.interviews = data.data.interviews;
+        } else {
+            app.errorMsg = data.data.message;
+        }
+    })
+})
+
 // feedbacks controller
 .controller('feedbackCtrl', function (admin) {
 

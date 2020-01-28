@@ -19,8 +19,6 @@ var transporter = nodemailer.createTransport({
     }
 });
 
-const fs = require('fs');
-
 module.exports = function (router){
 
     // User login API
@@ -1871,6 +1869,37 @@ module.exports = function (router){
                                     message : 'Thanks for your contribution! Sit back and relax while our reviewers approves your interview experience.'
                                 })
                             }
+                        })
+                    }
+                }
+            })
+        }
+    });
+
+    // get contributions
+    router.get('/getContributions', function (req, res) {
+        if(!req.decoded.college_id) {
+            res.json({
+                success : false,
+                message : 'Please login.'
+            })
+        } else {
+            Interview.find({ author_id : req.decoded.college_id }).lean().exec(function (err, interviews) {
+                if(err) {
+                    res.json({
+                        success : false,
+                        message : 'Something went wrong!'
+                    })
+                } else {
+                    if(!interviews) {
+                        res.json({
+                            success : false,
+                            message : 'Interviews not found.'
+                        })
+                    } else {
+                        res.json({
+                            success : true,
+                            interviews : interviews
                         })
                     }
                 }

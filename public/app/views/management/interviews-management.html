@@ -1,17 +1,34 @@
 <div class="row page-titles">
     <div class="col-md-5 align-self-center">
-        <h4 class="text-themecolor">Your Contributions</h4>
+        <h4 class="text-themecolor">All Interview Experiences</h4>
     </div>
 </div>
+
+<!-- Which Passout Batch details to show -->
+<div class="row" ng-show="main.authorized">
+    <div class="col-12">
+        <div class="form-group">
+            <select class="form-control" ng-model="status">
+                <option value="">-- Filter Interview Experience --</option>
+                <option value="approved">Approved</option>
+                <option value="pending">Pending</option>
+            </select>
+        </div>
+    </div>
+</div>
+
 <div>
     <div class="row">
-        <div class="col-lg-6" ng-repeat="experience in results=(contributions.interviews | filter : searchInterview)">
+        <div class="col-lg-6" ng-repeat="experience in results=(interviewsManagement.interviews | filter : { status : status })">
             <div class="card cc-widget">
                 <div class="card-body">
                     <div class="d-flex no-block flex-row">
                         <div class="round align-self-center round-primary m-t-10 m-b-10"><i class="icon-rocket"></i></div>
                         <div class="m-l-10 align-self-center">
-                            <h4 class="m-b-0"><a href="/experience/{{ experience._id }}" style="color: black">{{ experience.title }}</a> <i class="fa fa-check-circle text-success" ng-if="experience.status=='approved'"></i><i class="fa fa-exclamation-circle text-danger" ng-if="experience.status=='pending'"></i> </h4>
+                            <h4 class="m-b-0"><a href="/experience/{{ experience._id }}" style="color: black">{{ experience.title }}</a>
+                                <i class="fa fa-check-circle text-success" ng-if="experience.status=='approved'"></i>
+                                <i class="fa fa-exclamation-circle text-danger" ng-if="experience.status=='pending'"></i>
+                            </h4>
                             <h5 class="text-muted m-b-0"><i class="fa fa-user"></i> {{ experience.author_name }}</h5>
                         </div>
                     </div>

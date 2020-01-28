@@ -22,3 +22,21 @@
     </div>
 </div>
 
+<!-- Approve or pending change status -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <p class="text-primary" ng-show="experience.loading">Updating status... Please wait!</p>
+                        <p class="text-danger" ng-show="experience.errorMsg">{{ experience.errorMsg }}</p>
+                        <p class="text-primary" ng-show="experience.successMsg">{{ experience.successMsg }}</p>
+                        <button ng-if="experience.experience.status=='pending'" class="btn btn-block btn-success" ng-click="experience.changeStatus();"> &nbsp; Approve Interview Experience</button>
+                        <button ng-if="experience.experience.status=='approved'" class="btn btn-block btn-danger" ng-click="experience.changeStatus();"> &nbsp; Disapprove Interview Experience</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

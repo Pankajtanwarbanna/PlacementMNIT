@@ -472,19 +472,55 @@ angular.module('studentController',['studentServices','textAngular'])
 })
 
 // read experience ctrl
-.controller('experienceCtrl', function (student, $routeParams) {
+.controller('experienceCtrl', function (student, $routeParams, admin) {
 
     let app = this;
 
-    // get interview experience
-    student.getExperience($routeParams.experience_id).then(function (data) {
+    // get interview experience function
+    function getInterviewExperience() {
+        student.getExperience($routeParams.experience_id).then(function (data) {
+            if(data.data.success) {
+                app.experience = data.data.experience;
+            } else {
+                app.errorMsg = data.data.message;
+            }
+        });
+    }
+
+    getInterviewExperience();
+
+    // change status of interview experience - admin stuff
+    app.changeStatus = function () {
+        app.loading = true;
+        admin.changeStatus($routeParams.experience_id).then(function (data) {
+            console.log(data);
+            if(data.data.success) {
+                app.loading = false;
+                app.errorMsg = '';
+                app.successMsg = data.data.message;
+                getInterviewExperience();
+            } else {
+                app.loading = false;
+                app.successMsg = '';
+                app.errorMsg = data.data.message;
+            }
+        })
+    }
+
+})
+
+.controller('contributionsCtrl', function (student) {
+    let app = this;
+
+    // get all contributions of student
+    student.getContributions().then(function (data) {
+        console.log(data);
         if(data.data.success) {
-            app.experience = data.data.experience;
+            app.interviews = data.data.interviews;
         } else {
             app.errorMsg = data.data.message;
         }
     })
-
 })
 
 .controller('composeCtrl', function ($scope, student) {

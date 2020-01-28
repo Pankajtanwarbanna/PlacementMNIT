@@ -30,7 +30,7 @@
                 <div class="card-body">
                     <form class="form-material">
                         <div class="form-group" style="margin-bottom: 0px;">
-                            <input type="text" class="form-control form-control-line" placeholder="Type here to search for an interview" ng-model="searchInterview">
+                            <input type="text" class="form-control form-control-line" placeholder="Try ZoloStays, Placement etc." ng-model="searchInterview">
                             <br><span class="text-primary" ng-show="searchInterview">{{ results.length }} Results found</span>
                         </div>
                     </form>
@@ -46,7 +46,7 @@
                         </div>
                     </div>
                     <div class="d-flex no-block flex-row m-t-20 cc-details interview">
-                        <div ng-bind-html="experience.experience | limitHtml : 180"></div>
+                        <div ng-bind-html="experience.experience | limitHtml : 230"></div>
                     </div>
                     <br>
                     <div>

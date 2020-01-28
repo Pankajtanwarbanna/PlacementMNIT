@@ -191,5 +191,10 @@ angular.module('studentServices',[])
         return $http.post('/api/postInterviewExperience', experienceData);
     };
 
+    // get contributions
+    studentFactory.getContributions = function () {
+        return $http.get('/api/getContributions');
+    };
+
     return studentFactory;
 });

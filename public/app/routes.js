@@ -122,7 +122,9 @@ var app = angular.module('userRoutes', ['ngRoute'])
 
            .when('/contributions', {
                templateUrl : '/app/views/interview-experiences/contributions.html',
-               authenticated : true
+               authenticated : true,
+               controller : 'contributionsCtrl',
+               controllerAs : 'contributions'
            })
 
 
@@ -179,6 +181,14 @@ var app = angular.module('userRoutes', ['ngRoute'])
                permission : 'admin',
                controller : 'studentsManagementCtrl',
                controllerAs : 'studentsManagement'
+           })
+
+           .when('/interviews-management', {
+               templateUrl : '/app/views/management/interviews-management.html',
+               authenticated : true,
+               permission : 'admin',
+               controller : 'interviewsManagementCtrl',
+               controllerAs : 'interviewsManagement'
            })
 
            // User Profile
