@@ -1825,7 +1825,7 @@ module.exports = function (router){
                 }
             })
         }
-    })
+    });
 
     // Posting Interview experiences
     router.post('/postInterviewExperience', function (req, res) {
