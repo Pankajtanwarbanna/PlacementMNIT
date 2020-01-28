@@ -465,7 +465,9 @@ angular.module('studentController',['studentServices','textAngular'])
     student.getAllInterviewExperiences().then(function (data) {
         if(data.data.success) {
             app.interviews = data.data.interviews;
+            app.fetchedInterviewExperiences = true;
         } else {
+            app.fetchedInterviewExperiences = true;
             app.errorMsg = data.data.message;
         }
     })
@@ -481,8 +483,10 @@ angular.module('studentController',['studentServices','textAngular'])
         student.getExperience($routeParams.experience_id).then(function (data) {
             if(data.data.success) {
                 app.experience = data.data.experience;
+                app.fetchedInterviewExperience = true;
             } else {
                 app.errorMsg = data.data.message;
+                app.fetchedInterviewExperience = true;
             }
         });
     }

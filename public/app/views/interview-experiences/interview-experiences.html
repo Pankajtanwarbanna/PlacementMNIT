@@ -13,8 +13,37 @@
     </div>
 </div>
 
+<div class="row" ng-show="!interview.fetchedInterviewExperiences">
+    <div class="col-md-12">
+        <div class="card-body text-center">
+            <!--<h4 class="card-title">Loading Announcements!</h4>-->
+            <div class="spinner-grow" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-success" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-danger" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-warning" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-info" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-dark" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Interview Experiences -->
-<div>
+<div ng-show="interview.fetchedInterviewExperiences">
     <div class="row">
         <!-- Column -->
         <div class="col-lg-3">
