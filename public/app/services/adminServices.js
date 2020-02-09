@@ -36,24 +36,9 @@ angular.module('adminServices',[])
         return $http.get('/api/getStudentDetailsByCollegeID/' + college_id);
     };
 
-    // add company schedule
-    adminFactory.addCompanySchedule = function (scheduleData,company_id) {
-        return $http.post('/api/addCompanySchedule/'+company_id, scheduleData);
-    };
-
-    // add company notification
-    adminFactory.addCompanyNotification = function (notificationData, company_id) {
-        return $http.post('/api/addCompanyNotification/'+company_id, notificationData);
-    };
-
     // get all registered students in a company
     adminFactory.getAllRegisteredStudentsInCompany = function (company_id) {
         return $http.get('/api/getAllRegisteredStudentsInCompany/' + company_id);
-    };
-
-    // add company result
-    adminFactory.addCompanyResult = function (resultData, company_id) {
-        return $http.post('/api/addCompanyResult/'+company_id, resultData);
     };
 
     // fetch feedbacks form database

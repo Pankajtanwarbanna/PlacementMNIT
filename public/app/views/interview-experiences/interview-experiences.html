@@ -59,13 +59,13 @@
                 <div class="card-body">
                     <form class="form-material">
                         <div class="form-group" style="margin-bottom: 0px;">
-                            <input type="text" class="form-control form-control-line" placeholder="Try ZoloStays, Placement etc." ng-model="searchInterview">
+                            <input type="text" class="form-control form-control-line" placeholder="Try zoloStays, amazon Placement etc." ng-model="searchInterview">
                             <br><span class="text-primary" ng-show="searchInterview">{{ results.length }} Results found</span>
                         </div>
                     </form>
                 </div>
             </div>
-            <div class="card cc-widget" ng-repeat="experience in results=(interview.interviews | filter : searchInterview)">
+            <div class="card cc-widget" ng-repeat="experience in results=(interview.interviews | filter : searchInterview | orderBy : '-created_at')">
                 <div class="card-body">
                     <div class="d-flex no-block flex-row">
                         <div class="round align-self-center round-primary m-t-10 m-b-10"><i class="icon-rocket"></i></div>

@@ -284,118 +284,6 @@ module.exports = function (router){
         })
     });
 
-    // Schedule Company
-    router.post('/scheduleCompany', function (req, res) {
-
-        User.findOne({ college_id : req.decoded.college_id }).select('permission').exec(function (err, user) {
-            if(err) throw err;
-
-            if(!user) {
-                res.json({
-                    success : false,
-                    message : 'User not found.'
-                });
-            } else {
-                if(user.permission !== 'admin') {
-                    res.json({
-                        success : false,
-                        message : 'You are not authorized.'
-                    })
-                } else {
-                    if(!req.body.title || !req.body.start || !req.body.end) {
-                        res.json({
-                            success : false,
-                            message : 'Please ensure you fill all the entries.'
-                        })
-                    } else {
-                        let schedule = new Schedule();
-
-                        schedule.title = req.body.title;
-                        schedule.start = req.body.start;
-                        schedule.end = req.body.end;
-
-                        schedule.save(function (err) {
-                            if(err) {
-                                res.json({
-                                    success : false,
-                                    message : 'Error while saving data to database.'
-                                });
-                            } else {
-                                res.json({
-                                    success : true,
-                                    message : 'Event successfully created.'
-                                })
-                            }
-                        })
-                    }
-                }
-            }
-        })
-    });
-
-    // get schedules of all companies
-    router.get('/getSchedule', function (req, res) {
-
-        Schedule.find({}).select('title start end').exec(function (err, schedule) {
-            if(err) {
-                res.json({
-                    success : false,
-                    message : 'Error while getting schedule data'
-                });
-            }
-
-            if(!schedule) {
-                res.json({
-                    success : false,
-                    message : 'No schedule found.'
-                });
-            } else {
-
-                fs.writeFile('./public/events/events.json', JSON.stringify(schedule), function (err) {
-                    if(err) {
-                        console.log(err);
-                    } else {
-                        res.json({
-                            success : true,
-                            schedule : schedule
-                        })
-                    }
-                });
-            }
-        })
-    });
-
-    // Post new announcement
-    router.post('/postAnnouncement', auth.ensureAdmin, function (req, res) {
-
-        if(!req.decoded.college_id) {
-            res.json({
-                success : false,
-                message : 'Please login.'
-            })
-        } else {
-            var announcement  = new Announcement();
-
-            announcement.category = req.body.category;
-            announcement.announcement = req.body.announcement;
-            announcement.timestamp = new Date();
-
-            announcement.save(function (err) {
-                if(err) {
-                    res.json({
-                        success : false,
-                        message : 'Error while saving data to database.'
-                    });
-                } else {
-                    res.json({
-                        success : true,
-                        message : 'Announcement successfully updated.'
-                    });
-                }
-            })
-        }
-    });
-
     // get all announcements
     router.get('/getAnnouncements', function (req, res) {
         if(!req.decoded.college_id) {
@@ -425,46 +313,6 @@ module.exports = function (router){
                 }
             })
         }
-    });
-
-    // post new company to db
-    router.post('/postCompanyDetails', auth.ensureAdmin, function (req, res) {
-
-        let company = new Company(req.body);
-
-        company.save(function (err) {
-            if(err) {
-                console.log(err);
-                res.json({
-                    success : false,
-                    message : 'Error while saving to database.'
-                });
-            } else {
-                res.json({
-                    success : true,
-                    message : 'Successfully new company added.'
-                })
-            }
-        })
-    });
-
-    // update company details
-    router.post('/updateCompanyDetails', function (req, res) {
-        Company.findByIdAndUpdate( { _id : req.body._id } , req.body , function (err) {
-            if(err) {
-                console.log(err);
-                res.json({
-                    success : false,
-                    message : 'Something went wrong!',
-                    error : err
-                })
-            } else {
-                res.json({
-                    success : true,
-                    message : 'Company Details successfully updated.'
-                })
-            }
-        })
     });
 
     // get companies details from db
@@ -661,6 +509,7 @@ module.exports = function (router){
             } else {
                 // todo Check deadline date
                 // todo check eligibility criteria
+                // todo check if already applied
                 company.candidates.push({ college_id : req.decoded.college_id, timestamp : new Date()});
 
                 company.save(function (err) {
@@ -706,6 +555,7 @@ module.exports = function (router){
                     })
                 } else {
 
+                    // todo check timestamp
                     let candidateIndex;
 
                     for(let i=0;i<company.candidates.length;i++) {
@@ -733,7 +583,7 @@ module.exports = function (router){
                 }
             })
         }
-    })
+    });
 
     // get user timeline
     router.get('/getTimeline', function (req, res) {
@@ -759,6 +609,7 @@ module.exports = function (router){
                     });
                 } else {
 
+                    // todo code optimization with reduceMap
                     let candidateTimeline = [];
 
                     // Used Let for scope purpose
@@ -788,270 +639,6 @@ module.exports = function (router){
                 }
             })
         }
-    });
-
-    // delete company
-    router.delete('/deleteCompany/:company_id', function (req, res) {
-        if(!req.decoded.college_id) {
-            res.json({
-                success : false,
-                message : 'Please login.'
-            });
-        } else {
-            User.findOne({ college_id : req.decoded.college_id}, function (err, user) {
-                if(err) {
-                    res.json({
-                        success : false,
-                        message : 'Error from the database side.'
-                    });
-                }
-
-                if(!user) {
-                    res.json({
-                        success : false,
-                        message : 'User not found.'
-                    })
-                } else {
-                    if(user.permission === 'admin') {
-                        Company.findOneAndRemove({ _id : req.params.company_id}, function (err,data) {
-                            if(err) {
-                                res.json({
-                                    success : false,
-                                    message : 'Error while deleting company.'
-                                })
-                            } else {
-                                res.json({
-                                    success : true,
-                                    message : 'Successfully deleted company.'
-                                })
-                            }
-                        })
-                    } else {
-                        res.json({
-                            success :  false,
-                            message : 'User not authorized.'
-                        })
-                    }
-                }
-            })
-        }
-    });
-
-    // router to get registered candidate students
-    router.get('/getRegisteredStudents/:company_id', function (req, res) {
-        if(!req.decoded.college_id) {
-            res.json({
-                success : false,
-                message : 'Please login.'
-            });
-        } else {
-            User.findOne({ college_id : req.decoded.college_id}, function (err, user) {
-                if(err) {
-                    res.json({
-                        success : false,
-                        message : 'Error from the database side.'
-                    });
-                }
-
-                if(!user) {
-                    res.json({
-                        success : false,
-                        message : 'User not found.'
-                    })
-                } else {
-                    if(user.permission === 'admin') {
-                        Company.findOne({ _id : req.params.company_id }, function (err, company) {
-                            if(err) {
-                                res.json({
-                                    success : false,
-                                    message : 'Error from database.'
-                                })
-                            }
-
-                            if(!company) {
-                                res.json({
-                                    success : false,
-                                    message : 'Company not found.'
-                                })
-                            } else {
-                                res.json({
-                                    success : true,
-                                    candidates : company.candidates,
-                                    name : company.company_name
-                                })
-                            }
-                        })
-                    } else {
-                        res.json({
-                            success :  false,
-                            message : 'User not authorized.'
-                        })
-                    }
-                }
-            })
-        }
-    });
-
-    // get students details by college_id
-    router.get('/getStudentDetailsByCollegeID/:college_id', function (req, res) {
-        if(!req.decoded.college_id) {
-            res.json({
-                success : false,
-                message : 'Please login.'
-            });
-        } else {
-            User.findOne({ college_id : req.decoded.college_id}, function (err, user) {
-                if(err) {
-                    res.json({
-                        success : false,
-                        message : 'Error from the database side.'
-                    });
-                }
-
-                if(!user) {
-                    res.json({
-                        success : false,
-                        message : 'User not found.'
-                    })
-                } else {
-                    if(user.permission === 'admin') {
-                        User.findOne({ college_id : req.params.college_id}, function (err, user) {
-                            if(err) {
-                                res.json({
-                                    success : false,
-                                    message : 'Error from database.'
-                                });
-                            }
-
-                            if(!user) {
-                                res.json({
-                                    success : true,
-                                    message : 'No user found.'
-                                })
-                            } else {
-                                res.json({
-                                    success : true,
-                                    user : user
-                                })
-                            }
-                        })
-                    } else {
-                        res.json({
-                            success :  false,
-                            message : 'User not authorized.'
-                        })
-                    }
-                }
-            })
-        }
-    });
-
-    // Add Company Notification
-    router.post('/addCompanyNotification/:company_id', auth.ensureAdmin, function (req, res) {
-        Company.findOne({ _id : req.params.company_id }, function (err, company) {
-            if(err) {
-                res.json({
-                    success : false,
-                    message : 'Error while getting data from database.'
-                });
-            }
-
-            if(!company) {
-                res.json({
-                    success : false,
-                    message : 'Company Not found.'
-                })
-            } else {
-                var notificationObj = {};
-                notificationObj.notification = req.body.notification;
-                notificationObj.timestamp = new Date();
-
-                company.company_notifications.push(notificationObj);
-
-                company.save(function (err) {
-                    if(err) {
-                        res.json({
-                            success : false,
-                            message : 'Error from database.'
-                        });
-                    } else {
-                        res.json({
-                            success : true,
-                            message : 'Notification successfully posted.'
-                        })
-                    }
-                })
-            }
-        })
-    });
-
-    // get company notifications
-    router.get('/getCompanyNotifications/:company_id', function (req, res) {
-        if(!req.decoded.college_id) {
-            res.json({
-                success : false,
-                message : 'Please login.'
-            });
-        } else {
-            User.findOne({ college_id : req.decoded.college_id}, function (err, user) {
-                if(err) {
-                    res.json({
-                        success : false,
-                        message : 'Error while getting data from database.'
-                    });
-                }
-                if(!user) {
-                    res.json({
-                        success : false,
-                        message : 'User not found.'
-                    });
-                } else {
-                    Company.findOne({ _id : req.params.company_id }, function (err, company) {
-                        if(err) {
-                            res.json({
-                                success : false,
-                                message : 'Error while getting data from database.'
-                            });
-                        }
-
-                        if(!company) {
-                            res.json({
-                                success : false,
-                                message : 'Company Not found.'
-                            })
-                        } else {
-                            res.json({
-                                success : true,
-                                notifications : company.company_notifications
-                            })
-                        }
-                    })
-                }
-            })
-        }
-    });
-
-    router.get('/getAllRegisteredStudentsInCompany/:company_id', auth.ensureAdmin, function (req, res) {
-        Company.findOne({ _id : req.params.company_id}, function (err, company) {
-            if(err) {
-                res.json({
-                    success : false,
-                    message : 'Error from database side.'
-                });
-            }
-
-            if(!company) {
-                res.json({
-                    success : false,
-                    message : 'Company Not found.'
-                })
-            } else {
-                res.json({
-                    success : true,
-                    candidate : company.candidates
-                })
-            }
-        })
     });
 
     // get user profile details
@@ -1108,6 +695,7 @@ module.exports = function (router){
 		            })
 		        } else {
 
+		            // todo optimize code
 		            if(req.body.matric_marks) {
 		                user.matric_marks = req.body.matric_marks;
 		            }
@@ -1202,6 +790,7 @@ module.exports = function (router){
     // send feedback
     router.post('/sendFeedback', function (req, res) {
 
+        // todo notification to PANKAJ TANWAR
         let feedback = new Feedback();
 
         feedback.title = req.body.title;
@@ -1225,132 +814,6 @@ module.exports = function (router){
                 })
             }
         })
-    });
-
-    // get feedbacks form database
-    router.get('/fetchFeedbacks',  auth.ensureAdmin, function (req, res) {
-
-        Feedback.find({}, function (err, feedbacks) {
-            if(err) {
-                res.json({
-                    success : false,
-                    message : 'Error from database.'
-                })
-            }
-
-            if(!feedbacks) {
-                res.json({
-                    success : false,
-                    message : 'No feedbacks found.'
-                })
-            } else {
-                res.json({
-                    success : true,
-                    feedbacks : feedbacks
-                })
-            }
-        })
-    });
-
-    // Delete student from a company
-    router.delete('/withdrawRegistration/:college_id/:company_id', auth.ensureAdmin, function (req, res) {
-        Company.findOne({ _id : req.params.company_id}, function (err, company) {
-            if(err) {
-                res.json({
-                    success : false,
-                    message : 'Error from database side.'
-                })
-            }
-
-            if (!company){
-                res.json({
-                    success : false,
-                    message : 'Company not found'
-                })
-            } else {
-                var index = company.candidates.indexOf(company.candidates.find(x => x.college_id === req.params.college_id));
-                company.candidates.splice(index,1);
-
-                company.save(function (err) {
-                    if(err) {
-                        res.json({
-                            success : false,
-                            message : 'Error from database. '
-                        })
-                    } else {
-                        res.json({
-                            success : true,
-                            message : 'Successfully withdraw registration'
-                        })
-                    }
-                });
-            }
-        })
-    });
-
-    // router to start attendance
-    router.post('/updateAttendanceStatus/:company_id', function (req, res) {
-        if(!req.decoded.college_id) {
-            res.json({
-                success : false,
-                message : 'Please login.'
-            })
-        } else {
-            Company.findOne({ _id : req.params.company_id}, function (err, company) {
-                if(err) {
-                    res.json({
-                        success : false,
-                        message : 'Error from database.'
-                    })
-                }
-
-                if(!company) {
-                    res.json({
-                        success : false,
-                        message : 'Company not found.'
-                    })
-                } else {
-                    if(company.attendance) {
-                        company.attendance = false;
-                        company.company_otp = '';
-
-                        company.save(function (err) {
-                            if(err) {
-                                res.json({
-                                    success : false,
-                                    message : 'Database side eror.'
-                                })
-                            } else {
-                                res.json({
-                                    success : true,
-                                    message : 'Attendance successfully closed.'
-                                })
-                            }
-                        })
-                    } else {
-                        company.attendance = true;
-                        var max = 99999;
-                        var min = 10000;
-                        company.company_otp = Math.floor(Math.random() * (+max - +min)) + +min;
-                        console.log(company.company_otp);
-
-                        company.save(function (err) {
-                            if(err) {
-                                res.json({
-                                    success : false,
-                                    message : 'Database side error.'
-                                })
-                            } else {
-                                res.json({
-                                    success : true,
-                                    message : 'Attendance successfully started.'
-                                })
-                            }
-                        })
-                    }
-                }
-            })
-        }
     });
 
     // get company attendance status
@@ -1441,55 +904,6 @@ module.exports = function (router){
                 }
             })
         }
-    })
-
-    // done with the test  router
-    router.post('/doneWithAttendance/:company_id', function (req, res) {
-        if(!req.decoded.college_id) {
-            res.json({
-                success : false,
-                message : 'Please login'
-            })
-        } else {
-            Company.findOne({ _id : req.params.company_id }, function (err, company) {
-                if(err) {
-                    res.json({
-                        success : false,
-                        message : 'Error from database side.'
-                    })
-                }
-
-                if(!company) {
-                    res.json({
-                        success : false,
-                        message : 'Company not found.'
-                    })
-                } else {
-                    for(var i=0;i< company.candidates.length;i++) {
-                        if(company.candidates[i].candidate_status === 'Applied') {	
-                            company.candidates[i].candidate_status = 'Absent';
-			                console.log(company.candidates[i].college_id);
-                        }
-		            }
-
-                    company.attendance = false;
-
-                    company.save(function (err) {
-                        if(err) {
-                            res.json({
-                                success : false,
-                                message : 'Error from database.'
-                            });
-                        } else {
-                            res.json({
-                                success : true,
-                                message : 'Updated successfully.'
-                            });
-                        }
-                    });
-                }
-            })
-        }
     });
 
     // mark ref flag to absent students
@@ -1566,152 +980,6 @@ module.exports = function (router){
                 }
             });
         }
-    });
-
-    // Get student Profile
-    router.get('/searchByID/:studentID', function (req, res) {
-        if(!req.decoded.college_id) {
-            res.json({
-                success : false,
-                message : 'Please login.'
-            });
-        } else {
-            User.findOne({ college_id : req.params.studentID }, function (err, user) {
-                if(err) {
-                    res.json({
-                        success : false,
-                        message : 'Error from database side.'
-                    })
-                }
-
-                if(!user) {
-                    res.json({
-                        success : false,
-                        message : 'College ID is incorrect!'
-                    })
-                } else {
-                    res.json({
-                        success : true,
-                        user : user
-                    })
-                }
-            })
-        }
-    });
-
-    // update user profile
-    router.put('/updateStudentProfile', function (req, res) {
-        if(!req.decoded.college_id) {
-            res.json({
-                success : false,
-                message : 'Please login.'
-            })
-        } else {
-            User.findOne({ college_id : req.body.college_id }, function (err, user) {
-                if(err) {
-                    res.json({
-                        success : false,
-                        message : 'Error from database.'
-                    })
-                }
-
-                if(!user) {
-                    res.json({
-                        success : false,
-                        message : 'User not found.'
-                    })
-                } else {
-
-                    if(req.body.student_name) {
-                        user.student_name = req.body.student_name;
-                    }
-                    if(req.body.degree) {
-                        user.degree = req.body.degree;
-                    }
-                    if(req.body.department) {
-                        user.department = req.body.department;
-                    }
-                    if(req.body.alternate_email) {
-                        user.alternate_email = req.body.alternate_email;
-                    }
-                    if(req.body.contact_no) {
-                        user.contact_no = req.body.contact_no;
-                    }
-                    if(req.body.cgpa) {
-                        user.cgpa = req.body.cgpa;
-                    }
-                    if(req.body.red_flags == 0 || req.body.red_flags) {
-                        user.red_flags = req.body.red_flags;
-                    }
-                    if(req.body.matric_marks) {
-                        user.matric_marks = req.body.matric_marks;
-                    }
-                    if(req.body.matric_board) {
-                        user.matric_board = req.body.matric_board;
-                    }
-                    if(req.body.senior_marks) {
-                        user.senior_marks = req.body.senior_marks;
-                    }
-                    if(req.body.senior_board) {
-                        user.senior_board = req.body.senior_board;
-                    }
-                    if(req.body.alternate_contact_no) {
-                        user.alternate_contact_no = req.body.alternate_contact_no;
-                    }
-                    if(req.body.address) {
-                        user.address = req.body.address;
-                    }
-                    if(req.body.city) {
-                        user.city = req.body.city;
-                    }
-                    if(req.body.post_code) {
-                        user.post_code = req.body.post_code;
-                    }
-                    if(req.body.state) {
-                        user.state = req.body.state;
-                    }
-                    if(req.body.country) {
-                        user.country = req.body.country;
-                    }
-                    if(req.body.linkedln_link) {
-                        user.linkedln_link = req.body.linkedln_link;
-                    }
-
-                    user.save(function (err) {
-                        if(err) {
-                            console.log(err);
-                            res.json({
-                                success : false,
-                                message : 'Error while saving to database.'
-                            })
-                        } else {
-                            res.json({
-                                success : true,
-                                message : 'Profile Successfully updated.'
-                            })
-                        }
-                    })
-                }
-            })
-        }
-    });
-
-    // update admin's passout batch
-    router.post('/updateAdminBatch/:batch', auth.ensureAdmin, function (req, res) {
-
-        User.findOneAndUpdate( { college_id : req.decoded.college_id },{ $set : { passout_batch : req.params.batch }}, function (err) {
-            if(err) {
-                res.json({
-                    success : false,
-                    message : 'Something went wrong!'
-                })
-            } else {
-                res.json({
-                    success : true,
-                    message : 'Batch updated.'
-                })
-            }
-        })
     });
 
     // change password
@@ -1905,7 +1173,7 @@ module.exports = function (router){
                 }
             })
         }
-    })
+    });
 
 
     return router;
