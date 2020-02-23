@@ -1,3 +1,4 @@
+/* Currently Not Supported in Portal */
 var mongoose = require('mongoose');
 var titlize = require('mongoose-title-case');
 mongoose.set('useCreateIndex', true);
