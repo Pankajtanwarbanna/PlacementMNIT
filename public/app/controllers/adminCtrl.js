@@ -329,6 +329,33 @@ angular.module('adminController', ['adminServices'])
     })
 })
 
+// edit experience ctrl
+.controller('editExperienceCtrl', function ($routeParams, student,admin) {
+
+    let app = this;
+
+    // get experience
+    student.getExperience($routeParams.experience_id).then(function (data) {
+        console.log(data);
+        if(data.data.success) {
+            app.experienceData = data.data.experience;
+        }
+    });
+
+    // update experience
+    app.editInterviewExperience = function (experienceData) {
+        admin.editInterviewExperience(app.experienceData).then(function (data) {
+            console.log(data);
+            if(data.data.success) {
+                app.successMsg = data.data.message;
+            } else {
+                app.errorMsg = data.data.message;
+            }
+        })
+    }
+
+})
+
 // feedbacks controller
 .controller('feedbackCtrl', function (admin) {
 

@@ -113,6 +113,14 @@ var app = angular.module('userRoutes', ['ngRoute'])
                controllerAs : 'experience'
            })
 
+           .when('/editExperience/:experience_id', {
+               templateUrl : '/app/views/interview-experiences/editExperience.html',
+               authenticated : true,
+               controller : 'editExperienceCtrl',
+               controllerAs : 'editExperience',
+               permission : 'admin'
+           })
+
            .when('/compose', {
                templateUrl : '/app/views/interview-experiences/compose.html',
                authenticated : true,
@@ -163,10 +171,12 @@ var app = angular.module('userRoutes', ['ngRoute'])
                permission : 'admin'
            })
 
-           .when('/management', {
-               templateUrl : 'app/views/management/management.html',
+           .when('/coordinator-management', {
+               templateUrl : '/app/views/management/coordinator-management.html',
                authenticated : true,
-               permission : 'admin'
+               permission : 'admin',
+               controller : 'coordinatorCtrl',
+               controllerAs : 'coordinator'
            })
 
            .when('/students-database', {

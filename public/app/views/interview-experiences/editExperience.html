@@ -1,0 +1,77 @@
+<div class="row page-titles">
+    <div class="col-lg-12">
+        <div class="card text-white bg-dark">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h3>Edit Interview Experience</h3>
+                        <h6 class="font-light m-t-0">Edit details about the interview process you have been through..</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Write your experience here -->
+<div class="row" ng-show="!editExperience.successMsg">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <form ng-submit="editExperience.editInterviewExperience(experienceData)">
+                    <div class="row p-t-20">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Interview Experience title</label>
+                                <input type="text" class="form-control" placeholder="Enter title here" ng-model="editExperience.experienceData.title" required>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div text-angular data-ng-model="editExperience.experienceData.experience"></div>
+                                <button type="button" class="btn btn-outline-primary d-none d-lg-block m-l-15" ng-show="editExperience.experienceData.experience && editExperience.experienceData.title" data-toggle="modal" data-target="#previewExperienceModal"><i class="fa fa-eye"></i> Preview</button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div style="text-align: center" class="text-center">
+                        <p class="text-danger" ng-show="editExperience.errorMsg">{{ editExperience.errorMsg }}</p>
+                        <p class="text-primary" ng-show="editExperience.loading"> Updating experience... Please wait!</p>
+                        <button type="submit" class="btn btn-primary btn-rounded"><i class="ti-check-box"></i> &nbsp; Update Interview Experience</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Experience Add Div-->
+<div class="row" ng-show="editExperience.successMsg">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-md-center">
+                    <i class="icon-check large-success-icon"></i>
+                    <h3 class="success-text">{{ editExperience.successMsg }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Preview Modal -->
+<div class="modal fade" id="previewExperienceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel1">{{ editExperience.experienceData.title }}</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div ng-bind-html="editExperience.experienceData.experience"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -538,8 +538,8 @@ module.exports = function (router){
                                     from: '"Placement & Training Cell" <ptcell@mnit.ac.in>',
                                     to: interview.author_id + '@mnit.ac.in',
                                     subject: 'We published your article ' + interview.title,
-                                    text: 'Hello '+ interview.author_name + 'You requested for the reset password.Please find the below link Reset password With Regards, Prof. Mahendar Choudhary',
-                                    html: 'Hello <strong>'+ interview.author_name + '</strong>,<br><br>Thanks for sharing your interview process and thoughts with us. We published your interview experience! Please find the link below -<br><br><a href="' + 'http://placements.mnit.ac.in' + "/experience/" + interview._id + '">' + interview.title + ' </a><br><br>With Regards.<br><br>Prof. Mahender Choudhary<br>In-charge, Training & Placement<br>MNIT Jaipur<br>+91-141-2529065'
+                                    text: 'Hello '+ interview.author_name + 'Thanks for sharing your interview process and thoughts with us With Regards, Prof. Mahendar Choudhary',
+                                    html: 'Hello <strong>'+ interview.author_name + '</strong>,<br><br>Thanks for sharing your interview process and thoughts with us to help others. We have published your interview experience after a few modifications. We wish you luck for the future! Please find the link below -<br><br><a href="' + 'http://placements.mnit.ac.in' + "/experience/" + interview._id + '">' + interview.title + ' </a><br><br>With Regards.<br><br>Prof. Mahender Choudhary<br>In-charge, Training & Placement<br>MNIT Jaipur<br>+91-141-2529065'
                                 };
 
                                 transporter.sendMail(email, function(err, info){
@@ -582,5 +582,25 @@ module.exports = function (router){
         })
     });
 
+    // edit interview experience
+    router.post('/editInterviewExperience', function (req, res) {
+        console.log(req.body);
+        Interview.findByIdAndUpdate( { _id : req.body._id } , req.body , function (err) {
+            if(err) {
+                console.log(err);
+                res.json({
+                    success : false,
+                    message : 'Something went wrong!',
+                    error : err
+                })
+            } else {
+                res.json({
+                    success : true,
+                    message : 'Interview Experience successfully updated.'
+                })
+            }
+        })
+    })
+
     return router;
-}
+};

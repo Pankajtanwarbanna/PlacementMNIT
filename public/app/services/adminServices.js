@@ -69,7 +69,12 @@ angular.module('adminServices',[])
     // change status
     adminFactory.changeStatus = function (experience_id) {
         return $http.post('/api/changeStatus/' + experience_id);
-    }
+    };
+
+    // update interview experience
+    adminFactory.editInterviewExperience = function (experienceData) {
+        return $http.post('/api/editInterviewExperience', experienceData);
+    };
 
     return adminFactory;
 });
