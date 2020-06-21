@@ -11,6 +11,11 @@ var auth = require('../middlewares/authPermission');
 var jwt = require('jsonwebtoken');
 var secret = 'placementmnit';
 var nodemailer = require('nodemailer');
+//var sgTransport = require('nodemailer-sendgrid-transport');
+
+//const sgMail = require('@sendgrid/mail');
+//sgMail.setApiKey(process.env.SENDGRID_KEY);
+
 var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -20,6 +25,17 @@ var transporter = nodemailer.createTransport({
 });
 
 module.exports = function (router){
+
+    /*
+    // Nodemailer-sandgrid stuff
+    var options = {
+        auth: {
+            api_key: process.env.SENDGRID_KEY
+        }
+    };
+
+    var transporterNo = nodemailer.createTransport(sgTransport(options));
+    */
 
     // User login API
     router.post('/authenticate', function (req,res) {
@@ -95,20 +111,16 @@ module.exports = function (router){
                     });
                 } else {
 
-                    console.log(user.temporarytoken);
-
                     user.temporarytoken = jwt.sign({
                         student_name: user.student_name,
                         college_id: user.college_id
                     }, secret);
 
-                    console.log(user.temporarytoken);
-
                     user.save(function (err) {
                         if(err) {
                             res.json({
                                 success : false,
-                                message : 'Error accured! Please try again. '
+                                message : 'Something went wrong! Please try again.'
                             })
                         } else {
 
@@ -316,101 +328,87 @@ module.exports = function (router){
     });
 
     // get companies details from db
-    router.get('/getAllUpcomingCompanies', function (req, res) {
+    router.get('/getAllUpcomingCompanies', auth.ensureLoggedIn, function (req, res) {
 
-        if(!req.decoded.college_id) {
-            res.json({
-                success : false,
-                message : 'Please login.'
-            });
-        } else {
-            User.findOne({ college_id : req.decoded.college_id }).select('passout_batch').lean().exec(function (err, user) {
-                if (err) {
+        User.findOne({ college_id : req.decoded.college_id }).select('passout_batch').lean().exec(function (err, user) {
+            if (err) {
+                res.json({
+                    success: false,
+                    message: 'Something went wrong!'
+                })
+            } else {
+                if(!user) {
                     res.json({
-                        success: false,
-                        message: 'Something went wrong!'
+                        success : false,
+                        message : 'User not found.'
                     })
                 } else {
-                    if(!user) {
-                        res.json({
-                            success : false,
-                            message : 'User not found.'
-                        })
-                    } else {
-                        // todo Add here validation according to branch, cgpa etc
-                        Company.find({ passout_batch: user.passout_batch, deadline_date : { $gte: new Date() -1 } }).select('company_name job_profile package deadline_date').lean().exec(function (err, companies) {
-                            if(err) {
-                                res.json({
-                                    success : false,
-                                    message : 'Error while getting data from database.'
-                                });
-                            }
+                    // todo Add here validation according to branch, cgpa etc
+                    Company.find({ passout_batch: user.passout_batch, deadline_date : { $gte: new Date() -1 } }).select('company_name job_profile package deadline_date').lean().exec(function (err, companies) {
+                        if(err) {
+                            res.json({
+                                success : false,
+                                message : 'Error while getting data from database.'
+                            });
+                        }
 
-                            if(!companies) {
-                                res.json({
-                                    success : false,
-                                    message : 'Companies not found.'
-                                });
-                            } else {
-                                res.json({
-                                    success : true,
-                                    companies : companies
-                                })
-                            }
-                        })
-                    }
+                        if(!companies) {
+                            res.json({
+                                success : false,
+                                message : 'Companies not found.'
+                            });
+                        } else {
+                            res.json({
+                                success : true,
+                                companies : companies
+                            })
+                        }
+                    })
                 }
-            });
-        }
+            }
+        });
     });
 
     // get previous companies details from db
-    router.get('/getAllPreviousCompanies', function (req, res) {
+    router.get('/getAllPreviousCompanies', auth.ensureLoggedIn, function (req, res) {
 
-        if(!req.decoded.college_id) {
-            res.json({
-                success : false,
-                message : 'Please login.'
-            });
-        } else {
-            // todo Add here validation according to branch, cgpa etc
-            User.findOne({ college_id : req.decoded.college_id }).select('passout_batch').lean().exec(function (err, user) {
-                if(err) {
+        // todo Add here validation according to branch, cgpa etc
+        User.findOne({ college_id : req.decoded.college_id }).select('passout_batch').lean().exec(function (err, user) {
+            if(err) {
+                res.json({
+                    success : false,
+                    message : 'Something went wrong!'
+                })
+            } else {
+                if(!user) {
                     res.json({
                         success : false,
-                        message : 'Something went wrong!'
+                        message : 'User not found.'
                     })
                 } else {
-                    if(!user) {
-                        res.json({
-                            success : false,
-                            message : 'User not found.'
-                        })
-                    } else {
-                        Company.find({ passout_batch : user.passout_batch, deadline_date : { $lt: new Date() }  }).select('company_name job_profile package deadline_date').exec(function (err, companies) {
-                            if(err) {
-                                res.json({
-                                    success : false,
-                                    message : 'Error while getting data from database.'
-                                });
-                            }
+                    Company.find({ passout_batch : user.passout_batch, deadline_date : { $lt: new Date() }  }).select('company_name job_profile package deadline_date').exec(function (err, companies) {
+                        if(err) {
+                            res.json({
+                                success : false,
+                                message : 'Error while getting data from database.'
+                            });
+                        }
 
-                            if(!companies) {
-                                res.json({
-                                    success : false,
-                                    message : 'Companies not found.'
-                                });
-                            } else {
-                                res.json({
-                                    success : true,
-                                    companies : companies
-                                })
-                            }
-                        })
-                    }
+                        if(!companies) {
+                            res.json({
+                                success : false,
+                                message : 'Companies not found.'
+                            });
+                        } else {
+                            res.json({
+                                success : true,
+                                companies : companies
+                            })
+                        }
+                    })
                 }
-            });
-        }
+            }
+        });
     });
 
     // get company details
@@ -583,6 +581,35 @@ module.exports = function (router){
                 }
             })
         }
+    });
+
+    // send feedback
+    router.post('/sendFeedback', function (req, res) {
+
+        // todo notification to PANKAJ TANWAR
+        let feedback = new Feedback();
+
+        feedback.title = req.body.title;
+        feedback.feedback = req.body.feedback;
+        feedback.author_name = req.decoded.student_name;
+        feedback.author_email = req.decoded.college_id + '@mnit.ac.in';
+
+        feedback.timestamp = new Date();
+
+        feedback.save(function (err) {
+            if(err) {
+                console.log(err);
+                res.json({
+                    success : false,
+                    message : 'Database error'
+                })
+            } else {
+                res.json({
+                    success : true,
+                    message : 'Thank you for submitting feedback.'
+                })
+            }
+        })
     });
 
     // get user timeline
@@ -786,35 +813,6 @@ module.exports = function (router){
 		   })
 	   }
 	});
-
-    // send feedback
-    router.post('/sendFeedback', function (req, res) {
-
-        // todo notification to PANKAJ TANWAR
-        let feedback = new Feedback();
-
-        feedback.title = req.body.title;
-        feedback.feedback = req.body.feedback;
-        //console.log(req.decoded.student_name);
-        feedback.author_name = req.decoded.student_name;
-        feedback.author_email = req.decoded.college_id + '@mnit.ac.in';
-        feedback.timestamp = new Date();
-
-        feedback.save(function (err) {
-            if(err) {
-                console.log(err);
-                res.json({
-                    success : false,
-                    message : 'Database error'
-                })
-            } else {
-                res.json({
-                    success : true,
-                    message : 'Thank you for submitting feedback.'
-                })
-            }
-        })
-    });
 
     // get company attendance status
     router.get('/getAttendanceStatus/:company_id', function (req, res) {

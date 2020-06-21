@@ -7,9 +7,8 @@ var Feedback = require('../models/feedback');
 var Company = require('../models/company');
 var Interview = require('../models/interview');
 var auth = require('../middlewares/authPermission');
-var jwt = require('jsonwebtoken');
-var secret = 'placementmnit';
 var nodemailer = require('nodemailer');
+//var sgTransport = require('nodemailer-sendgrid-transport');
 var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -19,6 +18,17 @@ var transporter = nodemailer.createTransport({
 });
 
 module.exports = function (router){
+
+    /*
+    var options = {
+        auth: {
+            api_key: process.env.SENDGRID_KEY
+        }
+    };
+
+    var transporterNo = nodemailer.createTransport(sgTransport(options));
+    */
+
 
     // post new company to db
     router.post('/postCompanyDetails', auth.ensureAdmin, function (req, res) {

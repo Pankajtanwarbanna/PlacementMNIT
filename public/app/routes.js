@@ -161,7 +161,8 @@ var app = angular.module('userRoutes', ['ngRoute'])
            // Hall of Fame Routes
            .when('/placements2019-20', {
                templateUrl : '/app/views/hall-of-fame/placement-stats.html',
-               authenticated : true
+               controller : 'placementStatsCtrl',
+               controllerAs : 'placementStats'
            })
 
            // Admin Management Routes
@@ -231,8 +232,7 @@ var app = angular.module('userRoutes', ['ngRoute'])
 
            // Team Routes
            .when('/team', {
-               templateUrl : '/app/views/team/team.html',
-               authenticated : true
+               templateUrl : '/app/views/team/team.html'
            })
 
            .otherwise( { redirectTo : '/'});

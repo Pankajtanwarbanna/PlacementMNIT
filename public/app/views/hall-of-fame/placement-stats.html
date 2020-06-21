@@ -14,10 +14,55 @@
 </div>
 
 <div class="row">
-    <div class="col-lg-3 col-xlg-3 col-md-5">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <select class="form-control" ng-model="placementStats.selectedProgram" ng-change="changedProgram();">
+                                <option ng-repeat="program in placementStats.programs">{{ program }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--/span-->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <select class="form-control" ng-model="placementStats.selectedBranch" ng-change="changeBranch();">
+                                <option value=""> -- Select Branch --</option>
+                                <option ng-repeat="branch in placementStats.branches">{{ branch }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--/span-->
+                    <span class="ml-2 text-primary">Showing {{ placementStats.students.length }} Candidates.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-lg-3 col-xlg-3 col-md-5" ng-repeat="student in placementStats.students">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
                 <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                    <h4 class="card-title">{{ student.Name }}</h4>
+                    <h6 class="card-subtitle" ng-if="student.Company">{{ student.Company }}</h6>
+                    <h6 class="text-white" ng-if="student.Stipend">{{ student.Stipend }} Per Month</h6>
+                    <p class="text-white" ng-if="student.Package">{{ student.Package }} LPA</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<div class="row">
+    <div class="col-lg-3 col-xlg-3 col-md-5">
+        <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
+            <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Ashish Kumawat</h4>
                     <h6 class="card-subtitle">Arcelormittal Nippon Steel</h6>
                     <p class="text-white">5 LPA </p>
@@ -28,7 +73,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/placed-students/pankaj-tanwar.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/placed-students/pankaj-tanwar.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Pankaj Tanwar</h4>
                     <h6 class="card-subtitle">Wissen & PaisaBazaar.com</h6>
                     <p class="text-white">11 LPA & 9 LPA</p>
@@ -39,7 +84,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/placed-students/jagriti-aggarwal.png" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/placed-students/jagriti-aggarwal.png" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Jagriti Aggarwal</h4>
                     <h6 class="card-subtitle">Walmart Labs</h6>
                     <p class="text-white">19.27 LPA </p>
@@ -50,7 +95,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Aryan Sharma</h4>
                     <h6 class="card-subtitle">Walmart Labs</h6>
                     <p class="text-white">19.27 LPA </p>
@@ -61,7 +106,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Ashish Goyal</h4>
                     <h6 class="card-subtitle">Walmart Labs</h6>
                     <p class="text-white">19.27 LPA </p>
@@ -72,7 +117,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Sakshi Maheshwari</h4>
                     <h6 class="card-subtitle">Walmart Labs</h6>
                     <p class="text-white">19.27 LPA </p>
@@ -83,7 +128,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Sumit Kumar</h4>
                     <h6 class="card-subtitle">Walmart Labs</h6>
                     <p class="text-white">19.27 LPA </p>
@@ -94,7 +139,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Swaraj Pravin Thakre</h4>
                     <h6 class="card-subtitle">Walmart Labs</h6>
                     <p class="text-white">19.27 LPA </p>
@@ -105,7 +150,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Meedimale Yashwanth</h4>
                     <h6 class="card-subtitle">Walmart Labs</h6>
                     <p class="text-white">19.27 LPA </p>
@@ -116,7 +161,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Tarushree Sabarwal</h4>
                     <h6 class="card-subtitle">Goldman Sachs</h6>
                     <p class="text-white">22 LPA </p>
@@ -128,7 +173,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Aditya Sinha</h4>
                     <h6 class="card-subtitle">Goldman Sachs</h6>
                     <p class="text-white">22 LPA </p>
@@ -139,7 +184,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Anmola kumari</h4>
                     <h6 class="card-subtitle">Goldman Sachs</h6>
                     <p class="text-white">22 LPA </p>
@@ -150,7 +195,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Uditi Arora</h4>
                     <h6 class="card-subtitle">Goldman Sachs</h6>
                     <p class="text-white">22 LPA </p>
@@ -161,7 +206,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Ankita Soni</h4>
                     <h6 class="card-subtitle">Goldman Sachs</h6>
                     <p class="text-white">22 LPA </p>
@@ -172,7 +217,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Vandita Goyal</h4>
                     <h6 class="card-subtitle">Fidelity</h6>
                     <p class="text-white">12.93 LPA </p>
@@ -183,7 +228,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Akshita Agrawal</h4>
                     <h6 class="card-subtitle">Fidelity</h6>
                     <p class="text-white">12.93 LPA </p>
@@ -194,7 +239,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Kamakshi Sethi</h4>
                     <h6 class="card-subtitle">Fidelity</h6>
                     <p class="text-white">12.93 LPA </p>
@@ -205,7 +250,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Aditya Bansal</h4>
                     <h6 class="card-subtitle">Fidelity</h6>
                     <p class="text-white">12.93 LPA </p>
@@ -216,7 +261,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Vipul Vivek</h4>
                     <h6 class="card-subtitle">Fidelity</h6>
                     <p class="text-white">12.93 LPA </p>
@@ -227,7 +272,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Harsh Bansal</h4>
                     <h6 class="card-subtitle">Fidelity</h6>
                     <p class="text-white">12.93 LPA </p>
@@ -238,7 +283,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Kashyap Kumar</h4>
                     <h6 class="card-subtitle">Fidelity</h6>
                     <p class="text-white">12.93 LPA </p>
@@ -249,7 +294,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Hardik Ajmera</h4>
                     <h6 class="card-subtitle">Fidelity</h6>
                     <p class="text-white">12.93 LPA </p>
@@ -260,7 +305,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Fanendra Yadlapalli </h4>
                     <h6 class="card-subtitle">Fidelity</h6>
                     <p class="text-white">12.93 LPA </p>
@@ -271,7 +316,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Shristi Singh Thakur</h4>
                     <h6 class="card-subtitle">Fidelity</h6>
                     <p class="text-white">12.93 LPA </p>
@@ -282,7 +327,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Divya Golyan</h4>
                     <h6 class="card-subtitle">Fidelity</h6>
                     <p class="text-white">12.93 LPA </p>
@@ -293,7 +338,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Utkarsh Dubey</h4>
                     <h6 class="card-subtitle">Fidelity</h6>
                     <p class="text-white">12.93 LPA </p>
@@ -304,7 +349,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Aviral Mongra</h4>
                     <h6 class="card-subtitle">Fidelity</h6>
                     <p class="text-white">12.93 LPA </p>
@@ -315,7 +360,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Matli Mohan</h4>
                     <h6 class="card-subtitle">Fidelity</h6>
                     <p class="text-white">12.93 LPA </p>
@@ -326,7 +371,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Shubham Dubey </h4>
                     <h6 class="card-subtitle">Fidelity</h6>
                     <p class="text-white">12.93 LPA </p>
@@ -337,7 +382,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Shubham Bhootra</h4>
                     <h6 class="card-subtitle">Fidelity</h6>
                     <p class="text-white">12.93 LPA </p>
@@ -348,7 +393,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Ronak Gadia</h4>
                     <h6 class="card-subtitle">JP Morgan</h6>
                     <p class="text-white">14 LPA </p>
@@ -359,7 +404,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Saransh Goyal</h4>
                     <h6 class="card-subtitle">JP Morgan</h6>
                     <p class="text-white">14 LPA </p>
@@ -370,7 +415,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Shambhawi Varchasva</h4>
                     <h6 class="card-subtitle">JP Morgan</h6>
                     <p class="text-white">14 LPA </p>
@@ -381,7 +426,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Ashish Kumar</h4>
                     <h6 class="card-subtitle">JP Morgan</h6>
                     <p class="text-white">14 LPA </p>
@@ -392,7 +437,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">M. Satish Reddy</h4>
                     <h6 class="card-subtitle">JP Morgan</h6>
                     <p class="text-white">14 LPA </p>
@@ -403,7 +448,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Shreya Vijay</h4>
                     <h6 class="card-subtitle">JP Morgan</h6>
                     <p class="text-white">14 LPA </p>
@@ -414,7 +459,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Shubham Arora</h4>
                     <h6 class="card-subtitle">JP Morgan</h6>
                     <p class="text-white">14 LPA </p>
@@ -425,7 +470,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Nidheesh Panchal</h4>
                     <h6 class="card-subtitle">JP Morgan</h6>
                     <p class="text-white">14 LPA </p>
@@ -436,7 +481,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Aditya Sinha</h4>
                     <h6 class="card-subtitle">JP Morgan</h6>
                     <p class="text-white">14 LPA </p>
@@ -447,7 +492,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Prakriti Sankla</h4>
                     <h6 class="card-subtitle">JP Morgan</h6>
                     <p class="text-white">14 LPA </p>
@@ -458,7 +503,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Divya Gupta</h4>
                     <h6 class="card-subtitle">Salesforce</h6>
                     <p class="text-white">30.82 LPA </p>
@@ -469,7 +514,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Aashish Goel</h4>
                     <h6 class="card-subtitle">Salesforce</h6>
                     <p class="text-white">30.82 LPA </p>
@@ -480,7 +525,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Tarishi Jain</h4>
                     <h6 class="card-subtitle">Salesforce</h6>
                     <p class="text-white">30.82 LPA </p>
@@ -491,7 +536,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Gaurav Kabra</h4>
                     <h6 class="card-subtitle">Salesforce</h6>
                     <p class="text-white">30.82 LPA </p>
@@ -502,7 +547,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Shivani Khandelwal</h4>
                     <h6 class="card-subtitle">Salesforce</h6>
                     <p class="text-white">30.82 LPA </p>
@@ -513,7 +558,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Ramavatar Choudhary</h4>
                     <h6 class="card-subtitle">Amazon</h6>
                     <p class="text-white">28.75 LPA </p>
@@ -524,7 +569,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Shivanshu Vyas</h4>
                     <h6 class="card-subtitle">Amazon</h6>
                     <p class="text-white">28.75 LPA </p>
@@ -535,7 +580,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Narender Kumar Yadav</h4>
                     <h6 class="card-subtitle">Flipkart</h6>
                     <p class="text-white">23.84 LPA </p>
@@ -546,7 +591,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Aditya Raj</h4>
                     <h6 class="card-subtitle">Flipkart</h6>
                     <p class="text-white">23.84 LPA </p>
@@ -557,7 +602,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Sumit Kumar</h4>
                     <h6 class="card-subtitle">Bajaj Auto</h6>
                     <p class="text-white">8.72 LPA </p>
@@ -568,7 +613,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Himanshu Mangal</h4>
                     <h6 class="card-subtitle">Bajaj Auto</h6>
                     <p class="text-white">8.72 LPA </p>
@@ -579,7 +624,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Ankur Khandelwal</h4>
                     <h6 class="card-subtitle">Bajaj Auto</h6>
                     <p class="text-white">8.72 LPA </p>
@@ -590,7 +635,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Rahul Agarwal</h4>
                     <h6 class="card-subtitle">Bajaj Auto</h6>
                     <p class="text-white">8.72 LPA </p>
@@ -601,7 +646,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Kapil Saini</h4>
                     <h6 class="card-subtitle">Service Now</h6>
                     <p class="text-white">25 LPA </p>
@@ -612,7 +657,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Rahul Kumar</h4>
                     <h6 class="card-subtitle">Service Now</h6>
                     <p class="text-white">25 LPA </p>
@@ -623,7 +668,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Rishabh Kalakoti</h4>
                     <h6 class="card-subtitle">Service Now</h6>
                     <p class="text-white">25 LPA </p>
@@ -634,7 +679,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Srishti Agarwal</h4>
                     <h6 class="card-subtitle">Box8</h6>
                     <p class="text-white">17 LPA </p>
@@ -645,7 +690,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Chandni Dewani</h4>
                     <h6 class="card-subtitle">Box8</h6>
                     <p class="text-white">17 LPA </p>
@@ -656,7 +701,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Gaurav Bansal</h4>
                     <h6 class="card-subtitle">Airtel</h6>
                     <p class="text-white">14 LPA </p>
@@ -667,7 +712,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Mukul Kumar</h4>
                     <h6 class="card-subtitle">Airtel</h6>
                     <p class="text-white">14 LPA </p>
@@ -678,7 +723,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Harshita Agarwal</h4>
                     <h6 class="card-subtitle">Airtel</h6>
                     <p class="text-white">14 LPA </p>
@@ -689,7 +734,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Ronak Gupta</h4>
                     <h6 class="card-subtitle">Airtel</h6>
                     <p class="text-white">14 LPA </p>
@@ -700,7 +745,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Shivam Chandna</h4>
                     <h6 class="card-subtitle">Reliance</h6>
                     <p class="text-white">7.5 LPA </p>
@@ -711,7 +756,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Smrity Prakash</h4>
                     <h6 class="card-subtitle">Reliance</h6>
                     <p class="text-white">7.5 LPA </p>
@@ -722,7 +767,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Nishant Sharma</h4>
                     <h6 class="card-subtitle">Reliance</h6>
                     <p class="text-white">7.5 LPA </p>
@@ -733,7 +778,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Devesh Agarwal</h4>
                     <h6 class="card-subtitle">Reliance</h6>
                     <p class="text-white">7.5 LPA </p>
@@ -744,7 +789,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Anshika Maheshwari</h4>
                     <h6 class="card-subtitle">Reliance</h6>
                     <p class="text-white">7.5 LPA </p>
@@ -755,7 +800,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Vidhan Kumar</h4>
                     <h6 class="card-subtitle">Reliance</h6>
                     <p class="text-white">7.5 LPA </p>
@@ -766,7 +811,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Shivam Tyagi</h4>
                     <h6 class="card-subtitle">Reliance</h6>
                     <p class="text-white">7.5 LPA </p>
@@ -777,7 +822,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Yaashi Gupta</h4>
                     <h6 class="card-subtitle">Reliance</h6>
                     <p class="text-white">7.5 LPA </p>
@@ -788,7 +833,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Nishi Saraswat</h4>
                     <h6 class="card-subtitle">Reliance</h6>
                     <p class="text-white">7.5 LPA </p>
@@ -799,7 +844,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Bharat Kumar</h4>
                     <h6 class="card-subtitle">Reliance</h6>
                     <p class="text-white">7.5 LPA </p>
@@ -810,7 +855,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Kela Priyansh</h4>
                     <h6 class="card-subtitle">Reliance</h6>
                     <p class="text-white">7.5 LPA </p>
@@ -821,7 +866,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Vivek Sharma</h4>
                     <h6 class="card-subtitle">Reliance</h6>
                     <p class="text-white">7.5 LPA </p>
@@ -832,7 +877,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Chandrapal Singh</h4>
                     <h6 class="card-subtitle">Reliance</h6>
                     <p class="text-white">7.5 LPA </p>
@@ -843,7 +888,7 @@
     <div class="col-lg-3 col-xlg-3 col-md-5">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
-                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                <div class="align-self-center"> &lt;!&ndash;<img src="../assets/images/users/1.jpg" class="img-circle" width="100">&ndash;&gt;
                     <h4 class="card-title">Shubham</h4>
                     <h6 class="card-subtitle">QuadEye Security</h6>
                     <p class="text-white">17 LPA </p>
@@ -851,4 +896,4 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->

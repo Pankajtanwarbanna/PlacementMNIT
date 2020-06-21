@@ -9,6 +9,7 @@
   "author": "Pankaj Tanwar",
   "license": "ISC",
   "dependencies": {
+    "@sendgrid/mail": "^7.2.0",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.3",
     "dotenv": "^8.2.0",

@@ -68,7 +68,19 @@ function ensureStudent(req, res, next) {
     }
 }
 
+function ensureLoggedIn(req, res, next) {
+    if(!req.decoded.college_id) {
+        res.json({
+            success : false,
+            message : 'Please login.'
+        })
+    } else {
+        next();
+    }
+}
+
 module.exports = {
     ensureAdmin,
-    ensureStudent
+    ensureStudent,
+    ensureLoggedIn
 };
