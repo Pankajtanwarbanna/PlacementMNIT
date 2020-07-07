@@ -52,7 +52,7 @@ $ PORT=8080 node server.js
 
 Server would be running at port 8080. Open any browser. Access the project - http://localhost:8080/
 
-> You need to set environment variables PTP_EMAIL & PTP_EMAIL_PASSWORD otherwise email service will not work. For more info refer nodemailer transporter object - app/routes/api.js & app/routes/adminApi.js
+> You need to set environment variables PTP_EMAIL, PTP_EMAIL_PASSWORD, SECRET, SMS_API_KEY,SMS_SENDERID & SMS_BASE_URI in .env file (root folder). For more info refer nodemailer transporter object - app/routes/api.js & app/routes/adminApi.js
 
 ## Project Status
 
