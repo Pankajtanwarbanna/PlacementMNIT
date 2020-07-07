@@ -121,6 +121,40 @@
                         <li class="nav-item hidden-sm-up"> <a class="nav-link nav-toggler waves-effect waves-light" href="javascript:void(0)"><i class="ti-menu"></i></a></li>
                         <li class="nav-item d-none d-lg-block"><a class="nav-link nav-lock waves-effect waves-light" href="javascript:void(0)"><i class="ti-menu"></i></a></li>
 
+                        <!-- Notifications Feature -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="ti-email"></i>
+                                <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
+                            </a>
+                            <div class="dropdown-menu mailbox animated bounceInDown">
+                                <span class="with-arrow"><span class="bg-primary"></span></span>
+                                <ul>
+                                    <li>
+                                        <div class="drop-title bg-primary text-white">
+                                            <h4 class="m-b-0 m-t-5">1 New</h4>
+                                            <span class="font-light">Notification</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="message-center">
+                                            <!-- Message -->
+                                            <a href="javascript:void(0)">
+                                                <div class="btn btn-danger btn-circle"><i class="fa fa-bell"></i></div>
+                                                <div class="mail-contnet">
+                                                    <h5>Personalized Notifications </h5>
+                                                    <span class="mail-desc">We are thrilled to announce personalized notification feature to make Placement Portal more user friendly!</span>
+                                                    <span class="time">7 July, 9:30 AM</span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <!-- All Notifications  -->
+                                    <!--<li>
+                                        <a class="nav-link text-center m-b-5" href="javascript:void(0);"> <strong>Check all notifications</strong> <i class="fa fa-angle-right"></i> </a>
+                                    </li>-->
+                                </ul>
+                            </div>
+                        </li>
                     </ul>
                     <ul class="navbar-nav my-lg-0" ng-show="main.isLoggedIn">
                         <!-- ============================================================== -->
@@ -135,7 +169,7 @@
                                     <div class=""><img src="assets/images/profile/{{ main.gender}}.png" alt="user" class="img-circle" width="60"></div>
                                     <div class="m-l-10">
                                         <h4 class="m-b-0">{{ main.student_name }}</h4>
-                                        <p class=" m-b-0"> {{ main.permission }} </p>
+                                        <p class=" m-b-0"> {{ main.permission.toUpperCase() }} </p>
                                     </div>
                                 </div>
                                 <a class="dropdown-item" href="/profile"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
@@ -185,7 +219,7 @@
                             </ul>
                         </li>
                         <li> <a class="nav-toggler waves-effect waves-dark" href="/team" aria-expanded="false"><i class="icon-people"></i><span class="hide-menu">Team</span></a></li>
-                        <li ng-show="main.isLoggedIn"> <a class="nav-toggler waves-effect waves-dark" href="/technical" aria-expanded="false"><i class="icon-screen-desktop"></i><span class="hide-menu">Developer</span></a></li>
+                        <li> <a class="nav-toggler waves-effect waves-dark" href="/technical" aria-expanded="false"><i class="icon-screen-desktop"></i><span class="hide-menu">Developer</span></a></li>
                         <li> <a class="nav-toggler waves-effect waves-dark" href="/contact" aria-expanded="false"><i class="icon-phone"></i><span class="hide-menu">Contact Us </span></a></li>
                         <li> <a class="nav-toggler waves-effect waves-dark" href="/placements2019-20" aria-expanded="false"><span class="hide-menu">Hall of Fame &nbsp; <span class="badge badge-pill badge-primary text-white">New</span></span></a></li>
 

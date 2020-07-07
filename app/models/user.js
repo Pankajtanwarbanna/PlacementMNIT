@@ -47,6 +47,7 @@ var userSchema = new mongoose.Schema({
     },
     gender : {
         type : String,
+        default : 'M'
     },
     status : {
         type : String,

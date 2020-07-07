@@ -25,9 +25,9 @@
                         </div>-->
                     </div>
                     <h4 class="card-title m-t-10">{{ profile.userProfile.student_name }}</h4>
-                    <h6 class="card-subtitle">{{ profile.userProfile.department }} STUDENT</h6>
+                    <h6 class="card-subtitle">{{ profile.userProfile.department }}</h6>
                     <div class="row text-center">
-                        <div class="col-12"><a href="#" class="link"><i class="ti-location-pin"></i> <font class="font-medium">MNIT Jaipur</font></a></div>
+                        <div class="col-12"><a href="#" class="link"><i class="ti-crown"></i> <font class="font-medium">{{ profile.userProfile.passout_batch }} Batch</font></a></div>
                     </div>
                 </center>
             </div>
@@ -250,17 +250,24 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-12">Social Profile Link</label>
+                                <label class="col-md-12">LinkedIn Profile Link</label>
                                 <div class="col-md-12">
                                     <input type="text" placeholder="Enter your social profile link" class="form-control form-control-line" ng-value="profile.userProfile.linkedln_link" ng-model="profile.profileData.linkedln_link" required>
                                 </div>
                             </div>
 
+                            <!-- Loading Message -->
+                            <div class="alert alert-primary alert-rounded" ng-show="profile.profileUpdateLoadingMsg">
+                                <strong> Loading!</strong> Hold on. We are updating your data!
+                            </div>
+
+                            <!-- Success Message -->
                             <div class="alert alert-success alert-rounded" ng-show="profile.profileUpdateSuccessMsg">
                                 <i class="ti-face-smile"></i>
                                 <strong> Yay!</strong> {{ profile.profileUpdateSuccessMsg }}
                             </div>
 
+                            <!-- Error Message -->
                             <div class="alert alert-danger alert-rounded" ng-show="profile.profileUpdateErrorMsg">
                                 <i class="ti-face-sad"></i>
                                 <strong>Oops! </strong> {{ profile.profileUpdateErrorMsg }}
@@ -268,7 +275,7 @@
 
                             <div class="form-group">
                                 <div class="col-sm-12">
-                                    <button type="submit" class="btn btn-success">Update Profile</button>
+                                    <button type="submit" class="btn btn-success" ng-disabled="profile.profileUpdateLoadingMsg">Update Profile</button>
                                 </div>
                             </div>
                         </form>
@@ -278,42 +285,4 @@
         </div>
     </div>
     <!-- Column -->
-
-
-    <!-- Edit Profile Picture Modal box   -->
-    <div class="modal fade" id="editProfilePicture" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content" ng-show="!announcements.successMsg">
-                <form ng-submit="announcements.postAnnouncement(announcementData)">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="exampleModalLabel1">Add New Profile Picture</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    </div>
-                    <div class="modal-body">
-                        <input type="file" class="form-control">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success">Looks Good! Go on.</button>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-content" ng-show="announcements.successMsg">
-                <div class="modal-header">
-                    <h4 class="modal-title">Success</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body">
-                    <div class="modal-body">
-                        <div class="text-md-center">
-                            <i class="icon-check large-success-icon"></i>
-                            <h3 class="success-text">{{ announcements.successMsg }}</h3>
-                            <button type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
 </div>

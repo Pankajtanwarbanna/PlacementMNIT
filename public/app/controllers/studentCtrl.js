@@ -116,7 +116,6 @@ angular.module('studentController',['studentServices','textAngular'])
     }
 
     student.getCompanyDetails($routeParams.company_id).then(function (data) {
-        console.log(data)
         if(data.data.success) {
             app.companyDetail = data.data.companyDetail;
             convertAllDateStringsToDateObj(app.companyDetail);
@@ -302,6 +301,7 @@ angular.module('studentController',['studentServices','textAngular'])
     app.number = false;
     app.fetchedAnnouncements = false;
 
+    // Get all announcements
     function getAnnouncementsFunction () {
         student.getAnnouncements().then(function (data) {
             //console.log(data);
@@ -319,17 +319,22 @@ angular.module('studentController',['studentServices','textAngular'])
 
     app.successMsg = false;
     app.errorMsg = false;
+    app.postingAnnouncementsLoading = false;
 
     // Admin Stuff of posting announcement
     app.postAnnouncement = function (announcementData) {
         //console.log(announcementData);
+        app.postingAnnouncementsLoading = true;
+
         admin.postAnnouncement(announcementData).then(function (data) {
             //console.log(data);
             if(data.data.success) {
                 app.successMsg = data.data.message;
+                app.postingAnnouncementsLoading = false;
                 getAnnouncementsFunction();
             } else {
                 app.errorMsg = data.data.message;
+                app.postingAnnouncementsLoading = false;
             }
         })
     }
@@ -337,15 +342,17 @@ angular.module('studentController',['studentServices','textAngular'])
 
 
 // User Profile Controller
-.controller('profileCtrl', function (student) {
+.controller('profileCtrl', function (student, $timeout) {
 
 	var app = this;
 
+	// Success - Error Messages
 	app.profileUpdateSuccessMsg = '';
 	app.profileUpdateErrorMsg = '';
 
 	// getting user profile
 	student.getUserProfile().then(function (data) {
+	    console.log(data.data.profile);
 		if(data.data.success) {
 		    app.userProfile = data.data.profile;
 		}
@@ -353,13 +360,23 @@ angular.module('studentController',['studentServices','textAngular'])
 
 	// User user profile
 	app.updateProfile = function (profileData) {
-		console.log(app.profileData);
+	    // loading
+        app.profileUpdateLoadingMsg = true;
+        app.profileUpdateSuccessMsg = '';
+        app.profileUpdateErrorMsg = '';
+
+        // API call
 		student.updateProfile(app.profileData).then(function (data) {
-		    console.log(data);
 		    if(data.data.success) {
 		        app.profileUpdateSuccessMsg = data.data.message;
+                app.profileUpdateLoadingMsg = false;
+                // Remove Message after 3 seconds
+                $timeout(function () {
+                    app.profileUpdateSuccessMsg = '';
+                }, 3000);
 		    } else {
 		        app.profileUpdateErrorMsg = data.data.message;
+                app.profileUpdateLoadingMsg = false;
 		    }
 		});
 	}
@@ -367,21 +384,28 @@ angular.module('studentController',['studentServices','textAngular'])
 
 // User timeline controller
 .controller('timelineCtrl', function (student) {
-    var app = this;
+    let app = this;
 
     app.timelineLengthZero = false;
 
+    // get student timeline controller function
     student.getTimeline().then(function (data) {
-        console.log(data);
+        // Loading timeline message
+        app.getTimelineLoadingMsg = true;
+
         if(data.data.success) {
-            app.timelineData = data.data.candidateTimeline;
-            if(app.timelineData.length === 0) {
+            app.getTimelineLoadingMsg = false;
+            app.timeline = data.data.timeline;
+            if(app.timeline.length === 0) {
                 app.timelineLengthZero = true;
             } else {
                 app.timelineLengthZero = false;
             }
+        } else {
+            app.errorMsg = data.data.message;
+            app.getTimelineLoadingMsg = false;
         }
-    })
+    });
 })
 
 // technical controller
@@ -408,20 +432,30 @@ angular.module('studentController',['studentServices','textAngular'])
             document.getElementById('info').className = 'btn btn-outline-info';
             document.getElementById('danger').className = 'btn btn-outline-danger';
         }
-    }
+    };
 
+    // Send feedback function
     app.sendFeedback = function (feedbackData) {
-        console.log(app.feedbackData);
+
+        app.loading = true;
+        app.errorMsg = '';
+
         if(!app.feedbackTitle) {
             app.errorMsg = 'Select one category!'
+            app.loading = false;
         } else {
+
+            //  Set Title
             app.feedbackData.title = app.feedbackTitle;
+
+            console.log(app.feedbackData);
             student.sendFeedback(app.feedbackData).then(function (data) {
-                console.log(data);
                 if(data.data.success) {
                     app.successMsg = data.data.message;
+                    app.loading = false;
                 } else {
                     app.errorMsg = data.data.message;
+                    app.loading = false;
                 }
             })
         }

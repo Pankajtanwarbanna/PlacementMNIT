@@ -9,7 +9,7 @@ var Company = require('../models/company');
 var Interview = require('../models/interview');
 var auth = require('../middlewares/authPermission');
 var jwt = require('jsonwebtoken');
-var secret = 'placementmnit';
+var secret = process.env.SECRET;
 var nodemailer = require('nodemailer');
 //var sgTransport = require('nodemailer-sendgrid-transport');
 
@@ -231,6 +231,7 @@ module.exports = function (router){
         }
     });
 
+
     // Middleware to verify token
     router.use(function (req,res,next) {
 
@@ -264,7 +265,7 @@ module.exports = function (router){
 
         //console.log(req.decoded.email);
         // getting profile of user from database using email, saved in the token in localStorage
-        User.findOne({ college_id : req.decoded.college_id }).select('college_id student_name gender department red_flags passout_batch').exec(function (err, user) {
+        User.findOne({ college_id : req.decoded.college_id }).select('college_id student_name gender department red_flags passout_batch').lean().exec(function (err, user) {
             if(err) throw err;
 
             if(!user) {
@@ -278,7 +279,7 @@ module.exports = function (router){
     // get permission of user
     router.get('/permission', function (req,res) {
 
-        User.findOne({ college_id : req.decoded.college_id }).select('permission').exec(function (err,user) {
+        User.findOne({ college_id : req.decoded.college_id }).select('permission').lean().exec(function (err,user) {
 
             if(err) throw err;
 
@@ -297,34 +298,27 @@ module.exports = function (router){
     });
 
     // get all announcements
-    router.get('/getAnnouncements', function (req, res) {
-        if(!req.decoded.college_id) {
-            res.json({
-                success : false,
-                message : 'Please login.'
-            })
-        } else {
-            Announcement.find({ }, function (err, announcements) {
-                if(err) {
-                    res.json({
-                        success : false,
-                        message : 'Error while getting data.'
-                    })
-                }
+    router.get('/getAnnouncements', auth.ensureLoggedIn, function (req, res) {
+        Announcement.find({ }).select('category announcement').lean().exec( function (err, announcements) {
+            if(err) {
+                res.json({
+                    success : false,
+                    message : 'Error while getting data.'
+                })
+            }
 
-                if(!announcements) {
-                    res.json({
-                        success : false,
-                        message : 'Announcements not found.'
-                    })
-                } else {
-                    res.json({
-                        success : true,
-                        announcements : announcements
-                    })
-                }
-            })
-        }
+            if(!announcements) {
+                res.json({
+                    success : false,
+                    message : 'Announcements not found.'
+                })
+            } else {
+                res.json({
+                    success : true,
+                    announcements : announcements
+                })
+            }
+        })
     });
 
     // get companies details from db
@@ -386,7 +380,7 @@ module.exports = function (router){
                         message : 'User not found.'
                     })
                 } else {
-                    Company.find({ passout_batch : user.passout_batch, deadline_date : { $lt: new Date() }  }).select('company_name job_profile package deadline_date').exec(function (err, companies) {
+                    Company.find({ passout_batch : user.passout_batch, deadline_date : { $lt: new Date() }  }).select('company_name job_profile package deadline_date').lean().exec(function (err, companies) {
                         if(err) {
                             res.json({
                                 success : false,
@@ -412,84 +406,72 @@ module.exports = function (router){
     });
 
     // get company details
-    router.get('/getCompanyDetails/:company_id', function (req, res) {
+    router.get('/getCompanyDetails/:company_id', auth.ensureLoggedIn, function (req, res) {
 
-        if(!req.decoded.college_id) {
-            res.json({
-                success : false,
-                message : 'Please login.'
-            });
-        } else {
-            Company.findOne({ _id : req.params.company_id}).select('-candidates').lean().exec(function (err, companyDetail) {
-                if(err) {
-                    console.log(err);
-                    res.json({
-                        success : false,
-                        message : 'Error while getting data from database.'
-                    });
-                }
+        Company.findOne({ _id : req.params.company_id}).select('-candidates').lean().exec(function (err, companyDetail) {
+            if(err) {
+                console.log(err);
+                res.json({
+                    success : false,
+                    message : 'Error while getting data from database.'
+                });
+            }
 
-                if(!companyDetail) {
-                    res.json({
-                        success : false,
-                        message : 'Company not found.'
-                    });
-                } else {
-                    res.json({
-                        success : true,
-                        companyDetail : companyDetail
-                    })
-                }
-            })
-
-        }
+            if(!companyDetail) {
+                res.json({
+                    success : false,
+                    message : 'Company not found.'
+                });
+            } else {
+                res.json({
+                    success : true,
+                    companyDetail : companyDetail
+                })
+            }
+        })
     });
 
     // get candidate apply status in company
-    router.get('/getCandidateApplyStatus/:company_id', function (req, res) {
-        if(!req.decoded.college_id) {
-            res.json({
-                success : false,
-                message : 'Please login.'
-            });
-        } else {
-            Company.findOne({ _id : req.params.company_id}, function (err, company) {
-                if(err) {
-                    console.log(err);
+    router.get('/getCandidateApplyStatus/:company_id', auth.ensureStudent, function (req, res) {
+        Company.findOne({ _id : req.params.company_id}).select('candidates').lean().exec( function (err, company) {
+            if(err) {
+                console.log(err);
+                res.json({
+                    success : false,
+                    message : 'Database error.'
+                });
+            }
+            if(!company) {
+                res.json({
+                    success : false,
+                    message : 'Not applied.'
+                });
+            } else {
+                //console.log(company.candidates);
+                let isCandidateAlreadyRegistered = company.candidates.find(function (candidate) {
+                    return candidate.college_id === req.decoded.college_id
+                });
+
+                if(isCandidateAlreadyRegistered) {
                     res.json({
-                        success : false,
-                        message : 'Database error.'
+                        success : true,
+                        message : 'Applied',
+                        status : isCandidateAlreadyRegistered.candidate_status
                     });
-                }
-                // No candidate registered till now
-                if(!company) {
+                } else {
                     res.json({
                         success : false,
                         message : 'Not applied.'
-                    });
-                } else {
-                    console.log(company.candidates);
-
-                    if(company.candidates.find(candidate => candidate.college_id === req.decoded.college_id)) {
-                        res.json({
-                            success : true,
-                            message : 'Applied',
-                            status : company.candidates[company.candidates.indexOf(company.candidates.find(x => x.college_id === req.decoded.college_id))].candidate_status
-                        });
-                    } else {
-                        res.json({
-                            success : false,
-                            message : 'Not applied.'
-                        })
-                    }
+                    })
                 }
-            })
-        }
+            }
+        })
+
     });
 
     // register in a company by student
     router.post('/oneClickApply/:company_id', auth.ensureStudent, function (req, res) {
-        Company.findOne({ _id : req.params.company_id }, function (err, company) {
+        Company.findOne({ _id : req.params.company_id }).select('candidates').exec( function (err, company) {
             if(err) {
                 console.log(err);
                 res.json({
@@ -507,66 +489,17 @@ module.exports = function (router){
             } else {
                 // todo Check deadline date
                 // todo check eligibility criteria
-                // todo check if already applied
-                company.candidates.push({ college_id : req.decoded.college_id, timestamp : new Date()});
+                let isCandidateAlreadyRegistered = company.candidates.find(function (candidate) {
+                    return candidate.college_id === req.decoded.college_id;
+                });
 
-                company.save(function (err) {
-                    if(err) {
-                        console.log(err);
-                        res.json({
-                            success : false,
-                            message : 'Database error.'
-                        });
-                    } else {
-                        res.json({
-                            success : true,
-                            message : 'Successfully applied.'
-                        });
-                    }
-                })
-            }
-        })
-    });
-
-    // route to withdraw application
-    router.post('/withdrawApplication/:company_id', function (req, res) {
-        if(!req.decoded.college_id) {
-            res.json({
-                success : false,
-                message : 'Please login.'
-            })
-        } else {
-            Company.findOne({ _id : req.params.company_id }, function (err, company) {
-                if(err) {
-                    console.log(err);
-                    res.json({
-                        success : false,
-                        message : 'Database error.'
-                    });
-                }
-
-                if(!company) {
-                    // Company not found
-                    res.json({
-                        success : false,
-                        message : 'Company not found.'
-                    })
-                } else {
-
-                    // todo check timestamp
-                    let candidateIndex;
-
-                    for(let i=0;i<company.candidates.length;i++) {
-                        if(company.candidates[i].college_id === req.decoded.college_id) {
-                            candidateIndex = i;
-                            break;
-                        }
-                    }
-
-                    company.candidates.splice(candidateIndex,1);
+                if(!isCandidateAlreadyRegistered) {
+                    // push candidate details
+                    company.candidates.push({ college_id : req.decoded.college_id, timestamp : new Date()});
 
                     company.save(function (err) {
                         if(err) {
+                            console.log(err);
                             res.json({
                                 success : false,
                                 message : 'Database error.'
@@ -574,337 +507,332 @@ module.exports = function (router){
                         } else {
                             res.json({
                                 success : true,
-                                message : 'Registration successfully withdraw.'
+                                message : 'Successfully applied.'
                             });
                         }
                     })
+                } else {
+                    res.json({
+                        success : false,
+                        message : 'Already applied.'
+                    })
                 }
-            })
-        }
+            }
+        })
     });
 
-    // send feedback
-    router.post('/sendFeedback', function (req, res) {
-
-        // todo notification to PANKAJ TANWAR
-        let feedback = new Feedback();
-
-        feedback.title = req.body.title;
-        feedback.feedback = req.body.feedback;
-        feedback.author_name = req.decoded.student_name;
-        feedback.author_email = req.decoded.college_id + '@mnit.ac.in';
-
-        feedback.timestamp = new Date();
-
-        feedback.save(function (err) {
+    // route to withdraw application
+    router.post('/withdrawApplication/:company_id', auth.ensureStudent, function (req, res) {
+        Company.findOne({ _id : req.params.company_id }).select('candidates').exec( function (err, company) {
             if(err) {
                 console.log(err);
                 res.json({
                     success : false,
-                    message : 'Database error'
+                    message : 'Database error.'
+                });
+            }
+
+            if(!company) {
+                // Company not found
+                res.json({
+                    success : false,
+                    message : 'Company not found.'
                 })
             } else {
+                // todo check timestamp
+                // This method is 50% faster as compared to loop then splice and filter method
+                company.candidates.splice(company.candidates.map(function (candidate) {
+                    return candidate.college_id;
+                }).indexOf(req.decoded.college_id), 1);
+
+                company.save(function (err) {
+                    if(err) {
+                        res.json({
+                            success : false,
+                            message : 'Database error.'
+                        });
+                    } else {
+                        res.json({
+                            success : true,
+                            message : 'Registration successfully withdraw.'
+                        });
+                    }
+                })
+            }
+        })
+
+    });
+
+    // get user timeline
+    router.get('/getTimeline', auth.ensureLoggedIn, function (req, res) {
+
+        // Getting LoggedIn User's Passout batch
+        User.findOne({ college_id : req.decoded.college_id }).select('passout_batch').lean().exec(function (err, user) {
+            if(err) {
                 res.json({
-                    success : true,
-                    message : 'Thank you for submitting feedback.'
+                    success : false,
+                    message : 'Something went wrong!'
+                })
+            } else if(!user) {
+                res.json({
+                    success : false,
+                    message : 'User not found.'
+                })
+            } else {
+                // Filtering Companies as per passout batch of loggedIn User
+                Company.find({ passout_batch : user.passout_batch }).select('company_name candidates').lean().exec( function (err, companies) {
+                    if(err) {
+                        console.log(err);
+                        res.json({
+                            success : false,
+                            message : 'Something went wrong!'
+                        })
+                    } else if(!companies) {
+                        res.json({
+                            success : false,
+                            message : 'Company Data not found.'
+                        });
+                    } else {
+
+                        let timeline = [];
+
+                        // Check for each company
+                        companies.forEach(function (company) {
+                            // Find if candidates applied in the company
+                            let candidateApplyObject = company.candidates.find(function (candidate) {
+                                return candidate.college_id === req.decoded.college_id;
+                            });
+
+                            // Candidate applied in the company
+                            if(candidateApplyObject) {
+                                // timeline object
+                                let timelineObject = {
+                                    company_name : company.company_name,
+                                    status : candidateApplyObject.candidate_status,
+                                    timestamp : candidateApplyObject.timestamp
+                                };
+
+                                timeline.push(timelineObject);
+                            }
+                        });
+
+                        res.json({
+                            success : true,
+                            timeline : timeline
+                        })
+
+                    }
                 })
             }
         })
     });
 
-    // get user timeline
-    router.get('/getTimeline', function (req, res) {
-        if(!req.decoded.college_id) {
-            res.json({
-                success : false,
-                message : 'Please login.'
-            });
-        } else {
-            Company.find({  }, function (err, companyData) {
-                if(err) {
-                    console.log(err);
-                    res.json({
-                        success : false,
-                        message : 'Database error.'
-                    })
-                }
-
-                if(!companyData) {
-                    res.json({
-                        success : false,
-                        message : 'Company not found.'
-                    });
-                } else {
-
-                    // todo code optimization with reduceMap
-                    let candidateTimeline = [];
-
-                    // Used Let for scope purpose
-                    for(let i=0; i < companyData.length; i++) {
-                        if(companyData[i].candidates.find(obj => obj.college_id === req.decoded.college_id)) {
-
-                            let candidateTimelineObj = {};
-
-                            candidateTimelineObj.company_name = companyData[i].company_name;
-                            // todo company coming to MNIT date
-                            candidateTimelineObj.company_date = companyData[i].deadline_date;
-                            //console.log(candidatesData);
-                            candidateTimelineObj.timestamp = (companyData[i].candidates.find(obj => obj.college_id === req.decoded.college_id)).timestamp;
-                            candidateTimelineObj.status = (companyData[i].candidates.find(obj => obj.college_id === req.decoded.college_id)).candidate_status;
-
-                            candidateTimeline.push(candidateTimelineObj);
-                            console.log(candidateTimeline)
-                        }
-                    }
-
-                    console.log(candidateTimeline);
-                    res.json({
-                        success : true,
-                        candidateTimeline : candidateTimeline
-                    })
-
-                }
-            })
-        }
-    });
-
     // get user profile details
-    router.get('/getUserProfile', function (req, res) {
-        if(!req.decoded.college_id) {
-            res.json({
-                success : false,
-                message : 'Please login'
-            })
-        } else {
-            User.findOne({ college_id : req.decoded.college_id}, function (err, user) {
-                if(err) {
-                    res.json({
-                        success : false,
-                        message : 'Database error'
-                    })
-                }
-
-                if(!user) {
-                    res.json({
-                        success : false,
-                        message : 'User not found.'
-                    })
-                } else {
-                    res.json({
-                        success : true,
-                        profile : user
-                    })
-                }
-            })
-        }
+    router.get('/getUserProfile', auth.ensureLoggedIn, function (req, res) {
+        // exclude unnecessary fields to reduce load over network.
+        User.findOne({ college_id : req.decoded.college_id }).select(
+            '-temporarytoken -password -active -status -permission -program'
+        ).lean().exec( function (err, user) {
+            if(err) {
+                res.json({
+                    success : false,
+                    message : 'Database error'
+                })
+            } else if(!user) {
+                res.json({
+                    success : false,
+                    message : 'User not found.'
+                })
+            } else {
+                // Respond with user profile
+                res.json({
+                    success : true,
+                    profile : user
+                })
+            }
+        })
     });
 
 	// update user profile
-	router.put('/updateProfile', function (req, res) {
-		if(!req.decoded.college_id) {
-		    res.json({
-		        success : false,
-		        message : 'Please login.'
-		    })
-		} else {
-		    User.findOne({ college_id : req.decoded.college_id }, function (err, user) {
-		        if(err) {
-		            res.json({
-		                success : false,
-		                message : 'Error from database.'
-		            })
-		        }
+	router.put('/updateProfile', auth.ensureLoggedIn, function (req, res) {
+        User.findOne({ college_id : req.decoded.college_id }).select(
+            'matric_marks matric_board senior_marks senior_board alternate_contact_no address city state post_code country linkedln_link'
+        ).exec( function (err, user) {
+            if(err) {
+                res.json({
+                    success : false,
+                    message : 'Error from database.'
+                })
+            }
 
-		        if(!user) {
-		            res.json({
-		                success : false,
-		                message : 'User not found.'
-		            })
-		        } else {
+            if(!user) {
+                res.json({
+                    success : false,
+                    message : 'User not found.'
+                })
+            } else {
 
-		            // todo optimize code
-		            if(req.body.matric_marks) {
-		                user.matric_marks = req.body.matric_marks;
-		            }
-		            if(req.body.matric_board) {
-		                user.matric_board = req.body.matric_board;
-		            }
-		            if(req.body.senior_marks) {
-		                user.senior_marks = req.body.senior_marks;
-		            }
-		            if(req.body.senior_board) {
-		                user.senior_board = req.body.senior_board;
-		            }
-		            if(req.body.alternate_contact_no) {
-		                user.alternate_contact_no = req.body.alternate_contact_no;
-		            }
-		            if(req.body.address) {
-		                user.address = req.body.address;
-		            }
-		            if(req.body.city) {
-		                user.city = req.body.city;
-		            }
-		            if(req.body.post_code) {
-		                user.post_code = req.body.post_code;
-		            }
-		            if(req.body.state) {
-		                user.state = req.body.state;
-		            }
-		            if(req.body.country) {
-		                user.country = req.body.country;
-		            }
-		            if(req.body.linkedln_link) {
-		                user.linkedln_link = req.body.linkedln_link;
-		            }
-
-		            user.save(function (err) {
-		                if(err) {
-		                    console.log(err);
-		                    res.json({
-		                        success : false,
-		                        message : 'Error while saving to database.'
-		                    })
-		                } else {
-		                    res.json({
-		                        success : true,
-		                        message : 'Profile Successfully updated.'
-		                    })
-		                }
-		            })
-		        }
-		    })
-		}
-	});
-
-	// check profile is complete or not
-	router.get('/checkCompleteProfile', function (req, res) {
-	   if(!req.decoded.college_id) {
-		   res.json({
-		       success : false,
-		       message : 'Please login.'
-		   })
-	   } else {
-		   User.findOne({ college_id : req.decoded.college_id }, function (err, user) {
-		       if(err) {
-		           res.json({
-		               success : false,
-		               message : 'Error from database.'
-		           })
-		       }
-		      
-		       if(!user) {
-		           res.json({
-		               success : false,
-		               message : 'User not found'
-		           })
-		       } else {
-		           if(!user.matric_marks || !user.matric_board || !user.senior_marks || !user.senior_board || !user.alternate_contact_no || !user.address || !user.city || !user.post_code || !user.state || !user.country || !user.linkedln_link ) {
-		               res.json({
-		                   success : false,
-		                   message : 'Profile fields missing'
-		               })
-		           } else {
-		               res.json({
-		                   success : true,
-		                   message : 'Profile is complete!'
-		               })
-		           }
-		       }
-		   })
-	   }
-	});
-
-    // get company attendance status
-    router.get('/getAttendanceStatus/:company_id', function (req, res) {
-        if(!req.decoded.college_id) {
-            res.json({
-                success : false,
-                message : 'Please login.'
-            })
-        } else {
-            Company.findOne({ _id : req.params.company_id}, function (err, company) {
-                if(err) {
-                    res.json({
-                        success : false,
-                        message : 'Database error.'
-                    })
+                // todo optimize code
+                if(req.body.matric_marks) {
+                    user.matric_marks = req.body.matric_marks;
+                }
+                if(req.body.matric_board) {
+                    user.matric_board = req.body.matric_board;
+                }
+                if(req.body.senior_marks) {
+                    user.senior_marks = req.body.senior_marks;
+                }
+                if(req.body.senior_board) {
+                    user.senior_board = req.body.senior_board;
+                }
+                if(req.body.alternate_contact_no) {
+                    user.alternate_contact_no = req.body.alternate_contact_no;
+                }
+                console.log(req.body);
+                if(req.body.address) {
+                    user.address = req.body.address;
+                }
+                if(req.body.city) {
+                    user.city = req.body.city;
+                }
+                if(req.body.post_code) {
+                    user.post_code = req.body.post_code;
+                }
+                if(req.body.state) {
+                    user.state = req.body.state;
+                }
+                if(req.body.country) {
+                    user.country = req.body.country;
+                }
+                if(req.body.linkedln_link) {
+                    user.linkedln_link = req.body.linkedln_link;
                 }
 
-                if(!company) {
+                user.save(function (err) {
+                    if(err) {
+                        console.log(err);
+                        res.json({
+                            success : false,
+                            message : 'Error while saving to database.'
+                        })
+                    } else {
+                        res.json({
+                            success : true,
+                            message : 'Profile Successfully updated.'
+                        })
+                    }
+                })
+            }
+        })
+
+    });
+
+	// check profile is complete or not
+	router.get('/checkCompleteProfile', auth.ensureLoggedIn, function (req, res) {
+
+	    // Get User
+        User.findOne({ college_id : req.decoded.college_id }).select('matric_marks matric_board senior_marks senior_board address alternate_contact_no city state post_code country linkedln_link').lean().exec( function (err, user) {
+            if(err) {
+                res.json({
+                    success : false,
+                    message : 'Error from database.'
+                })
+            } else if(!user) {
+                res.json({
+                    success : false,
+                    message : 'User not found'
+                })
+            } else {
+                if(!user.matric_marks || !user.matric_board || !user.senior_marks || !user.senior_board || !user.alternate_contact_no || !user.address || !user.city || !user.post_code || !user.state || !user.country || !user.linkedln_link ) {
                     res.json({
                         success : false,
-                        message : 'Company Not found.'
+                        message : 'Profile fields missing'
                     })
                 } else {
                     res.json({
                         success : true,
-                        attendanceStatus : company.attendance,
-                        company_otp : company.company_otp
+                        message : 'Profile is complete!'
                     })
                 }
-            })
-        }
+            }
+        })
+	});
+
+    // get company attendance status
+    router.get('/getAttendanceStatus/:company_id', auth.ensureLoggedIn, function (req, res) {
+
+        Company.findOne({ _id : req.params.company_id}).select('attendance company_otp').lean().exec( function (err, company) {
+            if(err) {
+                res.json({
+                    success : false,
+                    message : 'Database error.'
+                })
+            } else if(!company) {
+                res.json({
+                    success : false,
+                    message : 'Company Not found.'
+                })
+            } else {
+                res.json({
+                    success : true,
+                    attendanceStatus : company.attendance,
+                    company_otp : company.company_otp
+                })
+            }
+        })
     });
 
     // mark attendance
-    router.post('/markCompanyAttendance/:company_id', function (req, res) {
-        if(!req.decoded.college_id) {
-            res.json({
-                success : false,
-                message : 'Please login.'
-            })
-        } else {
-            Company.findOne({ _id : req.params.company_id}, function (err, company) {
-                if(err) {
-                    res.json({
-                        success : false,
-                        message : 'Error from database'
-                    })
-                }
+    router.post('/markCompanyAttendance/:company_id', auth.ensureLoggedIn, function (req, res) {
+        Company.findOne({ _id : req.params.company_id}).select('attendance company_otp candidates').exec( function (err, company) {
+            if(err) {
+                res.json({
+                    success : false,
+                    message : 'Error from database'
+                })
+            } else if(!company) {
+                res.json({
+                    success : false,
+                    message : 'Company not found.'
+                })
+            } else {
+                if(company.attendance) {
+                    if(company.company_otp === req.body.otp) {
+                        let index = company.candidates.indexOf(company.candidates.find(x => x.college_id === req.decoded.college_id));
 
-                if(!company) {
-                    res.json({
-                        success : false,
-                        message : 'Company not found.'
-                    })
-                } else {
-                    if(company.attendance) {
-                        if(company.company_otp === req.body.otp) {
-                            var index = company.candidates.indexOf(company.candidates.find(x => x.college_id === req.decoded.college_id));
+                        company.candidates[index].candidate_status = 'Appeared';
 
-                            company.candidates[index].candidate_status = 'Appeared for Test';
-
-                            company.save(function (err) {
-                                if(err) {
-                                    res.json({
-                                        success : false,
-                                        message : 'Database error'
-                                    })
-                                } else {
-                                    res.json({
-                                        success : true,
-                                        message : 'Attendance successfully marked.'
-                                    })
-                                }
-                            })
-                        } else {
-                            res.json({
-                                success : false,
-                                message : 'Incorrect OTP'
-                            })
-                        }
+                        company.save(function (err) {
+                            if(err) {
+                                res.json({
+                                    success : false,
+                                    message : 'Database error'
+                                })
+                            } else {
+                                res.json({
+                                    success : true,
+                                    message : 'Attendance successfully marked.'
+                                })
+                            }
+                        })
                     } else {
                         res.json({
                             success : false,
-                            message : 'Attendance is closed.'
+                            message : 'Incorrect OTP'
                         })
                     }
+                } else {
+                    res.json({
+                        success : false,
+                        message : 'Attendance is closed.'
+                    })
                 }
-            })
-        }
+            }
+        })
+
     });
 
-    // mark ref flag to absent students
+    // mark ref flag to absent students - Shift it to Admin
     router.post('/sendEmailToAbsentAndMarkRedFlag/:company_id', function (req, res) {
         if(!req.decoded.college_id) {
             res.json({
@@ -981,149 +909,27 @@ module.exports = function (router){
     });
 
     // change password
-    router.post('/changePassword', function (req, res) {
-        if(!req.decoded.college_id) {
-            res.json({
-                success : false,
-                message : 'Please login first.'
-            })
-        } else {
-            User.findOne({ college_id : req.decoded.college_id }).select('password').exec(function (err, user) {
-                if(err) {
+    router.post('/changePassword', auth.ensureLoggedIn, function (req, res) {
+
+        User.findOne({ college_id : req.decoded.college_id }).select('password').exec(function (err, user) {
+            if(err) {
+                res.json({
+                    success : false,
+                    message : 'Something went wrong!'
+                })
+            } else {
+                if(!user) {
                     res.json({
                         success : false,
-                        message : 'Something went wrong!'
+                        message : 'User not found.'
                     })
                 } else {
-                    if(!user) {
-                        res.json({
-                            success : false,
-                            message : 'User not found.'
-                        })
-                    } else {
-                        let validPassword = user.comparePassword(req.body.old_password);
+                    let validPassword = user.comparePassword(req.body.old_password);
 
-                        if(validPassword) {
-                            user.password = req.body.new_password;
+                    if(validPassword) {
+                        user.password = req.body.new_password;
 
-                            user.save(function (err) {
-                                if(err) {
-                                    res.json({
-                                        success : false,
-                                        message : 'Something went wrong!'
-                                    })
-                                } else {
-                                    res.json({
-                                        success : true,
-                                        message : 'Password successfully updated.'
-                                    })
-                                }
-                            })
-                        } else {
-                            res.json({
-                                success : false,
-                                message : 'Old Password is incorrect.'
-                            })
-                        }
-                    }
-                }
-            })
-        }
-    });
-
-    // get all interview experiences
-    router.get('/getAllInterviewExperiences', function (req, res) {
-        if(!req.decoded.college_id) {
-            res.json({
-                success : false,
-                message : 'Please login.'
-            })
-        } else {
-            Interview.find({ status : 'approved' }).select('title experience author_name created_at tags').lean().exec(function (err, interviews) {
-                if(err) {
-                    res.json({
-                        success : false,
-                        message : 'Something went wrong!'
-                    })
-                } else {
-                    if(!interviews) {
-                        res.json({
-                            success : false,
-                            message : 'Interview not found.'
-                        })
-                    } else {
-                        res.json({
-                            success : true,
-                            interviews : interviews
-                        })
-                    }
-                }
-            })
-        }
-    });
-
-    // get interview experience
-    router.get('/getExperience/:experience_id', function (req, res) {
-        if(!req.decoded.college_id) {
-            res.json({
-                success : false,
-                message : 'Please login.'
-            })
-        } else {
-            Interview.findOne({ _id : req.params.experience_id }).lean().exec(function (err, experience) {
-                if(err) {
-                    res.json({
-                        success : false,
-                        message : 'Something went wrong!'
-                    })
-                } else {
-                    if(!experience) {
-                        res.json({
-                            success : false,
-                            message : 'Interview experience not found.'
-                        })
-                    } else {
-                        res.json({
-                            success : true,
-                            experience : experience
-                        })
-                    }
-                }
-            })
-        }
-    });
-
-    // Posting Interview experiences
-    router.post('/postInterviewExperience', function (req, res) {
-        if(!req.decoded.college_id) {
-            res.json({
-                success : false,
-                message : 'Please login.'
-            })
-        } else {
-            User.findOne({ college_id : req.decoded.college_id }).select('student_name').exec(function (err, user) {
-                if(err) {
-                    res.json({
-                        success : false,
-                        message : 'Something went wrong!'
-                    })
-                } else {
-                    if(!user) {
-                        res.json({
-                            success : false,
-                            message : 'User not found.'
-                        })
-                    } else {
-                        let interview = new Interview();
-
-                        interview.title = req.body.title;
-                        interview.experience = req.body.experience;
-                        interview.tags = req.body.tags;
-                        interview.author_id = req.decoded.college_id;
-                        interview.author_name = user.student_name;
-                        interview.created_at = new Date();
-
-                        interview.save(function (err) {
+                        user.save(function (err) {
                             if(err) {
                                 res.json({
                                     success : false,
@@ -1132,45 +938,178 @@ module.exports = function (router){
                             } else {
                                 res.json({
                                     success : true,
-                                    message : 'Thanks for your contribution! Sit back and relax while our reviewers approves your interview experience.'
+                                    message : 'Password successfully updated.'
                                 })
                             }
                         })
-                    }
-                }
-            })
-        }
-    });
-
-    // get contributions
-    router.get('/getContributions', function (req, res) {
-        if(!req.decoded.college_id) {
-            res.json({
-                success : false,
-                message : 'Please login.'
-            })
-        } else {
-            Interview.find({ author_id : req.decoded.college_id }).lean().exec(function (err, interviews) {
-                if(err) {
-                    res.json({
-                        success : false,
-                        message : 'Something went wrong!'
-                    })
-                } else {
-                    if(!interviews) {
-                        res.json({
-                            success : false,
-                            message : 'Interviews not found.'
-                        })
                     } else {
                         res.json({
-                            success : true,
-                            interviews : interviews
+                            success : false,
+                            message : 'Old Password is incorrect.'
                         })
                     }
                 }
-            })
-        }
+            }
+        })
+    });
+
+    // get all interview experiences
+    router.get('/getAllInterviewExperiences', auth.ensureLoggedIn, function (req, res) {
+        Interview.find({ status : 'approved' }).select('title experience author_name tags').lean().exec(function (err, interviews) {
+            if(err) {
+                res.json({
+                    success : false,
+                    message : 'Something went wrong!'
+                })
+            } else {
+                if(!interviews) {
+                    res.json({
+                        success : false,
+                        message : 'Interview not found.'
+                    })
+                } else {
+                    res.json({
+                        success : true,
+                        interviews : interviews
+                    })
+                }
+            }
+        })
+
+    });
+
+    // get interview experience
+    router.get('/getExperience/:experience_id', auth.ensureLoggedIn, function (req, res) {
+        Interview.findOne({ _id : req.params.experience_id }).lean().exec(function (err, experience) {
+            if(err) {
+                res.json({
+                    success : false,
+                    message : 'Something went wrong!'
+                })
+            } else {
+                if(!experience) {
+                    res.json({
+                        success : false,
+                        message : 'Interview experience not found.'
+                    })
+                } else {
+                    res.json({
+                        success : true,
+                        experience : experience
+                    })
+                }
+            }
+        })
+    });
+
+    // Posting Interview experiences
+    router.post('/postInterviewExperience', auth.ensureLoggedIn, function (req, res) {
+
+        let interview = new Interview({
+            title : req.body.title,
+            experience : req.body.experience,
+            tags : req.body.tags,
+            author_id : req.decoded.college_id,
+            author_name : req.decoded.student_name,
+            created_at : new Date()
+        });
+
+        interview.save(function (err) {
+            if(err) {
+                res.json({
+                    success : false,
+                    message : 'Something went wrong!'
+                })
+            } else {
+                res.json({
+                    success : true,
+                    message : 'Thanks for your contribution! Sit back and relax while our reviewers approves your interview experience.'
+                })
+            }
+        })
+
+    });
+
+    // send feedback - LoggedIn
+    router.post('/sendFeedback', function (req, res) {
+
+        // todo notification to PANKAJ TANWAR
+        let feedback = new Feedback({
+            title : req.body.title,
+            feedback : req.body.feedback,
+            author_name : req.decoded.student_name,
+            author_email : req.decoded.college_id + '@mnit.ac.in',
+            timestamp : new Date()
+        });
+
+        feedback.save(function (err) {
+            if(err) {
+                console.log(err);
+                res.json({
+                    success : false,
+                    message : 'Some fields are empty.'
+                })
+            } else {
+                res.json({
+                    success : true,
+                    message : 'Thank you for submitting feedback.'
+                })
+            }
+        })
+    });
+
+
+    // send feedback - Not LoggedIn
+    router.post('/sendFeedback', function (req, res) {
+
+        // todo notification to PANKAJ TANWAR
+        let feedback = new Feedback({
+            title : req.body.title,
+            feedback : req.body.feedback,
+            author_name : req.decoded.student_name,
+            author_email : req.body.college_id + '@mnit.ac.in',
+            timestamp : new Date()
+        });
+
+        feedback.save(function (err) {
+            if(err) {
+                console.log(err);
+                res.json({
+                    success : false,
+                    message : 'Something went wrong! May be some fields are empty.'
+                })
+            } else {
+                res.json({
+                    success : true,
+                    message : 'Thank you for submitting feedback.'
+                })
+            }
+        })
+    });
+
+
+    // get contributions
+    router.get('/getContributions', auth.ensureLoggedIn, function (req, res) {
+        Interview.find({ author_id : req.decoded.college_id }).lean().exec(function (err, interviews) {
+            if(err) {
+                res.json({
+                    success : false,
+                    message : 'Something went wrong!'
+                })
+            } else {
+                if(!interviews) {
+                    res.json({
+                        success : false,
+                        message : 'Interviews not found.'
+                    })
+                } else {
+                    res.json({
+                        success : true,
+                        interviews : interviews
+                    })
+                }
+            }
+        })
     });
 
 

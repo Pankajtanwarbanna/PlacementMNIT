@@ -2,25 +2,28 @@
     <div class="col-md-5 align-self-center">
         <h4 class="text-themecolor">A bit about me!</h4>
     </div>
-    <div class="col-md-7 align-self-center text-right" ng-show="main.authorized">
+    <!-- Only Admin -->
+    <div class="col-md-7 align-self-center text-right" ng-show="main.isLoggedIn && main.permission === 'admin'">
         <div class="d-flex justify-content-end align-items-center">
             <a href="/feedbacks" class="btn btn-primary d-none d-lg-block m-l-15"><i class="ti-clip"></i> View Feedbacks</a>
         </div>
     </div>
 </div>
 
-<!-- Row -->
-<div class="row">
+
+
+<!-- Row - If User is LoggedIn -->
+<div class="row" ng-show="main.isLoggedIn">
     <!-- Column -->
     <div class="col-lg-4 col-xlg-3 col-md-5">
         <div class="card">
             <div class="card-body">
                 <center class="m-t-30">
-                    <img src="assets/images/team/pankaj.jpg" class="img-circle" width="150" />
+                    <img src="https://res.cloudinary.com/placements-mnit/image/upload/v1593673496/team/pankaj-tanwar.jpg" class="img-circle" width="150" />
                     <h4 class="card-title m-t-10">Pankaj Tanwar</h4>
-                    <h6 class="card-subtitle">Computer Science Final Year Student</h6>
+                    <h6 class="card-subtitle">Node.Js Developer, JavaScript Enthusiast</h6>
                     <div class="row text-center">
-                        <div class="col-12"><a href="#" class="link"><i class="ti-location-pin"></i> <font class="font-medium">MNIT Jaipur</font></a></div>
+                        <div class="col-12"><a href="#" class="link"><i class="ti-crown"></i> <font class="font-medium">CSE'20 MNIT Jaipur</font></a></div>
                     </div>
                 </center>
             </div>
@@ -33,9 +36,9 @@
                 <h6>+91 7740996673</h6>
                 <small class="text-muted p-t-30 db">Social Profile</small>
                 <br/>
+                <a href="https://github.com/Pankajtanwarbanna" target="_blank"><button class="btn btn-circle btn-secondary"><i class="icon-social-github"></i></button></a>
                 <a href="https://www.facebook.com/pankajtanwar.bannaji" target="_blank"><button class="btn btn-circle btn-secondary"><i class="icon-social-facebook"></i></button></a>
                 <a href="https://www.linkedin.com/in/pankajtanwarbanna/" target="_blank"><button class="btn btn-circle btn-secondary"><i class="icon-social-linkedin"></i></button></a>
-                <a href="https://github.com/Pankajtanwarbanna" target="_blank"><button class="btn btn-circle btn-secondary"><i class="icon-social-github"></i></button></a>
             </div>
         </div>
     </div>
@@ -76,6 +79,7 @@
                             <br>
                             <div class="row">
 
+                                <!-- Feedback -->
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <label class="col-md-12">Your Feedback</label>
@@ -86,24 +90,67 @@
                                 </div>
                             </div>
 
-                            <div class="alert alert-success alert-rounded" ng-show="technical.successMsg">
-                                <i class="icon-check"></i>
-                                <strong> Yay!</strong> {{ technical.successMsg }}
+
+                            <!-- Loading Message -->
+                            <div class="alert alert-primary alert-rounded" ng-show="technical.loading">
+                                <strong> Loading!</strong> Hold on! your message is on the way...
+                            </div>
+                            <!-- Error Message -->
+                            <div class="alert alert-danger alert-rounded" ng-show="technical.errorMsg">
+                                <i class="ti-face-sad"></i>
+                                <strong> Oops!</strong> {{ technical.errorMsg }}!
                             </div>
 
-                            <div class="alert alert-danger alert-rounded" ng-show="technical.errorMsg">
-                                <i class="icon-close"></i>
-                                <strong>Oops! </strong> {{ technical.errorMsg }}
+                            <!-- Success Msg -->
+                            <div class="alert alert-success alert-rounded" ng-show="technical.successMsg">
+                                <i class="ti-face-smile"></i>
+                                <strong> Yay!</strong> {{ technical.successMsg }}
                             </div>
 
                             <div class="form-group">
                                 <div class="col-sm-12">
-                                    <button ng-disabled="technical.successMsg"  type="submit" class="btn btn-success">Shoot!</button>
+                                    <button ng-disabled ="technical.successMsg"  type="submit" class="btn btn-success">Shoot!</button>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+</div>
+
+
+
+<!-- Row - If User is not logged In.-->
+<div class="row" ng-show="!main.isLoggedIn">
+    <!-- Column -->
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <center class="m-t-30">
+                    <img src="https://res.cloudinary.com/placements-mnit/image/upload/v1593673496/team/pankaj-tanwar.jpg" class="img-circle" width="150" />
+                    <h4 class="card-title m-t-10">Pankaj Tanwar</h4>
+                    <h6 class="card-subtitle">Node.Js Developer, JavaScript Enthusiast</h6>
+                    <div class="row text-center">
+                        <div class="col-12"><a href="#" class="link"><i class="ti-crown"></i> <font class="font-medium">CSE'20 MNIT Jaipur</font></a></div>
+                    </div>
+                </center>
+            </div>
+            <div>
+                <hr>
+            </div>
+            <div class="card-body text-center">
+                <small class="text-muted">Email address </small>
+                <h6>2016ucp1381@mnit.ac.in</h6>
+                <small class="text-muted p-t-30 db">Contact No.</small>
+                <h6>+91 7740996673</h6>
+                <small class="text-muted p-t-30 db">Social Profile</small>
+                <br/>
+                <a href="https://github.com/Pankajtanwarbanna" target="_blank"><button class="btn btn-circle btn-secondary"><i class="icon-social-github"></i></button></a>
+                <a href="https://www.facebook.com/pankajtanwar.bannaji" target="_blank"><button class="btn btn-circle btn-secondary"><i class="icon-social-facebook"></i></button></a>
+                <a href="https://www.linkedin.com/in/pankajtanwarbanna/" target="_blank"><button class="btn btn-circle btn-secondary"><i class="icon-social-linkedin"></i></button></a>
             </div>
         </div>
     </div>

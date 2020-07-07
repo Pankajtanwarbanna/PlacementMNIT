@@ -234,12 +234,17 @@ angular.module('adminController', ['adminServices'])
 
     // update company details
     app.updateCompanyDetails = function (company) {
+
+        // Loading message while details are updating
+        app.loading = true;
+
         admin.updateCompanyDetails(company).then(function (data) {
             if(data.data.success) {
                 app.successMsg = data.data.message;
+                app.loading = false;
             } else {
                 app.errorMsg = data.data.message;
-                console.log(data.data.error);
+                app.loading = false;
             }
         })
     }
@@ -248,38 +253,94 @@ angular.module('adminController', ['adminServices'])
 .controller('registeredStudentsCtrl', function ($routeParams,student, admin,$scope) {
     let app = this;
 
+    // Loading Message
+    app.getRegisteredStudentsLoading = true;
+
+    // Get Total Registered Students Function
     function totalRegisteredStudent() {
-
-        app.registeredStudentsData = [];
-
         admin.getRegisteredStudents($routeParams.company_id).then(function (data) {
             if(data.data.success) {
-                app.studentsData = data.data.candidates;
-                app.company_name = data.data.name;
-                //console.log(app.studentsData);
-                for(var i=0;i < app.studentsData.length;i++) {
-                    admin.getStudentDetailsByCollegeID(app.studentsData[i].college_id).then(function (data) {
-                        if(data.data.success) {
-                            app.registeredStudentsData.push(data.data.user);
-                        }
-                    })
-                }
+                app.company = data.data.company;
+                app.getRegisteredStudentsLoading = false;
+            } else {
+                app.errorMsg = data.data.message;
+                app.getRegisteredStudentsLoading = false;
             }
         });
     }
 
     totalRegisteredStudent();
 
+    // Delete Registration
     $scope.withdrawRegistration = function (college_id) {
-        console.log(college_id);
 
+        // Loading True
+        app.getRegisteredStudentsLoading = true;
+
+        // Withdraw Candidates Registration
         student.withdrawRegistration(college_id,$routeParams.company_id).then(function (data) {
-            console.log(data);
             if(data.data.success) {
                 totalRegisteredStudent();
             }
         })
     }
+})
+
+// Coordinator Controller
+.controller('coordinatorCtrl', function (admin, $scope) {
+
+    let app = this;
+
+    // By Default
+    $scope.selectedRole = 'spc';
+
+    // get all coordinators from DB
+    function getAllCoordinators() {
+
+        app.getAllCoordinatorsLoading = true;
+
+        admin.getAllCoordinators().then(function (data) {
+            if(data.data.success) {
+                app.ptpCoordinators = data.data.coordinators;
+                app.getAllCoordinatorsLoading = false;
+            } else {
+                app.errorMsg = data.data.message;
+                app.getAllCoordinatorsLoading = false;
+            }
+        })
+    }
+
+    getAllCoordinators();
+
+    // add coordinator form submission
+    app.addCoordinator = function (coordinatorData) {
+        // loading
+        app.loading = true;
+        app.loadingMsg = 'Hold on, adding new coordinator..';
+
+        admin.addCoordinator(app.coordinatorData).then(function (data) {
+            if(data.data.success) {
+                app.loadingMsg = data.data.message + '. Notifying coordinator...';
+                app.errorMsg = '';
+
+                admin.notifyCoordinatorForRegistration(app.coordinatorData).then(function (data) {
+                    console.log(data);
+                    if(data.data.success) {
+                        app.successMsg = data.data.message;
+                        app.loading = false;
+                        getAllCoordinators();
+                    } else {
+                        app.errorMsg = data.data.message;
+                        app.loading = false;
+                    }
+                });
+            } else {
+                app.errorMsg = data.data.message;
+                app.loading = false;
+            }
+        })
+    }
+
 })
 
 .controller('studentsManagementCtrl', function ($scope, admin) {

@@ -13,29 +13,39 @@
                <h4 class="card-title">MNIT Placement Portal Login</h4>
                <h6 class="card-subtitle">Login for the placement session</h6>
                <form class="form-material m-t-40" ng-submit="main.doLogin(logData);">
+                   <!-- College ID Input -->
                    <div class="form-group">
                        <label>College ID </label>
                        <input type="text" class="form-control form-control-line" placeholder="Enter your college id" ng-model="main.logData.college_id" required>
                    </div>
-
+                   
+                   <!-- Password Input-->
                    <div class="form-group">
                        <label>Password </label>
-                       <input type="password" class="form-control form-control-line" placeholder="Enter your password" ng-model="main.logData.password">
+                       <input type="password" class="form-control form-control-line" placeholder="Enter your password" ng-model="main.logData.password" required>
+                   </div>
+                   
+                   <!-- Loading Message -->
+                   <div class="alert alert-primary alert-rounded" ng-show="main.loading">
+                       <strong> Loading!</strong> Hold on! Logging you in...
+                   </div>
+                   <!-- Error Message -->
+                   <div class="alert alert-danger alert-rounded" ng-show="main.errorMsg">
+                       <i class="ti-face-sad"></i>
+                       <strong> Oops!</strong> {{ main.errorMsg }}!
                    </div>
 
+                   <!-- Success Msg -->
                    <div class="alert alert-success alert-rounded" ng-show="main.successMsg">
-                       <i class="icon-check"></i>
+                       <i class="ti-face-smile"></i>
                        <strong> Yay!</strong> {{ main.successMsg }}
                    </div>
 
-                   <div class="alert alert-danger alert-rounded" ng-show="main.errorMsg">
-                       <i class="icon-close"></i>
-                       <strong>Oops! </strong> {{ main.errorMsg }}
+                   <div ng-show="!main.successMsg">
+                       <button type="submit" ng-disabled="main.loading" class="btn btn-success btn-rounded">Login</button>
+                       <a href="/reset-password" class="text-danger p-l-5">Reset Password?</a>
+
                    </div>
-
-                   <button type="submit" class="btn btn-success btn-rounded">Login</button>
-                   <a href="/reset-password" class="text-danger p-l-5">Reset Password?</a>
-
                </form>
            </div>
        </div>

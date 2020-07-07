@@ -57,7 +57,7 @@ var app = angular.module('userRoutes', ['ngRoute'])
                authenticated : true,
                controller : 'addNewCompanyCtrl',
                controllerAs : 'addNewCompany',
-               permission : 'admin'
+               permission : ['admin','spc','faculty-coordinator']
            })
 
            .when('/editCompany/:company_id', {
@@ -65,7 +65,7 @@ var app = angular.module('userRoutes', ['ngRoute'])
                authenticated : true,
                controller : 'editCompanyCtrl',
                controllerAs : 'editCompany',
-               permission : 'admin'
+               permission : ['admin','spc','faculty-coordinator']
            })
 
            .when('/registeredStudents/:company_id', {
@@ -73,7 +73,7 @@ var app = angular.module('userRoutes', ['ngRoute'])
                authenticated : true,
                controller : 'registeredStudentsCtrl',
                controllerAs : 'registeredStudents',
-               permission : 'admin'
+               permission : ['admin','spc','faculty-coordinator']
            })
 
            // 2. Student Routes
@@ -118,7 +118,7 @@ var app = angular.module('userRoutes', ['ngRoute'])
                authenticated : true,
                controller : 'editExperienceCtrl',
                controllerAs : 'editExperience',
-               permission : 'admin'
+               permission : ['admin','spc','faculty-coordinator']
            })
 
            .when('/compose', {
@@ -148,12 +148,11 @@ var app = angular.module('userRoutes', ['ngRoute'])
                authenticated : true,
                controller : 'feedbackCtrl',
                controllerAs : 'feedback',
-               permission : 'admin'
+               permission : ['admin']
            })
 
            .when('/technical', {
                templateUrl : '/app/views/developer/technical.html',
-               authenticated : true,
                controller : 'technicalCtrl',
                controllerAs : 'technical'
            })
@@ -169,13 +168,13 @@ var app = angular.module('userRoutes', ['ngRoute'])
            .when('/admin-management', {
                templateUrl : '/app/views/management/admin-management.html',
                authenticated : true,
-               permission : 'admin'
+               permission : ['admin','spc','faculty-coordinator']
            })
 
            .when('/coordinator-management', {
                templateUrl : '/app/views/management/coordinator-management.html',
                authenticated : true,
-               permission : 'admin',
+               permission : ['admin','spc','faculty-coordinator'],
                controller : 'coordinatorCtrl',
                controllerAs : 'coordinator'
            })
@@ -183,13 +182,13 @@ var app = angular.module('userRoutes', ['ngRoute'])
            .when('/students-database', {
                templateUrl : '/app/views/management/students-database.html',
                authenticated : true,
-               permission : 'admin'
+               permission : ['admin','spc','faculty-coordinator']
            })
 
            .when('/students-management', {
                templateUrl : '/app/views/management/students-management.html',
                authenticated : true,
-               permission : 'admin',
+               permission : ['admin','spc','faculty-coordinator'],
                controller : 'studentsManagementCtrl',
                controllerAs : 'studentsManagement'
            })
@@ -197,7 +196,7 @@ var app = angular.module('userRoutes', ['ngRoute'])
            .when('/interviews-management', {
                templateUrl : '/app/views/management/interviews-management.html',
                authenticated : true,
-               permission : 'admin',
+               permission : ['admin','spc','faculty-coordinator'],
                controller : 'interviewsManagementCtrl',
                controllerAs : 'interviewsManagement'
            })
@@ -258,7 +257,7 @@ app.run(['$rootScope','auth','$location', 'student', function ($rootScope,auth,$
 
                    student.getPermission().then(function (data) {
 
-                       if(next.$$route.permission !== data.data.permission) {
+                       if(next.$$route.permission.indexOf(data.data.permission) === -1) {
                            event.preventDefault();
                            $location.path('/');
                        }

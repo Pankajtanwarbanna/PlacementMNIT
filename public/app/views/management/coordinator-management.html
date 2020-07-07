@@ -1,55 +1,88 @@
 <div class="row page-titles">
+    <!-- Heading -->
     <div class="col-md-5 align-self-center">
         <h4 class="text-themecolor">Coordinators</h4>
     </div>
-
+    <!-- Add Coordinator Model Box -->
     <div class="col-md-7 align-self-center text-right" ng-show="main.authorized">
         <div class="d-flex justify-content-end align-items-center">
             <button type="button" class="btn btn-primary d-none d-lg-block m-l-15" data-toggle="modal" data-target="#addNewCoordinator"><i class="ti-plus"></i> Add Coordinator</button>
         </div>
     </div>
-    <!-- Company add Modal box   -->
+
+    <!-- Coordinator add Modal box   -->
     <div class="modal fade" id="addNewCoordinator" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
         <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content" ng-show="!announcements.successMsg">
-                <form ng-submit="announcements.postAnnouncement(announcementData)">
+            <!-- Modal Content -->
+            <div class="modal-content" ng-show="!coordinator.successMsg">
+                <!-- Coordinator Add Form -->
+                <form ng-submit="coordinator.addCoordinator(coordinatorData)">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="exampleModalLabel1">New Coordinator Details</h4>
+                        <h4 class="modal-title" id="exampleModalLabel1">Add New Coordinator</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
 
+                        <!-- Name -->
                         <div class="form-group">
                             <label class="control-label">Name</label>
-                            <input type="text" class="form-control" placeholder="Enter Coordinator Full Name*" ng-model="announcementData.announcement" required>
+                            <input type="text" class="form-control" placeholder="Enter Coordinator Name*" ng-model="coordinator.coordinatorData.name" required>
                         </div>
 
-                        <div class="form-group">
-                            <label class="control-label">Coordinator Username</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1">@</span>
-                                </div>
-                                <input type="text" class="form-control" placeholder="Enter Coordinator Username*" aria-label="Username" aria-describedby="basic-addon1" required>
-                            </div>
-                        </div>
-
+                        <!-- College Email ID -->
                         <div class="form-group">
                             <label class="control-label">College Email ID</label>
-                            <input type="email" class="form-control" placeholder="Enter College Email ID*" ng-model="announcementData.announcement" required>
+                            <input type="email" class="form-control" placeholder="Enter College Email ID*" ng-model="coordinator.coordinatorData.college_email" required>
                         </div>
 
-                        <div class="alert alert-danger alert-rounded" ng-show="announcements.errorMsg">
-                            <strong>Oops! </strong> {{ announcements.errorMsg }}
+                        <!-- Passout Batch -->
+                        <div class="form-group">
+                            <label class="control-label">Passout Batch</label>
+                            <select class="form-control" ng-model="coordinator.coordinatorData.passout_batch" required>
+                                <option value=""> -- Select Passout Batch -- </option>
+                                <option value="2020"> 2020</option>
+                                <option value="2021"> 2021</option>
+                                <option value="2022"> 2022</option>
+                                <option value="2023"> 2023</option>
+                            </select>
                         </div>
+
+                        <!-- Permission -->
+                        <div class="form-group">
+                            <label class="control-label">Permission</label>
+                            <select class="form-control" ng-model="coordinator.coordinatorData.permission" required>
+                                <option value=""> -- Select Permission -- </option>
+                                <option value="spc"> Student Placement Coordinator</option>
+                                <option value="faculty-coordinator"> Faculty Coordinator</option>
+                            </select>
+                        </div>
+
+                        <!-- Contact No -->
+                        <div class="form-group">
+                            <label class="control-label">Contact No.</label>
+                            <input type="text" class="form-control" placeholder="Coordinator 10 Digit Contact No. for communication*" ng-model="coordinator.coordinatorData.alternate_contact_no" minlength="10" maxlength="10" required>
+                        </div>
+
+                        <!-- Error Message -->
+                        <div class="alert alert-danger alert-rounded" ng-show="coordinator.errorMsg">
+                            <i class="ti-face-sad"></i>
+                            <strong>Oops! </strong> {{ coordinator.errorMsg }}
+                        </div>
+                        <!-- Loading Message -->
+                        <div class="alert alert-primary alert-rounded" ng-show="coordinator.loading">
+                            <strong>Loading! </strong> {{ coordinator.loadingMsg }}
+                        </div>
+
                     </div>
+                    <!-- Footer -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-success">Post Now</button>
                     </div>
                 </form>
             </div>
-            <div class="modal-content" ng-show="announcements.successMsg">
+            <!-- Success Message -->
+            <div class="modal-content" ng-show="coordinator.successMsg">
                 <div class="modal-header">
                     <h4 class="modal-title">Success</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -58,8 +91,7 @@
                     <div class="modal-body">
                         <div class="text-md-center">
                             <i class="icon-check large-success-icon"></i>
-                            <h3 class="success-text">{{ announcements.successMsg }}</h3>
-                            <button type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Close</button>
+                            <h3 class="success-text">{{ coordinator.successMsg }}</h3>
                         </div>
                     </div>
                 </div>
@@ -68,27 +100,66 @@
     </div>
 </div>
 
-<div class="col-lg-12">
+
+<div class="col-lg-12" ng-show="!coordinator.getAllCoordinatorsLoading">
     <div class="card">
-        <div class="card-body" ng-show="announcements.fetchedAnnouncements">
-            <div ng-if="!announcements.number">
-                <h5 class="card-title">No Announcements!</h5>
-            </div>
-            <div ng-if="announcements.number">
-                <h5 class="card-title">New Announcements</h5>
-                <h6 class="card-subtitle">check out new updates from placement cell</h6>
-            </div>
-            <div class="steamline m-t-40" ng-repeat="announcement in announcements.announcements | orderBy : '-timestamp' | limitTo : 10">
-                <div class="sl-item">
-                    <div class="sl-left"> <img class="img-circle" alt="user" src="../assets/images/announcements/{{announcement.category}}.png"> </div>
-                    <div class="sl-right">
-                        <div class="font-medium">{{ announcement.category }} Announcement</div>
-                        <div class="desc">{{ announcement.announcement }} </div>
-                    </div>
+        <div class="card-body">
+            <div class="d-flex">
+                <div>
+                    <h5 class="card-title">Placement Cell Coordinators </h5>
+                    <h6 class="card-subtitle">MNIT Jaipur</h6>
+                </div>
+                <div class="ml-auto">
+                    <select class="custom-select b-0" ng-model="selectedRole">
+                        <option value="spc">Student Placement Coordinators</option>
+                        <option value="faculty-coordinator">Faculty Coordinators</option>
+                    </select>
                 </div>
             </div>
         </div>
-        <div class="card-body text-center" ng-show="!announcements.fetchedAnnouncements">
+        <div class="card-body bg-light">
+            <div class="row">
+                <div class="col-6">
+                    <!-- Filtered Text -->
+                    <h3 ng-show="selectedRole==='spc'">Student Placement Coordinators</h3>
+                    <h3 ng-show="selectedRole==='faculty-coordinator'">Faculty Coordinators Coordinators</h3>
+
+                    <h5 class="font-light m-t-0">MNIT Jaipur</h5></div>
+                <div class="col-6 align-self-center display-6 text-right">
+                    <h2 class="text-success">{{ filteredCoordinators.length }} {{ selectedRole.toUpperCase() }}s</h2></div>
+            </div>
+        </div>
+        <div class="table-responsive" ng-show="filteredCoordinators.length > 0">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th class="text-center">#</th>
+                    <th>NAME</th>
+                    <th>LOGIN ID</th>
+                    <th>EMAIL</th>
+                    <th>CONTACT NO</th>
+                    <th>BATCH</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="coordinator in filteredCoordinators = (coordinator.ptpCoordinators | filter : { permission : selectedRole })">
+                    <td class="text-center">{{ $index + 1}}</td>
+                    <td class="txt-oflo">{{ coordinator.student_name }}</td>
+                    <td>{{ coordinator.college_id }} </td>
+                    <td class="txt-oflo">{{ coordinator.college_email }}</td>
+                    <td>{{ coordinator.alternate_contact_no }}</td>
+                    <td><span class="text-primary">{{ coordinator.passout_batch }}</span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Loading -->
+<div class="col-lg-12" ng-show="coordinator.getAllCoordinatorsLoading">
+    <div class="card">
+        <div class="card-body text-center" ng-show="!coordinator.fetchedAnnouncements">
             <!--<h4 class="card-title">Loading Announcements!</h4>-->
             <div class="spinner-grow" role="status">
                 <span class="sr-only">Loading...</span>
@@ -103,12 +174,6 @@
                 <span class="sr-only">Loading...</span>
             </div>
             <div class="spinner-grow text-warning" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-            <div class="spinner-grow text-info" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-            <div class="spinner-grow text-dark" role="status">
                 <span class="sr-only">Loading...</span>
             </div>
         </div>

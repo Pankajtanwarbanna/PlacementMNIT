@@ -36,11 +36,6 @@ angular.module('adminServices',[])
         return $http.get('/api/getStudentDetailsByCollegeID/' + college_id);
     };
 
-    // get all registered students in a company
-    adminFactory.getAllRegisteredStudentsInCompany = function (company_id) {
-        return $http.get('/api/getAllRegisteredStudentsInCompany/' + company_id);
-    };
-
     // fetch feedbacks form database
     adminFactory.fetchFeedbacks = function () {
         return $http.get('/api/fetchFeedbacks');
@@ -74,6 +69,21 @@ angular.module('adminServices',[])
     // update interview experience
     adminFactory.editInterviewExperience = function (experienceData) {
         return $http.post('/api/editInterviewExperience', experienceData);
+    };
+
+    // add coordinator
+    adminFactory.addCoordinator = function (coordinatorData) {
+        return $http.post('/api/addCoordinator', coordinatorData);
+    };
+
+    // notify coordinator for registration via SMS
+    adminFactory.notifyCoordinatorForRegistration = function (coordinatorData) {
+        return $http.post('/api/notifyCoordinatorForRegistration', coordinatorData);
+    };
+
+    // get all coordinators from DB
+    adminFactory.getAllCoordinators = function () {
+        return $http.get('/api/getAllCoordinators');
     };
 
     return adminFactory;

@@ -10,14 +10,13 @@
             <div class="card-body">
                 <h3 class="card-title">Your profile is blocked!</h3>
                 <p class="card-text">You violated Placement Rule 3 times so, your profile is blocked. Reach ptcell@mnit.ac.in in case of any help.</p>
-                <!--<a href="javascript:void(0)" class="btn btn-dark">Go somewhere</a>-->
             </div>
         </div>
     </div>
 </div>
 
-<!-- Which Passout Batch details to show -->
-<div class="row" ng-show="main.authorized">
+<!-- Which Passout Batch details to show only if User is Admin or Faculty Coordinator -->
+<div class="row" ng-if="main.permission === 'admin' || main.permission === 'faculty-coordinator'">
     <div class="col-12">
         <div class="form-group">
             <select class="form-control" ng-model="main.passout_batch" ng-change="updateBatch(main.passout_batch);">

@@ -485,7 +485,16 @@
         </div>
     </div>
 
-    <p class="text-danger text-center" ng-show="addNewCompany.errorMsg"> {{ editCompany.errorMsg }}</p>
+    <!-- Loading Message -->
+    <div class="alert alert-primary alert-rounded" ng-show="editCompany.loading">
+        <strong> Loading!</strong> Hold on. updating company details...
+    </div>
+
+    <!-- Error Message -->
+    <div class="alert alert-danger alert-rounded" ng-show="editCompany.errorMsg">
+        <strong>Oops! </strong> {{ editCompany.errorMsg }}
+    </div>
+
     <!--Submit Buttom-->
     <div style="text-align: center">
         <button type="submit" class="btn btn-primary btn-rounded"><i class="ti-check-box"></i> &nbsp; Submit Details</button>
