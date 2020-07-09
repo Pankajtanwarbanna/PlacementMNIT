@@ -51,11 +51,6 @@ angular.module('mainController', ['authServices','studentServices'])
                     }
                 });
             })
-            .catch(function (error) {
-                console.log(error);
-                auth.logout();
-                $route.reload();
-            })
 
         } else {
 
