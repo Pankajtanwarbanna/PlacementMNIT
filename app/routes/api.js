@@ -235,7 +235,7 @@ module.exports = function (router){
     // Middleware to verify token
     router.use(function (req,res,next) {
 
-        var token = req.body.token || req.body.query || req.headers['x-access-token'];
+        let token = req.body.token || req.body.query || req.headers['x-access-token'];
 
         if(token) {
             // verify token
@@ -305,9 +305,7 @@ module.exports = function (router){
                     success : false,
                     message : 'Error while getting data.'
                 })
-            }
-
-            if(!announcements) {
+            } else if(!announcements) {
                 res.json({
                     success : false,
                     message : 'Announcements not found.'
@@ -344,9 +342,7 @@ module.exports = function (router){
                                 success : false,
                                 message : 'Error while getting data from database.'
                             });
-                        }
-
-                        if(!companies) {
+                        } else if(!companies) {
                             res.json({
                                 success : false,
                                 message : 'Companies not found.'
@@ -386,9 +382,7 @@ module.exports = function (router){
                                 success : false,
                                 message : 'Error while getting data from database.'
                             });
-                        }
-
-                        if(!companies) {
+                        } else if(!companies) {
                             res.json({
                                 success : false,
                                 message : 'Companies not found.'
@@ -415,9 +409,7 @@ module.exports = function (router){
                     success : false,
                     message : 'Error while getting data from database.'
                 });
-            }
-
-            if(!companyDetail) {
+            } else if(!companyDetail) {
                 res.json({
                     success : false,
                     message : 'Company not found.'
@@ -440,8 +432,7 @@ module.exports = function (router){
                     success : false,
                     message : 'Database error.'
                 });
-            }
-            if(!company) {
+            } else if(!company) {
                 res.json({
                     success : false,
                     message : 'Not applied.'
@@ -452,6 +443,7 @@ module.exports = function (router){
                     return candidate.college_id === req.decoded.college_id
                 });
 
+                // If Candidate if already registered.
                 if(isCandidateAlreadyRegistered) {
                     res.json({
                         success : true,
@@ -478,9 +470,7 @@ module.exports = function (router){
                     success : false,
                     message : 'Some Database error.'
                 });
-            }
-
-            if(!company) {
+            } else if(!company) {
                 // Company not found
                 res.json({
                     success : false,
@@ -530,9 +520,7 @@ module.exports = function (router){
                     success : false,
                     message : 'Database error.'
                 });
-            }
-
-            if(!company) {
+            } else if(!company) {
                 // Company not found
                 res.json({
                     success : false,
@@ -594,6 +582,7 @@ module.exports = function (router){
                         });
                     } else {
 
+                        // Empty Timeline Data
                         let timeline = [];
 
                         // Check for each company
@@ -854,6 +843,7 @@ module.exports = function (router){
                         message : 'Company not found.'
                     })
                 } else {
+                    // todo Email Service Improvement
                     for(var i=0;i< company.candidates.length;i++) {
                         if (company.candidates[i].candidate_status === 'Absent') {
 
@@ -924,6 +914,7 @@ module.exports = function (router){
                         message : 'User not found.'
                     })
                 } else {
+                    // Compare Password with Old Password
                     let validPassword = user.comparePassword(req.body.old_password);
 
                     if(validPassword) {
@@ -955,7 +946,7 @@ module.exports = function (router){
 
     // get all interview experiences
     router.get('/getAllInterviewExperiences', auth.ensureLoggedIn, function (req, res) {
-        Interview.find({ status : 'approved' }).select('title experience author_name tags').lean().exec(function (err, interviews) {
+        Interview.find({ status : 'approved' }).select('title experience author_name tags created_at').lean().exec(function (err, interviews) {
             if(err) {
                 res.json({
                     success : false,
@@ -1057,36 +1048,6 @@ module.exports = function (router){
             }
         })
     });
-
-
-    // send feedback - Not LoggedIn
-    router.post('/sendFeedback', function (req, res) {
-
-        // todo notification to PANKAJ TANWAR
-        let feedback = new Feedback({
-            title : req.body.title,
-            feedback : req.body.feedback,
-            author_name : req.decoded.student_name,
-            author_email : req.body.college_id + '@mnit.ac.in',
-            timestamp : new Date()
-        });
-
-        feedback.save(function (err) {
-            if(err) {
-                console.log(err);
-                res.json({
-                    success : false,
-                    message : 'Something went wrong! May be some fields are empty.'
-                })
-            } else {
-                res.json({
-                    success : true,
-                    message : 'Thank you for submitting feedback.'
-                })
-            }
-        })
-    });
-
 
     // get contributions
     router.get('/getContributions', auth.ensureLoggedIn, function (req, res) {

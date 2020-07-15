@@ -1,6 +1,6 @@
 let express  = require('express');
-let app = express();
-require('dotenv').config();
+let app = express(); // Setup Express App
+require('dotenv').config(); // Environment Variables
 let morgan = require('morgan');     // middleware to log http requests
 let port = process.env.PORT || 80; // localhost : PORT=8080 nodemon server.js
 let mongoose = require('mongoose');
@@ -20,13 +20,14 @@ app.use(express.static(__dirname + '/public'));
 app.use('/api', apiRoutes, adminApiRoutes, notifyApiRoutes);
 
 // connecting to mongo database
-mongoose.connect('mongodb://127.0.0.1/placementmnit', { useNewUrlParser: true }, function (err) {
+mongoose.connect('mongodb://127.0.0.1/placementmnit', { useNewUrlParser: true, useFindAndModify: false }, function (err) {
     if(err) {
         console.log(err);
     } else {
         console.log('Successfully connected to database.');
     }
 });
+
 // index page
 app.get('*', function (req,res) {
     res.sendFile(__dirname + '/public/app/views/index.html');

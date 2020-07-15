@@ -320,6 +320,7 @@ angular.module('adminController', ['adminServices'])
 
         admin.addCoordinator(app.coordinatorData).then(function (data) {
             if(data.data.success) {
+
                 app.loadingMsg = data.data.message + '. Notifying coordinator...';
                 app.errorMsg = '';
 
@@ -334,6 +335,8 @@ angular.module('adminController', ['adminServices'])
                         app.loading = false;
                     }
                 });
+                
+
             } else {
                 app.errorMsg = data.data.message;
                 app.loading = false;

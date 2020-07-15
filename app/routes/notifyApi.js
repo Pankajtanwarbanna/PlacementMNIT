@@ -18,14 +18,14 @@ function getSendSMSApiUrl(sms_contacts,message) {
     let contacts = sms_contacts.toString(); // contacts with comma apart
     let senderid = process.env.SMS_SENDERID; // Sender ID
     let msg = encodeURI(message); // encode Message to URI
-    console.log(msg);
+
     return baseURI + 'key=' + SMS_API_KEY + '&campaign=' + campaign + '&routeid=' + routeid + '&type=' + type + '&contacts=' + contacts + '&senderid=' + senderid + '&msg=' + msg;
 }
 
 module.exports = function (router){
 
     // New Coordinator Notification
-    router.post('/notifyCoordinatorForRegistration', auth.ensureAdmin, function (req, res) {
+    router.post('/notifyCoordinatorForRegistration', auth.ensureAdminOrFaculty, function (req, res) {
 
         let SMSAPI = getSendSMSApiUrl(
             req.body.alternate_contact_no,

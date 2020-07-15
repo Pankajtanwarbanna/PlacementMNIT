@@ -9,7 +9,7 @@ var Interview = require('../models/interview');
 var auth = require('../middlewares/authPermission');
 var mongoose = require('mongoose');
 var nodemailer = require('nodemailer');
-//var sgTransport = require('nodemailer-sendgrid-transport');
+
 var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -19,17 +19,6 @@ var transporter = nodemailer.createTransport({
 });
 
 module.exports = function (router){
-
-    /*
-    var options = {
-        auth: {
-            api_key: process.env.SENDGRID_KEY
-        }
-    };
-
-    var transporterNo = nodemailer.createTransport(sgTransport(options));
-    */
-
 
     // post new company to db
     router.post('/postCompanyDetails', auth.ensureOfficialPlacementTeam, function (req, res) {
@@ -136,6 +125,7 @@ module.exports = function (router){
                     message : 'Company not found.'
                 })
             } else {
+                console.log(company);
 
                 res.json({
                     success : true,
@@ -189,6 +179,7 @@ module.exports = function (router){
                 }));
 
                 // Remove User.
+                // todo If User Is Not There?
                 company.candidates.splice(studentIndex,1);
 
                 company.save(function (err) {
@@ -308,7 +299,6 @@ module.exports = function (router){
         })
     });
 
-
     // Post new announcement
     router.post('/postAnnouncement', auth.ensureOfficialPlacementTeam, function (req, res) {
 
@@ -342,9 +332,7 @@ module.exports = function (router){
                     success : false,
                     message : 'Error from database side.'
                 })
-            }
-
-            if(!user) {
+            } else if(!user) {
                 res.json({
                     success : false,
                     message : 'College ID is incorrect!'
@@ -367,9 +355,7 @@ module.exports = function (router){
                     success : false,
                     message : 'Error from database.'
                 })
-            }
-
-            if(!user) {
+            } else if(!user) {
                 res.json({
                     success : false,
                     message : 'User not found.'
@@ -624,6 +610,7 @@ module.exports = function (router){
                 senior_board : 'N/A'
             });
 
+            // Save Data
             coordinator.save(function (err) {
                 if(err) {
                     console.log(err);
