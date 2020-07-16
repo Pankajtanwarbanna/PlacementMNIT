@@ -67,8 +67,32 @@ angular.module('mainController', ['authServices','studentServices'])
 
     });
 
+    // OTP Not set by default
+    app.isOTPsent = false;
+
+    // Check Details and send OTP to EMAIL
+    this.sendOTPForEmailVerificationIfValidLogin = function (logData) {
+
+        app.successMsg = '';
+        app.errorMsg = '';
+        app.loading = true;
+
+        auth.sendOTPForEmailVerificationIfValidLogin(app.logData).then(function (data) {
+            if(data.data.success) {
+                app.successMsg = data.data.message;
+                app.loading = false;
+                app.isOTPsent = true;
+            } else {
+                app.errorMsg = data.data.message;
+                app.loading = false;
+            }
+        })
+    };
+
+    // Login Now
     this.doLogin = function (logData) {
         //console.log(this.logData);
+        app.loginSuccessMsg = '';
         app.successMsg = '';
         app.errorMsg = '';
         app.loading = true;
@@ -81,11 +105,13 @@ angular.module('mainController', ['authServices','studentServices'])
 
             if(data.data.success) {
                 app.loading = false;
-                app.successMsg = data.data.message + ' Redirecting to home page...';
+                app.loginSuccessMsg = data.data.message + ' Redirecting to home page...';
                 $timeout(function () {
                     $location.path('/');
                     app.logData = {};
+                    app.loginSuccessMsg = false;
                     app.successMsg = false;
+                    app.isOTPsent = false;
                 }, 2000);
 
             } else {

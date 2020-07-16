@@ -107,9 +107,12 @@ var userSchema = new mongoose.Schema({
         type : Number,
         default : 0
     },
+    login_otp : {
+        type : String
+    },
     password : {
-        type : String,
-        select : false
+        type : String
+        //select : false
     },
     active : {
         type : Boolean,

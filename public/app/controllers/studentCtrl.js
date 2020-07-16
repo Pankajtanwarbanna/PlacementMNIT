@@ -6,7 +6,7 @@ angular.module('studentController',['studentServices','textAngular'])
 // Company Registration Controller
 .controller('companyRegistrationCtrl', function (student, admin, $scope) {
 
-    var app = this;
+    let app = this;
 
     app.noUpcomingCompanies = false;
     app.fetchedUpcomingCompanies = false;

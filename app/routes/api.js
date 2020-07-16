@@ -37,9 +37,8 @@ module.exports = function (router){
     var transporterNo = nodemailer.createTransport(sgTransport(options));
     */
 
-    // User login API
-    router.post('/authenticate', function (req,res) {
-
+    // User Login - Send OTP for verification API
+    router.post('/sendOTPForEmailVerificationIfValidLogin', function (req, res) {
         if(!req.body.college_id || !req.body.password) {
             res.json({
                 success : false,
@@ -47,32 +46,117 @@ module.exports = function (router){
             });
         } else {
 
-            User.findOne({ college_id : (req.body.college_id).toUpperCase() }).select('college_id student_name password active').exec(function (err, user) {
+            User.findOne({ college_id : (req.body.college_id).toUpperCase() }).select('college_id college_email student_name password login_otp').exec(function (err, user) {
 
-                if(err) throw err;
-
-                if(!user) {
+                if(err) {
+                    console.log(err);
+                    res.json({
+                        success : false,
+                        message : 'Something went wrong!'
+                    })
+                } else if(!user) {
                     res.json({
                         success : false,
                         message : 'User not found.'
                     });
                 } else if(user) {
 
-                    if(!user.active) {
-                        res.json({
-                            success : false,
-                            message : 'Account is not activated yet.Please check your email for activation link.',
-                            expired : true
+                    let validPassword = user.comparePassword(req.body.password);
+
+                    if (validPassword) {
+
+                        // Generate OTP & Send EMAIL
+                        let max = 99999;
+                        let min = 10000;
+
+                        user.login_otp = (Math.floor(Math.random() * (+max - +min)) + +min).toString();
+
+                        user.save(function (err) {
+                            if(err) {
+                                res.json({
+                                    success : false,
+                                    message : 'Something went wrong. Try again later.'
+                                })
+                            } else {
+
+                                let email = {
+                                    from: '"Placement & Training Cell" <ptcell@mnit.ac.in>',
+                                    to: user.college_email,
+                                    subject: 'Login Request : Placement Cell, MNIT Jaipur',
+                                    text: 'Hello '+ user.student_name + 'We have received a login request for your account.Please find the below OTP to proceed further With Regards, Prof. Mahendar Choudhary',
+                                    html: 'Hello <strong>'+ user.student_name + '</strong>,<br><br>A sign in attempt to Placement Portal requires further verification to prevent unauthorized access to your account. To complete the sign in, enter the verification code on the Placement Portal.<br><br>Verification Code: ' + user.login_otp + '<br><br>With Regards.<br><br>Prof. Mahender Choudhary<br>In-charge, Training & Placement<br>MNIT Jaipur<br>+91-141-2529065'
+                                };
+
+                                transporter.sendMail(email, function(err, info){
+                                    if (err ){
+                                        console.log(err);
+                                        res.json({
+                                            success : false,
+                                            message : 'Email service not working. Contact Admin.'
+                                        })
+                                    }
+                                    else {
+                                        console.log('Message sent: ' + info.response);
+
+                                        res.json({
+                                            success : true,
+                                            message : 'OTP for verification has been sent to your registered college email.'
+                                        });
+                                    }
+                                });
+
+
+                            }
                         });
                     } else {
+                        res.json({
+                            success: false,
+                            message: 'Incorrect password. Please try again.'
+                        });
+                    }
+                }
+            });
+        }
 
-                        var validPassword = user.comparePassword(req.body.password);
+    });
 
-                        if (validPassword) {
-                            var token = jwt.sign({
+    // User login API
+    router.post('/authenticate', function (req,res) {
+
+        if(!req.body.college_id || !req.body.password || !req.body.login_otp) {
+            res.json({
+                success : false,
+                message : 'Ensure you filled all the entries.'
+            });
+        } else {
+
+            User.findOne({ college_id : (req.body.college_id).toUpperCase() }).select('college_id student_name password active login_otp').exec(function (err, user) {
+
+                if(err) {
+                    console.log(err);
+                    res.json({
+                        success : false,
+                        message : 'Something went wrong!'
+                    })
+                } else if(!user) {
+                    res.json({
+                        success : false,
+                        message : 'User not found.'
+                    });
+                } else if(user) {
+
+                    let validPassword = user.comparePassword(req.body.password);
+
+                    if (validPassword) {
+
+                        // OTP Matched
+                        if(req.body.login_otp === user.login_otp) {
+
+                            let token = jwt.sign({
                                 college_id : user.college_id,
                                 student_name: user.student_name
                             }, secret);
+
                             res.json({
                                 success: true,
                                 message: 'User authenticated.',
@@ -80,10 +164,15 @@ module.exports = function (router){
                             });
                         } else {
                             res.json({
-                                success: false,
-                                message: 'Incorrect password. Please try again.'
-                            });
+                                success : false,
+                                message : 'Incorrect OTP'
+                            })
                         }
+                    } else {
+                        res.json({
+                            success: false,
+                            message: 'Incorrect password. Please try again.'
+                        });
                     }
                 }
             });
@@ -124,7 +213,7 @@ module.exports = function (router){
                             })
                         } else {
 
-                            var email = {
+                            let email = {
                                 from: '"Placement & Training Cell" <ptcell@mnit.ac.in>',
                                 to: user.college_email,
                                 subject: 'Reset Password Request : Placement Cell, MNIT Jaipur',

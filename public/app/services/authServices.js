@@ -6,6 +6,11 @@ angular.module('authServices',[])
 .factory('auth', function ($http, authToken) {
     var authFactory = {};
 
+    // auth.sendOTPForEmailVerificationIfValidLogin(logData);
+    authFactory.sendOTPForEmailVerificationIfValidLogin = function(logData) {
+        return $http.post('/api/sendOTPForEmailVerificationIfValidLogin', logData);
+    };
+
     // auth.login(logData);
     authFactory.login = function (logData) {
         return $http.post('/api/authenticate', logData).then(function (data) {
