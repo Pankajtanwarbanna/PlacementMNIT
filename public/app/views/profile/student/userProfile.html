@@ -56,6 +56,99 @@
     <!-- Column -->
     <!-- Column -->
     <div class="col-lg-8 col-xlg-9 col-md-7">
+
+        <!-- Resume Section -->
+        <div class="card">
+            <!-- Resume Upload Button -->
+            <div class="card-body">
+                <div class="d-flex no-block align-items-center">
+                    <div class="ml-auto">
+                        <button class="float-right btn btn-circle btn-primary" data-toggle="modal" data-target="#myResumeUploadModal">
+                            <i class="ti-pencil" ng-if="profile.userProfile.resume_url"></i>
+                            <i class="ti-upload" ng-if="!profile.userProfile.resume_url"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <ul class="product-review text-center">
+                <!-- Resume Uploaded -->
+                <li ng-if="profile.userProfile.resume_url">
+                    <span class="text-muted display-5">
+                        <i class="mdi mdi-emoticon-cool text-success"></i>
+                    </span>
+                    <span>
+                        <h3 class="card-title">We've your resume! </h3>
+                        <h6 class="card-subtitle">Now, you are all set for Placement session.<a target="_blank" href="/assets/uploads/resumes/{{ profile.userProfile.resume_url }}">&nbsp;<i class="ti ti-cloud-down"></i> </a></h6>
+                    </span>
+                </li>
+
+                <!-- Resume Not Uploaded. -->
+                <li ng-if="!profile.userProfile.resume_url">
+                    <font class="text-muted display-5">
+                        <i class="mdi mdi-emoticon-sad text-danger"></i>
+                    </font>
+                    <span>
+                        <h3 class="card-title"> Resume is missing!</h3>
+                        <h6 class="card-subtitle">Upload your resume to get started.</h6>
+                    </span>
+                </li>
+            </ul>
+
+            <!-- Resume Upload Modal -->
+            <!-- .modal for add task -->
+            <div class="modal fade" id="myResumeUploadModal" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+
+                            <h4 class="modal-title" ng-if="!profile.userProfile.resume_url">Upload Resume</h4>
+                            <h4 class="modal-title" ng-if="profile.userProfile.resume_url">Edit Resume</h4>
+
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+                        </div>
+
+                        <!-- Resume Upload Success Message Modal Body -->
+                        <div class="modal-body" ng-show="profile.resumeUploadSuccessMsg">
+                            <!-- Success Message -->
+                            <div class="alert alert-success alert-rounded">
+                                <i class="ti-face-smile"></i>
+                                <strong> Yay!</strong> {{ profile.resumeUploadSuccessMsg }}
+                            </div>
+                        </div>
+
+                        <!-- Resume is not uploaded yet! -->
+                        <form ng-submit="profile.updateStudentResume();" ng-show="!profile.resumeUploadSuccessMsg">
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label>Select Resume</label>
+                                    <input class="form-control" type="file" file-model="file.resume" accept="application/pdf" name="resume" ng-disabled="profile.resumeUploadLoading" required>
+                                    <span class="ml-3 text-primary">*only pdf files</span>
+                                </div>
+
+                                <!-- Loading Message -->
+                                <div class="alert alert-primary alert-rounded" ng-show="profile.resumeUploadLoading">
+                                    <strong> Loading!</strong> Hold on. Uploading your resume...
+                                </div>
+
+                                <!-- Error Message -->
+                                <div class="alert alert-danger alert-rounded" ng-show="profile.resumeUploadErrorMsg">
+                                    <i class="ti-face-sad"></i>
+                                    <strong>Oops! </strong> {{ profile.resumeUploadErrorMsg }}
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" ng-disabled="profile.resumeUploadLoading" class="btn btn-success">Upload Now</button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+        </div>
+
+
         <div class="card">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs profile-tab" role="tablist">

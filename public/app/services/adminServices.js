@@ -86,5 +86,11 @@ angular.module('adminServices',[])
         return $http.get('/api/getAllCoordinators');
     };
 
+    // get all coordinators from DB
+    adminFactory.exportResumesOfRegisteredStudents = function (company_id) {
+        return $http.get('/api/exportResumesOfRegisteredStudents/'+ company_id, {responseType:'arraybuffer'});
+    };
+
+
     return adminFactory;
 });

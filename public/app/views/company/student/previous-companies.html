@@ -4,8 +4,8 @@
     </div>
 </div>
 
-<!-- Which Passout Batch details to show -->
-<div class="row" ng-show="main.authorized">
+<!-- Visible to ADMIN,SPC,FACULTY -->
+<div class="row" ng-if="main.authorized">
     <div class="col-12">
         <div class="form-group">
             <select class="form-control" ng-model="main.passout_batch" ng-change="updateBatch(main.passout_batch);">

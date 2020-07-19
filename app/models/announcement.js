@@ -1,8 +1,8 @@
-var mongoose = require('mongoose');
-var titlize = require('mongoose-title-case');
+let mongoose = require('mongoose');
+let titlize = require('mongoose-title-case');
 mongoose.set('useCreateIndex', true);
 
-var announcementSchema = new mongoose.Schema({
+let announcementSchema = new mongoose.Schema({
     category : {
         type : String,
         required : true
@@ -10,6 +10,14 @@ var announcementSchema = new mongoose.Schema({
     announcement : {
         type: String,
         required: true
+    },
+    passout_batch : {
+        type : String,
+        required : true
+    },
+    author : {
+        type : String,
+        required : true
     },
     timestamp : {
         type : Date,

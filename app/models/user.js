@@ -110,6 +110,9 @@ var userSchema = new mongoose.Schema({
     login_otp : {
         type : String
     },
+    resume_url : {
+        type : String
+    },
     password : {
         type : String
         //select : false

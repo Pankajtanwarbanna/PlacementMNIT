@@ -1,6 +1,6 @@
 function saveAsExcel(id, file)
         {
-            var fileName = file + '-students-data.xls';
+            var fileName = file + '-students-data.xlsx';
 			
             var table_text="<table border='2px'><tr>"; //Table Intialization, CSS included
             var textRange; 

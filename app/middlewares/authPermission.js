@@ -138,6 +138,47 @@ function ensureStudent(req, res, next) {
     }
 }
 
+function ensureStudentWithResume(req, res, next) {
+    if(!req.decoded.college_id) {
+        res.json({
+            success : false,
+            message : 'Please login.'
+        })
+    } else {
+        User.findOne({ college_id : req.decoded.college_id }).select('permission resume_url').lean().exec(function (err, user) {
+            if(err) {
+                res.json({
+                    success : false,
+                    message : 'Something went wrong!'
+                })
+            } else {
+                if(!user) {
+                    res.json({
+                        success : false,
+                        message : 'User not found.'
+                    })
+                } else {
+                    if(user.permission === 'student') {
+                        if(user.resume_url) {
+                            next();
+                        } else {
+                            res.json({
+                                success : false,
+                                message : 'Sorry, We could not find your resume. Head over to profile page to upload it.'
+                            })
+                        }
+                    } else {
+                        res.json({
+                            success : false,
+                            message : 'Insufficient Permission. Only Student allowed.'
+                        })
+                    }
+                }
+            }
+        });
+    }
+}
+
 function ensureLoggedIn(req, res, next) {
     if(!req.decoded.college_id) {
         res.json({
@@ -154,5 +195,6 @@ module.exports = {
     ensureStudent,
     ensureOfficialPlacementTeam,
     ensureAdminOrFaculty,
-    ensureLoggedIn
+    ensureLoggedIn,
+    ensureStudentWithResume
 };

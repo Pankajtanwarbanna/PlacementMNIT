@@ -72,6 +72,7 @@ This project is currently deployed to MNIT Cloud and being used by UG, PG, & MBA
     ├── public/                 # Frontend Folder
     │   ├── app/                    # Frontend Application
     │   │   ├── controllers/            # AngularJs Controllers
+    │   │   ├── directives/             # Custom AngularJs directives 
     │   │   ├── filters/                # Custom AngularJs filters
     │   │   ├── services/               # Services in AngularJs
     │   │   ├── views/                  # All HTML files

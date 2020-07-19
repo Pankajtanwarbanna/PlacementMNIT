@@ -1,22 +1,42 @@
 /*
     API written by - Pankaj Tanwar
 */
-var User = require('../models/user');
-var Schedule = require('../models/schedule');
-var Announcement = require('../models/announcement');
-var Feedback = require('../models/feedback');
-var Company = require('../models/company');
-var Interview = require('../models/interview');
-var auth = require('../middlewares/authPermission');
-var jwt = require('jsonwebtoken');
-var secret = process.env.SECRET;
-var nodemailer = require('nodemailer');
-//var sgTransport = require('nodemailer-sendgrid-transport');
+let User = require('../models/user');
+let Schedule = require('../models/schedule');
+let Announcement = require('../models/announcement');
+let Feedback = require('../models/feedback');
+let Company = require('../models/company');
+let Interview = require('../models/interview');
+let auth = require('../middlewares/authPermission');
+let jwt = require('jsonwebtoken');
+let secret = process.env.SECRET;
+let nodemailer = require('nodemailer');
+let multer = require('multer');
 
-//const sgMail = require('@sendgrid/mail');
-//sgMail.setApiKey(process.env.SENDGRID_KEY);
+// Resume Storage on Disk
+let resumeStorage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, __basedir + '/public/assets/uploads/resumes/')
+    },
+    filename: function (req, file, cb) {
 
-var transporter = nodemailer.createTransport({
+        if(!file.originalname.match(/\.(pdf)$/)) {
+            let err = new Error();
+            err.code = 'filetype';
+            return cb(err);
+        } else {
+            cb(null,Date.now() + '_' + file.originalname.replace(/ /g,'')) // replace - to remove all white spaces
+        }
+    }
+});
+
+// Upload
+let upload = multer({
+    storage: resumeStorage,
+    limits : { fileSize : 100000000000000 }
+}).single('resume');
+
+let transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: process.env.PTP_EMAIL,
@@ -28,13 +48,13 @@ module.exports = function (router){
 
     /*
     // Nodemailer-sandgrid stuff
-    var options = {
+    let options = {
         auth: {
             api_key: process.env.SENDGRID_KEY
         }
     };
 
-    var transporterNo = nodemailer.createTransport(sgTransport(options));
+    let transporterNo = nodemailer.createTransport(sgTransport(options));
     */
 
     // User Login - Send OTP for verification API
@@ -388,24 +408,39 @@ module.exports = function (router){
 
     // get all announcements
     router.get('/getAnnouncements', auth.ensureLoggedIn, function (req, res) {
-        Announcement.find({ }).select('category announcement').lean().exec( function (err, announcements) {
+
+        User.findOne({ college_id : req.decoded.college_id }).select('passout_batch').lean().exec(function (err, user) {
             if(err) {
                 res.json({
                     success : false,
-                    message : 'Error while getting data.'
+                    message : 'Something went wrong!'
                 })
-            } else if(!announcements) {
+            } else if(!user) {
                 res.json({
                     success : false,
-                    message : 'Announcements not found.'
+                    message : 'User not found.'
                 })
             } else {
-                res.json({
-                    success : true,
-                    announcements : announcements
+                Announcement.find({ passout_batch : user.passout_batch }).select('category announcement timestamp author').lean().exec( function (err, announcements) {
+                    if(err) {
+                        res.json({
+                            success : false,
+                            message : 'Error while getting data.'
+                        })
+                    } else if(!announcements) {
+                        res.json({
+                            success : false,
+                            message : 'Announcements not found.'
+                        })
+                    } else {
+                        res.json({
+                            success : true,
+                            announcements : announcements
+                        })
+                    }
                 })
             }
-        })
+        });
     });
 
     // get companies details from db
@@ -551,7 +586,7 @@ module.exports = function (router){
     });
 
     // register in a company by student
-    router.post('/oneClickApply/:company_id', auth.ensureStudent, function (req, res) {
+    router.post('/oneClickApply/:company_id', auth.ensureStudentWithResume, function (req, res) {
         Company.findOne({ _id : req.params.company_id }).select('candidates').exec( function (err, company) {
             if(err) {
                 console.log(err);
@@ -709,7 +744,7 @@ module.exports = function (router){
     router.get('/getUserProfile', auth.ensureLoggedIn, function (req, res) {
         // exclude unnecessary fields to reduce load over network.
         User.findOne({ college_id : req.decoded.college_id }).select(
-            '-temporarytoken -password -active -status -permission -program'
+            '-temporarytoken -password -active -status -permission -program -login_otp'
         ).lean().exec( function (err, user) {
             if(err) {
                 res.json({
@@ -933,7 +968,7 @@ module.exports = function (router){
                     })
                 } else {
                     // todo Email Service Improvement
-                    for(var i=0;i< company.candidates.length;i++) {
+                    for(let i=0;i< company.candidates.length;i++) {
                         if (company.candidates[i].candidate_status === 'Absent') {
 
                             User.findOne({ college_id :  company.candidates[i].college_id }, function (err, user) {
@@ -954,7 +989,7 @@ module.exports = function (router){
                                         if(err) {
                                             console.log('Error from database side.' + err);
                                         } else {
-                                            var email = {
+                                            let email = {
                                                 from: '"Placement & Training Cell" <ptcell@mnit.ac.in>',
                                                 to: user.college_email,
                                                 subject: 'Red Flag Notification : Placement Cell, MNIT Jaipur',
@@ -1161,6 +1196,78 @@ module.exports = function (router){
             }
         })
     });
+
+    // Upload Student Resume
+    router.post('/uploadResume', auth.ensureLoggedIn, function (req, res) {
+
+        User.findOne({ college_id : req.decoded.college_id }).select('resume_url').exec(function (err, student) {
+
+            if(err) {
+                res.json({
+                    success : false,
+                    message : 'Something went wrong!'
+                })
+            } else {
+                if(!student) {
+                    res.json({
+                        success : false,
+                        message : 'Student not found.'
+                    })
+                } else {
+                    upload(req, res, function (err) {
+                        if (err) {
+                            if(err.code === 'LIMIT_FILE_SIZE') {
+                                res.json({
+                                    success : false,
+                                    message : 'File is too large to upload.'
+                                })
+                            } else if(err.code === 'filetype') {
+                                res.json({
+                                    success : false,
+                                    message : 'File type invalid. Only PDF files accepted.'
+                                })
+                            } else {
+                                console.log(err);
+                                res.json({
+                                    success : false,
+                                    message : 'File was not able to be uploaded. Try again later.'
+                                })
+                            }
+                        } else {
+
+                            if(!req.file) {
+                                res.json({
+                                    success: false,
+                                    message: 'File is missing.'
+                                })
+                            } else {
+                                console.log(req.file);
+
+                                student.resume_url = req.file.filename;
+
+                                student.save(function (err) {
+                                    if(err) {
+                                        res.json({
+                                            success : false,
+                                            message : 'Something went wrong!'
+                                        })
+                                    } else {
+                                        res.json({
+                                            success : true,
+                                            message : 'Resume Uploaded successfully.',
+                                        })
+                                    }
+                                });
+                            }
+                        }
+                    })
+
+                }
+            }
+        });
+    });
+
+
 
 
     return router;

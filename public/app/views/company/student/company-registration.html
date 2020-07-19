@@ -4,6 +4,7 @@
     </div>
 </div>
 
+<!-- Profile Blocked -->
 <div class="row" ng-show="main.blockedProfile">
     <div class="col-md-12">
         <div class="card text-white bg-danger">
@@ -15,8 +16,8 @@
     </div>
 </div>
 
-<!-- Which Passout Batch details to show only if User is Admin or Faculty Coordinator -->
-<div class="row" ng-if="main.permission === 'admin' || main.permission === 'faculty-coordinator'">
+<!-- Visible to ADMIN,SPC,FACULTY -->
+<div class="row" ng-if="main.authorized">
     <div class="col-12">
         <div class="form-group">
             <select class="form-control" ng-model="main.passout_batch" ng-change="updateBatch(main.passout_batch);">
@@ -30,6 +31,7 @@
 </div>
 
 <div ng-show="companyRegistration.fetchedUpcomingCompanies && !main.blockedProfile">
+    <!-- Profile is not updated.-->
     <div class="row">
         <div class="col-md-12" ng-show="!companyRegistration.profileComplete && !main.authorized">
             <div class="card text-white bg-success">
@@ -56,7 +58,7 @@
                     </div>
                     <div class="d-flex no-block flex-row m-t-20 cc-details text-center">
                         <div class="col-lg-6 p-10 p-l-0 border-right">
-                            <h6 class="font-light">Package</h6><b class="growth">₹ {{company.package | package }}</b></div>
+                            <h6 class="font-light">Package</h6><b class="growth">₹ {{ company.package | package }}</b></div>
                         <div class="col-lg-6 p-10">
                             <h6 class="font-light">Last Date</h6><b class="down">{{ company.deadline_date | date : 'dd MMMM'}}</b>
                         </div>

@@ -24,6 +24,7 @@
                     </div>
                     <div class="modal-body">
 
+                        <!-- Category -->
                         <div class="form-group">
                             <label class="control-label">Select Category</label>
                             <select class="form-control" ng-model="announcementData.category" required>
@@ -34,6 +35,19 @@
                                 <option value="other"> Other</option>
                             </select>
                         </div>
+
+                        <!-- Passout Batch -->
+                        <div class="form-group">
+                            <label class="control-label">Select Passout Batch</label>
+                            <select class="form-control" ng-model="announcementData.passout_batch" required>
+                                <option value=""> -- Select Batch -- </option>
+                                <option value="2020">2020 Batch</option>
+                                <option value="2021">2021 Batch</option>
+                                <option value="2022">2022 Batch</option>
+                                <option value="2023">2023 Batch</option>
+                            </select>
+                        </div>
+
                         <div class="form-group">
                             <label class="control-label">Announcement</label>
                             <textarea type="text" class="form-control" placeholder="Write announcement here..." rows="4" ng-model="announcementData.announcement" required></textarea>
@@ -73,23 +87,47 @@
         </div>
     </div>
 </div>
+
 <!--All Announcements -->
 <div class="col-lg-12">
     <div class="card">
         <div class="card-body" ng-show="announcements.fetchedAnnouncements">
-            <div ng-if="!announcements.number">
+
+            <!-- Visible to ADMIN,SPC,FACULTY -->
+            <div class="row" ng-if="main.authorized">
+                <div class="col-12">
+                    <div class="form-group">
+                        <select class="form-control" ng-model="main.passout_batch" ng-change="updateBatch(main.passout_batch);">
+                            <option value="2020">2020 Batch</option>
+                            <option value="2021">2021 Batch</option>
+                            <option value="2022">2022 Batch</option>
+                            <option value="2023">2023 Batch</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- If No announcements in database -->
+            <div ng-show="!announcements.notZeroAnnouncements">
                 <h5 class="card-title">No Announcements!</h5>
             </div>
-            <div ng-if="announcements.number">
+
+            <!-- If More then 0 announcements in database -->
+            <div ng-show="announcements.notZeroAnnouncements">
                 <h5 class="card-title">New Announcements</h5>
                 <h6 class="card-subtitle">check out new updates from placement cell</h6>
             </div>
+
+            <!-- All Announcements -->
             <div class="steamline m-t-40" ng-repeat="announcement in announcements.announcements | orderBy : '-timestamp' | limitTo : 10">
                 <div class="sl-item">
                     <div class="sl-left"> <img class="img-circle" alt="user" src="../assets/images/announcements/{{announcement.category}}.png"> </div>
                     <div class="sl-right">
-                        <div class="font-medium">{{ announcement.category }} Announcement</div>
+                        <div class="font-medium">
+                            {{ announcement.category }} Announcement
+                        </div>
                         <div class="desc">{{ announcement.announcement }} </div>
+                        <h6 class="card-subtitle">Placement Cell <span ng-show="main.authorized"> ({{ announcement.author }})</span> posted on {{ announcement.timestamp | date : 'dd MMM yyyy, hh:mm a' }}</h6>
                     </div>
                 </div>
             </div>

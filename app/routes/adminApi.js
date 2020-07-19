@@ -1,16 +1,16 @@
 /*
     API written by - Pankaj Tanwar
 */
-var User = require('../models/user');
-var Announcement = require('../models/announcement');
-var Feedback = require('../models/feedback');
-var Company = require('../models/company');
-var Interview = require('../models/interview');
-var auth = require('../middlewares/authPermission');
-var mongoose = require('mongoose');
-var nodemailer = require('nodemailer');
+let User = require('../models/user');
+let Announcement = require('../models/announcement');
+let Feedback = require('../models/feedback');
+let Company = require('../models/company');
+let Interview = require('../models/interview');
+let auth = require('../middlewares/authPermission');
+let mongoose = require('mongoose');
+let nodemailer = require('nodemailer');
 
-var transporter = nodemailer.createTransport({
+let transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: process.env.PTP_EMAIL,
@@ -109,8 +109,8 @@ module.exports = function (router){
                     "registered_candidates.department" : 1,
                     "registered_candidates.cgpa" : 1,
                     "registered_candidates.matric_marks" : 1,
-                    "registered_candidates.senior_marks" : 1
-
+                    "registered_candidates.senior_marks" : 1,
+                    "registered_candidates.resume_url" : 1
                 }
             }
         ]).exec( function (err, company) {
@@ -125,8 +125,6 @@ module.exports = function (router){
                     message : 'Company not found.'
                 })
             } else {
-                console.log(company);
-
                 res.json({
                     success : true,
                     // $lookup give result in array format
@@ -136,8 +134,72 @@ module.exports = function (router){
         })
     });
 
+    // Export Resumes of Registered Students
+    router.get('/exportResumesOfRegisteredStudents/:company_id' , auth.ensureOfficialPlacementTeam, function (req, res) {
+
+        Company.aggregate([
+            {
+                // Document matching Company ID
+                $match : {
+                    _id : mongoose.Types.ObjectId(req.params.company_id)
+                }
+            },
+            {
+                // Lookup
+                $lookup: {
+                    from : "users",
+                    localField: "candidates.college_id",
+                    foreignField : "college_id",
+                    as : "registered_candidates"
+                }
+            },
+            {
+                // To Select Particular Fields
+                $project : {
+                    "company_name" : 1,
+                    "registered_candidates.resume_url" : 1,
+                    "registered_candidates.student_name" : 1,
+                    "registered_candidates.college_id" : 1
+                }
+            }
+        ]).exec( function (err, company) {
+            if(err) {
+                res.json({
+                    success : false,
+                    message : 'Error from database.'
+                })
+            } else if(!company) {
+                res.json({
+                    success : false,
+                    message : 'Company not found.'
+                })
+            } else {
+
+                let files = [];
+
+                company[0].registered_candidates.forEach(function (student) {
+                    let data = {};
+
+                    data.name = student.student_name.split(' ').join('_') + '_' + student.college_id + '.pdf';
+                    data.path = __basedir + '/public/assets/uploads/resumes/' + student.resume_url;
+
+                    files.push(data);
+                });
+
+                console.log(files);
+
+
+                res.zip(files, 'nodejs-zip-files.zip', function (err) {
+                    if(err) {
+                        console.log(err);
+                    }
+                });
+            }
+        })
+    });
+
     // get feedbacks form database
-    router.get('/fetchFeedbacks',  auth.ensureOfficialPlacementTeam, function (req, res) {
+    router.get('/fetchFeedbacks',  auth.ensureAdmin, function (req, res) {
 
         Feedback.find({}).select('title feedback author_name author_email timestamp').lean().exec( function (err, feedbacks) {
             if(err) {
@@ -304,6 +366,8 @@ module.exports = function (router){
 
         let announcement = new Announcement({
             category : req.body.category,
+            passout_batch : req.body.passout_batch,
+            author : req.decoded.student_name,
             announcement : req.body.announcement,
             timestamp : new Date()
         });
@@ -312,7 +376,7 @@ module.exports = function (router){
             if(err) {
                 res.json({
                     success : false,
-                    message : 'Error while saving data to database.'
+                    message : 'Error while this saving data to database.'
                 });
             } else {
                 res.json({
@@ -436,8 +500,8 @@ module.exports = function (router){
 
     });
 
-    // update admin's passout batch
-    router.post('/updateAdminBatch/:batch', auth.ensureAdminOrFaculty, function (req, res) {
+    // update placement team passout batch
+    router.post('/updateAdminBatch/:batch', auth.ensureOfficialPlacementTeam, function (req, res) {
 
         User.findOneAndUpdate( { college_id : req.decoded.college_id },{ $set : { passout_batch : req.params.batch }}, function (err) {
             if(err) {
@@ -507,7 +571,7 @@ module.exports = function (router){
                                     message : 'Something went wrong!'
                                 })
                             } else {
-                                var email = {
+                                let email = {
                                     from: '"Placement & Training Cell" <ptcell@mnit.ac.in>',
                                     to: interview.author_id + '@mnit.ac.in',
                                     subject: 'Yay! We have published your article ' + interview.title,

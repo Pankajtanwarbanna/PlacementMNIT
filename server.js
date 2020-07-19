@@ -18,6 +18,7 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
 // diff. front end and backend routes
 app.use('/api', apiRoutes, adminApiRoutes, notifyApiRoutes);
+global.__basedir = __dirname; // Globally Declaring basedir to use in API files
 
 // connecting to mongo database
 mongoose.connect('mongodb://127.0.0.1/placementmnit', { useNewUrlParser: true, useFindAndModify: false }, function (err) {

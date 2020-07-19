@@ -1,7 +1,7 @@
 /*
     Controller written by - Pankaj tanwar
 */
-angular.module('studentController',['studentServices','textAngular'])
+angular.module('studentController',['studentServices','textAngular','fileModelDirective','uploadFileService'])
 
 // Company Registration Controller
 .controller('companyRegistrationCtrl', function (student, admin, $scope) {
@@ -94,7 +94,7 @@ angular.module('studentController',['studentServices','textAngular'])
 // company controller
 .controller('companyCtrl', function (student, $routeParams, $scope) {
 
-    var app = this;
+    let app = this;
 
     app.applyStatus = false;
     app.deleteSuccessMsg = '';
@@ -102,8 +102,8 @@ angular.module('studentController',['studentServices','textAngular'])
     app.fetchedCompanyDetails = false;
 
     function checkDateDifference(deadline) {
-        var deadline_date = new Date(deadline);
-        var today = new Date();
+        let deadline_date = new Date(deadline);
+        let today = new Date();
 
         //console.log(deadline_date.getTime());
         //console.log(today.getTime());
@@ -173,7 +173,7 @@ angular.module('studentController',['studentServices','textAngular'])
 
                     if(company.selection_process.personal_interview.date == null) {
                         app.companyDetail.selection_process.personal_interview.date = '';
-                        console.log(app.companyDetail.selection_process.personal_interview.date)
+                        //console.log(app.companyDetail.selection_process.personal_interview.date)
                     } else {
                         app.companyDetail.selection_process.personal_interview.date = new Date(company.selection_process.personal_interview.date);
                     }
@@ -228,6 +228,13 @@ angular.module('studentController',['studentServices','textAngular'])
         student.oneClickApply($routeParams.company_id).then(function (data) {
             if(data.data.success) {
                 getCandidateApplyStatusFunction();
+            } else {
+                app.errorMsg = data.data.message;
+                app.applyStatus = false;
+                document.getElementById('oneClickApplyButton').disabled = false;
+                document.getElementById('oneClickApplyButton').className = 'btn btn-success btn-rounded';
+                document.getElementById('oneClickApplyButton').innerHTML = 'One Click Apply';
+
             }
         })
     };
@@ -269,7 +276,7 @@ angular.module('studentController',['studentServices','textAngular'])
 
     app.markCompanyAttendance = function (attendanceData) {
         student.markCompanyAttendance(app.attendanceData,$routeParams.company_id).then(function (data) {
-            console.log(data);
+            //console.log(data);
             if(data.data.success) {
                 app.markCompanyAttendanceSuccessMsg =  data.data.message;
                 getCandidateApplyStatusFunction();
@@ -281,10 +288,10 @@ angular.module('studentController',['studentServices','textAngular'])
 
     app.doneWithAttendance = function () {
         student.doneWithAttendance($routeParams.company_id).then(function (data) {
-            console.log(data);
+            //console.log(data);
             if(data.data.success) {
                 student.sendEmailToAbsentAndMarkRedFlag($routeParams.company_id).then(function (data) {
-                    console.log(data);
+                    //console.log(data);
                     if(data.data.success) {
                         getAttendanceStatus();
                     }
@@ -294,12 +301,22 @@ angular.module('studentController',['studentServices','textAngular'])
     }
 })
 
-.controller('announcementsCtrl', function (student, admin) {
+.controller('announcementsCtrl', function (student, admin,$scope) {
 
-    var app = this;
+    let app = this;
 
-    app.number = false;
+    app.notZeroAnnouncements = false;
     app.fetchedAnnouncements = false;
+
+    // update admin's passout batch
+    $scope.updateBatch = function (batch) {
+        admin.updateAdminBatch(batch).then(function (data) {
+            if(data.data.success) {
+                app.fetchedAnnouncements = false;
+                getAnnouncementsFunction();
+            }
+        });
+    };
 
     // Get all announcements
     function getAnnouncementsFunction () {
@@ -308,9 +325,7 @@ angular.module('studentController',['studentServices','textAngular'])
             if(data.data.success) {
                 app.announcements = data.data.announcements;
                 app.fetchedAnnouncements = true;
-                if(data.data.announcements.length > 0) {
-                    app.number = true;
-                }
+                app.notZeroAnnouncements = (data.data.announcements.length > 0);
             }
         });
     }
@@ -342,21 +357,26 @@ angular.module('studentController',['studentServices','textAngular'])
 
 
 // User Profile Controller
-.controller('profileCtrl', function (student, $timeout) {
+.controller('profileCtrl', function (student, $timeout,$scope, uploadFile) {
 
-	var app = this;
+	let app = this;
 
 	// Success - Error Messages
 	app.profileUpdateSuccessMsg = '';
 	app.profileUpdateErrorMsg = '';
 
 	// getting user profile
-	student.getUserProfile().then(function (data) {
-	    console.log(data.data.profile);
-		if(data.data.success) {
-		    app.userProfile = data.data.profile;
-		}
-	});
+    function getUserProfileFunction() {
+        student.getUserProfile().then(function (data) {
+            //console.log(data.data.profile);
+            if(data.data.success) {
+                app.userProfile = data.data.profile;
+            }
+        });
+    }
+
+    // get Student Profile
+    getUserProfileFunction();
 
 	// User user profile
 	app.updateProfile = function (profileData) {
@@ -379,7 +399,35 @@ angular.module('studentController',['studentServices','textAngular'])
                 app.profileUpdateLoadingMsg = false;
 		    }
 		});
-	}
+	};
+
+	// Resume Loading/Error/Success Message
+    app.resumeUploadLoading = false;
+    app.resumeUploadErrorMsg = '';
+    app.resumeUploadSuccessMsg = '';
+
+	// Upload Student Resume
+    app.updateStudentResume = function() {
+
+        // Loading & Error Msg
+        app.resumeUploadLoading = true;
+        app.resumeUploadErrorMsg = '';
+
+        // Upload Resume to Server.
+        uploadFile.uploadStudentResume($scope.file).then(function (data) {
+            if(data.data.success) {
+                // Uploaded Resume
+                app.resumeUploadSuccessMsg = data.data.message;
+                app.resumeUploadLoading = false;
+                getUserProfileFunction();
+            } else {
+                // Something went wrong!
+                app.resumeUploadErrorMsg = data.data.message;
+                app.resumeUploadLoading = false;
+            }
+        })
+    };
+
 })
 
 // User timeline controller
@@ -448,7 +496,6 @@ angular.module('studentController',['studentServices','textAngular'])
             //  Set Title
             app.feedbackData.title = app.feedbackTitle;
 
-            console.log(app.feedbackData);
             student.sendFeedback(app.feedbackData).then(function (data) {
                 if(data.data.success) {
                     app.successMsg = data.data.message;
@@ -531,7 +578,7 @@ angular.module('studentController',['studentServices','textAngular'])
     app.changeStatus = function () {
         app.loading = true;
         admin.changeStatus($routeParams.experience_id).then(function (data) {
-            console.log(data);
+            //console.log(data);
             if(data.data.success) {
                 app.loading = false;
                 app.errorMsg = '';
@@ -552,7 +599,7 @@ angular.module('studentController',['studentServices','textAngular'])
 
     // get all contributions of student
     student.getContributions().then(function (data) {
-        console.log(data);
+        //console.log(data);
         if(data.data.success) {
             app.interviews = data.data.interviews;
         } else {
@@ -595,9 +642,9 @@ angular.module('studentController',['studentServices','textAngular'])
         } else {
             app.loading = true;
             app.experienceData.tags = app.tags;
-            console.log(app.experienceData);
+            //console.log(app.experienceData);
             student.postInterviewExperience(app.experienceData).then(function (data) {
-                console.log(data);
+                //console.log(data);
                 if(data.data.success) {
                     app.loading = false;
                     app.successMsg = data.data.message;
@@ -2995,8 +3042,8 @@ angular.module('studentController',['studentServices','textAngular'])
                     "Name": "Balwant Singh",
                     "College ID": "2016ucp1411",
                     "Branch": "CSE",
-                    "Company": "Tally Solutions",
-                    "Package": "7",
+                    "Company": "Toshiba",
+                    "Package": "8",
                     "Company visited on": "18 Sept",
                     "Result Date": "18 Sept",
                     "Date": "18 Sept"
@@ -7451,8 +7498,6 @@ angular.module('studentController',['studentServices','textAngular'])
                     "Internship Type": "Summer"
                 }
             ]
-
-
         },
         {
             "M.Sc.": [
@@ -7953,13 +7998,17 @@ angular.module('studentController',['studentServices','textAngular'])
                     "Test Date": "28 Jan",
                     "Result Date": "7 Feb",
                     "Offer": "FTE"
-                },
+                }
+            ]
+        },
+        {
+            "IIIT Kota - Internship" : [
                 {
                     "Name": "Shivam Garg",
                     "ID": "2017kucp",
                     "Branch": "CSE",
                     "Company": "Amazon",
-                    "Package": "50K",
+                    "Stipend": "50K",
                     "Test Date": "8 Aug",
                     "Result Date": "8 Aug",
                     "Offer": "Interns"
@@ -7969,7 +8018,7 @@ angular.module('studentController',['studentServices','textAngular'])
                     "ID": "2017kucp",
                     "Branch": "CSE",
                     "Company": "Amazon",
-                    "Package": "50K",
+                    "Stipend": "50K",
                     "Test Date": "8 Aug",
                     "Result Date": "8 Aug",
                     "Offer": "Interns"
@@ -7979,7 +8028,7 @@ angular.module('studentController',['studentServices','textAngular'])
                     "ID": "2017kucp",
                     "Branch": "CSE",
                     "Company": "Amazon",
-                    "Package": "50K",
+                    "Stipend": "50K",
                     "Test Date": "8 Aug",
                     "Result Date": "8 Aug",
                     "Offer": "Interns"
@@ -7989,7 +8038,7 @@ angular.module('studentController',['studentServices','textAngular'])
                     "ID": "2017kucp",
                     "Branch": "CSE",
                     "Company": "Amazon",
-                    "Package": "50K",
+                    "Stipend": "50K",
                     "Test Date": "8 Aug",
                     "Result Date": "8 Aug",
                     "Offer": "Interns"
@@ -7999,7 +8048,7 @@ angular.module('studentController',['studentServices','textAngular'])
                     "ID": "2017kucp",
                     "Branch": "CSE",
                     "Company": "Amazon",
-                    "Package": "50K",
+                    "Stipend": "50K",
                     "Test Date": "8 Aug",
                     "Result Date": "8 Aug",
                     "Offer": "Interns"
@@ -8009,21 +8058,21 @@ angular.module('studentController',['studentServices','textAngular'])
                     "ID": "2017kucp",
                     "Branch": "CSE",
                     "Company": "Droom",
-                    "Package": "15k"
+                    "Stipend": "15k"
                 },
                 {
                     "Name": "Himanshu Sharma",
                     "ID": "2017kucp",
                     "Branch": "CSE",
                     "Company": "Droom",
-                    "Package": "15k"
+                    "Stipend": "15k"
                 },
                 {
                     "Name": "Ashish Uniyal",
                     "ID": "2017kucp",
                     "Branch": "CSE",
                     "Company": "Droom",
-                    "Package": "15k"
+                    "Stipend": "15k"
                 }
             ]
         }
@@ -8145,9 +8194,5 @@ angular.module('studentController',['studentServices','textAngular'])
                 return student.Branch === app.selectedBranch;
             });
         }
-
-
-        console.log(app.students);
-
     }
 });
