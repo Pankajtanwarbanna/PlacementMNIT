@@ -649,7 +649,7 @@ module.exports = function (router){
             })
         } else {
             let coordinator = new User({
-                student_name : req.body.name,
+                student_name : req.body.name.toUpperCase(),
                 college_email: req.body.college_email.toLowerCase(),
                 college_id : req.body.college_email.toUpperCase().split("@")[0] + '-PTP',
                 permission : req.body.permission,

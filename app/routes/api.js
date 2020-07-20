@@ -46,17 +46,6 @@ let transporter = nodemailer.createTransport({
 
 module.exports = function (router){
 
-    /*
-    // Nodemailer-sandgrid stuff
-    let options = {
-        auth: {
-            api_key: process.env.SENDGRID_KEY
-        }
-    };
-
-    let transporterNo = nodemailer.createTransport(sgTransport(options));
-    */
-
     // User Login - Send OTP for verification API
     router.post('/sendOTPForEmailVerificationIfValidLogin', function (req, res) {
         if(!req.body.college_id || !req.body.password) {

@@ -269,7 +269,7 @@ angular.module('studentController',['studentServices','textAngular','fileModelDi
                 getAttendanceStatus();
             }
         })
-    }
+    };
 
     app.markCompanyAttendanceSuccessMsg = '';
     app.markCompanyAttendanceErrorMsg = '';
@@ -459,7 +459,7 @@ angular.module('studentController',['studentServices','textAngular','fileModelDi
 // technical controller
 .controller('technicalCtrl', function (student) {
 
-    var app = this;
+    let app = this;
 
     app.feedbackTitle = '';
     app.successMsg = '';
@@ -489,7 +489,7 @@ angular.module('studentController',['studentServices','textAngular','fileModelDi
         app.errorMsg = '';
 
         if(!app.feedbackTitle) {
-            app.errorMsg = 'Select one category!'
+            app.errorMsg = 'Select one category!';
             app.loading = false;
         } else {
 
@@ -540,7 +540,7 @@ angular.module('studentController',['studentServices','textAngular','fileModelDi
 
 .controller('interviewCtrl', function (student) {
 
-    var app = this;
+    let app = this;
 
     // get all interview experiences
     student.getAllInterviewExperiences().then(function (data) {
@@ -6666,11 +6666,11 @@ angular.module('studentController',['studentServices','textAngular','fileModelDi
                 },
                 {
                     "S.No.": "53",
-                    "Name": "RAJITA KASLIWAL",
+                    "Name": "Rajita Kasliwal",
                     "College ID": "2018PWC5012",
                     "Branch": "ECE",
                     "Company": "Sagacious IP",
-                    "Package": "4.2",
+                    "Package": "4.5",
                     "Company visited on": "28 Jan",
                     "Result Date": "7 Feb"
                 },
@@ -6680,7 +6680,7 @@ angular.module('studentController',['studentServices','textAngular','fileModelDi
                     "College ID": "2018PEB5051",
                     "Branch": "ECE",
                     "Company": "Sagacious IP",
-                    "Package": "4.2",
+                    "Package": "4.5",
                     "Company visited on": "28 Jan",
                     "Result Date": "7 Feb"
                 },
@@ -8073,77 +8073,6 @@ angular.module('studentController',['studentServices','textAngular','fileModelDi
                     "Branch": "CSE",
                     "Company": "Droom",
                     "Stipend": "15k"
-                }
-            ]
-        }
-    ];
-
-    app.testing = [
-        {
-            "B.Tech.": [
-                {
-                    "S.No.": "1",
-                    "Name": "Pankaj",
-                    "College ID": "2018PCY5318",
-                    "Branch": "CHEMISTRY",
-                    "Company": "Aakash institute",
-                    "Package": "6.25-8.25",
-                    "Company visited on": "21 Nov",
-                    "Result Date": "30 Nov"
-                },
-                {
-                    "S.No.": "2",
-                    "Name": "Piyush Maheshwari",
-                    "College ID": "2018PCY5486",
-                    "Branch": "CHEMISTRY",
-                    "Company": "Avanti Learning",
-                    "Package": "5",
-                    "Company visited on": "11 Dec",
-                    "Result Date": "14 Dec"
-                },
-                {
-                    "S.No.": "3",
-                    "Name": " Govind ",
-                    "College ID": "2018PCY5402 ",
-                    "Branch": "MATHS",
-                    "Company": "Resonance",
-                    "Package": "4.8",
-                    "Company visited on": "15 Dec",
-                    "Result Date": "15 Dec"
-                }
-            ]
-        },
-        {
-            "M.Sc.": [
-                {
-                    "S.No.": "1",
-                    "Name": "Savi",
-                    "College ID": "2018PCY5318",
-                    "Branch": "CHEMISTRY",
-                    "Company": "Aakash institute",
-                    "Package": "6.25-8.25",
-                    "Company visited on": "21 Nov",
-                    "Result Date": "30 Nov"
-                },
-                {
-                    "S.No.": "2",
-                    "Name": "Piyush Maheshwari",
-                    "College ID": "2018PCY5486",
-                    "Branch": "CHEMISTRY",
-                    "Company": "Avanti Learning",
-                    "Package": "5",
-                    "Company visited on": "11 Dec",
-                    "Result Date": "14 Dec"
-                },
-                {
-                    "S.No.": "3",
-                    "Name": " Govind ",
-                    "College ID": "2018PCY5402 ",
-                    "Branch": "CHEMISTRY",
-                    "Company": "Resonance",
-                    "Package": "4.8",
-                    "Company visited on": "15 Dec",
-                    "Result Date": "15 Dec"
                 }
             ]
         }

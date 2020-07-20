@@ -6,7 +6,7 @@ angular.module('adminController', ['adminServices'])
 // Add new company controller
 .controller('addNewCompanyCtrl', function (admin,$scope) {
 
-    var app = this;
+    let app = this;
 
     app.successMsg = '';
 
@@ -79,7 +79,7 @@ angular.module('adminController', ['adminServices'])
 
     // Add New Company
     app.postCompanyDetails = function (newCompanyData) {
-        console.log(app.newCompanyData);
+
         admin.postCompanyDetails(app.newCompanyData).then(function (data) {
             if(data.data.success) {
                 app.successMsg = data.data.message;
@@ -92,7 +92,7 @@ angular.module('adminController', ['adminServices'])
 
 .controller('editCompanyCtrl', function ($routeParams, admin,student, $scope) {
 
-    var app = this;
+    let app = this;
 
     $scope.programs = [
         'UG',
