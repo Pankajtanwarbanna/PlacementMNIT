@@ -73,6 +73,34 @@
         <!-- Column -->
         <!-- Column -->
         <div class="col-lg-8 col-xlg-9 col-md-7">
+
+            <!-- Resume Section -->
+            <div class="card">
+                <ul class="product-review text-center">
+                    <!-- Resume Uploaded -->
+                    <li ng-if="studentsManagement.studentData.resume_url">
+                    <span class="text-muted display-5">
+                        <i class="mdi mdi-emoticon-cool text-success"></i>
+                    </span>
+                        <span>
+                        <h3 class="card-title">We've his resume! </h3>
+                        <h6 class="card-subtitle">Now, he is all set for Placement session.<a target="_blank" href="/assets/uploads/resumes/{{ studentsManagement.studentData.resume_url }}">&nbsp;<i class="ti ti-cloud-down"></i> </a></h6>
+                    </span>
+                    </li>
+
+                    <!-- Resume Not Uploaded. -->
+                    <li ng-if="!studentsManagement.studentData.resume_url">
+                        <font class="text-muted display-5">
+                            <i class="mdi mdi-emoticon-sad text-danger"></i>
+                        </font>
+                        <span>
+                        <h3 class="card-title"> Resume is missing!</h3>
+                        <h6 class="card-subtitle">Upload your resume to get started.</h6>
+                    </span>
+                    </li>
+                </ul>
+            </div>
+
             <div class="card">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs profile-tab" role="tablist">

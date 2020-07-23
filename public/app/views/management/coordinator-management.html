@@ -126,7 +126,8 @@
 
                     <h5 class="font-light m-t-0">MNIT Jaipur</h5></div>
                 <div class="col-6 align-self-center display-6 text-right">
-                    <h2 class="text-success">{{ filteredCoordinators.length }} {{ selectedRole.toUpperCase() }}s</h2></div>
+                    <h2 class="text-success">{{ filteredCoordinators.length }} {{ selectedRole.toUpperCase() }}s</h2>
+                </div>
             </div>
         </div>
         <div class="table-responsive" ng-show="filteredCoordinators.length > 0">
@@ -138,18 +139,16 @@
                     <th>LOGIN ID</th>
                     <th>EMAIL</th>
                     <th>CONTACT NO</th>
-                    <th>BATCH</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="coordinator in filteredCoordinators = (coordinator.ptpCoordinators | filter : { permission : selectedRole })">
-                    <td class="text-center">{{ $index + 1}}</td>
-                    <td class="txt-oflo">{{ coordinator.student_name }}</td>
-                    <td>{{ coordinator.college_id }} </td>
-                    <td class="txt-oflo">{{ coordinator.college_email }}</td>
-                    <td>{{ coordinator.alternate_contact_no }}</td>
-                    <td><span class="text-primary">{{ coordinator.passout_batch }}</span></td>
-                </tr>
+                    <tr ng-repeat="coordinator in filteredCoordinators = (coordinator.ptpCoordinators | filter : { permission : selectedRole })">
+                        <td class="text-center">{{ $index + 1}}</td>
+                        <td class="txt-oflo">{{ coordinator.student_name }}</td>
+                        <td>{{ coordinator.college_id }} </td>
+                        <td class="txt-oflo">{{ coordinator.college_email }}</td>
+                        <td>{{ coordinator.alternate_contact_no }}</td>
+                    </tr>
                 </tbody>
             </table>
         </div>

@@ -64,7 +64,7 @@
                         <tr ng-repeat="student in registeredStudents.company.registered_candidates | filter : studentName">
                             <td>{{ $index + 1}}.</td>
                             <td>
-                                <a href="#  "> {{ student.student_name }}</a>
+                                <a class="text-primary"> {{ student.student_name }}</a>
                             </td>
                             <td><a>{{ student.college_id }} </a></td>
                             <td>+91 {{ student.alternate_contact_no }}</td>

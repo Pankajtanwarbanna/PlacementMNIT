@@ -3795,7 +3795,7 @@ angular.module('studentController',['studentServices','textAngular','fileModelDi
                     "College ID": "2016UEE1428",
                     "Branch": "EEE",
                     "Company": "Texas Instruments ",
-                    "Package": "19",
+                    "Package": "20.88",
                     "Company visited on": "PPO",
                     "Result Date": "30 Nov"
                 },

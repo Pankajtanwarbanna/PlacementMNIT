@@ -9,6 +9,7 @@ let Interview = require('../models/interview');
 let auth = require('../middlewares/authPermission');
 let mongoose = require('mongoose');
 let nodemailer = require('nodemailer');
+let zip = require('express-zip');
 
 let transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -180,6 +181,7 @@ module.exports = function (router){
                 company[0].registered_candidates.forEach(function (student) {
                     let data = {};
 
+                    // todo Check if file exists
                     data.name = student.student_name.split(' ').join('_') + '_' + student.college_id + '.pdf';
                     data.path = __basedir + '/public/assets/uploads/resumes/' + student.resume_url;
 
@@ -695,7 +697,7 @@ module.exports = function (router){
     // get Placement Cell Coordinators from DB
     router.get('/getAllCoordinators', auth.ensureOfficialPlacementTeam, function (req, res) {
 
-        User.find({ permission : { $in : ['spc', 'faculty-coordinator']} }).select('student_name college_id college_email alternate_contact_no passout_batch permission').lean().exec(function (err, coordinators) {
+        User.find({ permission : { $in : ['spc', 'faculty-coordinator']} }).select('student_name college_id college_email alternate_contact_no permission').lean().exec(function (err, coordinators) {
             if(err) {
                 res.json({
                     success : false,
