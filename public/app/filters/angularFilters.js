@@ -6,7 +6,7 @@ var app = angular.module('portalFilters', [])
             return package;
         } else {
             let programs = Object.keys(package);
-            return package[programs[0]].ctc;
+            return package[programs[0]].ctc.toUpperCase();
         }
     };
 })

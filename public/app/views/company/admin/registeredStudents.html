@@ -1,28 +1,47 @@
 <div class="row page-titles">
+    <!-- Heading -->
     <div class="col-md-5 align-self-center">
         <h4 class="text-themecolor">Registered Students</h4>
     </div>
-
-    <div class="col-md-7 align-self-center text-right" ng-show="main.authorized">
-        <div class="d-flex justify-content-end align-items-center">
-            <input type="button" value="Export as Excel" onclick="saveAsExcel('demo-foo-addrow', $('#company_name').val() )"/>
-        </div>
-    </div>
 </div>
 
-<div class="row">
+<!-- Loading Message -->
+<div class="alert alert-primary alert-rounded" ng-show="registeredStudents.getRegisteredStudentsLoading">
+    <strong> Loading!</strong> Hold on. We are fetching registered students...
+</div>
+
+<!-- Registered Students Table -->
+<div class="row" ng-show="!registeredStudents.getRegisteredStudentsLoading">
     <div class="col-12">
         <div class="card">
+
             <div class="card-body">
-                <h4 class="card-title text-center"> {{ registeredStudents.company_name}}  Registered Students list</h4>
-                <input type="hidden" id="company_name" value={{registeredStudents.company_name}}>
+                <h4 class="card-title text-center"> {{ registeredStudents.company.company_name}}  Registered Students list</h4>
+
+                <!-- Form Input to search a particular Student -->
                 <form class="form-material">
                     <div class="form-group">
                         <input type="text" class="form-control form-control-line" placeholder="Type here to Search for student name" ng-model="studentName">
                     </div>
                 </form>
+
+                <!-- Total Registered Students -->
+                <span class="text-purple">Total {{ registeredStudents.company.registered_candidates.length }} Registered Student(s).</span>
+
+                <!-- Export Resumes & Excel Button -->
+                <div class="row mt-5" ng-show="main.authorized && !registeredStudents.getRegisteredStudentsLoading && registeredStudents.company.registered_candidates.length > 0">
+                    <div class="col-12">
+                        <!-- Export Resume Button - Only show if Company was added after Resume Upload feature -->
+                        <button ng-show="registeredStudents.company.registered_candidates[0].resume_url" class="btn btn-primary mb-1" ng-click="registeredStudents.exportResumesOfRegisteredStudents();">Export Resumes</button>
+
+                        <!-- Export Excel Sheet Button -->
+                        <input type="button" class="btn btn-primary mb-1" value="Export as Excel" ng-click="saveAsExcel('demo-foo-addrow', registeredStudents.company.company_name)"/>
+
+                    </div>
+                </div>
+
                 <h6 class="card-subtitle"></h6>
-                <div class="table-responsive">
+                <div class="table-responsive" ng-if="registeredStudents.company.registered_candidates.length > 0">
                     <table id="demo-foo-addrow" class="table table-bordered m-t-30 table-hover contact-list" data-paging="true" data-paging-size="7">
                         <thead>
                         <tr>
@@ -42,10 +61,10 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="student in registeredStudents.registeredStudentsData | filter : studentName">
-                            <td>{{ $index + 1}}</td>
+                        <tr ng-repeat="student in registeredStudents.company.registered_candidates | filter : studentName">
+                            <td>{{ $index + 1}}.</td>
                             <td>
-                                <a href="#  "> {{ student.student_name }}</a>
+                                <a class="text-primary"> {{ student.student_name }}</a>
                             </td>
                             <td><a>{{ student.college_id }} </a></td>
                             <td>+91 {{ student.alternate_contact_no }}</td>

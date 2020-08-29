@@ -47,6 +47,7 @@ var userSchema = new mongoose.Schema({
     },
     gender : {
         type : String,
+        default : 'M'
     },
     status : {
         type : String,
@@ -106,9 +107,15 @@ var userSchema = new mongoose.Schema({
         type : Number,
         default : 0
     },
+    login_otp : {
+        type : String
+    },
+    resume_url : {
+        type : String
+    },
     password : {
-        type : String,
-        select : false
+        type : String
+        //select : false
     },
     active : {
         type : Boolean,

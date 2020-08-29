@@ -52,7 +52,7 @@ $ PORT=8080 node server.js
 
 Server would be running at port 8080. Open any browser. Access the project - http://localhost:8080/
 
-> You need to set environment variables PTP_EMAIL & PTP_EMAIL_PASSWORD otherwise email service will not work. For more info refer nodemailer transporter object - app/routes/api.js & app/routes/adminApi.js
+> You need to set environment variables PTP_EMAIL, PTP_EMAIL_PASSWORD, SECRET, SMS_API_KEY,SMS_SENDERID & SMS_BASE_URI in .env file (root folder). For more info refer API files in router folder.
 
 ## Project Status
 
@@ -72,6 +72,7 @@ This project is currently deployed to MNIT Cloud and being used by UG, PG, & MBA
     ├── public/                 # Frontend Folder
     │   ├── app/                    # Frontend Application
     │   │   ├── controllers/            # AngularJs Controllers
+    │   │   ├── directives/             # Custom AngularJs directives 
     │   │   ├── filters/                # Custom AngularJs filters
     │   │   ├── services/               # Services in AngularJs
     │   │   ├── views/                  # All HTML files

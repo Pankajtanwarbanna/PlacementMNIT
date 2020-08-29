@@ -3,6 +3,7 @@
         <h4 class="text-themecolor">Your Contributions</h4>
     </div>
 </div>
+<!-- All Interview Experience Contributions -->
 <div>
     <div class="row">
         <div class="col-lg-6" ng-repeat="experience in results=(contributions.interviews | filter : searchInterview)">
@@ -23,6 +24,19 @@
                         <span class="label label-success" style="margin-right: 10px;" ng-repeat="tag in experience.tags">{{ tag }}</span>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- If No Contributions -->
+<div class="row" ng-if="results.length === 0">
+    <div class="col-md-12">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h3 class="card-title">Nothing right here!</h3>
+                <p class="card-text">Start contributing to help your mates out there.Share details about the interview process you have been through.. .</p>
+                <a href="/compose" class="btn btn-dark">Contribute Now</a>
             </div>
         </div>
     </div>

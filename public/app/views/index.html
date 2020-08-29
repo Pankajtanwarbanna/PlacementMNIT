@@ -14,30 +14,6 @@
     <!-- Title Meta tag -->
     <title>Placement Portal : MNIT Jaipur</title>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
-
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-    <!-- App config -->
-    <script src="/app/app.js"></script>
-    <script src="/app/routes.js"></script>
-
-    <!-- Angularjs Filters -->
-    <script src="/app/filters/angularFilters.js"></script>
-
-    <!-- Angular Controller files -->
-    <script src="/app/controllers/studentCtrl.js"></script>
-    <script src="/app/controllers/mainCtrl.js"></script>
-    <script src="/app/controllers/adminCtrl.js"></script>
-    <script src="/app/controllers/emailCtrl.js"></script>
-
-    <!-- Angular Services -->
-    <script src="/app/services/adminServices.js"></script>
-    <script src="/app/services/studentServices.js"></script>
-    <script src="/app/services/authServices.js"></script>
-
     <!-- Font library -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
@@ -45,19 +21,6 @@
     <link href="assets/css/style.min.css" rel="stylesheet">
     <!--Style-->
     <link href="assets/css/style.css" rel="stylesheet">
-    <!--Timeline Page CSS-->
-    <link href="assets/css/pages/timeline-vertical-horizontal.css" rel="stylesheet">
-
-    <link rel="stylesheet" href="http://textangular.com/dist/textAngular.css" type="text/css">
-
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <script type="text/javascript" src="https://cdn.statically.io/gh/Pankajtanwarbanna/PlacementMNIT/d4e8ceac/public/assets/js/saveAsExcel.js"></script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-144843888-1"></script>
@@ -121,6 +84,40 @@
                         <li class="nav-item hidden-sm-up"> <a class="nav-link nav-toggler waves-effect waves-light" href="javascript:void(0)"><i class="ti-menu"></i></a></li>
                         <li class="nav-item d-none d-lg-block"><a class="nav-link nav-lock waves-effect waves-light" href="javascript:void(0)"><i class="ti-menu"></i></a></li>
 
+                        <!-- Notifications Feature -->
+                        <li class="nav-item dropdown" ng-show="main.isLoggedIn">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="ti-email"></i>
+                                <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
+                            </a>
+                            <div class="dropdown-menu mailbox animated bounceInDown">
+                                <span class="with-arrow"><span class="bg-primary"></span></span>
+                                <ul>
+                                    <li>
+                                        <div class="drop-title bg-primary text-white">
+                                            <h4 class="m-b-0 m-t-5">1 New</h4>
+                                            <span class="font-light">Notification</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="message-center">
+                                            <!-- Message -->
+                                            <a href="javascript:void(0)">
+                                                <div class="btn btn-danger btn-circle"><i class="fa fa-bell"></i></div>
+                                                <div class="mail-contnet">
+                                                    <h5>Personalized Notifications </h5>
+                                                    <span class="mail-desc">We are thrilled to announce personalized notification feature to make Placement Portal more user friendly!</span>
+                                                    <span class="time">7 July, 9:30 AM</span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <!-- All Notifications  -->
+                                    <!--<li>
+                                        <a class="nav-link text-center m-b-5" href="javascript:void(0);"> <strong>Check all notifications</strong> <i class="fa fa-angle-right"></i> </a>
+                                    </li>-->
+                                </ul>
+                            </div>
+                        </li>
                     </ul>
                     <ul class="navbar-nav my-lg-0" ng-show="main.isLoggedIn">
                         <!-- ============================================================== -->
@@ -135,7 +132,7 @@
                                     <div class=""><img src="assets/images/profile/{{ main.gender}}.png" alt="user" class="img-circle" width="60"></div>
                                     <div class="m-l-10">
                                         <h4 class="m-b-0">{{ main.student_name }}</h4>
-                                        <p class=" m-b-0"> {{ main.permission }} </p>
+                                        <p class=" m-b-0"> {{ main.permission.toUpperCase() }} </p>
                                     </div>
                                 </div>
                                 <a class="dropdown-item" href="/profile"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
@@ -184,10 +181,10 @@
                                 <li><a class="nav-toggler" href="/settings">Account Settings <i class="ti-settings text-success"></i></a></li>
                             </ul>
                         </li>
-                        <li ng-show="main.isLoggedIn"> <a class="nav-toggler waves-effect waves-dark" href="/team" aria-expanded="false"><i class="icon-people"></i><span class="hide-menu">Team</span></a></li>
-                        <li ng-show="main.isLoggedIn"> <a class="nav-toggler waves-effect waves-dark" href="/technical" aria-expanded="false"><i class="icon-screen-desktop"></i><span class="hide-menu">Developer</span></a></li>
+                        <li> <a class="nav-toggler waves-effect waves-dark" href="/team" aria-expanded="false"><i class="icon-people"></i><span class="hide-menu">Team</span></a></li>
+                        <li> <a class="nav-toggler waves-effect waves-dark" href="/technical" aria-expanded="false"><i class="icon-screen-desktop"></i><span class="hide-menu">Developer</span></a></li>
                         <li> <a class="nav-toggler waves-effect waves-dark" href="/contact" aria-expanded="false"><i class="icon-phone"></i><span class="hide-menu">Contact Us </span></a></li>
-                        <li ng-show="main.isLoggedIn"> <a class="nav-toggler waves-effect waves-dark" href="/placements2019-20" aria-expanded="false"><span class="hide-menu">Hall of Fame &nbsp; <span class="badge badge-pill badge-primary text-white">New</span></span></a></li>
+                        <li> <a class="nav-toggler waves-effect waves-dark" href="/placements2019-20" aria-expanded="false"><span class="hide-menu">Hall of Fame &nbsp; <span class="badge badge-pill badge-primary text-white">New</span></span></a></li>
 
                     </ul>
                 </nav>
@@ -235,27 +232,50 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
-    <script src="https://cdn.statically.io/gh/Pankajtanwarbanna/PlacementMNIT/d4e8ceac/public/assets/modules/jquery/jquery-3.2.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- App config -->
+    <script src="/app/app.js"></script>
+    <script src="/app/routes.js"></script>
+
+    <!-- Angularjs Filters -->
+    <script src="/app/filters/angularFilters.js"></script>
+
+    <!-- Angular Controller files -->
+    <script src="/app/controllers/studentCtrl.js"></script>
+    <script src="/app/controllers/mainCtrl.js"></script>
+    <script src="/app/controllers/adminCtrl.js"></script>
+    <script src="/app/controllers/emailCtrl.js"></script>
+
+    <!-- Angular Custom File Model Directives -->
+    <script src="app/directives/fileModel.js"></script>
+
+    <!-- Angular Services -->
+    <script src="/app/services/adminServices.js"></script>
+    <script src="/app/services/studentServices.js"></script>
+    <script src="/app/services/authServices.js"></script>
+    <script src="app/services/uploadFileService.js"></script>
+
     <!-- Bootstrap popper Core JavaScript -->
-    <script src="https://cdn.statically.io/gh/Pankajtanwarbanna/PlacementMNIT/d4e8ceac/public/assets/modules/popper/popper.min.js"></script>
-    <script src="https://cdn.statically.io/gh/Pankajtanwarbanna/PlacementMNIT/d4e8ceac/public/assets/modules/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/assets/js/popper/popper.min.js"></script>
+    <script src="/assets/js/bootstrap/js/bootstrap.min.js"></script>
     <!-- slimscrollbar scrollbar JavaScript -->
-    <script src="https://cdn.statically.io/gh/Pankajtanwarbanna/PlacementMNIT/d4e8ceac/public/assets/js/perfect-scrollbar.jquery.min.js"></script>
-    <!--Wave Effects -->
-    <script src="https://cdn.statically.io/gh/Pankajtanwarbanna/PlacementMNIT/d4e8ceac/public/assets/js/waves.js"></script>
-    <!--Menu sidebar -->
-    <script src="https://cdn.statically.io/gh/Pankajtanwarbanna/PlacementMNIT/d4e8ceac/public/assets/js/sidebarmenu.js"></script>
-    <!--stickey kit -->
-    <script src="https://cdn.statically.io/gh/Pankajtanwarbanna/PlacementMNIT/d4e8ceac/public/assets/modules/sticky-kit-master/dist/sticky-kit.min.js"></script>
-    <script src="https://cdn.statically.io/gh/Pankajtanwarbanna/PlacementMNIT/d4e8ceac/public/assets/modules/sparkline/jquery.sparkline.min.js"></script>
-    <!--Custom JavaScript -->
-    <script src="https://cdn.statically.io/gh/Pankajtanwarbanna/PlacementMNIT/d4e8ceac/public/assets/js/custom.min.js"></script>
+    <script src="/assets/js/perfect-scrollbar.jquery.min.js"></script>
+    <!--Menu sidebar-->
+    <script src="/assets/js/sidebarmenu.js"></script>
+    <!-- Export as Excel -->
+    <script type="text/javascript" src="/assets/js/saveAsExcel.js"></script>
+
     <!-- ============================================================== -->
-    <script src='http://textangular.com/dist/textAngular-rangy.min.js'></script>
+    <script src='/assets/js/textAngular/textAngular-rangy.min.js'></script>
 
-    <script src='http://textangular.com/dist/textAngular-sanitize.min.js'></script>
+    <script src='/assets/js/textAngular/textAngular-sanitize.min.js'></script>
 
-    <script src='http://textangular.com/dist/textAngular.min.js'></script>
+    <script src='/assets/js/textAngular/textAngular.min.js'></script>
 
 </body>
 

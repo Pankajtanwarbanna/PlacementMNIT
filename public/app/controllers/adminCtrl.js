@@ -6,7 +6,7 @@ angular.module('adminController', ['adminServices'])
 // Add new company controller
 .controller('addNewCompanyCtrl', function (admin,$scope) {
 
-    var app = this;
+    let app = this;
 
     app.successMsg = '';
 
@@ -79,7 +79,7 @@ angular.module('adminController', ['adminServices'])
 
     // Add New Company
     app.postCompanyDetails = function (newCompanyData) {
-        console.log(app.newCompanyData);
+
         admin.postCompanyDetails(app.newCompanyData).then(function (data) {
             if(data.data.success) {
                 app.successMsg = data.data.message;
@@ -92,7 +92,7 @@ angular.module('adminController', ['adminServices'])
 
 .controller('editCompanyCtrl', function ($routeParams, admin,student, $scope) {
 
-    var app = this;
+    let app = this;
 
     $scope.programs = [
         'UG',
@@ -234,52 +234,160 @@ angular.module('adminController', ['adminServices'])
 
     // update company details
     app.updateCompanyDetails = function (company) {
+
+        // Loading message while details are updating
+        app.loading = true;
+
         admin.updateCompanyDetails(company).then(function (data) {
             if(data.data.success) {
                 app.successMsg = data.data.message;
+                app.loading = false;
             } else {
                 app.errorMsg = data.data.message;
-                console.log(data.data.error);
+                app.loading = false;
             }
         })
     }
 })
 
-.controller('registeredStudentsCtrl', function ($routeParams,student, admin,$scope) {
+.controller('registeredStudentsCtrl', function ($routeParams,student, admin,$scope,$window) {
+
     let app = this;
 
+    // assign javascript method reference in controller
+    $scope.saveAsExcel = saveAsExcel;
+
+    // Loading Message
+    app.getRegisteredStudentsLoading = true;
+
+    // Get Total Registered Students Function
     function totalRegisteredStudent() {
-
-        app.registeredStudentsData = [];
-
         admin.getRegisteredStudents($routeParams.company_id).then(function (data) {
             if(data.data.success) {
-                app.studentsData = data.data.candidates;
-                app.company_name = data.data.name;
-                //console.log(app.studentsData);
-                for(var i=0;i < app.studentsData.length;i++) {
-                    admin.getStudentDetailsByCollegeID(app.studentsData[i].college_id).then(function (data) {
-                        if(data.data.success) {
-                            app.registeredStudentsData.push(data.data.user);
-                        }
-                    })
-                }
+                app.company = data.data.company;
+                app.getRegisteredStudentsLoading = false;
+            } else {
+                app.errorMsg = data.data.message;
+                app.getRegisteredStudentsLoading = false;
             }
         });
     }
 
     totalRegisteredStudent();
 
+    // Delete Registration
     $scope.withdrawRegistration = function (college_id) {
-        console.log(college_id);
 
+        // Loading True
+        app.getRegisteredStudentsLoading = true;
+
+        // Withdraw Candidates Registration
         student.withdrawRegistration(college_id,$routeParams.company_id).then(function (data) {
-            console.log(data);
             if(data.data.success) {
                 totalRegisteredStudent();
             }
         })
+    };
+
+    // export
+    app.exportResumesOfRegisteredStudents = function () {
+
+        // admin exporting resumes
+        admin.exportResumesOfRegisteredStudents($routeParams.company_id).then(function (data) {
+
+            console.log(data);
+            if(data.status.toString() === '200') {
+                // First Method
+                const a = document.createElement("a");
+                a.href = URL.createObjectURL(new Blob([data.data],{type:'application/zip'}));
+                a.setAttribute("download", app.company.company_name.split(' ').join('_') + "_Resumes.zip");
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+
+            }
+
+            // Second Method with Object_id.zip file name
+            /*
+            let URL = $window.URL || $window.webkitURL || $window.mozURL || $window.msURL;
+
+            if ( URL ) {
+
+                let blob = new Blob([data.data],{type:'application/zip'});
+                let url = URL.createObjectURL(blob);
+                $window.open(url);
+            }
+            */
+
+            // Third Method with Object_id.zip
+            /*
+            let file = new File([data.data], {type: "application/zip"});
+            let exportUrl = URL.createObjectURL(file);
+            window.location.assign(exportUrl);
+            URL.revokeObjectURL(exportUrl);
+            */
+        })
     }
+})
+
+// Coordinator Controller
+.controller('coordinatorCtrl', function (admin, $scope) {
+
+    let app = this;
+
+    // By Default - SPC Profile
+    $scope.selectedRole = 'spc';
+
+    // get all coordinators from DB
+    function getAllCoordinators() {
+
+        app.getAllCoordinatorsLoading = true;
+
+        admin.getAllCoordinators().then(function (data) {
+            if(data.data.success) {
+                app.ptpCoordinators = data.data.coordinators;
+                app.getAllCoordinatorsLoading = false;
+            } else {
+                app.errorMsg = data.data.message;
+                app.getAllCoordinatorsLoading = false;
+            }
+        })
+    }
+
+    getAllCoordinators();
+
+    // add coordinator form submission
+    app.addCoordinator = function (coordinatorData) {
+        // loading
+        app.loading = true;
+        app.loadingMsg = 'Hold on, adding new coordinator..';
+
+        admin.addCoordinator(app.coordinatorData).then(function (data) {
+            if(data.data.success) {
+
+                app.loadingMsg = data.data.message + '. Notifying coordinator...';
+                app.errorMsg = '';
+
+                admin.notifyCoordinatorForRegistration(app.coordinatorData).then(function (data) {
+                    console.log(data);
+                    if(data.data.success) {
+                        app.successMsg = data.data.message;
+                        app.loading = false;
+                        getAllCoordinators();
+                    } else {
+                        app.errorMsg = data.data.message;
+                        app.loading = false;
+                    }
+                });
+                
+
+            } else {
+                app.errorMsg = data.data.message;
+                app.loading = false;
+            }
+        })
+    }
+
 })
 
 .controller('studentsManagementCtrl', function ($scope, admin) {

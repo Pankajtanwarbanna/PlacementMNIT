@@ -34,7 +34,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Company Name</label>
-                                <input type="text" class="form-control" placeholder="Enter name" ng-model="addNewCompany.newCompanyData.company_name">
+                                <input type="text" class="form-control" placeholder="Enter name" ng-model="addNewCompany.newCompanyData.company_name" required>
                             </div>
                         </div>
                         <!--/span-->
@@ -101,14 +101,14 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Job Profile</label>
-                                <input type="text" class="form-control" placeholder="Enter job profile" ng-model="addNewCompany.newCompanyData.job_profile">
+                                <input type="text" class="form-control" placeholder="Enter job profile" ng-model="addNewCompany.newCompanyData.job_profile" required>
                             </div>
                         </div>
                         <!--/span-->
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Passout Batch</label>
-                                <select class="form-control" ng-model="addNewCompany.newCompanyData.passout_batch">
+                                <select class="form-control" ng-model="addNewCompany.newCompanyData.passout_batch" required>
                                     <option value=""> -- Select Batch --</option>
                                     <option value="2020">2020</option>
                                     <option value="2021">2021</option>
@@ -124,7 +124,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Recruitment</label>
-                                <select class="form-control" ng-model="addNewCompany.newCompanyData.recruitment">
+                                <select class="form-control" ng-model="addNewCompany.newCompanyData.recruitment" required>
                                     <option value=""> -- Select Recruitment --</option>
                                     <option value="Internship">Internship</option>
                                     <option value="Placement">Placement</option>
@@ -337,7 +337,7 @@
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label class="control-label">CTC</label>
-                                    <input type="text" class="form-control" placeholder="...... ₹" ng-model="addNewCompany.newCompanyData.package[program].ctc">
+                                    <input type="text" class="form-control" placeholder="...... ₹" ng-model="addNewCompany.newCompanyData.package[program].ctc" required>
                                     <!--<small class="form-control-feedback"> This field has error. </small>-->
                                 </div>
                             </div>
@@ -486,7 +486,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label class="m-t-20">Last Date to Apply</label>
-                            <input type="datetime-local" class="form-control" placeholder="Enter date" ng-model="addNewCompany.newCompanyData.deadline_date">
+                            <input type="datetime-local" class="form-control" placeholder="Enter date" ng-model="addNewCompany.newCompanyData.deadline_date" required>
                         </div>
                     </div>
                 </div>

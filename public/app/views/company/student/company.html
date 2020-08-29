@@ -538,6 +538,13 @@
         </div>
     </div>
 
+
+    <!--Error Message -->
+    <div class="alert alert-danger alert-rounded text-center" ng-show="company.errorMsg">
+        <strong> Oops!</strong> {{ company.errorMsg }}
+    </div>
+
+
     <div style="text-align: center; margin-bottom: 20px;" ng-show="!main.authorized && !company.missedLastDate">
         <button ng-disabled="company.applyStatus" type="button" id="oneClickApplyButton" class="btn btn-success btn-rounded" data-toggle="modal" data-target="#applyNowCompanyModal"> One Click Apply</button>
     </div>

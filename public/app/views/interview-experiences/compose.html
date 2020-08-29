@@ -52,7 +52,7 @@
                     <div style="text-align: center" class="text-center">
                         <p class="text-danger" ng-show="compose.errorMsg">{{ compose.errorMsg }}</p>
                         <p class="text-primary" ng-show="compose.loading"> Posing your experience... Please wait!</p>
-                        <button type="submit" class="btn btn-primary btn-rounded"><i class="ti-check-box"></i> &nbsp; Post Interview Experience</button>
+                        <button type="submit" ng-disabled="compose.loading" class="btn btn-primary btn-rounded"><i class="ti-check-box"></i> &nbsp; Post Interview Experience</button>
                     </div>
                 </form>
             </div>

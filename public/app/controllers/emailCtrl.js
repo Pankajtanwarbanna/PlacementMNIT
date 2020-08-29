@@ -97,7 +97,7 @@ angular.module('emailController', ['studentServices'])
 
     app.forgotPassword = function (logData) {
 
-       app.successMsgPassword = 'Checking credentials...';
+       app.successMsgPassword = 'Checking credentials. Please wait...';
        app.errorMsgPassword = '';
        app.disabledPassword = true;
 
