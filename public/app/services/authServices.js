@@ -8,12 +8,12 @@ angular.module('authServices',[])
 
     // auth.sendOTPForEmailVerificationIfValidLogin(logData);
     authFactory.sendOTPForEmailVerificationIfValidLogin = function(logData) {
-        return $http.post('/api/sendOTPForEmailVerificationIfValidLogin', logData);
+        return $http.post('/api/user/sendOTP', logData);
     };
 
     // auth.login(logData);
     authFactory.login = function (logData) {
-        return $http.post('/api/authenticate', logData).then(function (data) {
+        return $http.post('/api/user/login', logData).then(function (data) {
             authToken.setToken(data.data.token);
             return data;
         });
@@ -32,7 +32,7 @@ angular.module('authServices',[])
     // auth.getUser();
     authFactory.getUser = function () {
         if(authToken.getToken()) {
-            return $http.post('/api/me');
+            return $http.post('/api/user/me');
         } else {
             $q.reject({ message : 'User has no token.'});
         }

@@ -1,0 +1,130 @@
+<div class="row page-titles">
+    <!-- Headling -->
+    <div class="col-md-5 align-self-center">
+        <h4 class="text-themecolor">Placements Management</h4>
+    </div>
+
+    <!-- Add Announcement Button -->
+    <div class="col-md-7 align-self-center text-right">
+        <div class="d-flex justify-content-end align-items-center">
+            <a href="/add-placement" type="button" class="btn btn-primary d-none d-lg-block m-l-15"><i class="ti-plus"></i> Add Placement</a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <select class="form-control" ng-model="selectedBatch">
+                                <option value="">-- Select Batch -- </option>
+                                <option value="2021">Batch of 2021</option>
+                                <option value="2022">Batch of 2022</option>
+                                <option value="2023">Batch of 2023</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--/span-->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <select class="form-control" ng-model="selectedRecruitment">
+                                <option value="">-- Select Recruitment --</option>
+                                <option value="Internship">Internship</option>
+                                <option value="Placement">Placement</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <select class="form-control" ng-model="selectedRecruitmentType">
+                                <option value="">-- Select Recruitment Type --</option>
+                                <option value="PPO">Pre Placement Offer</option>
+                                <option value="On-Campus">On-Campus</option>
+                                <option value="Off-Campus">Off-Campus</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Todo - Degree & Branch Filter-->
+                    <!--/span-->
+<!--                    <div class="col-md-6">-->
+<!--                        <div class="form-group">-->
+<!--                            <select class="form-control" ng-model="selectedDegree">-->
+<!--                                <option value="">&#45;&#45; Select Degree &#45;&#45;</option>-->
+<!--                                <option value="B.Tech">B.Tech</option>-->
+<!--                                <option value="M.Tech">M.Tech</option>-->
+<!--                            </select>-->
+<!--                        </div>-->
+<!--                    </div>-->
+                    <!--/span-->
+<!--                    <div class="col-md-6">-->
+<!--                        <div class="form-group">-->
+<!--                            <select class="form-control" ng-model="selectedDepartment">-->
+<!--                                <option value="">&#45;&#45; Select Department &#45;&#45;</option>-->
+<!--                                <option value="Computer Science">Computer Science</option>-->
+<!--                                <option value="Electronics & Comm.">Electronics & Comm.</option>-->
+<!--                            </select>-->
+<!--                        </div>-->
+<!--                    </div>-->
+                    <!--/span-->
+                    <span class="ml-2 text-primary">Showing {{ students.length }} <span ng-if="selectedBatch">Batch of {{ selectedBatch }}</span> {{ selectedRecruitment }} {{ selectedRecruitmentType }}  {{ selectedDegree }} {{ selectedDepartment }} Candidates.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-lg-3 col-xlg-3 col-md-5" ng-repeat="student in students=(placementManagement.placements | filter : { recruitment : selectedRecruitment, recruitment_type : selectedRecruitmentType, passout_batch : selectedBatch })">
+        <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
+            <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
+                <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->
+                    <h4 class="card-title">{{ student.students[0].student_name }}</h4>
+                    <h6 class="card-subtitle">{{ student.job_profile }} @ {{ student.company_name }}</h6>
+                    <h6 class="text-white">
+                        {{ student.recruitment_type }} : {{ student.recruitment }}
+                        <br>
+                        <span ng-if="student.recruitment==='Internship'">( {{ student.intern_duration }} Months - {{ student.intern_stipend }} Per Month)</span>
+                        <span ng-if="student.recruitment==='Placement'">( Full Time - {{ student.package }} LPA)</span>
+                    </h6>
+                    <p class="text-white">Batch of {{ student.passout_batch }}</p>
+                    <p class="text-muted"> **{{ student.recruitment_date | date : 'dd MMM yyyy' }}**</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--All Placements -->
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-body text-center" ng-show="placementManagement.loading">
+            <!--<h4 class="card-title">Loading Announcements!</h4>-->
+            <div class="spinner-grow" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-success" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-danger" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-warning" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-info" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-dark" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
+</div>

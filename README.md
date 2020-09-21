@@ -66,9 +66,11 @@ This project is currently deployed to MNIT Cloud and being used by UG, PG, & MBA
    
     PlacementMNIT/
     ├── app/                    # Backend Folder
+    │   ├── controllers/            # All business logic for routers
     │   ├── middlewares/            # ExpressJs Middlewares
     │   ├── models/                 # MongoDB database models
-    │   └── routes/                 # Backend API routes
+    │   ├── routes/                 # Backend API routes
+    │   └── services/               # Server side services 
     ├── public/                 # Frontend Folder
     │   ├── app/                    # Frontend Application
     │   │   ├── controllers/            # AngularJs Controllers
@@ -81,6 +83,7 @@ This project is currently deployed to MNIT Cloud and being used by UG, PG, & MBA
     │   └── assets/                 # Project assets including CSS, Images, Icons, JavaScripts files
     ├── README.md               # README file
     ├── package.json            # Holds metadata relevent to project & project's dependencies 
+    ├── .gitignore              # Git ignore files 
     └── server.js               # Node App start file
 
 

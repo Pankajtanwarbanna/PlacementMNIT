@@ -44,6 +44,8 @@
                     </div>
                     <br>
                     <small class="text-muted">*3 Red Flags will lead to suspension </small>
+                    <br>
+                    <a href="#" data-toggle="modal" data-target="#addCompanyNotificationModal"> What is Ref Flag policy?</a>
                 </center>
                 <br>
                 <small class="text-muted">Email address </small>
@@ -58,7 +60,7 @@
     <div class="col-lg-8 col-xlg-9 col-md-7">
 
         <!-- Resume Section -->
-        <div class="card">
+        <div class="card" ng-show="!main.authorized">
             <!-- Resume Upload Button -->
             <div class="card-body">
                 <div class="d-flex no-block align-items-center">
@@ -114,6 +116,7 @@
                                 <i class="ti-face-smile"></i>
                                 <strong> Yay!</strong> {{ profile.resumeUploadSuccessMsg }}
                             </div>
+                            <span class="ml-3 text-primary">*Refresh page to upload new resume</span>
                         </div>
 
                         <!-- Resume is not uploaded yet! -->
@@ -162,7 +165,7 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label class="col-md-12">Name</label>
+                                        <label class="col-md-12">Name*</label>
                                         <div class="col-md-12">
                                             <input type="text" placeholder="Enter your name" class="form-control form-control-line" value="{{ profile.userProfile.student_name }}" disabled>
                                         </div>
@@ -170,7 +173,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label class="col-md-12">College ID</label>
+                                        <label class="col-md-12">College ID*</label>
                                         <div class="col-md-12">
                                             <input type="text" placeholder="Enter your college ID" class="form-control form-control-line" value="{{ profile.userProfile.college_id }}" disabled>
                                         </div>
@@ -181,7 +184,7 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label class="col-md-12">Degree</label>
+                                        <label class="col-md-12">Degree*</label>
                                         <div class="col-md-12">
                                             <input type="text" placeholder="Enter your degree" class="form-control form-control-line" value="{{ profile.userProfile.degree }}" disabled>
                                         </div>
@@ -189,7 +192,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label class="col-md-12">Branch </label>
+                                        <label class="col-md-12">Branch*</label>
                                         <div class="col-md-12">
                                             <input type="text" placeholder="Enter your branch" class="form-control form-control-line" value="{{ profile.userProfile.department }}" disabled>
                                         </div>
@@ -200,7 +203,7 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label class="col-md-12">Personal Email</label>
+                                        <label class="col-md-12">Personal Email*</label>
                                         <div class="col-md-12">
                                             <input type="text" placeholder="Enter your personal email" class="form-control form-control-line" value="{{ profile.userProfile.alternate_email }}" disabled>
                                         </div>
@@ -208,7 +211,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label class="col-md-12">Personal Contact No.</label>
+                                        <label class="col-md-12">Personal Contact No.*</label>
                                         <div class="col-md-12">
                                             <input type="text" placeholder="Enter your personal contact no." class="form-control form-control-line" value="+91 {{profile.userProfile.contact_no}}" disabled>
                                         </div>
@@ -219,7 +222,7 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label class="col-md-12">CGPA</label>
+                                        <label class="col-md-12">CGPA*</label>
                                         <div class="col-md-12">
                                             <input type="text" placeholder="Enter your CGPA" class="form-control form-control-line" value="{{profile.userProfile.cgpa}}" disabled>
                                         </div>
@@ -227,7 +230,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label class="col-md-12">Active Backlogs</label>
+                                        <label class="col-md-12">Active Backlogs*</label>
                                         <div class="col-md-12">
                                             <input type="text" placeholder="Enter Active Backlogs" class="form-control form-control-line" value="N/A" disabled>
                                         </div>
@@ -371,6 +374,11 @@
                                     <button type="submit" class="btn btn-success" ng-disabled="profile.profileUpdateLoadingMsg">Update Profile</button>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <span class="text-danger">*Non-editable fields. Data directly coming from MNIT ERP.</span>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -378,4 +386,33 @@
         </div>
     </div>
     <!-- Column -->
+</div>
+
+
+<div class="modal fade" id="addCompanyNotificationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="addCompanyNotificationModalHeader">Red Flag Policy!</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+
+            <!-- Confirm Notification -->
+            <div class="modal-body">
+                <span class="text-primary">
+                    Red Flag is awarded when you violate MNIT Placement Cell rules by skipping company presentation, online test or interview process (after showing willingness for the company).
+                    <br>
+                    <br>
+                    1. One Violation - ( 3 Red Flags ) in your profile on placements portal, results in debarring of you from placements process for one Semester.
+                    <br>
+                    <br>
+                    2. Two Violation - ( 4 Red Flags ) in your profile on placements portal, results in debarring of you from placements process Permanently.
+                </span>
+            </div>
+
+            <div class="modal-footer">
+                <button type="buttom" class="btn btn-success" data-dismiss="modal">Okay! Got it.</button>
+            </div>
+        </div>
+    </div>
 </div>

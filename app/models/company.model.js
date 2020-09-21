@@ -27,7 +27,8 @@ var companySchema = new mongoose.Schema({
         required: true
     },
     passout_batch : {
-        type : String
+        type : String,
+        required : true
     },
     recruitment : {
         type : String
@@ -40,6 +41,9 @@ var companySchema = new mongoose.Schema({
     },
     joining_date : {
         type : Date
+    },
+    job_description : {
+        type : String
     },
 
     // student eligibility
@@ -123,51 +127,7 @@ var companySchema = new mongoose.Schema({
         type : Date,
         required : true,
         default: Date.now()
-    },
-    company_schedule : [{
-        date_time : {
-            type : Date,
-            required : true
-        },
-        schedule_info : {
-            type : String,
-            required : true
-        },
-        timestamp : {
-            type : Date,
-            required : true
-        }
-    }],
-    company_notifications : [{
-        notification : {
-            type : String,
-            required : true
-        },
-        timestamp : {
-            type : Date,
-            required : true
-        }
-    }],
-    company_result : [{
-        result_title : {
-            type : String,
-            required : true
-        },
-        candidates : [String],
-        result_message : {
-            type : String,
-            required : true
-        },
-        result_stage : {
-            type : Number,
-            required : true
-        },
-        timestamp : {
-            type : Date,
-            required : true
-        }
-    }]
-
+    }
 });
 
 // Mongoose title case plugin

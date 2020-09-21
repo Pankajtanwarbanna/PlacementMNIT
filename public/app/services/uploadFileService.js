@@ -9,7 +9,7 @@ angular.module('uploadFileService', [])
 
         fd.append( 'resume', file.resume);
 
-        return $http.post('/api/uploadResume', fd, {
+        return $http.post('/api/upload/resume', fd, {
             transformRequest: angular.identity,
             headers : { 'content-type' : undefined }
         })

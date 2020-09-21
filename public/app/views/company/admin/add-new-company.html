@@ -34,7 +34,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Company Name</label>
-                                <input type="text" class="form-control" placeholder="Enter name" ng-model="addNewCompany.newCompanyData.company_name" required>
+                                <input type="text" class="form-control" placeholder="Enter name" ng-model="addNewCompany.newCompanyData.company_name">
                             </div>
                         </div>
                         <!--/span-->
@@ -124,7 +124,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Recruitment</label>
-                                <select class="form-control" ng-model="addNewCompany.newCompanyData.recruitment" required>
+                                <select class="form-control" ng-model="addNewCompany.newCompanyData.recruitment">
                                     <option value=""> -- Select Recruitment --</option>
                                     <option value="Internship">Internship</option>
                                     <option value="Placement">Placement</option>
@@ -160,6 +160,15 @@
                             </div>
                         </div>
                         <!--/span-->
+                    </div>
+                    <div class="row">
+                        <!--/span-->
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Job Description</label>
+                                <textarea type="text" class="form-control" rows="3" ng-model="addNewCompany.newCompanyData.job_description" placeholder="Write Job Description here..."></textarea>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -337,7 +346,7 @@
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label class="control-label">CTC</label>
-                                    <input type="text" class="form-control" placeholder="...... ₹" ng-model="addNewCompany.newCompanyData.package[program].ctc" required>
+                                    <input type="text" class="form-control" placeholder="...... ₹" ng-model="addNewCompany.newCompanyData.package[program].ctc">
                                     <!--<small class="form-control-feedback"> This field has error. </small>-->
                                 </div>
                             </div>

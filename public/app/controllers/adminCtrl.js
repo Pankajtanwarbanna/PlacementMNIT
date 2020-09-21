@@ -81,6 +81,7 @@ angular.module('adminController', ['adminServices'])
     app.postCompanyDetails = function (newCompanyData) {
 
         admin.postCompanyDetails(app.newCompanyData).then(function (data) {
+            console.log(data);
             if(data.data.success) {
                 app.successMsg = data.data.message;
             } else {
@@ -250,7 +251,48 @@ angular.module('adminController', ['adminServices'])
     }
 })
 
-.controller('registeredStudentsCtrl', function ($routeParams,student, admin,$scope,$window) {
+// Send notification to all students at just one click.
+.controller('companyNotificationCtrl', function ($routeParams, $scope, admin) {
+
+    let app = this;
+
+    app.postingNotificationLoading = false;
+
+    // Send Notification
+    app.sendNotification = function (notificationData) {
+        notificationData.companyId = $routeParams.company_id;
+        if($scope.confirmNotification) {
+            app.postingNotificationLoading = true;
+            admin.sendCompanyNotification(notificationData).then(function (data) {
+                if(data.data.success) {
+                    app.postingNotificationLoading = false;
+                    app.successMsg = data.data.message;
+                    getNotifs();
+                } else {
+                    app.postingNotificationLoading = false;
+                    app.errorMsg = data.data.message;
+                }
+            })
+        } else {
+            $scope.confirmNotification = true;
+        }
+    };
+
+    // get notifications
+    function getNotifs() {
+        admin.getNotifications({ reference : 'company_' + $routeParams.company_id }).then(function (data) {
+            if(data.data.success) {
+                app.notifications = data.data.notifications;
+            } else {
+                app.errorMsg = data.data.message;
+            }
+        })
+    }
+
+    getNotifs();
+})
+
+.controller('registeredStudentsCtrl', function ($routeParams,student, admin,$scope) {
 
     let app = this;
 
@@ -282,7 +324,7 @@ angular.module('adminController', ['adminServices'])
         app.getRegisteredStudentsLoading = true;
 
         // Withdraw Candidates Registration
-        student.withdrawRegistration(college_id,$routeParams.company_id).then(function (data) {
+        admin.withdrawApplication({ college_id : college_id, company_id : $routeParams.company_id}).then(function (data) {
             if(data.data.success) {
                 totalRegisteredStudent();
             }
@@ -364,23 +406,9 @@ angular.module('adminController', ['adminServices'])
 
         admin.addCoordinator(app.coordinatorData).then(function (data) {
             if(data.data.success) {
-
-                app.loadingMsg = data.data.message + '. Notifying coordinator...';
-                app.errorMsg = '';
-
-                admin.notifyCoordinatorForRegistration(app.coordinatorData).then(function (data) {
-                    console.log(data);
-                    if(data.data.success) {
-                        app.successMsg = data.data.message;
-                        app.loading = false;
-                        getAllCoordinators();
-                    } else {
-                        app.errorMsg = data.data.message;
-                        app.loading = false;
-                    }
-                });
-                
-
+                app.successMsg = data.data.message;
+                app.loading = false;
+                getAllCoordinators();
             } else {
                 app.errorMsg = data.data.message;
                 app.loading = false;
@@ -464,10 +492,81 @@ angular.module('adminController', ['adminServices'])
 
 })
 
+// add new placement controller
+.controller('addNewPlacementCtrl', function (admin, $scope) {
+
+    let app = this;
+    app.candidates = [];
+
+    // Adding candidate
+    app.addCandidate = function (candidate) {
+        app.candidateErrorMsg = '';
+        if(!app.candidates.find(student => student.college_id === candidate.toUpperCase())) {
+            admin.searchByID(candidate).then(function (data) {
+                if(data.data.success) {
+                    app.candidates.push(data.data.user);
+                    $scope.candidate = ''; // clear scope
+                } else {
+                    app.candidateErrorMsg = data.data.message;
+                }
+            })
+        } else {
+            app.candidateErrorMsg = 'Candidate already added.'
+        }
+    };
+
+    // remove candidate from local Candidates list
+    app.removeCandidate = function (candidate) {
+        app.candidates = app.candidates.filter(student => {
+            return student.college_id !== candidate.toUpperCase()
+        });
+    };
+
+    // add Placement details to DB
+    app.postPlacementDetails = function (newPlacementData) {
+
+        app.loading = true;
+        app.newPlacementData.candidates = app.candidates;
+
+        admin.addPlacement(app.newPlacementData).then(function (data) {
+            console.log(data);
+            if(data.data.success) {
+                app.loading = false;
+                app.successMsg = data.data.message;
+            } else {
+                app.loading = false;
+                app.errorMsg = data.data.message;
+            }
+        })
+    }
+})
+
+// get all placements
+.controller('placementManagementCtrl', function (admin, $scope) {
+
+    let app = this;
+
+    function getPlacementsData() {
+        app.loading = true;
+        admin.getPlacementsData().then(function (data) {
+            if(data.data.success) {
+                app.loading = false;
+                app.placements = data.data.placements;
+                console.log(app.placements);
+            } else {
+                app.loading = false;
+                app.errorMsg = data.data.message;
+            }
+        })
+    }
+
+    getPlacementsData();
+})
+
 // feedbacks controller
 .controller('feedbackCtrl', function (admin) {
 
-    var app = this;
+    let app = this;
 
     admin.fetchFeedbacks().then(function (data) {
         //console.log(data);

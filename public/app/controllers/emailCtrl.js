@@ -103,7 +103,7 @@ angular.module('emailController', ['studentServices'])
 
        app.logData.hostname = window.location.origin;
 
-       student.forgotPasswordLink(app.logData).then(function (data) {
+       student.forgotPassword(app.logData).then(function (data) {
 
            if(data.data.success) {
                app.successMsgPassword = data.data.message;
@@ -121,7 +121,7 @@ angular.module('emailController', ['studentServices'])
 // Controller to reset password
 .controller('resetCtrl', function ($routeParams,student,$timeout, $location) {
 
-   var app = this;
+   let app = this;
    app.successMsg = false;
    app.errorMsg = false;
    app.disabled = true;
@@ -146,7 +146,9 @@ angular.module('emailController', ['studentServices'])
 
        if(app.resetPassword) {
 
-           student.resetPassword($routeParams.token,app.logData).then(function (data) {
+           app.logData.token = $routeParams.token;
+
+           student.resetPassword(app.logData).then(function (data) {
 
                if(data.data.success) {
                    app.successMsg = data.data.message + ' Redirecting....';

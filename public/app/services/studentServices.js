@@ -4,146 +4,101 @@
 angular.module('studentServices',[])
 
 .factory('student', function ($http) {
-    var studentFactory = {};
+    let studentFactory = {};
 
-    // user.activateAccount(token);
-    studentFactory.activateAccount = function (token) {
-        return $http.put('/api/activate/'+token);
-    };
-
-    // user.resendLink(logData);
-    studentFactory.checkCredientials = function (logData) {
-        return $http.post('/api/resend',logData);
-    };
-
-    // user.resendEmail(username);
-    studentFactory.resendEmail = function (username) {
-        return $http.put('/api/sendlink', username);
-    };
-
-    // user.forgotUsername(email);
-    studentFactory.forgotUsername = function (email) {
-        return $http.post('/api/forgotUsername', email);
-    };
-
-    // user.forgotPasswordLink(username);
-    studentFactory.forgotPasswordLink = function (username) {
-        return $http.put('/api/forgotPasswordLink', username);
+    // user.forgotPasswordLink(data);
+    studentFactory.forgotPassword = function (data) {
+        return $http.post('/api/user/forgotPassword', data);
     };
 
     // user.forgotPasswordCheckToken(token);
     studentFactory.forgotPasswordCheckToken = function (token) {
-        return $http.post('/api/forgotPassword/'+token);
+        return $http.post('/api/user/verifyToken', { token : token });
     };
 
     // user.resetPassword(token,password);
-    studentFactory.resetPassword = function (token,password) {
-        return $http.put('/api/resetPassword/'+token, password);
+    studentFactory.resetPassword = function (data) {
+        return $http.post('/api/user/resetPassword', data);
     };
 
     // user.getPermission();
     studentFactory.getPermission = function () {
-        return $http.get('/api/permission');
+        return $http.get('/api/user/permission');
     };
 
     // get all announcements
     studentFactory.getAnnouncements = function () {
-        return $http.get('/api/getAnnouncements');
+        return $http.get('/api/announcement/getAll');
     };
 
     // get all upcoming companies from db
     studentFactory.getAllUpcomingCompanies = function () {
-        return $http.get('/api/getAllUpcomingCompanies');
+        return $http.get('/api/company/allUpcoming');
     };
 
     // get all previous companies from db
     studentFactory.getAllPreviousCompanies = function () {
-        return $http.get('/api/getAllPreviousCompanies');
+        return $http.get('/api/company/allPrevious');
     };
 
     // get company detail
     studentFactory.getCompanyDetails = function (company_id) {
-        return $http.get('/api/getCompanyDetails/' + company_id);
+        return $http.get('/api/company/getOne/' + company_id);
     };
 
     // get candidate apply status in company
     studentFactory.getCandidateApplyStatus = function(company_id) {
-        return $http.get('/api/getCandidateApplyStatus/' + company_id);
+        return $http.get('/api/apply/getStatus/' + company_id);
     };
     
     // register in a company
     studentFactory.oneClickApply = function (company_id) {
-        return $http.post('/api/oneClickApply/' + company_id);
+        return $http.post('/api/apply/oneClickApply', { company_id : company_id});
     };
 
     // withdraw application
     studentFactory.withdrawApplication = function(company_id) {
-        return $http.post('/api/withdrawApplication/' + company_id);
+        return $http.post('/api/apply/withdraw/', {company_id : company_id});
     };
 
     // get user timeline
     studentFactory.getTimeline = function () {
-        return $http.get('/api/getTimeline');
-    };
-
-    // get company schedule
-    studentFactory.getCompanySchedule = function (company_id) {
-        return $http.get('/api/getCompanySchedule/'+company_id);
-    };
-
-    // get company notifications
-    studentFactory.getCompanyNotifications = function (company_id) {
-        return $http.get('/api/getCompanyNotifications/'+company_id);
-    };
-
-    // get company result
-    studentFactory.getCompanyResult = function (company_id) {
-        return $http.get('/api/getCompanyResult/'+company_id);
+        return $http.get('/api/user/timeline');
     };
 
     // get user profile from database
     studentFactory.getUserProfile = function () {
-        return $http.get('/api/getUserProfile');
+        return $http.get('/api/user/profile');
     };
 
 	// update user profile
 	studentFactory.updateProfile = function (profileData) {
-		return $http.put('/api/updateProfile', profileData);
+		return $http.post('/api/user/updateProfile', profileData);
 	};
-
-	// check profile is complete or not
-	studentFactory.checkCompleteProfile = function () {
-	   return $http.get('/api/checkCompleteProfile');
-	}
 
 	// send feedback
     studentFactory.sendFeedback = function (feedbackData) {
-        return $http.post('/api/sendFeedback', feedbackData);
-    };
-
-	// withdrawRegistration
-    studentFactory.withdrawRegistration = function (college_id, company_id) {
-        return $http.delete('/api/withdrawRegistration/' + college_id + '/' + company_id);
+        return $http.post('/api/feedback/add', feedbackData);
     };
 
     // start attendance
     studentFactory.updateAttendanceStatus = function (company_id) {
-        return $http.post('/api/updateAttendanceStatus/' + company_id);
+        return $http.post('/api/attendance/update' ,{ company_id : company_id});
     };
 
     // get attendance status
     studentFactory.getAttendanceStatus = function (company_id) {
-        return $http.get('/api/getAttendanceStatus/' + company_id);
+        return $http.get('/api/attendance/getStatus/' + company_id);
     };
 
     // mark attendance
     studentFactory.markCompanyAttendance = function (attendanceData, company_id) {
-        return $http.post('/api/markCompanyAttendance/'+ company_id, attendanceData);
+        return $http.post('/api/attendance/mark', company_id, attendanceData);
     };
 
     // done with attendance
     studentFactory.doneWithAttendance = function (company_id) {
-        return $http.post('/api/doneWithAttendance/' + company_id);
+        return $http.post('/api/attendance/complete', { company_id : company_id});
     };
 
     // mark red flag to absent students
@@ -153,27 +108,32 @@ angular.module('studentServices',[])
 
     // change password
     studentFactory.changePassword = function (passwordData) {
-        return $http.post('/api/changePassword', passwordData);
+        return $http.post('/api/user/changePassword', passwordData);
     };
 
     // get all interview experiences
     studentFactory.getAllInterviewExperiences = function() {
-        return $http.get('/api/getAllInterviewExperiences');
+        return $http.get('/api/interview/getAll');
     };
 
     // get interview experience
     studentFactory.getExperience = function(experience_id) {
-        return $http.get('/api/getExperience/' + experience_id);
+        return $http.get('/api/interview/getOne/' + experience_id);
     };
 
     // post interview experience
     studentFactory.postInterviewExperience = function (experienceData) {
-        return $http.post('/api/postInterviewExperience', experienceData);
+        return $http.post('/api/interview/add', experienceData);
     };
 
     // get contributions
     studentFactory.getContributions = function () {
-        return $http.get('/api/getContributions');
+        return $http.get('/api/user/contributions');
+    };
+
+    // wipe notifications
+    studentFactory.wipeNotifications = function () {
+        return $http.post('/api/notification/wipe')
     };
 
     return studentFactory;

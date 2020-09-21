@@ -46,7 +46,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="control-label text-muted">About Company</label>
-                                    <h5><i class="ti-blackboard text-primary"></i>  &nbsp; {{company.companyDetail.about_company }} </h5>
+                                    <h5 class="editor-box"><i class="ti-blackboard text-primary"></i>  &nbsp; {{company.companyDetail.about_company }} </h5>
                                 </div>
                             </div>
                         </div>
@@ -101,6 +101,13 @@
                                 <div class="form-group">
                                     <label class="control-label text-muted">Tentative Date of Joining</label>
                                     <h5><i class="ti-calendar text-primary"></i>  &nbsp; {{ company.companyDetail.joining_date  | date : 'dd MMM yyyy' || 'Not Disclosed yet!' }}</h5>
+                                </div>
+                            </div>
+                            <!-- /span -->
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label text-muted">Job Description</label>
+                                    <h5 class="editor-box"><i class="ti-blackboard text-primary"></i>  &nbsp; {{company.companyDetail.job_description }} </h5>
                                 </div>
                             </div>
                         </div>
@@ -381,6 +388,20 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <a href="/company-notification/{{ company.companyDetail._id }}">
+                                        <button class="btn btn-primary btn-rounded"><i class="ti-bell"></i> &nbsp; View Notification History</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -406,60 +427,13 @@
             <div class="modal-dialog modal-xl" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="deleteCompanyModal1">Deletion of any kind of data is not allowed</h4>
+                        <h4 class="modal-title" id="deleteCompanyModal1">Deletion of any kind of data is not allowed. Contact Pankaj :)</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <!--<div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         <button type="buttom" class="btn btn-danger" ng-click="company.deleteCompany();">Delete</button>
                     </div>-->
-                </div>
-            </div>
-        </div>
-
-        <!-- Schedule Company Model  -->
-        <div class="modal fade" id="scheduleCompanyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
-            <div class="modal-dialog modal-xl" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="scheduleCompanyModal1">{{ company.companyDetail.company_name }}'s Schedule</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="card" ng-repeat="schedule in company.companyScheduleData | orderBy : 'date_time'">
-                            <h4><b>{{ schedule.date_time | date : 'dd MMMM yyyy h:mm a' }} </b>: {{ schedule.schedule_info}}</h4>
-                        </div>
-                        <div ng-show="company.noCompanySchedule">
-                            <h4 class="text-danger text-center">No schedule yet!</h4>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <!-- Notifications Company   -->
-        <div class="modal fade" id="notificationsCompanyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
-            <div class="modal-dialog modal-xl" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="notificationsCompanyModal1">{{ company.companyDetail.company_name}}'s Notifications</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="card" ng-repeat="notification in company.companyNotificationsData | orderBy : '-timestamp'">
-                            <h4><i class="ti-bell"></i> &nbsp; {{ notification.notification }}</h4>
-                        </div>
-                        <div ng-show="company.noCompanyNotification">
-                            <h4 class="text-danger text-center">No notifications yet!</h4>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    </div>
                 </div>
             </div>
         </div>

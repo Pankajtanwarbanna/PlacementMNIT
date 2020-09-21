@@ -2,9 +2,9 @@
     Controller written by - Pankaj tanwar
 */
 
-angular.module('mainController', ['authServices','studentServices'])
+angular.module('mainController', ['authServices','studentServices','adminServices'])
 
-.controller('mainCtrl', function ($window,$http, auth, $timeout, $location, $route, authToken, $rootScope, student) {
+.controller('mainCtrl', function ($window,$http, auth, $timeout, $location, $route, authToken, $rootScope, student, admin) {
 
     let app = this;
 
@@ -50,6 +50,21 @@ angular.module('mainController', ['authServices','studentServices'])
                         app.loadme = true;
                     }
                 });
+
+                // get notifications
+                admin.getNotifications({ limit : 4}).then(function (data) {
+                    if(data.data.success) {
+                        app.notifications = data.data.notifications;
+                        let count = 0;
+                        app.notifications.forEach(notif => {
+                            if(!notif.read.seen) count++;
+                        });
+                        app.unreadCount = count;
+                    } else {
+                        app.errorMsg = data.data.message;
+                    }
+                })
+
             })
             .catch(function (error) {
                 console.log(error);
@@ -78,6 +93,7 @@ angular.module('mainController', ['authServices','studentServices'])
         app.loading = true;
 
         auth.sendOTPForEmailVerificationIfValidLogin(app.logData).then(function (data) {
+            console.log(data);
             if(data.data.success) {
                 app.successMsg = data.data.message;
                 app.loading = false;

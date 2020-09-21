@@ -28,6 +28,7 @@ var interviewSchema = new mongoose.Schema({
         type : String,
         default : 'pending', // status can be pending or approved
         required : true
+        // todo enums
     }
 });
 
