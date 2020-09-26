@@ -5,11 +5,21 @@
 </div>
 <div class="row">
     <!-- Open Source -->
-    <div class="col-lg-12">
+    <div class="col-lg-12" ng-show="!main.isLoggedIn">
         <div class="alert alert-info">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
             <h3 class="text-info"><i class="icon-social-github"></i> Open Source!</h3> Placement Portal is open source. Be part of the community or help improve the placement portal. If you want to contribute to the project and make it better, your help is very welcome!
-            <br><br><a href="https://github.com/Pankajtanwarbanna/PlacementMNIT" target="_blank" class="btn btn-primary">Fork on Github</a>
+            <br><br><a href="https://github.com/Pankajtanwarbanna/PlacementMNIT" target="_blank" class="btn btn-primary">Star on Github</a>
+        </div>
+    </div>
+
+    <!-- Redirect to feedback page -->
+    <div class="col-lg-12" ng-show="main.isLoggedIn">
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+            <h3 class="text-success"><i class="icon-like"></i> {{ main.student_name.split(' ')[0] }}, we need your feedback!</h3>
+            We are constantly working on towards making the placement portal more efficient and to speed up the overall service of Placement Portal to ensure smooth transition. If you have a bug or a new feature in mind, please share your thoughts on feedback page. We are very interested in any feedback you have about using it!
+            <br><br><a href="/technical" class="btn btn-outline-info">Take me to the feedback page</a>
         </div>
     </div>
 

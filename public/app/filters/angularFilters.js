@@ -5,8 +5,12 @@ var app = angular.module('portalFilters', [])
         if(typeof package === 'string') {
             return package;
         } else {
-            let programs = Object.keys(package);
-            return package[programs[0]].ctc.toUpperCase();
+            if(package) {
+                let programs = Object.keys(package);
+                return package[programs[0]].ctc.toUpperCase();
+            } else {
+                return 'TO BE UPDATED.'
+            }
         }
     };
 })

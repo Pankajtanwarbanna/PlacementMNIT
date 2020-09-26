@@ -10,43 +10,26 @@ angular.module('studentController',['studentServices','textAngular','fileModelDi
 
     app.noUpcomingCompanies = false;
     app.fetchedUpcomingCompanies = false;
-    app.profileComplete = false;
 
     // Get all upcoming companies
     function getAllUpcomingCompaniesFunction() {
         student.getAllUpcomingCompanies().then(function (data) {
-            //console.log(data);
             if(data.data.success) {
                 app.upcomingCompanies = data.data.companies;
                 app.fetchedUpcomingCompanies = true;
-                if(app.upcomingCompanies.length === 0) {
-                    app.noUpcomingCompanies = true;
-                } else {
-                    app.noUpcomingCompanies = false;
-                }
+                app.noUpcomingCompanies = (app.upcomingCompanies.length === 0);
             }
         });
     }
 
-    // Check Profile
-    student.checkCompleteProfile().then(function (data) {
-        //console.log(data);
-        if(data.data.success) {
-            app.profileComplete = true;
-            getAllUpcomingCompaniesFunction();
-        } else {
-            app.profileComplete = false;
-            // No need to fetch companies details
-            app.fetchedUpcomingCompanies = true;
-            app.fetchedPreviousCompanies = true;
-        }
-    });
+    getAllUpcomingCompaniesFunction();
 
     // update admin's passout batch
     $scope.updateBatch = function (batch) {
+        app.fetchedUpcomingCompanies = false;
+
         admin.updateAdminBatch(batch).then(function (data) {
             if(data.data.success) {
-                app.fetchedUpcomingCompanies = false;
                 getAllUpcomingCompaniesFunction();
             }
         });
@@ -64,15 +47,10 @@ angular.module('studentController',['studentServices','textAngular','fileModelDi
 
     function getAllPreviousCompaniesFunction () {
         student.getAllPreviousCompanies().then(function (data) {
-            //console.log(data);
             if(data.data.success) {
                 app.previousCompanies = data.data.companies;
                 app.fetchedPreviousCompanies = true;
-                if(app.previousCompanies.length === 0) {
-                    app.noPreviousCompanies = true;
-                } else {
-                    app.noPreviousCompanies = false;
-                }
+                app.noPreviousCompanies = (app.previousCompanies.length === 0);
             }
         });
     }
@@ -82,9 +60,10 @@ angular.module('studentController',['studentServices','textAngular','fileModelDi
 
     // update admin's passout batch
     $scope.updateBatch = function (batch) {
+        app.fetchedUpcomingCompanies = false;
+
         admin.updateAdminBatch(batch).then(function (data) {
             if(data.data.success) {
-                app.fetchedUpcomingCompanies = false;
                 getAllPreviousCompaniesFunction();
             }
         });
@@ -290,12 +269,13 @@ angular.module('studentController',['studentServices','textAngular','fileModelDi
         student.doneWithAttendance($routeParams.company_id).then(function (data) {
             //console.log(data);
             if(data.data.success) {
-                student.sendEmailToAbsentAndMarkRedFlag($routeParams.company_id).then(function (data) {
+                getAttendanceStatus();
+                /*student.sendEmailToAbsentAndMarkRedFlag($routeParams.company_id).then(function (data) {
                     //console.log(data);
                     if(data.data.success) {
                         getAttendanceStatus();
                     }
-                });
+                });*/
             }
         })
     }
@@ -562,6 +542,7 @@ angular.module('studentController',['studentServices','textAngular','fileModelDi
     // get interview experience function
     function getInterviewExperience() {
         student.getExperience($routeParams.experience_id).then(function (data) {
+            console.log(data);
             if(data.data.success) {
                 app.experience = data.data.experience;
                 app.fetchedInterviewExperience = true;
@@ -655,6 +636,54 @@ angular.module('studentController',['studentServices','textAngular','fileModelDi
             });
         }
     }
+})
+    
+// Notifications Controller
+.controller('notificationsCtrl', function(admin, student) {
+
+    let app = this;
+
+    // get notifications
+    admin.getNotifications().then(function (data) {
+        if(data.data.success) {
+            app.notifications = data.data.notifications;
+            wipeNotifications();
+        } else {
+            app.errorMsg = data.data.message;
+        }
+    })
+
+    // wipe all notifications as well
+    function wipeNotifications() {
+        student.wipeNotifications().then(function (data) {
+            if(data.data.success) {
+                app.successMsg = data.data.message;
+            } else {
+                app.errorMsg = data.data.message;
+            }
+        })
+    }
+
+})
+
+// placements controller
+.controller('placementsCtrl', function(admin) {
+    let app = this;
+
+    function getPlacementsData() {
+        app.loading = true;
+        admin.getPlacementsData().then(function (data) {
+            if(data.data.success) {
+                app.loading = false;
+                app.placements = data.data.placements;
+            } else {
+                app.loading = false;
+                app.errorMsg = data.data.message;
+            }
+        })
+    }
+
+    getPlacementsData();
 })
 
 // Placement Stats Controller

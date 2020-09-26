@@ -1,0 +1,128 @@
+<div class="row page-titles">
+    <!-- Headling -->
+    <div class="col-md-5 align-self-center">
+        <h4 class="text-themecolor">All Notifications</h4>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <button class="btn btn-block btn-primary btn-rounded" data-toggle="modal" data-target="#addCompanyNotificationModal"><i class="ti-bell"></i> &nbsp; Add New Notification</button>
+    </div>
+</div>
+
+
+<!--All Announcements -->
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-body">
+
+            <!-- If More then 0 notification in database -->
+            <div>
+                <h5 class="card-title">Notifications History</h5>
+                <h6 class="card-subtitle">check out personalized notification history for this company</h6>
+            </div>
+
+            <!-- All Announcements -->
+            <div class="m-t-40">
+
+                <div class="message-box" ng-repeat="notif in companyNotification.notifications">
+                    <div class="message-widget message-scroll">
+                        <!-- Message -->
+                        <a href="javascript:void(0)">
+                            <div class="user-img">
+                                <img src="/assets/images/announcements/Other.png" alt="user" class="img-circle">
+                                <span ng-show="!notif.read.seen" class="profile-status online float-right"></span>
+                            </div>
+                            <div class="mail-contnet" style="width: 90% !important;">
+                                <h5>{{ notif.title }}🎉</h5>
+                                <span class="text-muted">
+                                     {{ notif.description }}
+                                </span>
+                                <span class="time">{{ notif.timestamp | date : 'dd MMM yyyy, hh:mm a'}} by {{ notif.sender }}</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Model Boxes -->
+<div class="modal fade" id="addCompanyNotificationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content" ng-show="!companyNotification.successMsg">
+            <!-- Notification Form-->
+            <form ng-submit="companyNotification.sendNotification(notificationData)">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="addCompanyNotificationModalHeader">Add New Notification</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+
+                <!-- Confirm Notification -->
+                <div class="modal-body" ng-show="confirmNotification">
+                    <div class="form-group">
+                        <label class="control-label">Title</label>
+                        <p>{{ notificationData.title }}</p>
+                    </div>
+
+                    <!-- Description   -->
+                    <div class="form-group">
+                        <label class="control-label">Description</label>
+                        <p>{{ notificationData.description }}</p>
+                    </div>
+                    <!-- SPAN  -->
+                    <span class="text-primary">**This notification will be sent to all registered students!</span>
+
+                    <!-- Loading Message -->
+                    <div class="alert alert-primary alert-rounded" ng-show="companyNotification.postingNotificationLoading">
+                        <strong> Loading!</strong> Hold on. sending notification...
+                    </div>
+
+                    <!-- Error Message -->
+                    <div class="alert alert-danger alert-rounded" ng-show="companyNotification.errorMsg">
+                        <strong>Oops! </strong> {{ companyNotification.errorMsg }}
+                    </div>
+                </div>
+
+                <!-- Notification Inputs -->
+                <div class="modal-body" ng-show="!confirmNotification">
+                    <div class="form-group">
+                        <label class="control-label">Title</label>
+                        <input type="text" class="form-control" placeholder="Write title here..." ng-model="notificationData.title">
+                    </div>
+
+                    <!-- Description   -->
+                    <div class="form-group">
+                        <label class="control-label">Description</label>
+                        <textarea type="text" class="form-control" placeholder="Write description here..." rows="4" ng-model="notificationData.description" required></textarea>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="buttom" class="btn btn-success">Submit</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Success Message -->
+        <div class="modal-content" ng-show="companyNotification.successMsg">
+            <div class="modal-header">
+                <h4 class="modal-title">New Notification </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-body">
+                    <div class="text-md-center">
+                        <i class="icon-check large-success-icon"></i>
+                        <h3 class="success-text">{{ companyNotification.successMsg }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

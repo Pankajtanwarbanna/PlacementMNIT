@@ -76,6 +76,14 @@ var app = angular.module('userRoutes', ['ngRoute'])
                permission : ['admin','spc','faculty-coordinator']
            })
 
+           .when('/company-notification/:company_id', {
+               templateUrl : '/app/views/company/admin/company-notification.html',
+               authenticated : true,
+               controller : 'companyNotificationCtrl',
+               controllerAs : 'companyNotification',
+               permission : ['admin','spc','faculty-coordinator']
+           })
+
            // 2. Student Routes
            .when('/company/:company_id', {
                templateUrl : '/app/views/company/student/company.html',
@@ -135,8 +143,6 @@ var app = angular.module('userRoutes', ['ngRoute'])
                controllerAs : 'contributions'
            })
 
-
-
            // Contact Routes
            .when('/contact', {
                templateUrl : '/app/views/contact/contact.html',
@@ -158,6 +164,12 @@ var app = angular.module('userRoutes', ['ngRoute'])
            })
 
            // Hall of Fame Routes
+           .when('/placements', {
+               templateUrl : '/app/views/hall-of-fame/placements.html',
+               controller : 'placementsCtrl',
+               controllerAs : 'placements'
+           })
+
            .when('/placements2019-20', {
                templateUrl : '/app/views/hall-of-fame/placement-stats.html',
                controller : 'placementStatsCtrl',
@@ -183,6 +195,22 @@ var app = angular.module('userRoutes', ['ngRoute'])
                templateUrl : '/app/views/management/students-database.html',
                authenticated : true,
                permission : ['admin','spc','faculty-coordinator']
+           })
+
+           .when('/placement-management', {
+               templateUrl : '/app/views/management/placements/placement-management.html',
+               authenticated : true,
+               permission : ['admin','spc','faculty-coordinator'],
+               controller : 'placementManagementCtrl',
+               controllerAs : 'placementManagement'
+           })
+
+           .when('/add-placement', {
+               templateUrl : '/app/views/management/placements/add-placement.html',
+               authenticated : true,
+               permission : ['admin','spc','faculty-coordinator'],
+               controller : 'addNewPlacementCtrl',
+               controllerAs : 'addNewPlacement'
            })
 
            .when('/students-management', {
@@ -229,9 +257,20 @@ var app = angular.module('userRoutes', ['ngRoute'])
                controllerAs : 'settings'
            })
 
+           .when('/notifications', {
+               templateUrl : '/app/views/profile/student/notifications.html',
+               authenticated : true,
+               controller : 'notificationsCtrl',
+               controllerAs : 'notifications'
+           })
+
            // Team Routes
            .when('/team', {
                templateUrl : '/app/views/team/team.html'
+           })
+
+           .when('/team2020', {
+               templateUrl : '/app/views/team/team2020.html'
            })
 
            .otherwise( { redirectTo : '/'});

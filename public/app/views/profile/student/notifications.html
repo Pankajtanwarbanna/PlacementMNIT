@@ -1,0 +1,42 @@
+<div class="row page-titles">
+    <!-- Headling -->
+    <div class="col-md-5 align-self-center">
+        <h4 class="text-themecolor">Notifications</h4>
+    </div>
+
+</div>
+
+<!--All Announcements -->
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-body">
+
+            <!-- If More then 0 announcements in database -->
+            <div>
+                <h5 class="card-title">New Notifications</h5>
+                <h6 class="card-subtitle">check out new updates from placement cell</h6>
+            </div>
+
+            <!-- All Notifications -->
+            <div class="m-t-40">
+                <div class="message-box" ng-repeat="notif in notifications.notifications">
+                    <div class="message-widget message-scroll">
+                        <!-- Message -->
+                        <a href="javascript:void(0)">
+                            <div class="user-img"> <img src="/assets/images/announcements/Other.png" alt="user" class="img-circle">
+                                <span ng-show="!notif.read.seen" class="profile-status online float-right"></span>
+                            </div>
+                            <div class="mail-contnet" style="width: 90% !important;">
+                                <h5> {{ notif.title }}</h5>
+                                <span class="text-muted">
+                                     {{ notif.description }}
+                                </span>
+                                <span class="time">{{ notif.timestamp | date : 'dd MMM yyyy, hh:mm a'}}</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

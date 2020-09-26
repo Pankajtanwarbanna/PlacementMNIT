@@ -144,7 +144,7 @@
                 <tbody>
                     <tr ng-repeat="coordinator in filteredCoordinators = (coordinator.ptpCoordinators | filter : { permission : selectedRole })">
                         <td class="text-center">{{ $index + 1}}</td>
-                        <td class="txt-oflo">{{ coordinator.student_name }}</td>
+                        <td class="txt-oflo">{{ coordinator.student_name.toUpperCase() }}</td>
                         <td>{{ coordinator.college_id }} </td>
                         <td class="txt-oflo">{{ coordinator.college_email }}</td>
                         <td>{{ coordinator.alternate_contact_no }}</td>
