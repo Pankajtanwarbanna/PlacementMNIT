@@ -145,7 +145,8 @@ exports.resetPassword = async (req, res) => {
                 const data = await user.save();
 
                 res.status(200).json({ success : true, message : 'Hi ' + user.student_name + ', your Password has been changed successfully.'})
-                // todo Password Reset Confirmation Success Email
+                
+                const sendConfirmationMail = await Mailer.sendDM(user, 'passwordUpdated');
             }
         }
         catch (err) {
