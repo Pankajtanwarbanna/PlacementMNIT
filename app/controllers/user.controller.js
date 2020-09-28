@@ -259,14 +259,14 @@ exports.profile = (req, res) => {
 exports.updateProfile = (req, res) => {
 
     const _b = req.body;
-    const properties = ["matric_marks","matric_board","senior_marks","senior_board","alternate_contact_no","address","city","post_code","state","country","linkedln_link"];
+    const userDatafields = ["matric_marks","matric_board","senior_marks","senior_board","alternate_contact_no","address","city","post_code","state","country","linkedln_link"];
     User
         .findOne({ college_id : req.decoded.college_id })
         .select('matric_marks matric_board senior_marks senior_board alternate_contact_no address city state post_code country linkedln_link')
         .then(user=> {
-            properties.forEach(property => {
-                if(_b[property]) {
-                    user[property] = _b[property];
+            userDatafields.forEach(field => {
+                if(_b[field]) {
+                    user[field] = _b[field];
                 }
             })
             const data = user.save();
