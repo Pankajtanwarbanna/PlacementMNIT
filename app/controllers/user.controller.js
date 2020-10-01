@@ -145,7 +145,8 @@ exports.resetPassword = async (req, res) => {
                 const data = await user.save();
 
                 res.status(200).json({ success : true, message : 'Hi ' + user.student_name + ', your Password has been changed successfully.'})
-                // todo Password Reset Confirmation Success Email
+                
+                const sendConfirmationMail = await Mailer.sendDM(user, 'passwordUpdated');
             }
         }
         catch (err) {
@@ -258,46 +259,16 @@ exports.profile = (req, res) => {
 exports.updateProfile = (req, res) => {
 
     const _b = req.body;
-
+    const userDatafields = ["matric_marks","matric_board","senior_marks","senior_board","alternate_contact_no","address","city","post_code","state","country","linkedln_link"];
     User
         .findOne({ college_id : req.decoded.college_id })
         .select('matric_marks matric_board senior_marks senior_board alternate_contact_no address city state post_code country linkedln_link')
         .then(user=> {
-            // todo optimize code, it looks messy!
-            if(_b.matric_marks) {
-                user.matric_marks = _b.matric_marks;
-            }
-            if(_b.matric_board) {
-                user.matric_board = _b.matric_board;
-            }
-            if(_b.senior_marks) {
-                user.senior_marks = _b.senior_marks;
-            }
-            if(_b.senior_board) {
-                user.senior_board = _b.senior_board;
-            }
-            if(_b.alternate_contact_no) {
-                user.alternate_contact_no = _b.alternate_contact_no;
-            }
-            if(_b.address) {
-                user.address = _b.address;
-            }
-            if(_b.city) {
-                user.city = _b.city;
-            }
-            if(_b.post_code) {
-                user.post_code = _b.post_code;
-            }
-            if(_b.state) {
-                user.state = _b.state;
-            }
-            if(_b.country) {
-                user.country = _b.country;
-            }
-            if(_b.linkedln_link) {
-                user.linkedln_link = _b.linkedln_link;
-            }
-
+            userDatafields.forEach(field => {
+                if(_b[field]) {
+                    user[field] = _b[field];
+                }
+            })
             const data = user.save();
 
             res.status(200).json({ success : true, message : 'Profile Successfully updated.'})

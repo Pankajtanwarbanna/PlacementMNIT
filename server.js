@@ -2,9 +2,9 @@ let express  = require('express');
 let app = express(); // Setup Express App
 require('dotenv').config(); // Environment Variables
 let morgan = require('morgan');     // middleware to log http requests
-let port = process.env.PORT || 80; // localhost : PORT=8080 nodemon server.js
-let mongoose = require('mongoose');
+let port = process.env.PORT || 80; // localhost : PORT=8080 nodemon server.js 
 let bodyParser = require('body-parser');
+const mongodbService = require('./app/services/mongodb.service'); // MongoDB Services
 
 app.use(morgan('dev'));
 // parse application/x-www-form-urlencoded
@@ -30,14 +30,8 @@ app.use('/api/upload', require('./app/routes/upload.router'));
 app.use(express.static(__dirname + '/public'));
 global.__basedir = __dirname; // Globally Declaring basedir to use in API files
 
-// connecting to mongo database
-mongoose.connect('mongodb://127.0.0.1/placementmnit', { useNewUrlParser: true, useFindAndModify: false }, function (err) {
-    if(err) {
-        console.log(err);
-    } else {
-        console.log('Successfully connected to database.');
-    }
-});
+mongodbService.connect(); // Connect to MongoDB
+
 
 // index page
 app.get('*', function (req,res) {
