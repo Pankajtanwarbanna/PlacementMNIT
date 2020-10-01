@@ -134,7 +134,8 @@ exports.resetPassword = async (req, res) => {
         res.status(200).json({ success : false, message : 'Password or Token is missing.'})
     } else {
         try {
-            const user = await User.findOne({ temporarytoken : _b.token }).select('student_name password temporarytoken');
+            // todo saving token in db is not a good practice, take it, decode it every time!!
+            const user = await User.findOne({ temporarytoken : _b.token }).select('student_name college_email password temporarytoken');
 
             if(!user) {
                 res.status(200).json({ success : false, message : 'Token has been expired.'});
@@ -145,7 +146,7 @@ exports.resetPassword = async (req, res) => {
                 const data = await user.save();
 
                 res.status(200).json({ success : true, message : 'Hi ' + user.student_name + ', your Password has been changed successfully.'})
-                
+
                 const sendConfirmationMail = await Mailer.sendDM(user, 'passwordUpdated');
             }
         }
@@ -259,16 +260,16 @@ exports.profile = (req, res) => {
 exports.updateProfile = (req, res) => {
 
     const _b = req.body;
-    const userDatafields = ["matric_marks","matric_board","senior_marks","senior_board","alternate_contact_no","address","city","post_code","state","country","linkedln_link"];
+    const userDataFields = ["matric_marks","matric_board","senior_marks","senior_board","alternate_contact_no","address","city","post_code","state","country","linkedln_link"];
+
     User
         .findOne({ college_id : req.decoded.college_id })
         .select('matric_marks matric_board senior_marks senior_board alternate_contact_no address city state post_code country linkedln_link')
         .then(user=> {
-            userDatafields.forEach(field => {
-                if(_b[field]) {
-                    user[field] = _b[field];
-                }
-            })
+            userDataFields.forEach(field => {
+                if(_b[field]) user[field] = _b[field];
+            });
+
             const data = user.save();
 
             res.status(200).json({ success : true, message : 'Profile Successfully updated.'})
