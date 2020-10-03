@@ -19,5 +19,6 @@ router.post('/updateProfile', jwtMiddleware.verify, authMiddleware.ensureLoggedI
 router.post('/changePassword', jwtMiddleware.verify, authMiddleware.ensureLoggedIn, userController.changePassword)
 router.get('/contributions', jwtMiddleware.verify, authMiddleware.ensureLoggedIn, userController.contributions)
 router.post('/updateBatch', jwtMiddleware.verify, authMiddleware.ensureOfficialPlacementTeam, userController.updateBatch)
+router.get('/achievements', jwtMiddleware.verify, authMiddleware.ensureLoggedIn, userController.achievements)
 
 module.exports = router;
