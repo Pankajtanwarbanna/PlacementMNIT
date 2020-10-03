@@ -1,6 +1,7 @@
 let User = require('../models/user.model');
 let Company = require('../models/company.model');
 let Interview = require('../models/interview.model');
+let Placements = require('../models/placements.model');
 const jwtService = require('../services/jwt.service');
 const Mailer = require('../services/mailer.service');
 
@@ -342,6 +343,21 @@ exports.updateBatch = (req, res) => {
         })
         .then(data => {
             res.status(200).json({ success : true, message : 'Batch updated.'})
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(200).json({ success : false, message : 'Something went wrong!' })
+        })
+}
+
+exports.achievements = (req, res) => {
+
+    Placements
+        .find({ student_college_id : req.decoded.college_id })
+        .lean()
+        .sort({ recruitment_date : -1 })
+        .then(achievements => {
+            res.status(200).json({ success : true, achievements : achievements })
         })
         .catch(err => {
             console.error(err);
