@@ -666,6 +666,26 @@ angular.module('studentController',['studentServices','textAngular','fileModelDi
 
 })
 
+// achievements controller
+.controller('achievementsCtrl', function(student) {
+    let app = this;
+
+    function getAchievements() {
+        app.loading = true;
+        student.getAchievements().then(function (data) {
+            if(data.data.success) {
+                app.loading = false;
+                app.achievements = data.data.achievements;
+            } else {
+                app.loading = false;
+                app.errorMsg = data.data.message;
+            }
+        })
+    }
+
+    getAchievements();
+})
+
 // placements controller
 .controller('placementsCtrl', function(admin) {
     let app = this;

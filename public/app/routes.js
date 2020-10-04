@@ -247,7 +247,9 @@ var app = angular.module('userRoutes', ['ngRoute'])
 
            .when('/achievement', {
                templateUrl : '/app/views/profile/student/achievement.html',
-               authenticated : true
+               authenticated : true,
+               controller : 'achievementsCtrl',
+               controllerAs : 'achievements'
            })
 
            .when('/settings', {

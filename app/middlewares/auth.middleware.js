@@ -1,5 +1,6 @@
 let User = require('../models/user.model');
 
+// TODO high priority : Replace all these function with one function if possible like (ensureUser['admin',['student']]) like we can pass permission
 function ensureAdmin(req, res, next) {
     if(!req.decoded.college_id ) {
         res.status(200).json({ success : false, message : 'Please login.' })

@@ -8,6 +8,7 @@ exports.add = async (req, res) => {
     let users;
     let reference;
 
+    // TODO : This is quite basic, give freedom to SPC to send notifications to particular branch, batch etc
     if(_b.companyId) {
         let company = await Company.findOne({ _id : _b.companyId });
         reference = 'company_' + _b.companyId; // To check in future

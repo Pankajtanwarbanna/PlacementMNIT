@@ -136,5 +136,10 @@ angular.module('studentServices',[])
         return $http.post('/api/notification/wipe')
     };
 
+    // get getAchievements
+    studentFactory.getAchievements = function () {
+        return $http.get('/api/user/achievements')
+    };
+
     return studentFactory;
 });
