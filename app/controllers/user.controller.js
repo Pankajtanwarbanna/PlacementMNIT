@@ -25,6 +25,7 @@ exports.sendOTP = async (req, res) => {
 
                 if (validPassword) {
 
+                    // todo separate service to generate OTP
                     let max = 99999;
                     let min = 10000;
 
@@ -160,7 +161,7 @@ exports.resetPassword = async (req, res) => {
 
 exports.me = async (req, res) => {
 
-    const user = await User.findOne({ college_id : req.decoded.college_id }).select('college_id student_name gender department red_flags passout_batch').lean();
+    const user = await User.findOne({ college_id : req.decoded.college_id }).select('college_id student_name gender department red_flags passout_batch permission').lean();
 
     if(!user) {
         res.status(500).json({ success : false, message : 'User not found.'})

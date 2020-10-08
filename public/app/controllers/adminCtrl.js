@@ -419,21 +419,25 @@ angular.module('adminController', ['adminServices'])
 })
 
 .controller('studentsManagementCtrl', function ($scope, admin) {
-    var app = this;
+    let app = this;
 
     $scope.searchByID = function (studentID) {
         app.errorMsg = '';
         //console.log(studentID);
         app.searchingByID = false;
-        admin.searchByID($scope.studentID.toUpperCase()).then(function (data) {
-            console.log(data);
-            if(data.data.success) {
-                app.studentData = data.data.user;
-                app.searchingByID = true;
-            } else {
-                app.errorMsg = data.data.message;
-            }
-        })
+        if(!$scope.studentID) {
+            app.errorMsg = 'Missing student college ID.';
+        } else {
+            admin.searchByID($scope.studentID.toUpperCase()).then(function (data) {
+                console.log(data);
+                if(data.data.success) {
+                    app.studentData = data.data.user;
+                    app.searchingByID = true;
+                } else {
+                    app.errorMsg = data.data.message;
+                }
+            })
+        }
     };
 
     app.updateProfile = function (studentData) {
@@ -535,6 +539,46 @@ angular.module('adminController', ['adminServices'])
                 app.successMsg = data.data.message;
             } else {
                 app.loading = false;
+                app.errorMsg = data.data.message;
+            }
+        })
+    }
+})
+
+// edit placement controller
+.controller('editPlacementCtrl', function (admin,$routeParams) {
+
+    let app = this;
+
+    // get placement
+    admin.getPlacementsData({ placement_id : $routeParams.placement_id }).then(function (data) {
+        if(data.data.success) {
+            app.placements = data.data.placements[0];
+            app.placements = {
+                ...app.placements,
+                recruitment_date : new Date(app.placements.recruitment_date),
+                package : parseInt(app.placements.package),
+                intern_duration : parseInt(app.placements.intern_duration),
+                intern_stipend : parseInt(app.placements.intern_stipend)
+            }
+        } else {
+            app.errorMsg = data.data.message;
+        }
+    });
+
+    // update Placement
+    app.editPlacementDetails = function () {
+        app.placements = {
+            ...app.placements,
+            package : app.placements.package.toString(),
+            intern_duration : app.placements.intern_duration.toString(),
+            intern_stipend : app.placements.intern_stipend.toString()
+        };
+
+        admin.editPlacementDetails(app.placements).then(function (data) {
+            if(data.data.success) {
+                app.successMsg = data.data.message;
+            } else {
                 app.errorMsg = data.data.message;
             }
         })

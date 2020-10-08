@@ -102,9 +102,14 @@ angular.module('adminServices',[])
     };
 
     // get all placements
-    adminFactory.getPlacementsData = function () {
-        return $http.get('/api/placements/getAll');
+    adminFactory.getPlacementsData = function (data) {
+        return $http.post('/api/placements/getAll', data);
     };
+
+    // edit placement details
+    adminFactory.editPlacementDetails = function (data) {
+        return $http.post('/api/placements/update', data);
+    }
 
     return adminFactory;
 });

@@ -1,7 +1,7 @@
 <div class="row page-titles">
     <!-- Heading -->
     <div class="col-md-5 align-self-center">
-        <h4 class="text-themecolor">Add New Placements</h4>
+        <h4 class="text-themecolor">Edit Placements</h4>
     </div>
 
     <!-- All Placements Button -->
@@ -13,21 +13,21 @@
 </div>
 
 <!--Placement Added Div-->
-<div class="row" ng-show="addNewPlacement.successMsg">
+<div class="row" ng-show="editPlacement.successMsg">
     <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
                 <div class="text-md-center">
                     <i class="icon-check large-success-icon"></i>
-                    <h3 class="success-text">Placements Successfully Added.</h3>
+                    <h3 class="success-text">Placements Successfully updated.</h3>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!--Add New Placement Form -->
-<form ng-submit="addNewPlacement.postPlacementDetails(newPlacementData);" ng-show="!addNewPlacement.successMsg">
+<!--Edit Placement Details -->
+<form ng-submit="editPlacement.editPlacementDetails();" ng-show="!editPlacement.successMsg">
 
     <div class="row">
 
@@ -35,21 +35,21 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Placement Details</h4>
+                    <h4 class="card-title">Edit {{ editPlacement.placements.students[0].student_name.split(" ")[0] }}'s Placement Details</h4>
                     <h6 class="card-subtitle">Enter placement details for placement session</h6>
 
                     <div class="row p-t-20">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Company Name</label>
-                                <input type="text" class="form-control" placeholder="Enter name" ng-model="addNewPlacement.newPlacementData.company_name" required>
+                                <input type="text" class="form-control" placeholder="Enter name" ng-model="editPlacement.placements.company_name" required>
                             </div>
                         </div>
                         <!--/span-->
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Passout Batch</label>
-                                <select class="form-control" ng-model="addNewPlacement.newPlacementData.passout_batch" required>
+                                <select class="form-control" ng-model="editPlacement.placements.passout_batch" required>
                                     <option value="">-- Select Passout Batch --</option>
                                     <option value="2021">2021</option>
                                     <option value="2022">2022</option>
@@ -63,13 +63,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Job Profile</label>
-                                <input type="text" class="form-control" placeholder="Enter Job Profile" ng-model="addNewPlacement.newPlacementData.job_profile" required>
+                                <input type="text" class="form-control" placeholder="Enter Job Profile" ng-model="editPlacement.placements.job_profile" required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Recruitment Date(when company announced the result)</label>
-                                <input type="date" class="form-control" ng-model="addNewPlacement.newPlacementData.recruitment_date" required>
+                                <input type="date" class="form-control" ng-model="editPlacement.placements.recruitment_date" required>
                             </div>
                         </div>
                     </div>
@@ -77,7 +77,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Recruitment</label>
-                                <select class="form-control" ng-model="addNewPlacement.newPlacementData.recruitment" required>
+                                <select class="form-control" ng-model="editPlacement.placements.recruitment" required>
                                     <option value="">-- Select Recruitment --</option>
                                     <option value="Internship">Internship</option>
                                     <option value="Placement">Placement</option>
@@ -88,7 +88,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Recruitment Type</label>
-                                <select class="form-control" ng-model="addNewPlacement.newPlacementData.recruitment_type" required>
+                                <select class="form-control" ng-model="editPlacement.placements.recruitment_type" required>
                                     <option value="">-- Select Recruitment Type --</option>
                                     <option value="PPO">Pre Placement Offer</option>
                                     <option value="On-Campus">On-Campus</option>
@@ -99,12 +99,12 @@
                     </div>
 
                     <!-- For Internship -->
-                    <div class="row" ng-if="addNewPlacement.newPlacementData.recruitment === 'Internship'">
+                    <div class="row" ng-if="editPlacement.placements.recruitment === 'Internship'">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Internship Duration</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="Enter internship duration" ng-model="addNewPlacement.newPlacementData.intern_duration" required>
+                                    <input type="number" class="form-control" placeholder="Enter internship duration" ng-model="editPlacement.placements.intern_duration" required>
                                     <div class="input-group-append">
                                         <span class="input-group-text">Months</span>
                                     </div>
@@ -116,7 +116,7 @@
                             <div class="form-group">
                                 <label class="control-label">Internship Stipend</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="Enter internship stipend" ng-model="addNewPlacement.newPlacementData.intern_stipend" required>
+                                    <input type="number" class="form-control" placeholder="Enter internship stipend" ng-model="editPlacement.placements.intern_stipend" required>
                                     <div class="input-group-append">
                                         <span class="input-group-text">Per Month</span>
                                     </div>
@@ -127,7 +127,7 @@
                     </div>
 
                     <!-- For Full Time - Placement -->
-                    <div class="row" ng-if="addNewPlacement.newPlacementData.recruitment === 'Placement'">
+                    <div class="row" ng-if="editPlacement.placements.recruitment === 'Placement'">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Duration</label>
@@ -139,7 +139,7 @@
                             <div class="form-group">
                                 <label class="control-label">Package</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="Enter package" ng-model="addNewPlacement.newPlacementData.package" step="any" required>
+                                    <input type="number" class="form-control" placeholder="Enter package" ng-model="editPlacement.placements.package" step="any" required>
                                     <div class="input-group-append">
                                         <span class="input-group-text">Lakhs Per Annum</span>
                                     </div>
@@ -149,53 +149,9 @@
                         <!--/span-->
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th class="text-center">#</th>
-                                        <th>NAME</th>
-                                        <th>COLLEGE ID</th>
-                                        <th>COURSE</th>
-                                        <th>CONTACT NO</th>
-                                        <th>ACTION</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr ng-repeat="candidate in addNewPlacement.candidates">
-                                        <td class="text-center">{{ $index+1 }}.</td>
-                                        <td class="txt-oflo">{{ candidate.student_name }}</td>
-                                        <td><span class="text-info">{{ candidate.college_id }}</span></td>
-                                        <td class="txt-oflo">{{ candidate.degree }} - {{ candidate.department }}</td>
-                                        <td><span class="text-success">{{ candidate.alternate_contact_no }}</span></td>
-                                        <td class="txt-oflo" ng-click="addNewPlacement.removeCandidate(candidate.college_id);"><i class="fa fa-trash text-danger" style="font-size: x-large;"></i></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-8">
-                            <div class="form-group">
-                                <label class="control-label">Add Candidate</label>
-                                <input type="text" class="form-control" placeholder="Enter College ID" ng-model="candidate">
-                                <span class="form-control-feedback text-danger"> {{ addNewPlacement.candidateErrorMsg }} </span>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group" style="margin-top: 25px;">
-                                <button type="button" ng-click="addNewPlacement.addCandidate(candidate);" class="btn btn-success btn-circle"><i class="fa fa-plus"></i> </button>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="form-group">
                         <label class="control-label">Any Comments</label>
-                        <textarea type="text" class="form-control" rows="3" ng-model="addNewPlacement.newPlacementData.comments" placeholder="Any comments..."></textarea>
+                        <textarea type="text" class="form-control" rows="3" ng-model="editPlacement.placements.comments" placeholder="Any comments..."></textarea>
                     </div>
                 </div>
             </div>
@@ -203,12 +159,12 @@
     </div>
 
     <!--Error Message -->
-    <div class="alert alert-danger alert-rounded text-center" ng-show="addNewPlacement.errorMsg">
-        <strong> Oops!</strong> {{ addNewPlacement.errorMsg }}
+    <div class="alert alert-danger alert-rounded text-center" ng-show="editPlacement.errorMsg">
+        <strong> Oops!</strong> {{ editPlacement.errorMsg }}
     </div>
 
     <!--Error Message -->
-    <div class="alert alert-primary alert-rounded text-center" ng-show="addNewPlacement.loading">
+    <div class="alert alert-primary alert-rounded text-center" ng-show="editPlacement.loading">
         <strong> Hold on!</strong> Please wait, while we add your data...
     </div>
 

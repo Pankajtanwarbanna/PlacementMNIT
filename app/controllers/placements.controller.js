@@ -1,4 +1,5 @@
 let Placements = require('../models/placements.model');
+const mongoose = require('mongoose');
 
 exports.add = (req, res) => {
     const _b = req.body;
@@ -38,36 +39,49 @@ exports.add = (req, res) => {
 
 exports.getAll = (req, res) => {
 
+    const _b = req.body;
+
+    const pipeline = [
+        {
+            // Lookup
+            $lookup: {
+                from : "users",
+                localField: "student_college_id",
+                foreignField : "college_id",
+                as : "students"
+            }
+        },
+        {
+            // To Select Particular Fields
+            $project : {
+                "passout_batch" : 1,
+                "company_name" : 1,
+                "job_profile" : 1,
+                "recruitment" : 1,
+                "recruitment_type" : 1,
+                "recruitment_date" : 1,
+                "intern_duration" : 1,
+                "intern_stipend" : 1,
+                "package" : 1,
+                "students.student_name" : 1,
+                "students.degree" : 1,
+                "students.department" : 1,
+                "comments" : 1
+            }
+        }
+    ];
+
+    if(_b.placement_id) {
+        pipeline.push({
+            $match : {
+                _id : mongoose.Types.ObjectId(_b.placement_id)
+            }
+        })
+    }
+
     // Todo Some Filter
     Placements
-        .aggregate([
-            {
-                // Lookup
-                $lookup: {
-                    from : "users",
-                    localField: "student_college_id",
-                    foreignField : "college_id",
-                    as : "students"
-                }
-            },
-            {
-                // To Select Particular Fields
-                $project : {
-                    "passout_batch" : 1,
-                    "company_name" : 1,
-                    "job_profile" : 1,
-                    "recruitment" : 1,
-                    "recruitment_type" : 1,
-                    "recruitment_date" : 1,
-                    "intern_duration" : 1,
-                    "intern_stipend" : 1,
-                    "package" : 1,
-                    "students.student_name" : 1,
-                    "students.degree" : 1,
-                    "students.department" : 1
-                }
-            }
-        ])
+        .aggregate(pipeline)
         .sort({ recruitment_date : -1 })
         .then(data => {
             res.status(200).json({ success : true, placements : data })
@@ -75,5 +89,20 @@ exports.getAll = (req, res) => {
         .catch(err => {
             console.log(err);
             res.status(200).json({ success : false, message : 'Something went wrong!', error : err})
+        })
+}
+
+exports.update = (req, res) => {
+
+    const _b = req.body;
+
+    Placements
+        .updateOne({ _id : _b._id }, _b)
+        .then(data => {
+            res.status(200).json({ success : true, message : 'Placement details successfully updated..' })
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(200).json({ success :false, message : 'Something went wrong!' })
         })
 }

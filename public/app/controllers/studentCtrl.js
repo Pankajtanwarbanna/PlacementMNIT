@@ -696,6 +696,7 @@ angular.module('studentController',['studentServices','textAngular','fileModelDi
             if(data.data.success) {
                 app.loading = false;
                 app.placements = data.data.placements;
+                app.companies = [...new Set(app.placements.map(val => { return val.company_name }))]
             } else {
                 app.loading = false;
                 app.errorMsg = data.data.message;

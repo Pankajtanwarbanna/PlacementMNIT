@@ -17,7 +17,15 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <select class="form-control" ng-model="selectedCompanyName">
+                                <option value="">-- Select Company Name --</option>
+                                <option ng-repeat="company in placements.companies" ng-value="company">{{ company }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
                         <div class="form-group">
                             <select class="form-control" ng-model="selectedBatch">
                                 <option value="">-- Select Batch -- </option>
@@ -28,7 +36,7 @@
                         </div>
                     </div>
                     <!--/span-->
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <select class="form-control" ng-model="selectedRecruitment">
                                 <option value="">-- Select Recruitment --</option>
@@ -38,7 +46,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <select class="form-control" ng-model="selectedRecruitmentType">
                                 <option value="">-- Select Recruitment Type --</option>
@@ -48,6 +56,7 @@
                             </select>
                         </div>
                     </div>
+
                     <!-- Todo - Degree & Branch Filter-->
                     <!--/span-->
                     <!--                    <div class="col-md-6">-->
@@ -79,7 +88,7 @@
 
 
 <div class="row">
-    <div class="col-lg-3 col-xlg-3 col-md-5" ng-repeat="student in students=(placements.placements | filter : { recruitment : selectedRecruitment, recruitment_type : selectedRecruitmentType, passout_batch : selectedBatch })">
+    <div class="col-lg-3 col-xlg-3 col-md-5" ng-repeat="student in students=(placements.placements | filter : { recruitment : selectedRecruitment, recruitment_type : selectedRecruitmentType, passout_batch : selectedBatch, company_name : selectedCompanyName })">
         <div class="card"> <img class="card-img" src="../assets/images/celebration.jpg" height="230" alt="Card image">
             <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center" style="border-radius: 15px;">
                 <div class="align-self-center"> <!--<img src="../assets/images/users/1.jpg" class="img-circle" width="100">-->

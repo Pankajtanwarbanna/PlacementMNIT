@@ -213,6 +213,14 @@ var app = angular.module('userRoutes', ['ngRoute'])
                controllerAs : 'addNewPlacement'
            })
 
+           .when('/edit-placement/:placement_id', {
+               templateUrl : '/app/views/management/placements/edit-placement.html',
+               authenticated : true,
+               permission : ['admin','spc','faculty-coordinator'],
+               controller : 'editPlacementCtrl',
+               controllerAs : 'editPlacement'
+           })
+
            .when('/students-management', {
                templateUrl : '/app/views/management/students-management.html',
                authenticated : true,

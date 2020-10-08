@@ -34,22 +34,14 @@ angular.module('mainController', ['authServices','studentServices','adminService
                 app.gender = data.data.gender;
                 app.department = data.data.department;
                 app.passout_batch = data.data.passout_batch;
-                if(data.data.red_flags >= 3) {
-                    app.blockedProfile = true;
+                app.permission = data.data.permission;
+                if(app.permission === 'admin' || app.permission === 'spc' || app.permission === 'faculty-coordinator') {
+                    app.authorized = true;
+                    app.loadme = true;
+                } else {
+                    app.authorized = false;
+                    app.loadme = true;
                 }
-
-                student.getPermission().then(function (data) {
-
-                    app.permission = data.data.permission;
-
-                    if(data.data.permission === 'admin' || data.data.permission === 'spc' || data.data.permission === 'faculty-coordinator') {
-                        app.authorized = true;
-                        app.loadme = true;
-                    } else {
-                        app.authorized = false;
-                        app.loadme = true;
-                    }
-                });
 
                 // get notifications
                 admin.getNotifications({ limit : 4}).then(function (data) {

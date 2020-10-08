@@ -93,6 +93,7 @@
                     </h6>
                     <p class="text-white">Batch of {{ student.passout_batch }}</p>
                     <p class="text-muted"> **{{ student.recruitment_date | date : 'dd MMM yyyy' }}**</p>
+                    <a href="/edit-placement/{{ student._id }}" class="text-primary">Edit </a>
                 </div>
             </div>
         </div>

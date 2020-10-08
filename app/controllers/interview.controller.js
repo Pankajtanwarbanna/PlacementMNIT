@@ -100,10 +100,9 @@ exports.changeStatus = async (req, res) => {
 exports.edit = (req, res) => {
 
     const _b = req.body;
-    _b.status = 'pending'; // to avoid smartness of some people!
 
     Interview
-        .update({ _id : _b._id }, _b)
+        .updateOne({ _id : _b._id }, _b)
         .then(data => {
             res.status(200).json({ success : true, message : 'Interview Experience successfully updated..' })
         })
