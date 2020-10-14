@@ -1,5 +1,6 @@
 let User = require('../models/user.model');
 const Company = require('../models/company.model');
+const RedFlag = require('../models/redFlag.model');
 
 exports.getStatus = (req, res) => {
 
@@ -30,21 +31,31 @@ exports.oneClickApply = async (req, res) => {
     const _b = req.body;
 
     try {
-        const company = await Company.findOne({ _id : _b.company_id }).select('candidates');
+        const redFlagHistory = await RedFlag.find({ receiver : req.decoded.college_id.toUpperCase(), active : true });
 
-        const isCandidateAlreadyRegistered = company.candidates.find(function (candidate) {
-            return candidate.college_id === req.decoded.college_id;
-        });
+        let redFlags = redFlagHistory.reduce((flags, history) => {
+            return flags + (history.active ? history.redFlag : 0);
+        },0);
 
-        if(!isCandidateAlreadyRegistered) {
-            // todo = Validations
-            company.candidates.push({ college_id : req.decoded.college_id, timestamp : new Date()});
-
-            const data = await company.save();
-            res.status(200).json({ success : true, message : 'Successfully applied.' })
-
+        if(redFlags >= 3) {
+            res.status(200).json({ success : false, message : 'Your profile has been blocked by Placement Cell due to more than 3 red flags.'})
         } else {
-            res.status(200).json({ success : false, message : 'Already applied.'})
+            const company = await Company.findOne({ _id : _b.company_id }).select('candidates');
+
+            const isCandidateAlreadyRegistered = company.candidates.find(function (candidate) {
+                return candidate.college_id === req.decoded.college_id;
+            });
+
+            if(!isCandidateAlreadyRegistered) {
+                // todo = Validations
+                company.candidates.push({ college_id : req.decoded.college_id, timestamp : new Date()});
+
+                const data = await company.save();
+                res.status(200).json({ success : true, message : 'Successfully applied.' })
+
+            } else {
+                res.status(200).json({ success : false, message : 'Already applied.'})
+            }
         }
     }
     catch (err) {

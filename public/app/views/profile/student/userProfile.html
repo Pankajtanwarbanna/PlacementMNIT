@@ -34,20 +34,6 @@
             <div>
                 <hr> </div>
             <div class="card-body">
-                <center>
-                    <h6>{{ profile.userProfile.red_flags}} Red Flags</h6>
-                    <div ng-repeat="x in [].constructor(profile.userProfile.red_flags) track by $index" style="display: inline">
-                        <td><span class="badge badge-danger badge-pill">&nbsp;</span></td>
-                    </div>
-                    <div ng-repeat="x in [].constructor(3 - profile.userProfile.red_flags) track by $index" style="display: inline">
-                        <td><span class="badge badge-success badge-pill">&nbsp;</span></td>
-                    </div>
-                    <br>
-                    <small class="text-muted">*3 Red Flags will lead to suspension </small>
-                    <br>
-                    <a href="#" data-toggle="modal" data-target="#redFlagPolicyModal"> What is Red Flag policy?</a>
-                </center>
-                <br>
                 <small class="text-muted">Email address </small>
                 <h6>{{ profile.userProfile.college_email }}</h6>
                 <small class="text-muted p-t-30 db">Contact No.</small>
@@ -388,30 +374,3 @@
     <!-- Column -->
 </div>
 
-
-<div class="modal fade" id="redFlagPolicyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
-    <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="redFlagPolicyModalHeader">Red Flag Policy!</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            </div>
-
-            <div class="modal-body">
-                <span class="text-primary">
-                    Red Flag is awarded when you violate MNIT Placement Cell rules by skipping company presentation, online test or interview process (after showing willingness for the company).
-                    <br>
-                    <br>
-                    1. One Violation - ( 3 Red Flags ) in your profile on placements portal, results in debarring of you from placements process for one Semester.
-                    <br>
-                    <br>
-                    2. Two Violation - ( 4 Red Flags ) in your profile on placements portal, results in debarring of you from placements process Permanently.
-                </span>
-            </div>
-
-            <div class="modal-footer">
-                <button type="buttom" class="btn btn-success" data-dismiss="modal">Okay! Got it.</button>
-            </div>
-        </div>
-    </div>
-</div>

@@ -51,18 +51,6 @@
                 <div>
                     <hr> </div>
                 <div class="card-body">
-                    <center>
-                        <h6>{{ studentsManagement.studentData.red_flags}} Red Flags</h6>
-                        <div ng-repeat="x in [].constructor(studentsManagement.studentData.red_flags) track by $index" style="display: inline">
-                            <td><span class="badge badge-danger badge-pill">&nbsp;</span></td>
-                        </div>
-                        <div ng-repeat="x in [].constructor(3 - studentsManagement.studentData.red_flags) track by $index" style="display: inline">
-                            <td><span class="badge badge-success badge-pill">&nbsp;</span></td>
-                        </div>
-                        <br>
-                        <small class="text-muted">*3 Red Flags will lead to suspension </small>
-                    </center>
-                    <br>
                     <small class="text-muted">Email address </small>
                     <h6>{{ studentsManagement.studentData.college_email }}</h6>
                     <small class="text-muted p-t-30 db">Contact No.</small>
@@ -169,19 +157,11 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-12">
                                         <div class="form-group">
                                             <label class="col-md-12">CGPA</label>
                                             <div class="col-md-12">
                                                 <input type="text" placeholder="Enter your CGPA" class="form-control form-control-line" ng-value="studentsManagement.studentData.cgpa" ng-model="studentsManagement.studentData.cgpa" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label class="col-md-12">Red Flags</label>
-                                            <div class="col-md-12">
-                                                <input type="number" placeholder="Enter Red Flags" class="form-control form-control-line" ng-value="studentsManagement.studentData.red_flags" ng-model="studentsManagement.studentData.red_flags" required>
                                             </div>
                                         </div>
                                     </div>

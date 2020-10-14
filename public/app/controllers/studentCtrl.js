@@ -686,6 +686,22 @@ angular.module('studentController',['studentServices','textAngular','fileModelDi
     getAchievements();
 })
 
+// red flag history
+.controller('redFlagHistoryCtrl', function (student) {
+
+    let app = this;
+
+    student.getMyRedFlagHistory().then(function (data) {
+        if(data.data.success) {
+            app.redFlagHistory = data.data.redFlagHistory;
+            app.redFlags = data.data.redFlags;
+            app.fetchedRedFlagHistory = true;
+        } else {
+            app.errorMsg = data.data.message;
+        }
+    })
+})
+
 // placements controller
 .controller('placementsCtrl', function(admin) {
     let app = this;

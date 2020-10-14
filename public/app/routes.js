@@ -191,10 +191,12 @@ var app = angular.module('userRoutes', ['ngRoute'])
                controllerAs : 'coordinator'
            })
 
-           .when('/students-database', {
-               templateUrl : '/app/views/management/students-database.html',
+           .when('/red-flag-management', {
+               templateUrl : '/app/views/management/red-flag/red-flag-management.html',
                authenticated : true,
-               permission : ['admin','spc','faculty-coordinator']
+               permission : ['admin','spc','faculty-coordinator'],
+               controller : 'redFlagManagementCtrl',
+               controllerAs : 'redFlagManagement'
            })
 
            .when('/placement-management', {
@@ -244,6 +246,13 @@ var app = angular.module('userRoutes', ['ngRoute'])
                authenticated : true,
                controller : 'profileCtrl',
                controllerAs : 'profile'
+           })
+
+           .when('/red-flag-history', {
+               templateUrl : '/app/views/profile/student/red-flag-history.html',
+               authenticated : true,
+               controller : 'redFlagHistoryCtrl',
+               controllerAs : 'redFlagHistory'
            })
 
            .when('/timeline', {

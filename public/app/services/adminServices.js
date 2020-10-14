@@ -109,7 +109,22 @@ angular.module('adminServices',[])
     // edit placement details
     adminFactory.editPlacementDetails = function (data) {
         return $http.post('/api/placements/update', data);
-    }
+    };
+
+    // get Red Flag history
+    adminFactory.getRedFlagHistory = function (data) {
+        return $http.post('/api/redFlag/getAll', { receiver : data.collegeID });
+    };
+
+    // add red flag
+    adminFactory.addRedFlag = function (data) {
+        return $http.post('/api/redFlag/add', data);
+    };
+
+    // remove red flag
+    adminFactory.removeRedFlag = function (data) {
+        return $http.post('/api/redFlag/remove', data);
+    };
 
     return adminFactory;
 });

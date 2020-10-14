@@ -454,6 +454,73 @@ angular.module('adminController', ['adminServices'])
     }
 })
 
+// Red Flag management controller
+.controller('redFlagManagementCtrl', function (admin) {
+    let app = this;
+
+    app.student = false;
+
+    // get red flag history function
+    function getRedFlagHistory(studentData) {
+        app.errorMsg = "";
+        app.fetchedRedFlagHistory = false;
+
+        if(!studentData.collegeID) {
+            app.errorMsg = 'Missing college ID.'
+        } else {
+            app.studentID = studentData.collegeID;
+            admin.getRedFlagHistory(studentData).then(function (data) {
+                console.log(data.data);
+                if(data.data.success) {
+                    app.student = data.data.student;
+                    app.redFlagHistory = data.data.redFlagHistory;
+                    app.redFlags = data.data.redFlags;
+                    app.fetchedRedFlagHistory = true;
+                } else {
+                    app.errorMsg = data.data.message;
+                }
+            })
+        }
+    }
+    // Search Student Red Flag History
+    app.searchStudent = function (studentData) {
+        getRedFlagHistory(studentData);
+    };
+
+    // Add Red Flag to student
+    app.addRedFlag = function (redFlagData) {
+        if(!app.studentID) {
+            app.errorMsg = 'Student ID not selected.'
+        } else {
+            admin.addRedFlag({ ...redFlagData, receiver : app.studentID }).then(function (data) {
+                if(data.data.success) {
+                    app.addRedFlagSuccessMsg = data.data.message;
+                    getRedFlagHistory({ collegeID : app.studentID });
+                    app.removeRedFlagSuccessMsg = "";
+                    app.removeRedFlagErrorMsg = "";
+                } else {
+                    app.addRedFlagErrorMsg = data.data.message;
+                }
+            })
+        }
+    };
+
+    // remove red Flag
+    app.removeRedFlag = function (redFlagID) {
+        app.removeRedFlagSuccessMsg = "";
+        app.removeRedFlagErrorMsg = "";
+
+        admin.removeRedFlag({ redFlagID : redFlagID }).then(function (data) {
+            if(data.data.success) {
+                getRedFlagHistory({ collegeID : app.studentID });
+                app.removeRedFlagSuccessMsg = data.data.message;
+            } else {
+                app.removeRedFlagErrorMsg = data.data.message;
+            }
+        })
+    }
+})
+
 .controller('interviewsManagementCtrl', function (admin) {
 
     var app = this;

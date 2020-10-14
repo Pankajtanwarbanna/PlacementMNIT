@@ -1,0 +1,122 @@
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h4 class="text-themecolor">Red Flag Management</h4>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <form class="form-material" ng-submit="redFlagManagement.searchStudent(studentData)">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <input type="text" class="form-control form-control-line" placeholder="Enter Students' College ID" ng-model="studentData.collegeID" required>
+                                <p style="color: red;margin-top: 10px;">{{ redFlagManagement.errorMsg }}</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 text-center">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary btn-rounded"><i class="ti-search"></i> &nbsp; Search Student</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Red Flag Addition Model -->
+<div class="row" ng-show="redFlagManagement.fetchedRedFlagHistory">
+    <div class="col-12">
+        <button class="btn btn-block btn-primary btn-rounded" data-toggle="modal" data-target="#addRedFlagModal"><i class="ti-bell"></i> &nbsp; Add Red Flags</button>
+    </div>
+</div>
+
+<!-- Red Flags History -->
+<div class="col-lg-12" ng-show="redFlagManagement.fetchedRedFlagHistory">
+    <div class="card">
+        <div class="card-body">
+
+            <h5 class="card-title">{{ redFlagManagement.student.student_name }} has {{ redFlagManagement.redFlags || "0" }} red flags!</h5>
+            <h6 class="card-subtitle">Red flag history from placement cell</h6>
+
+            <h6 class="text-danger">{{ redFlagManagement.removeRedFlagErrorMsg }}</h6>
+            <h6 class="text-success">{{redFlagManagement.removeRedFlagSuccessMsg }}</h6>
+
+            <!-- All Red Flags -->
+            <div class="steamline m-t-40" ng-repeat="redFlag in redFlagManagement.redFlagHistory | orderBy : '-timestamp'">
+                <div class="sl-item">
+                    <div class="sl-left"> <img class="img-circle" alt="user" src="../assets/images/announcements/{{announcement.category}}.png"> </div>
+                    <div class="sl-right">
+                        <div class="font-medium">
+                             {{ redFlag.redFlag }} Red Flag by {{ redFlag.assignees[0].permission.toUpperCase() }} - {{ redFlag.assignees[0].student_name }} on {{ redFlag.timestamp | date : 'dd MMM yyyy, hh:mm a' }}
+                            <button ng-show="redFlag.active" class="btn btn-danger" ng-click="redFlagManagement.removeRedFlag(redFlag._id);"> <i class="text-white ti-trash" style="font-size: large"></i></button>
+                            <span ng-show="!redFlag.active" class="text-danger">&nbsp;&nbsp;[REMOVED]</span>
+                        </div>
+                        <div class="desc">Reason : {{ redFlag.reason.toUpperCase() }}</div>
+                        <h6 ng-show="!redFlag.active" class="card-subtitle">Red Flag was removed by {{ redFlag.removers[0].permission.toUpperCase() }} - {{ redFlag.removers[0].student_name }} on {{ redFlag.remove_timestamp | date : 'dd MMM yyyy, hh:mm a' }}</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Model Boxes -->
+<div class="modal fade" id="addRedFlagModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content" ng-show="!redFlagManagement.successMsg">
+            <!-- Notification Form-->
+            <form ng-submit="redFlagManagement.addRedFlag(redFlagData)">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="addRedFlagModalHeader">Add Red Flag</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+
+                <!-- Red Flag Inputs -->
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label">Red Flag Count</label>
+                        <input type="number" class="form-control" placeholder="Write number of red flags..." ng-model="redFlagData.redFlag">
+                    </div>
+
+                    <!-- Description   -->
+                    <div class="form-group">
+                        <label class="control-label">Reason</label>
+                        <textarea type="text" class="form-control" placeholder="Write reason here..." rows="4" ng-model="redFlagData.reason" required></textarea>
+                    </div>
+
+                    <div class="form-group" ng-if="redFlagManagement.addRedFlagErrorMsg">
+                        <p class="text-danger">{{ redFlagManagement.addRedFlagErrorMsg }}</p>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="buttom" class="btn btn-success">Submit</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Success Message -->
+        <div class="modal-content" ng-show="redFlagManagement.successMsg">
+            <div class="modal-header">
+                <h4 class="modal-title">Red Flag Management </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-body">
+                    <div class="text-md-center">
+                        <i class="icon-check large-success-icon"></i>
+                        <h3 class="success-text">{{ redFlagManagement.addRedFlagSuccessMsg }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

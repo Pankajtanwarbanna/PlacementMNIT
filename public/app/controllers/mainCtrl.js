@@ -85,7 +85,6 @@ angular.module('mainController', ['authServices','studentServices','adminService
         app.loading = true;
 
         auth.sendOTPForEmailVerificationIfValidLogin(app.logData).then(function (data) {
-            console.log(data);
             if(data.data.success) {
                 app.successMsg = data.data.message;
                 app.loading = false;

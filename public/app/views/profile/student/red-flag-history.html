@@ -1,0 +1,122 @@
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h4 class="text-themecolor">Your Red Flag History</h4>
+    </div>
+</div>
+
+<!--Timeline page-->
+<div class="row">
+    <!-- Column -->
+    <div class="col-lg-4 col-xlg-3 col-md-5">
+        <div class="card">
+            <div class="card-body">
+                <center class="m-t-30">
+                    <img src="assets/images/profile/{{ main.gender }}.png" class="img-circle" width="150" />
+                    <h4 class="card-title m-t-10">{{ main.student_name }}</h4>
+                    <h6 class="card-subtitle">{{ main.department }}</h6>
+                    <div class="row text-center">
+                        <div class="col-12"><a href="#" class="link"><i class="ti-location-pin"></i> <font class="font-medium">MNIT Jaipur</font></a></div>
+                    </div>
+                </center>
+            </div>
+            <div>
+                <hr> </div>
+            <div class="card-body">
+                <center>
+                    <h6>{{ redFlagHistory.redFlags}} Red Flags</h6>
+                    <div ng-repeat="x in [].constructor(redFlagHistory.redFlags) track by $index" style="display: inline">
+                        <td><span class="badge badge-danger badge-pill">&nbsp;</span></td>
+                    </div>
+                    <!--<div ng-repeat="x in [].constructor(redFlagHistory.redFlags) track by $index" style="display: inline">
+                        <td><span class="badge badge-success badge-pill">&nbsp;</span></td>
+                    </div>-->
+                    <br>
+                    <small class="text-muted">*3 Red Flags will lead to suspension </small>
+                    <br>
+                    <a href="#" data-toggle="modal" data-target="#redFlagPolicyModal"> What is Red Flag policy?</a>
+                </center>
+                <br>
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+    <div class="col-lg-8 col-xlg-9 col-md-7">
+        <div class="card">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs profile-tab" role="tablist">
+                <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#" role="tab">Red Flag History</a> </li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane active" id="home" role="tabpanel">
+                    <div class="card-body">
+                        <!-- Timeline Div -->
+                        <div class="profiletimeline" ng-repeat="redFlag in redFlagHistory.redFlagHistory">
+                            <div class="sl-item">
+                                <div class="sl-left">
+                                    <img src="https://res.cloudinary.com/placements-mnit/image/upload/v1593682008/timeline/timeline_j8jzub.png" alt="Timeline Icon" class="img-circle" />
+                                </div>
+                                <div class="sl-right">
+                                    <div><a href="javascript:void(0)" class="link">{{ redFlag.redFlag }} red flag for <b>{{ redFlag.reason }}</b></a><!-- <span class="sl-date"> {{registration.timestamp | date : 'dd MMMM yyyy'}}</span>-->
+                                        <div class="row">
+                                            <div class="col-lg-6"><p class="m-t-10"> <b>Date :</b> {{redFlag.timestamp | date : 'dd MMMM yyyy'}}</p></div>
+                                            <div class="col-lg-6">
+                                                <p class="m-t-10">
+                                                    <b>Status :</b>
+                                                    <span class="text-danger" ng-if="!redFlag.active">REMOVED</span>
+                                                    <span class="text-success" ng-if="redFlag.active">ACTIVE</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Loading Message -->
+                        <div class="alert alert-primary alert-rounded" ng-show="!redFlagHistory.fetchedRedFlagHistory">
+                            <strong> Loading!</strong> Hold on. We are fetching your red flag history!
+                        </div>
+                        <!-- Error Message -->
+                        <div class="alert alert-danger alert-rounded" ng-show="redFlagHistory.errorMsg">
+                            <i class="ti-face-sad"></i>
+                            <strong> Oops!</strong> {{ redFlagHistory.errorMsg }}!
+                        </div>
+                        <!-- Nothing in Red Flag Message -->
+                        <div ng-if="redFlagHistory.redFlags === 0">
+                            <h5> Nothing right here!</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+</div>
+<!-- Row -->
+
+<div class="modal fade" id="redFlagPolicyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="redFlagPolicyModalHeader">Red Flag Policy!</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+
+            <div class="modal-body">
+                <span class="text-primary">
+                    Red Flag is awarded when you violate MNIT Placement Cell rules by skipping company presentation, online test or interview process (after showing willingness for the company).
+                    <br>
+                    <br>
+                    1. One Violation - ( 3 Red Flags ) in your profile on placements portal, results in debarring of you from placements process for one Semester.
+                    <br>
+                    <br>
+                    2. Two Violation - ( 4 Red Flags ) in your profile on placements portal, results in debarring of you from placements process Permanently.
+                </span>
+            </div>
+
+            <div class="modal-footer">
+                <button type="buttom" class="btn btn-success" data-dismiss="modal">Okay! Got it.</button>
+            </div>
+        </div>
+    </div>
+</div>

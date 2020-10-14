@@ -141,5 +141,10 @@ angular.module('studentServices',[])
         return $http.get('/api/user/achievements')
     };
 
+    // get my red flag history
+    studentFactory.getMyRedFlagHistory = function () {
+        return $http.get('/api/redFlag/my');
+    };
+
     return studentFactory;
 });
