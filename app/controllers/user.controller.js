@@ -4,6 +4,7 @@ let Interview = require('../models/interview.model');
 let Placements = require('../models/placements.model');
 const jwtService = require('../services/jwt.service');
 const Mailer = require('../services/mailer.service');
+const Utility = require('../services/utility.service');
 
 exports.sendOTP = async (req, res) => {
 
@@ -15,7 +16,7 @@ exports.sendOTP = async (req, res) => {
 
         try {
             const user = await User.findOne({
-                college_id: (req.body.college_id).toUpperCase()
+                college_id: (_b.college_id).toUpperCase()
             }).select('college_id college_email student_name password login_otp');
 
             if(!user) {
@@ -25,12 +26,9 @@ exports.sendOTP = async (req, res) => {
 
                 if (validPassword) {
 
-                    // todo separate service to generate OTP
-                    let max = 99999;
-                    let min = 10000;
+                    user.login_otp = Utility.generateOTP();
 
-                    user.login_otp = (Math.floor(Math.random() * (+max - +min)) + +min).toString();
-                    const userUpdate = await User.updateOne({ college_id: (req.body.college_id).toUpperCase() }, { login_otp: user.login_otp });
+                    const userUpdate = await User.updateOne({ college_id: (_b.college_id).toUpperCase() }, { login_otp: user.login_otp });
 
                     res.status(200).json({ success: true, message: 'OTP for verification has been sent to your registered college email.'})
 
@@ -136,7 +134,7 @@ exports.resetPassword = async (req, res) => {
         res.status(200).json({ success : false, message : 'Password or Token is missing.'})
     } else {
         try {
-            // todo saving token in db is not a good practice, take it, decode it every time!!
+            // todo saving even temp token in db is not a good practice, take it, decode it every time!!
             const user = await User.findOne({ temporarytoken : _b.token }).select('student_name college_email password temporarytoken');
 
             if(!user) {

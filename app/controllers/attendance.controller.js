@@ -1,4 +1,5 @@
 const Company = require('../models/company.model');
+const Utility = require('../services/utility.service');
 
 exports.getStatus = (req, res) => {
 
@@ -57,13 +58,9 @@ exports.update = async (req, res) => {
             company.company_otp = '';
 
         } else {
-            // todo a service to generate random OTPs
             // If Attendance Closed then start Attendance
             company.attendance = true;
-            let max = 99999;
-            let min = 10000;
-            // Generating Random OTP
-            company.company_otp = Math.floor(Math.random() * (+max - +min)) + +min;
+            company.company_otp = Utility.generateOTP();
         }
 
         const data = await company.save();

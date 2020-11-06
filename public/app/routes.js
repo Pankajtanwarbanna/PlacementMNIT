@@ -239,6 +239,14 @@ var app = angular.module('userRoutes', ['ngRoute'])
                controllerAs : 'interviewsManagement'
            })
 
+           .when('/email-groups-management', {
+               templateUrl : '/app/views/management/email-groups/email-groups-management.html',
+               authenticated : true,
+               permission : ['admin','spc','faculty-coordinator'],
+               controller : 'emailGroupsManagementCtrl',
+               controllerAs : 'emailGroupsManagement'
+           })
+
            // User Profile
            // 1. Student
            .when('/profile', {

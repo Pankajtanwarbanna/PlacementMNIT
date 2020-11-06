@@ -706,13 +706,38 @@ angular.module('studentController',['studentServices','textAngular','fileModelDi
 .controller('placementsCtrl', function(admin) {
     let app = this;
 
+    function getAllDegrees(placements) {
+        return [...new Set(placements.map(val => { return val.students[0].degree }))]
+    }
+
+    function getAllBranches(placements) {
+        let branches = {};
+        let degree = null;
+        let department = null;
+
+        placements.forEach(placement => {
+            degree = placement.students[0].degree;
+            department = placement.students[0].department;
+            if(branches.hasOwnProperty(degree)) {
+                branches[degree].push(department);
+                branches[degree] = [...new Set(branches[degree])]
+            } else {
+                branches[degree] = [department];
+            }
+        });
+
+        return branches;
+    }
+
     function getPlacementsData() {
         app.loading = true;
         admin.getPlacementsData().then(function (data) {
             if(data.data.success) {
                 app.loading = false;
                 app.placements = data.data.placements;
-                app.companies = [...new Set(app.placements.map(val => { return val.company_name }))]
+                app.companies = [...new Set(app.placements.map(val => { return val.company_name }))];
+                app.degrees = getAllDegrees(app.placements);
+                app.branches = getAllBranches(app.placements);
             } else {
                 app.loading = false;
                 app.errorMsg = data.data.message;

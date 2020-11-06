@@ -9,6 +9,7 @@ function verify(req, res, next) {
             next();
         }
         catch(err) {
+            console.log(err);
             res.status(200).json({ success : false, message  : 'Token invalid.' })
         }
     } else {

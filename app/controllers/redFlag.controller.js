@@ -1,5 +1,6 @@
-let RedFlag = require('../models/redFlag.model');
-let User = require('../models/user.model');
+const RedFlag = require('../models/redFlag.model');
+const User = require('../models/user.model');
+const Utility = require('../services/utility.service');
 
 exports.add = (req, res) => {
     const _b = req.body;
@@ -18,7 +19,7 @@ exports.add = (req, res) => {
             console.log(err);
             res.status(200).json({ success : false, message : 'Something went wrong!', error : err })
         })
-}
+};
 
 exports.remove = (req, res) => {
 
@@ -32,7 +33,8 @@ exports.remove = (req, res) => {
         .catch(err => {
             console.log(err);
             res.status(200).json({ success : false, message : 'Something went wrong!', error : err })
-        })};
+        })
+};
 
 exports.getAll = async (req, res) => {
 
@@ -90,9 +92,7 @@ exports.getAll = async (req, res) => {
             .aggregate(pipeline)
             .then(data => {
 
-                let redFlags = data.reduce((flags, history) => {
-                    return flags + (history.active ? history.redFlag : 0);
-                },0);
+                const redFlags = Utility.calculateRedFlags(data);
 
                 res.status(200).json({ success : true, student : student, redFlagHistory : data, redFlags : redFlags });
             })
@@ -101,7 +101,7 @@ exports.getAll = async (req, res) => {
                 res.status(200).json({ success : false, message : 'Something went wrong!', error : err })
             })
     }
-}
+};
 
 exports.my = (req, res) => {
 
@@ -110,9 +110,7 @@ exports.my = (req, res) => {
         .select('-remover -remove_timestamp -assignee')
         .then(data => {
 
-            let redFlags = data.reduce((flags, history) => {
-                return flags + (history.active ? history.redFlag : 0);
-            },0);
+            const redFlags = Utility.calculateRedFlags(data);
 
             res.status(200).json({ success : true, redFlagHistory : data, redFlags : redFlags });
         })
@@ -120,4 +118,4 @@ exports.my = (req, res) => {
             console.log(err);
             res.status(200).json({ success : false, message : 'Something went wrong!', error : err })
         })
-}
+};

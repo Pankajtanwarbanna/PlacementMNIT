@@ -33,11 +33,13 @@ let placementsSchema = new mongoose.Schema({
         type : String
     },
     intern_stipend : {
-        type : String
+        type : String,
+        default : "0"
     },
     // In both cases
     package : {
-        type : String
+        type : String,
+        default : "0"
     },
     student_college_id : {
         type : String,

@@ -1,29 +1,18 @@
-let User = require('../models/user.model');
+const User = require('../models/user.model');
 const Company = require('../models/company.model');
+const mongoose = require('mongoose');
 
-let mongoose = require('mongoose');
+exports.getAll = async (req, res) => {
+    const _b = req.body;
 
-exports.allUpcoming = async (req, res) => {
+    const opts = { deadline_date : { $lt: new Date() } };
 
-    try {
-        const user = await User.findOne({ college_id : req.decoded.college_id }).select('passout_batch').lean();
-
-        const companies = await Company.find({ passout_batch: user.passout_batch, deadline_date : { $gte: new Date() -1 } }).select('company_name job_profile package deadline_date').lean()
-
-        res.status(200).json({ success : true, companies : companies })
-    }
-    catch (err) {
-        console.error(err);
-        res.status(200).json({ success : false, message : 'Something went wrong!'});
-    }
-}
-
-exports.allPrevious = async (req, res) => {
+    if(_b.active) opts.deadline_date = { $gte: new Date() -1 };
 
     try {
         const user = await User.findOne({ college_id : req.decoded.college_id }).select('passout_batch').lean();
 
-        const companies = await Company.find({ passout_batch: user.passout_batch, deadline_date : { $lt: new Date() } }).select('company_name job_profile package deadline_date').lean()
+        const companies = await Company.find({ passout_batch: user.passout_batch, ...opts }).select('company_name job_profile package deadline_date').lean()
 
         res.status(200).json({ success : true, companies : companies })
     }

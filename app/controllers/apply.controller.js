@@ -1,6 +1,7 @@
-let User = require('../models/user.model');
+const User = require('../models/user.model');
 const Company = require('../models/company.model');
 const RedFlag = require('../models/redFlag.model');
+const Utility = require('../services/utility.service');
 
 exports.getStatus = (req, res) => {
 
@@ -33,9 +34,7 @@ exports.oneClickApply = async (req, res) => {
     try {
         const redFlagHistory = await RedFlag.find({ receiver : req.decoded.college_id.toUpperCase(), active : true });
 
-        let redFlags = redFlagHistory.reduce((flags, history) => {
-            return flags + (history.active ? history.redFlag : 0);
-        },0);
+        const redFlags = Utility.calculateRedFlags(redFlagHistory);
 
         if(redFlags >= 3) {
             res.status(200).json({ success : false, message : 'Your profile has been blocked by Placement Cell due to more than 3 red flags.'})
@@ -51,6 +50,7 @@ exports.oneClickApply = async (req, res) => {
                 company.candidates.push({ college_id : req.decoded.college_id, timestamp : new Date()});
 
                 const data = await company.save();
+
                 res.status(200).json({ success : true, message : 'Successfully applied.' })
 
             } else {

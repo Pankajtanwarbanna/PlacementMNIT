@@ -1,5 +1,5 @@
 /*
-    Controller written by - Pankaj tanwar
+    Controller written by - Pankaj Tanwar
 */
 angular.module('adminController', ['adminServices'])
 
@@ -81,7 +81,6 @@ angular.module('adminController', ['adminServices'])
     app.postCompanyDetails = function (newCompanyData) {
 
         admin.postCompanyDetails(app.newCompanyData).then(function (data) {
-            console.log(data);
             if(data.data.success) {
                 app.successMsg = data.data.message;
             } else {

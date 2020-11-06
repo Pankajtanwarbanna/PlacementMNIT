@@ -33,12 +33,12 @@ angular.module('studentServices',[])
 
     // get all upcoming companies from db
     studentFactory.getAllUpcomingCompanies = function () {
-        return $http.get('/api/company/allUpcoming');
+        return $http.post('/api/company/getAll', { active : true });
     };
 
     // get all previous companies from db
     studentFactory.getAllPreviousCompanies = function () {
-        return $http.get('/api/company/allPrevious');
+        return $http.post('/api/company/getAll', { active : false });
     };
 
     // get company detail

@@ -1,4 +1,4 @@
-let User = require('../models/user.model');
+const User = require('../models/user.model');
 const Multer = require('../services/multer.service');
 
 exports.resume = async (req, res) => {

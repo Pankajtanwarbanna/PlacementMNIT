@@ -44,6 +44,7 @@ exports.getEmailOpts = (data, mailType) => {
                 text: 'Hello '+ data.author_name + 'Thanks for sharing your interview process and thoughts with us With Regards, Prof. Mahendar Choudhary',
                 html: 'Hello <strong>'+ data.author_name + '</strong>,<br><br>Thanks for sharing your interview process and thoughts with us to help others. We have published your interview experience after a few modifications. We wish you luck for the future! Please find the link below -<br><br><a href="' + baseUrl + "/experience/" + data._id + '">' + data.title + ' </a>'+ email_signature
             };
+            break;
 
         default:
             return {}
@@ -56,15 +57,9 @@ exports.getSMSOpts = (data, smsType) => {
     switch (smsType) {
 
         case 'addCoordinator':
-            return 'Hi '+ data.name.split(" ")[0] + ',' +
-                '\n' +
-                '\n' +
+            return 'Hi '+ data.name.split(" ")[0] + ',' + '\n' + '\n' +
                 'Welcome to Placement Cell. Login with College ID ' + data.college_email.toUpperCase().split("@")[0] + '-PTP' + ' and '+ data.alternate_contact_no + ' as password on portal.' +
-                '\n' +
-                '\n' +
-                'Thanks' +
-                '\n' +
-                'PTP MNIT Jaipur'
+                '\n' + '\n' + 'Thanks' + '\n' + 'PTP MNIT Jaipur'
             break;
 
         default:
