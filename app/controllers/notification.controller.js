@@ -1,6 +1,6 @@
-let Notification = require('../models/notification.model');
-let Company = require('../models/company.model');
-let User = require('../models/user.model');
+let Notification    = require('../models/notification.model');
+let Company         = require('../models/company.model');
+let User            = require('../models/user.model');
 
 exports.add = async (req, res) => {
 
@@ -10,9 +10,9 @@ exports.add = async (req, res) => {
 
     // TODO : This is quite basic, give freedom to SPC to send notifications to particular branch, batch etc
     if(_b.companyId) {
-        let company = await Company.findOne({ _id : _b.companyId });
-        reference = 'company_' + _b.companyId; // To check in future
-        users = await User.find({ $or : [
+        let company     = await Company.findOne({ _id : _b.companyId });
+        reference       = 'company_' + _b.companyId; // To check in future
+        users           = await User.find({ $or : [
             { passout_batch : company.passout_batch},
             { permission : { $in : ['spc', 'faculty-coordinator']} }
         ]});
@@ -21,12 +21,12 @@ exports.add = async (req, res) => {
     Notification
         .create(users.map(user => {
             return {
-                title : _b.title,
+                title       : _b.title,
                 description : _b.description,
-                sender : req.decoded.college_id,
-                receiver : user.college_id,
-                reference : reference,
-                timestamp : new Date()
+                sender      : req.decoded.college_id,
+                receiver    : user.college_id,
+                reference   : reference,
+                timestamp   : new Date()
             }
         }))
         .then(data => {
@@ -59,7 +59,7 @@ exports.getAll = (req, res) => {
             console.log(err);
             res.status(200).json({ success : false, message : 'Something went wrong!'})
         });
-}
+};
 
 exports.wipe = (req, res) => {
 

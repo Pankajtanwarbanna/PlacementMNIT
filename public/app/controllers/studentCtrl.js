@@ -706,27 +706,36 @@ angular.module('studentController',['studentServices','textAngular','fileModelDi
 .controller('placementsCtrl', function(admin) {
     let app = this;
 
-    function getAllDegrees(placements) {
-        return [...new Set(placements.map(val => { return val.students[0].degree }))]
-    }
-
-    function getAllBranches(placements) {
-        let branches = {};
-        let degree = null;
-        let department = null;
+    function generatePlacements(placements) {
+        let companies    = [];
+        let degrees      = [];
+        let branches     = {};
 
         placements.forEach(placement => {
-            degree = placement.students[0].degree;
-            department = placement.students[0].department;
-            if(branches.hasOwnProperty(degree)) {
-                branches[degree].push(department);
-                branches[degree] = [...new Set(branches[degree])]
+            companies.push(placement.company_name);
+
+            placement.department = placement.students[0].department;
+            placement.degree     = placement.students[0].degree;
+
+            degrees.push(placement.degree);
+
+            if(branches.hasOwnProperty(placement.degree)) {
+                branches[placement.degree].push(placement.department);
+                branches[placement.degree] = [...new Set(branches[placement.degree])]
             } else {
-                branches[degree] = [department];
+                branches[placement.degree] = [placement.department];
             }
         });
 
-        return branches;
+        companies = [...new Set(companies)];
+        degrees = [...new Set(degrees)];
+
+        return {
+            placements,
+            companies,
+            degrees,
+            branches
+        }
     }
 
     function getPlacementsData() {
@@ -734,10 +743,13 @@ angular.module('studentController',['studentServices','textAngular','fileModelDi
         admin.getPlacementsData().then(function (data) {
             if(data.data.success) {
                 app.loading = false;
-                app.placements = data.data.placements;
-                app.companies = [...new Set(app.placements.map(val => { return val.company_name }))];
-                app.degrees = getAllDegrees(app.placements);
-                app.branches = getAllBranches(app.placements);
+                let result = generatePlacements(data.data.placements);
+                app.placements = result.placements;
+                app.companies = result.companies;
+                app.degrees = result.degrees;
+                app.branches = result.branches;
+                console.log(app.placements);
+                //app.placements = data.data.placements;
             } else {
                 app.loading = false;
                 app.errorMsg = data.data.message;

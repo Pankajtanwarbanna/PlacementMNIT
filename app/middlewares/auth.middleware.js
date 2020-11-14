@@ -50,6 +50,7 @@ function ensureAdminOrFaculty(req, res, next) {
 
 // This will check if user is Admin/Faculty Coordinator/SPC
 function ensureOfficialPlacementTeam(req, res, next) {
+
     if(!req.decoded.college_id ) {
         res.status(200).json({ success : false, message : 'Please login.' })
     } else {

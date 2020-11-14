@@ -1,4 +1,5 @@
 let Feedback = require('../models/feedback.model');
+const Constant = require('../config/constant');
 
 exports.add = (req, res) => {
 
@@ -8,7 +9,7 @@ exports.add = (req, res) => {
         title : _b.title,
         feedback : _b.feedback,
         author_name : req.decoded.student_name,
-        author_email : req.decoded.college_id + '@mnit.ac.in',
+        author_email : req.decoded.college_id + '@' + Constant.emailSuffix,
         timestamp : new Date()
     })
         .then(data => {
