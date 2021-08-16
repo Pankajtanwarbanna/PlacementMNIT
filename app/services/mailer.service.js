@@ -12,6 +12,8 @@ let transporter = nodemailer.createTransport({
 async function sendDM(user, mailType) {
 
     try {
+        console.log('Calling Mailer service with payload ', JSON.stringify(user));
+
         const opts = templateService.getEmailOpts(user, mailType);
 
         const data = await transporter.sendMail(opts);
@@ -19,6 +21,7 @@ async function sendDM(user, mailType) {
         return { success : true, message : 'Email sent.', data : data }
     }
     catch (err) {
+        console.log(err);
         return { success : false, message : 'Email service not working.' , error : err}
     }
 }
