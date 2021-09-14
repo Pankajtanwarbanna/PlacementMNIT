@@ -300,6 +300,14 @@ var app = angular.module('userRoutes', ['ngRoute'])
                templateUrl : '/app/views/team/team2020.html'
            })
 
+           .when('/team2021', {
+                templateUrl : '/app/views/team/team2021.html'
+            })
+
+            .when('/stats19-20', {
+                templateUrl : '/app/views/layout/stats19-20.html'
+            })
+
            .otherwise( { redirectTo : '/'});
 
        $locationProvider.html5Mode({
@@ -348,7 +356,3 @@ app.run(['$rootScope','auth','$location', 'student', function ($rootScope,auth,$
 */
    })
 }]);
-
-
-
-
