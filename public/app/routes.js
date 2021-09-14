@@ -304,8 +304,8 @@ var app = angular.module('userRoutes', ['ngRoute'])
                 templateUrl : '/app/views/team/team2021.html'
             })
 
-            .when('/home1', {
-                templateUrl : '/app/views/layout/home1.html'
+            .when('/stats19-20', {
+                templateUrl : '/app/views/layout/stats19-20.html'
             })
 
            .otherwise( { redirectTo : '/'});
