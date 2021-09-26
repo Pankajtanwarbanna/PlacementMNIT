@@ -1,4 +1,5 @@
 const User = require('../models/user.model');
+const Mail = require('../services/mailer.service');
 const Company = require('../models/company.model');
 const mongoose = require('mongoose');
 
@@ -45,8 +46,68 @@ exports.add = (req, res) => {
 
     Company
         .create(_b)
-        .then(data => {
+        .then(async data => {
             res.status(200).json({ success : true, message : 'Successfully new company added.'})
+            
+            const batch = Number(_b.passout_batch);
+
+            let email = [];
+
+            // eligibility
+            for(let course in _b.eligibility){
+                if(course == "UG"){
+                    email.push(batch-4+"_ug_all@mnit.ac.in");
+                } else if(course == "MTech"){
+                    email.push(batch-2+"_MTECH@mnit.ac.in");
+                } else if(course == "MPlan"){
+                    email.push(batch-2+"_PAR@mnit.ac.in");
+                } else if(course == "MSc"){
+                    email.push(batch-2+"_MSC@mnit.ac.in");
+                } else if(course == "MBA"){
+                    email.push(batch-2+"_PBM@mnit.ac.in");
+                }
+            }
+
+            //package details
+            if(!_b.package){
+                _b.package = {
+                    UG: {ctc: 'NA'},
+                    MTech: {ctc: 'NA'},
+                    MPlan: {ctc: 'NA'},
+                    MSc: {ctc: 'NA'},
+                    MBA: {ctc: 'NA'}
+                };
+            }
+            try{
+                _b.package.UG.ctc = _b.package.UG.ctc;
+            } catch(err){
+                _b.package.UG = {ctc: 'NA'};
+            }
+            try{
+                _b.package.MTech.ctc = _b.package.MTech.ctc;
+            } catch(err){
+                _b.package.MTech = {ctc: 'NA'};
+            }
+            try {
+                _b.package.MPlan.ctc = _b.package.MPlan.ctc;
+            } catch(err){
+                _b.package.MPlan = {ctc: 'NA'};
+            }
+            try {
+                _b.package.MSc.ctc = _b.package.MSc.ctc;
+            } catch(err){
+                _b.package.MSc = {ctc: 'NA'};
+            }
+            try {
+                _b.package.MBA.ctc = _b.package.MBA.ctc;
+            } catch(err){
+                _b.package.MBA = {ctc: 'NA'};
+            }
+
+            data.email = email;
+            data.package = _b.package;
+
+            const notif = await Mail.sendDM(data, 'companyAdded');
         })
         .catch(err => {
             console.error(err);

@@ -9,16 +9,20 @@ var companySchema = new mongoose.Schema({
         required : true
     },
     company_website_url : {
-        type : String
+        type : String,
+        default : ' '
     },
     organization_type : {
-        type : String
+        type : String,
+        default : ' '
     },
     industry_sector : {
-        type : String
+        type : String,
+        default : ' '
     },
     about_company : {
-        type : String
+        type : String,
+        default : ' '
     },
 
     // Job Profile
@@ -31,19 +35,23 @@ var companySchema = new mongoose.Schema({
         required : true
     },
     recruitment : {
-        type : String
+        type : String,
+        required : true
     },
     duration : {
-        type : String
+        type : String,
+        default : ' '
     },
     posting_location : {
-        type : String
+        type : String,
+        default : ' '
     },
     joining_date : {
         type : Date
     },
     job_description : {
-        type : String
+        type : String,
+        default : ' '
     },
 
     // student eligibility
@@ -51,25 +59,32 @@ var companySchema = new mongoose.Schema({
         type : Object
     },
     min_cgpa : {
-        type : String // todo convert float
+        type : String, // todo convert float
+        default : 'NA'
     },
     min_10_percent : {
-        type : String
+        type : String,
+        default : 'NA'
     },
     min_12_percent : {
-        type : String
+        type : String,
+        default : 'NA'
     },
     medical_requirement : {
-        type : String
+        type : String,
+        default : 'NA'
     },
     service_agreement : {
-        type : String
+        type : String,
+        default : 'NA'
     },
     service_agreement_duration : {
-        type : String
+        type : String,
+        default : 'NA'
     },
     other_eligibility : {
-        type : String
+        type : String,
+        default : 'NA'
     },
 
     // Package Details
@@ -77,10 +92,12 @@ var companySchema = new mongoose.Schema({
         type : Object
     },
     company_accommodation : {
-        type : String
+        type : String,
+        default : 'NA'
     },
     other_facility : {
-        type : String
+        type : String,
+        default : 'NA'
     },
 
     // Selection Process

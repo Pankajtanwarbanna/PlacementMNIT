@@ -46,6 +46,22 @@ exports.getEmailOpts = (data, mailType) => {
             };
             break;
 
+        case 'companyAdded':
+            return {
+                from: from,
+                to: data.email,
+                subject: 'Company Specific Registration: ' + data.company_name,
+                text: 'Dear Students,\nCompany Name: '+data.company_name+'\nProfile: '+data.job_profile+'\nJob Location: '+data.posting_locatioin+'\nDeadline: '+data.deadline_date+'\nWith Regards, Prof. Mahendar Choudhary',
+                html: 'Dear Students,<br><br><table border="1|0" style="border-collapse: collapse"><tr><td><strong>Company Name:</strong></td><td>'+data.company_name+'</td></tr><tr><td><strong>Company URL:</strong></td><td>'+data.company_website_url+'</td></tr><tr><td><strong>Organization Type:</strong></td><td>'
+                +data.organization_type+'</td></tr><tr><td><strong>Industry Sector:</strong></td><td>'+data.industry_sector+'</td></tr><tr><td><strong>About Company:</strong></td><td>'+data.about_company+'</td></tr><tr><td><strong>Profile:</strong></td><td>'+data.job_profile+'</td></tr><tr><td><strong>Passout Batch:</strong></td><td>'
+                +data.passout_batch+'</td></tr><tr><td><strong>Recruitment Type:</strong></td><td>'+data.recruitment+'</td></tr><tr><td><strong>Duration:</strong></td><td>'+data.duration+'</td></tr><tr><td><strong>Job Location:</strong></td><td>'+data.posting_location+'</td></tr><tr><td><strong>Job Description:</strong></td><td>'
+                +data.job_description+'</td></tr><tr><td><strong>Min CGPA:</strong></td><td>'+data.min_cgpa+'</td></tr><tr><td><strong>Min 10%:</strong></td><td>'+data.min_10_percent+'</td></tr><tr><td><strong>Min 12%:</strong></td><td>'+data.min_12_percent+'</td></tr><tr><td><strong>Medical Requirement:</strong></td><td>'
+                +data.medical_requirement+'</td></tr><tr><td><strong>Service Agreement:</strong></td><td>'+data.service_agreement+'</td></tr><tr><td><strong>Duration of Agreement:</strong></td><td>'+data.service_agreement_duration+'</td></tr><tr><td><strong>Other Eligibility:</strong></td><td>'
+                +data.other_eligibility+'</td></tr><tr><td><strong>Package:</strong></td><td>UG: '+data.package.UG.ctc+'<br>MTech: '+data.package.MTech.ctc+'<br>MPlan: '+data.package.MPlan.ctc+'<br>MSc: '+data.package.MSc.ctc+'<br>MBA: '+data.package.MBA.ctc+'</td></tr><tr><td><strong>Company Accommodation:</strong></td><td>'
+                +data.company_accommodation+'</td></tr><tr><td><strong>Other Facility:</strong></td><td>'+data.other_facility+'</td></tr><tr><td><strong>Deadline:</strong></td><td>'+data.deadline_date+'</td></tr></table><br><a href="'+baseUrl+"/company/"+data._id+'"><strong>Link to register</strong></a><br><br>'+email_signature
+            };
+            break;
+
         default:
             return {}
     }
